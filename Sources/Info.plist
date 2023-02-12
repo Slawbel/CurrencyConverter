@@ -20,8 +20,8 @@
 	<string>1.0</string>
 	<key>UILaunchScreen</key>
 	<dict>
-		<key>UIImageName</key>
-		<string></string>
+		<key>UIColorName</key>
+		<string>launchScreenColor</string>
 	</dict>
 	<key>CFBundleVersion</key>
 	<string>1</string>
