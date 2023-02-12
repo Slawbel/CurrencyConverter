@@ -3,23 +3,27 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		29710D0413A522BE50EE231F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107E2E4344C9C2B1582FAB2F /* AppDelegate.swift */; };
-		56A7A0A0C9CCEA2023F1049A /* RateHistoryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12DCEB5D4B1FB9883B1644C /* RateHistoryScreen.swift */; };
 		5E85E574A1A4C9DB20A99727 /* ConverterScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF596EFC18EDFE5C23A61493 /* ConverterScreen.swift */; };
 		731045D13C6E838C0C137D4D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F63A59195389F85E0C8D026A /* SnapKit */; };
 		7CD9B33A8A96A421585813DE /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0109FDF3BC4A71D6BF9A6B76 /* SwifterSwift */; };
+		A2F83E1729996E3500FAE989 /* DiagramPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F83E1629996E3500FAE989 /* DiagramPage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		107E2E4344C9C2B1582FAB2F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6C88B6AE5D72304E2E7EEE80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		AC79AC52A7CED523EA4F690B /* iOSApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = iOSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2F83E1629996E3500FAE989 /* DiagramPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramPage.swift; sourceTree = "<group>"; };
+		A2F83E1929996FBA00FAE989 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A2F83E1B2999701000FAE989 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A2F83E1C2999709600FAE989 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		A2F83E1D2999714F00FAE989 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AC79AC52A7CED523EA4F690B /* iOSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF596EFC18EDFE5C23A61493 /* ConverterScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterScreen.swift; sourceTree = "<group>"; };
-		D12DCEB5D4B1FB9883B1644C /* RateHistoryScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateHistoryScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,8 +44,11 @@
 			children = (
 				107E2E4344C9C2B1582FAB2F /* AppDelegate.swift */,
 				AF596EFC18EDFE5C23A61493 /* ConverterScreen.swift */,
+				A2F83E1A29996FBA00FAE989 /* Localizable.strings */,
+				A2F83E1C2999709600FAE989 /* Media.xcassets */,
+				A2F83E1D2999714F00FAE989 /* LaunchScreen.storyboard */,
 				6C88B6AE5D72304E2E7EEE80 /* Info.plist */,
-				D12DCEB5D4B1FB9883B1644C /* RateHistoryScreen.swift */,
+				A2F83E1629996E3500FAE989 /* DiagramPage.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -92,8 +99,6 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1200;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = 11C38EE8E3393F0EF65A11C7 /* Build configuration list for PBXProject "CurrencyConverter" */;
 			compatibilityVersion = "Xcode 11.0";
@@ -102,6 +107,7 @@
 			knownRegions = (
 				Base,
 				en,
+				ru,
 			);
 			mainGroup = D833F7C10193E82AE63DD049;
 			packageReferences = (
@@ -123,17 +129,30 @@
 			files = (
 				29710D0413A522BE50EE231F /* AppDelegate.swift in Sources */,
 				5E85E574A1A4C9DB20A99727 /* ConverterScreen.swift in Sources */,
-				56A7A0A0C9CCEA2023F1049A /* RateHistoryScreen.swift in Sources */,
+				A2F83E1729996E3500FAE989 /* DiagramPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A2F83E1A29996FBA00FAE989 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A2F83E1929996FBA00FAE989 /* en */,
+				A2F83E1B2999701000FAE989 /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		14252CAE11809B21EA18C6E8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -190,6 +209,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 4A2KG46AV7;
 				INFOPLIST_FILE = Sources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -206,6 +226,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -269,6 +290,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 4A2KG46AV7;
 				INFOPLIST_FILE = Sources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
