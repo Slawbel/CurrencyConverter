@@ -8,15 +8,6 @@
         "revision" : "f222cbdf325885926566172f6f5f06af95473158",
         "version" : "5.6.0"
       }
-    },
-    {
-      "identity" : "swifterswift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/RomanPodymov/SwifterSwift",
-      "state" : {
-        "branch" : "master",
-        "revision" : "8ad38e1a54e337b52c461294445fe0a148beacf7"
-      }
     }
   ],
   "version" : 2
