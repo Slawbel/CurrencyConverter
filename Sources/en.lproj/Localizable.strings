@@ -2,3 +2,5 @@
 "swap" = "Swap ";
 "convert" = "Convert";
 "transfer" = "Transfer";
+"inputCurBut" = "Currency for sale";
+"outputCurBut" = "Currency for purchase";
