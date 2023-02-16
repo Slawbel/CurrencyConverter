@@ -12,6 +12,7 @@
 		9E25D2DC29998CA700293AB7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9E25D2D329998CA700293AB7 /* Localizable.strings */; };
 		9E25D2DE29998CA700293AB7 /* DiagramPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D629998CA700293AB7 /* DiagramPage.swift */; };
 		9E25D2DF29998CA700293AB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D829998CA700293AB7 /* AppDelegate.swift */; };
+		A2F83E20299AE3AA00FAE989 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A2F83E1F299AE3AA00FAE989 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2F83E20299AE3AA00FAE989 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +83,9 @@
 			dependencies = (
 			);
 			name = CurrencyConverter;
+			packageProductDependencies = (
+				A2F83E1F299AE3AA00FAE989 /* SnapKit */,
+			);
 			productName = CurrencyConverter;
 			productReference = 9E25D2B729998C2B00293AB7 /* CurrencyConverter.app */;
 			productType = "com.apple.product-type.application";
@@ -110,6 +115,9 @@
 				ru,
 			);
 			mainGroup = 9E25D2AE29998C2B00293AB7;
+			packageReferences = (
+				A2F83E1E299AE3AA00FAE989 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 9E25D2B829998C2B00293AB7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -341,6 +349,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A2F83E1E299AE3AA00FAE989 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A2F83E1F299AE3AA00FAE989 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2F83E1E299AE3AA00FAE989 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9E25D2AF29998C2B00293AB7 /* Project object */;
 }
