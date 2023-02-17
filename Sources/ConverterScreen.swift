@@ -21,6 +21,10 @@ class ConverterScreen: UIViewController {
         inputCurButton.setTitleColor(.black, for: .normal)
         let inputCurBut = NSLocalizedString("inputCurBut", comment: "")
         inputCurButton.setTitle(inputCurBut, for: .normal)
+        inputCurButton.addAction(UIAction { [unowned self] _ in
+            let currencyScreen = CurrencyScreen()
+            self.present(currencyScreen, animated: true)
+        }, for: primaryActionTriggered)
         
         
         inputCurLabel.textAlignment = .center
@@ -44,6 +48,10 @@ class ConverterScreen: UIViewController {
         outputCurButton.setTitleColor(.black, for: .normal)
         let outputCurBut = NSLocalizedString("outputCurBut", comment: "")
         outputCurButton.setTitle(outputCurBut, for: .normal)
+        outputCurButton.addAction(UIAction { [unowned self] _ in
+            let currencyScreen = CurrencyScreen()
+            self.present(currencyScreen, animated: true)
+        }, for: primaryActionTriggered)
         
         
         outputCurLabel.textAlignment = .center
