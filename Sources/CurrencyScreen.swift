@@ -42,12 +42,27 @@ class MyTableViewCell: UITableViewCell {
 
 
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    private let tableView = UITableView(frame: .init(x: 20, y: 20, width: 350, height: 804), style: .plain)
+    private let tableView = UITableView(frame: .init(x: 50, y: 80, width: 290, height: 550), style: .plain)
+    private let backButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            
+        
+        backButton.backgroundColor = .white
+        backButton.setTitleColor(.black, for: .normal)
+        let buttonBack = NSLocalizedString("buttonBack", comment: "")
+        backButton.setTitle(buttonBack, for: .normal)
+        
         view.addSubview(tableView)
+        view.addSubview(backButton)
+        
+        
+        backButton.snp.makeConstraints { make in
+            make.top.equalTo(view).inset(650)
+            make.centerX.equalTo(view)
+            make.width.equalTo(120)
+            make.height.equalTo(50)
+        }
     }
 
     

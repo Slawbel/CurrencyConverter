@@ -24,7 +24,7 @@ class ConverterScreen: UIViewController {
         inputCurButton.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             self.present(currencyScreen, animated: true)
-        }, for: primaryActionTriggered)
+        }, for: .primaryActionTriggered)
         
         
         inputCurLabel.textAlignment = .center
@@ -51,7 +51,7 @@ class ConverterScreen: UIViewController {
         outputCurButton.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             self.present(currencyScreen, animated: true)
-        }, for: primaryActionTriggered)
+        }, for: .primaryActionTriggered)
         
         
         outputCurLabel.textAlignment = .center
