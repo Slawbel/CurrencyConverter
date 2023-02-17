@@ -22,13 +22,13 @@ class ConverterScreen: UIViewController {
         let inputCurBut = NSLocalizedString("inputCurBut", comment: "")
         inputCurButton.setTitle(inputCurBut, for: .normal)
         
+        
         inputCurLabel.textAlignment = .center
         inputCurLabel.backgroundColor = .white
         
         inputTF.placeholder = NSLocalizedString("writeTheAmount", comment: "")
         inputTF.textAlignment = .center
         inputTF.backgroundColor = .white
-        
         
         swapButton.backgroundColor = .white
         swapButton.setTitleColor(.black, for: .normal)
@@ -44,6 +44,7 @@ class ConverterScreen: UIViewController {
         outputCurButton.setTitleColor(.black, for: .normal)
         let outputCurBut = NSLocalizedString("outputCurBut", comment: "")
         outputCurButton.setTitle(outputCurBut, for: .normal)
+        
         
         outputCurLabel.textAlignment = .center
         outputCurLabel.backgroundColor = .white
@@ -81,7 +82,8 @@ class ConverterScreen: UIViewController {
         
         inputTF.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view).inset(70)
-            make.top.equalTo(view).inset(200)
+            make.top.equalTo(view).inset(190)
+            make.height.equalTo(50)
             make.centerX.equalTo(view)
         }
         
@@ -104,19 +106,19 @@ class ConverterScreen: UIViewController {
             make.height.equalTo(40)
         }
         
-        outputLabel.snp.makeConstraints{ make in
-            make.top.equalTo(view).inset(450)
-            make.leading.trailing.equalTo(view).inset(70)
-            make.height.equalTo(40)
-        }
         
         buttonCalc.snp.makeConstraints{ make in
-            make.top.equalTo(view).inset(520)
+            make.top.equalTo(view).inset(460)
             make.centerX.equalTo(view)
             make.width.equalTo(120)
             make.height.equalTo(50)
         }
         
+        outputLabel.snp.makeConstraints{ make in
+            make.top.equalTo(view).inset(530)
+            make.leading.trailing.equalTo(view).inset(70)
+            make.height.equalTo(40)
+        }
         
         buttonDiagram.snp.makeConstraints{ make in
             make.top.equalTo(view).inset(600)
