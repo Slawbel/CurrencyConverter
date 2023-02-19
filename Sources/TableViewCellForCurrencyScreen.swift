@@ -20,10 +20,10 @@ class MyTableViewCell: UITableViewCell {
         
         
         shortName.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.leadingAnchor as! ConstraintRelatableTarget)
-            make.trailing.equalTo(contentView.trailingAnchor as! ConstraintRelatableTarget)
-            make.top.equalTo(contentView.topAnchor as! ConstraintRelatableTarget)
-            make.bottom.equalTo(fullName.topAnchor as! ConstraintRelatableTarget)
+            make.leading.equalTo(contentView.snp.leading)
+            make.trailing.equalTo(contentView.snp.trailing)
+            make.top.equalTo(contentView.snp.top)
+            make.bottom.equalTo(fullName.snp.top)
         }
         
         
