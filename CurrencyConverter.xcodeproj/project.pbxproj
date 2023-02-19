@@ -13,6 +13,7 @@
 		9E25D2DE29998CA700293AB7 /* DiagramPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D629998CA700293AB7 /* DiagramPage.swift */; };
 		9E25D2DF29998CA700293AB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D829998CA700293AB7 /* AppDelegate.swift */; };
 		A2B496F5299FBDD00017A82A /* CurrencyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */; };
+		A2B496F729A2C5200017A82A /* TableViewCellForCurrencyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */; };
 		A2F83E20299AE3AA00FAE989 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A2F83E1F299AE3AA00FAE989 /* SnapKit */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		9E25D2D829998CA700293AB7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E25D2D929998CA700293AB7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyScreen.swift; sourceTree = "<group>"; };
+		A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellForCurrencyScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				9E25D2D129998CA700293AB7 /* Media.xcassets */,
 				9E25D2D229998CA700293AB7 /* ConverterScreen.swift */,
 				A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */,
+				A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */,
 				9E25D2D329998CA700293AB7 /* Localizable.strings */,
 				9E25D2D629998CA700293AB7 /* DiagramPage.swift */,
 				9E25D2D829998CA700293AB7 /* AppDelegate.swift */,
@@ -151,6 +154,7 @@
 				9E25D2DB29998CA700293AB7 /* ConverterScreen.swift in Sources */,
 				A2B496F5299FBDD00017A82A /* CurrencyScreen.swift in Sources */,
 				9E25D2DE29998CA700293AB7 /* DiagramPage.swift in Sources */,
+				A2B496F729A2C5200017A82A /* TableViewCellForCurrencyScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
