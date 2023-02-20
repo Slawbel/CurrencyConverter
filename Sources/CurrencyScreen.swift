@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    private let tableView = UITableView(frame: .init(x: 50, y: 80, width: 290, height: 550), style: .plain)
+    private let tableView = UITableView()
     private let backButton = UIButton()
     
     override func viewDidLoad() {
@@ -20,23 +20,24 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         view.addSubview(tableView)
         view.addSubview(backButton)
         
-        
         backButton.snp.makeConstraints { make in
             make.top.equalTo(view).inset(650)
             make.centerX.equalTo(view)
             make.width.equalTo(120)
             make.height.equalTo(50)
             
-        
-            backButton.addAction(UIAction { [weak self] _ in
+        backButton.addAction(UIAction { [weak self] _ in
                 self?.dismiss(animated: true)
             }, for: .primaryActionTriggered)
         }
+        
+        tableView.snp.makeConstraints{ make in
+            make.top.equalTo(view).inset(80)
+            make.bottom.equalTo(view).inset(200)
+            make.leading.trailing.equalTo(view).inset(50)
+        }
     }
 
-    
-    
-    
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
         return cell!
@@ -47,11 +48,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-            
     }
-        
-    
-    
 }
         
         

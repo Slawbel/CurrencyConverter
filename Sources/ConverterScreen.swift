@@ -12,12 +12,10 @@ class ConverterScreen: UIViewController {
     private let outputLabel = UILabel()
     private let buttonDiagram = UIButton()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.backgroundColor = .init(named: "mainBackgroundColor")
        
-        
         inputCurButton.backgroundColor = .white
         inputCurButton.setTitleColor(.black, for: .normal)
         let inputCurBut = NSLocalizedString("inputCurBut", comment: "")
@@ -27,7 +25,6 @@ class ConverterScreen: UIViewController {
             self.present(currencyScreen, animated: true)
             
         }, for: .primaryActionTriggered)
-        
         
         inputCurLabel.textAlignment = .center
         inputCurLabel.backgroundColor = .white
@@ -55,7 +52,6 @@ class ConverterScreen: UIViewController {
             self.present(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
         
-        
         outputCurLabel.textAlignment = .center
         outputCurLabel.backgroundColor = .white
         
@@ -76,7 +72,6 @@ class ConverterScreen: UIViewController {
         view.addSubview(buttonCalc)
         view.addSubview(outputLabel)
         view.addSubview(buttonDiagram)
-        
         
         inputCurButton.snp.makeConstraints{ make in
             make.leading.trailing.equalTo(view).inset(70)
@@ -116,7 +111,6 @@ class ConverterScreen: UIViewController {
             make.height.equalTo(40)
         }
         
-        
         buttonCalc.snp.makeConstraints{ make in
             make.top.equalTo(view).inset(460)
             make.centerX.equalTo(view)
@@ -136,6 +130,5 @@ class ConverterScreen: UIViewController {
             make.width.equalTo(120)
             make.height.equalTo(50)
         }
-        
     }
 }

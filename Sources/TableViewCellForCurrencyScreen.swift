@@ -18,15 +18,13 @@ class MyTableViewCell: UITableViewCell {
         shortName.numberOfLines = 0
         fullName.numberOfLines = 0
         
-        
         shortName.snp.makeConstraints { make in
             make.leading.equalTo(contentView.snp.leading)
             make.trailing.equalTo(contentView.snp.trailing)
             make.top.equalTo(contentView.snp.top)
             make.bottom.equalTo(fullName.snp.top)
         }
-        
-        
+          
         fullName.snp.makeConstraints { make in
             make.leading.equalTo(contentView.leadingAnchor as! ConstraintRelatableTarget)
             make.trailing.equalTo(contentView.trailingAnchor as! ConstraintRelatableTarget)
