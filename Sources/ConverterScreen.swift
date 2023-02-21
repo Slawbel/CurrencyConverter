@@ -64,6 +64,11 @@ class ConverterScreen: UIViewController {
         buttonDiagram.setTitleColor(.black, for: .normal)
         let buttonDiagramText = NSLocalizedString("transfer", comment: "")
         buttonDiagram.setTitle(buttonDiagramText, for: .normal)
+        buttonDiagram.addAction(UIAction { [unowned self] _ in
+            let diagramPage = DiagramPage()
+            diagramPage.modalPresentationStyle = .fullScreen
+            self.present(diagramPage, animated: true)
+        }, for: .primaryActionTriggered)
 
         view.addSubview(inputCurButton)
         view.addSubview(inputCurLabel)

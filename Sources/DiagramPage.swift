@@ -1,3 +1,11 @@
+import UIKit
+import SnapKit
 
-
-import Foundation
+class DiagramPage: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .green
+    }
+    
+}
