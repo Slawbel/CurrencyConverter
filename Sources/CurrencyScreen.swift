@@ -25,10 +25,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.centerX.equalTo(view)
             make.width.equalTo(120)
             make.height.equalTo(50)
-
-            backButton.addAction(UIAction { [weak self] _ in
-                self?.dismiss(animated: true)
-            }, for: .primaryActionTriggered)
         }
 
         tableView.snp.makeConstraints { make in
@@ -36,6 +32,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.bottom.equalTo(view).inset(200)
             make.leading.trailing.equalTo(view).inset(50)
         }
+        
+        backButton.addAction(UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
+        }, for: .primaryActionTriggered)
+
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -16,16 +16,16 @@ class MyTableViewCell: UITableViewCell {
         fullName.numberOfLines = 0
 
         shortName.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.snp.leading)
-            make.trailing.equalTo(contentView.snp.trailing)
-            make.top.equalTo(contentView.snp.top)
+            make.leading.equalTo(contentView)
+            make.trailing.equalTo(contentView)
+            make.top.equalTo(contentView)
             make.bottom.equalTo(fullName.snp.top)
         }
 
         fullName.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.leadingAnchor as! ConstraintRelatableTarget)
-            make.trailing.equalTo(contentView.trailingAnchor as! ConstraintRelatableTarget)
-            make.bottom.equalTo(contentView.bottomAnchor as! ConstraintRelatableTarget)
+            make.leading.equalTo(contentView)
+            make.trailing.equalTo(contentView)
+            make.bottom.equalTo(contentView)
         }
     }
 
