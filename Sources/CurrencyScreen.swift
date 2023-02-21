@@ -2,7 +2,7 @@ import SnapKit
 import UIKit
 
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    private let tableView = UITableView(frame: .init(x: 50, y: 80, width: 290, height: 550), style: .plain)
+    private let tableView = UITableView()
     private let backButton = UIButton()
 
     override func viewDidLoad() {
@@ -27,9 +27,16 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.height.equalTo(50)
         }
 
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(view).inset(80)
+            make.bottom.equalTo(view).inset(200)
+            make.leading.trailing.equalTo(view).inset(50)
+        }
+        
         backButton.addAction(UIAction { [weak self] _ in
             self?.dismiss(animated: true)
         }, for: .primaryActionTriggered)
+
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
