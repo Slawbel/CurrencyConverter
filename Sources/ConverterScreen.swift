@@ -22,6 +22,7 @@ class ConverterScreen: UIViewController {
         inputCurButton.setTitle(inputCurBut, for: .normal)
         inputCurButton.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
+            currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
 
         }, for: .primaryActionTriggered)
@@ -49,6 +50,7 @@ class ConverterScreen: UIViewController {
         outputCurButton.setTitle(outputCurBut, for: .normal)
         outputCurButton.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
+            currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
 
