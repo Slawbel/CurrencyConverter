@@ -49,4 +49,24 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_: UITableView, didSelectRowAt _: IndexPath) {}
+    
+    private func findCur() {
+        let stringUrl = "https://api.apilayer.com/fixer/symbols"
+        guard let url = URL(string: stringUrl) else {
+            return
+        }
+        var request = URLRequest(url: url,timeoutInterval: Double.infinity)
+        request.httpMethod = "GET"
+        request.addValue("mUGIIf6VCrvec8zDdJv2EofmA4euGt2z", forHTTPHeaderField: "apikey")
+        
+        let task = URLSession.shared.dataTask(with: request) {data, response, error in
+            guard let data = data else {
+                print(String(describing: error))
+                return
+            }
+            print(String(data: data, encoding: .utf8)!)
+            print()
+        }
+        task.resume()
+    }
 }
