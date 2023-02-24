@@ -20,6 +20,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         view.addSubview(tableView)
         view.addSubview(backButton)
 
+        
         backButton.snp.makeConstraints { make in
             make.top.equalTo(view).inset(650)
             make.centerX.equalTo(view)
@@ -65,8 +66,16 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                 return
             }
             print(String(data: data, encoding: .utf8)!)
-            print()
         }
         task.resume()
+        
+        // stopped here
+        guard let currencyName = try? CurData(from: task as! Decoder) else {
+            return
+        }
+        let outputNames = MyTableViewCell()
+        let resultCurrency = CurData()
+        outputNames.shortName = resultCurrency.currency
+       
     }
 }
