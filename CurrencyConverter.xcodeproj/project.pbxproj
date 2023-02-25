@@ -12,6 +12,7 @@
 		9E25D2DC29998CA700293AB7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9E25D2D329998CA700293AB7 /* Localizable.strings */; };
 		9E25D2DE29998CA700293AB7 /* DiagramPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D629998CA700293AB7 /* DiagramPage.swift */; };
 		9E25D2DF29998CA700293AB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D829998CA700293AB7 /* AppDelegate.swift */; };
+		9E6B6BEC29AAA66C003502AD /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9E6B6BEB29AAA66C003502AD /* SwifterSwift */; };
 		A2B496F5299FBDD00017A82A /* CurrencyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */; };
 		A2B496F729A2C5200017A82A /* TableViewCellForCurrencyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */; };
 		A2F83E20299AE3AA00FAE989 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A2F83E1F299AE3AA00FAE989 /* SnapKit */; };
@@ -36,6 +37,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2F83E20299AE3AA00FAE989 /* SnapKit in Frameworks */,
+				9E6B6BEC29AAA66C003502AD /* SwifterSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +93,7 @@
 			name = CurrencyConverter;
 			packageProductDependencies = (
 				A2F83E1F299AE3AA00FAE989 /* SnapKit */,
+				9E6B6BEB29AAA66C003502AD /* SwifterSwift */,
 			);
 			productName = CurrencyConverter;
 			productReference = 9E25D2B729998C2B00293AB7 /* CurrencyConverter.app */;
@@ -123,6 +126,7 @@
 			mainGroup = 9E25D2AE29998C2B00293AB7;
 			packageReferences = (
 				A2F83E1E299AE3AA00FAE989 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				9E6B6BEA29AAA66B003502AD /* XCRemoteSwiftPackageReference "SwifterSwift" */,
 			);
 			productRefGroup = 9E25D2B829998C2B00293AB7 /* Products */;
 			projectDirPath = "";
@@ -359,6 +363,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9E6B6BEA29AAA66B003502AD /* XCRemoteSwiftPackageReference "SwifterSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwifterSwift/SwifterSwift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		A2F83E1E299AE3AA00FAE989 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -370,6 +382,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9E6B6BEB29AAA66C003502AD /* SwifterSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9E6B6BEA29AAA66B003502AD /* XCRemoteSwiftPackageReference "SwifterSwift" */;
+			productName = SwifterSwift;
+		};
 		A2F83E1F299AE3AA00FAE989 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A2F83E1E299AE3AA00FAE989 /* XCRemoteSwiftPackageReference "SnapKit" */;
