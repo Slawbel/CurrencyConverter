@@ -1,5 +1,7 @@
 import SnapKit
 import UIKit
+import SwifterSwift
+
 
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private let tableView = UITableView()
@@ -60,7 +62,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         request.httpMethod = "GET"
         request.addValue("mUGIIf6VCrvec8zDdJv2EofmA4euGt2z", forHTTPHeaderField: "apikey")
         
-        let task = URLSession.shared.dataTask(with: request) {data, response, error in
+        let task = URLSession.shared.dataSync(with: request) {data, response, error in
             guard let data = data else {
                 print(String(describing: error))
                 return
@@ -74,8 +76,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             return
         }
         let outputNames = MyTableViewCell()
-        let resultCurrency = CurData()
-        outputNames.shortName = resultCurrency.currency
+        let resultCurrency = CurData(data: task)
+        outputNames.shortName.text = resultCurrency.symbols
        
     }
 }
