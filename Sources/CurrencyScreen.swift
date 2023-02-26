@@ -6,7 +6,7 @@ import SwifterSwift
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private let tableView = UITableView()
     private let backButton = UIButton()
-    private var symbols = [String]()
+    var symbols = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

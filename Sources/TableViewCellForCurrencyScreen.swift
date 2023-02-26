@@ -14,6 +14,7 @@ class MyTableViewCell: UITableViewCell {
         contentView.addSubview(fullName)
         shortName.numberOfLines = 0
         fullName.numberOfLines = 0
+    
 
         shortName.snp.makeConstraints { make in
             make.leading.equalTo(contentView)
@@ -28,7 +29,12 @@ class MyTableViewCell: UITableViewCell {
             make.bottom.equalTo(contentView)
         }
         
-        
+        let symbolsValue = CurrencyScreen()
+        for element in (0...symbolsValue.symbols.count - 1) {
+            print(symbolsValue.symbols)
+            fullName.text = symbolsValue.symbols[element]
+            print(element)
+        }
     }
 
     @available(*, unavailable)
