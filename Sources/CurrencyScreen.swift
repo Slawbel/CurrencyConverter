@@ -6,7 +6,7 @@ import SwifterSwift
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private let tableView = UITableView()
     private let backButton = UIButton()
-    var symbols = [String]()
+    private var symbols = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,11 +46,12 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
+        cell?.setup(text: symbols[indexPath.row])
         return cell!
     }
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        40
+        symbols.count
     }
 
     func tableView(_: UITableView, didSelectRowAt _: IndexPath) {}
@@ -73,5 +74,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             return
         }
         symbols = Array(curData.symbols.values)
+        tableView.reloadData()
     }
 }

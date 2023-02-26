@@ -28,15 +28,12 @@ class MyTableViewCell: UITableViewCell {
             make.trailing.equalTo(contentView)
             make.bottom.equalTo(contentView)
         }
-        
-        let symbolsValue = CurrencyScreen()
-        for element in (0...symbolsValue.symbols.count - 1) {
-            print(symbolsValue.symbols)
-            fullName.text = symbolsValue.symbols[element]
-            print(element)
-        }
     }
 
+    func setup(text: String) {
+        fullName.text = text
+    }
+    
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
