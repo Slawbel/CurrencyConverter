@@ -2,12 +2,12 @@ import SnapKit
 import UIKit
 
 class MyTableViewCell: UITableViewCell {
-    private let shortName = UILabel(frame: .zero)
-    private let fullName = UILabel(frame: .zero)
+    var shortName = UILabel(frame: .zero)
+    var fullName = UILabel(frame: .zero)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
+        
         shortName.textAlignment = .center
         fullName.textAlignment = .center
         contentView.addSubview(shortName)
@@ -27,6 +27,8 @@ class MyTableViewCell: UITableViewCell {
             make.trailing.equalTo(contentView)
             make.bottom.equalTo(contentView)
         }
+        
+        
     }
 
     @available(*, unavailable)
