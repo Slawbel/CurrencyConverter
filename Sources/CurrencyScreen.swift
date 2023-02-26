@@ -6,7 +6,8 @@ import SwifterSwift
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private let tableView = UITableView()
     private let backButton = UIButton()
-
+    private var symbols = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,6 +41,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             self?.dismiss(animated: true)
         }, for: .primaryActionTriggered)
 
+        findCur()
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -67,11 +69,9 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         print(String(data: data, encoding: .utf8)!)
         
-        guard let currencyName = CurData(from: data) else {
+        guard let curData = CurData(from: data) else {
             return
         }
-        let outputNames = MyTableViewCell()
-        let resultCurrency = CurData(from: data)
-        outputNames.fullName.text = resultCurrency?.symbols as String
+        symbols = Array(curData.symbols.values)
     }
 }
