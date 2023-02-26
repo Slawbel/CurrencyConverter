@@ -15,7 +15,7 @@
 		A2B496F5299FBDD00017A82A /* CurrencyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */; };
 		A2B496F729A2C5200017A82A /* TableViewCellForCurrencyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */; };
 		A2B496FB29A802A30017A82A /* CurData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496FA29A802A20017A82A /* CurData.swift */; };
-		A2B496FE29AA91020017A82A /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A2B496FD29AA91020017A82A /* SwifterSwift */; };
+		A2B4970629AACC060017A82A /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A2B4970529AACC060017A82A /* SwifterSwift */; };
 		A2F83E20299AE3AA00FAE989 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A2F83E1F299AE3AA00FAE989 /* SnapKit */; };
 /* End PBXBuildFile section */
 
@@ -39,7 +39,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2F83E20299AE3AA00FAE989 /* SnapKit in Frameworks */,
-				A2B496FE29AA91020017A82A /* SwifterSwift in Frameworks */,
+				A2B4970629AACC060017A82A /* SwifterSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +51,7 @@
 			children = (
 				9E25D2D029998CA700293AB7 /* Sources */,
 				9E25D2B829998C2B00293AB7 /* Products */,
+				A2B496FF29AAC9660017A82A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,6 +79,13 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		A2B496FF29AAC9660017A82A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -96,7 +104,7 @@
 			name = CurrencyConverter;
 			packageProductDependencies = (
 				A2F83E1F299AE3AA00FAE989 /* SnapKit */,
-				A2B496FD29AA91020017A82A /* SwifterSwift */,
+				A2B4970529AACC060017A82A /* SwifterSwift */,
 			);
 			productName = CurrencyConverter;
 			productReference = 9E25D2B729998C2B00293AB7 /* CurrencyConverter.app */;
@@ -129,7 +137,7 @@
 			mainGroup = 9E25D2AE29998C2B00293AB7;
 			packageReferences = (
 				A2F83E1E299AE3AA00FAE989 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				A2B496FC29AA91020017A82A /* XCRemoteSwiftPackageReference "SwifterSwift" */,
+				A2B4970429AACC060017A82A /* XCRemoteSwiftPackageReference "SwifterSwift" */,
 			);
 			productRefGroup = 9E25D2B829998C2B00293AB7 /* Products */;
 			projectDirPath = "";
@@ -367,12 +375,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A2B496FC29AA91020017A82A /* XCRemoteSwiftPackageReference "SwifterSwift" */ = {
+		A2B4970429AACC060017A82A /* XCRemoteSwiftPackageReference "SwifterSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwifterSwift/SwifterSwift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				branch = master;
+				kind = branch;
 			};
 		};
 		A2F83E1E299AE3AA00FAE989 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
@@ -386,9 +394,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A2B496FD29AA91020017A82A /* SwifterSwift */ = {
+		A2B4970529AACC060017A82A /* SwifterSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A2B496FC29AA91020017A82A /* XCRemoteSwiftPackageReference "SwifterSwift" */;
+			package = A2B4970429AACC060017A82A /* XCRemoteSwiftPackageReference "SwifterSwift" */;
 			productName = SwifterSwift;
 		};
 		A2F83E1F299AE3AA00FAE989 /* SnapKit */ = {

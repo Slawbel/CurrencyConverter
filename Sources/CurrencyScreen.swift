@@ -58,26 +58,20 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         guard let url = URL(string: stringUrl) else {
             return
         }
-        var request = URLRequest(url: url,timeoutInterval: Double.infinity)
+        var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.addValue("mUGIIf6VCrvec8zDdJv2EofmA4euGt2z", forHTTPHeaderField: "apikey")
         
-        let task = URLSession.shared.dataSync(with: request) {data, response, error in
-            guard let data = data else {
-                print(String(describing: error))
-                return
-            }
-            print(String(data: data, encoding: .utf8)!)
+        guard let data = try? URLSession.shared.dataSync(with: request).0 else {
+            return
         }
-        task.resume()
+        print(String(data: data, encoding: .utf8)!)
         
-        // stopped here
-        guard let currencyName = try? CurData(from: task as! Decoder) else {
+        guard let currencyName = CurData(from: data) else {
             return
         }
         let outputNames = MyTableViewCell()
-        let resultCurrency = CurData(data: task)
-        outputNames.shortName.text = resultCurrency.symbols
-       
+        let resultCurrency = CurData(from: data)
+        outputNames.fullName.text = resultCurrency?.symbols as String
     }
 }
