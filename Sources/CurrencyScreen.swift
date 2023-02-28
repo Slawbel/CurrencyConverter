@@ -6,14 +6,10 @@ import SwifterSwift
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private let tableView = UITableView()
     private let backButton = UIButton()
-    private var symbols = [String]()
+    private var symbols = [(String, String)]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let viewController = UIViewController()
-        viewController.modalPresentationStyle = .fullScreen
-        present(viewController, animated: true, completion: nil)
 
         backButton.backgroundColor = .white
         backButton.setTitleColor(.black, for: .normal)
@@ -41,12 +37,15 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             self?.dismiss(animated: true)
         }, for: .primaryActionTriggered)
 
+        tableView.register(cellWithClass: MyTableViewCell.self)
+        tableView.delegate = self
+        tableView.dataSource = self
         findCur()
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
-        cell?.setup(text: symbols[indexPath.row])
+        cell?.setup(text: symbols[indexPath.row].1)
         return cell!
     }
 
@@ -73,7 +72,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         guard let curData = CurData(from: data) else {
             return
         }
-        symbols = Array(curData.symbols.values)
+        symbols = curData.symbols.map { $0 }
         tableView.reloadData()
     }
 }
