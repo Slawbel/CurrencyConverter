@@ -14,6 +14,7 @@ class MyTableViewCell: UITableViewCell {
         contentView.addSubview(fullName)
         shortName.numberOfLines = 0
         fullName.numberOfLines = 0
+    
 
         shortName.snp.makeConstraints { make in
             make.leading.equalTo(contentView)
@@ -27,10 +28,12 @@ class MyTableViewCell: UITableViewCell {
             make.trailing.equalTo(contentView)
             make.bottom.equalTo(contentView)
         }
-        
-        
     }
 
+    func setup(text: String) {
+        fullName.text = text
+    }
+    
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
