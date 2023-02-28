@@ -73,6 +73,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             return
         }
         symbols = curData.symbols.map { $0 }
+        print(symbols.sort{ $0.1 < $1.1 })
+        
         tableView.reloadData()
     }
 }
