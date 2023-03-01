@@ -21,7 +21,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
         
         backButton.snp.makeConstraints { make in
-            make.top.equalTo(view).inset(650)
+            make.top.equalTo(view).inset(680)
             make.centerX.equalTo(view)
             make.width.equalTo(120)
             make.height.equalTo(50)
