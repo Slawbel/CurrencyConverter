@@ -3,7 +3,7 @@ import UIKit
 
 class ConverterScreen: UIViewController {
     private let inputCurButton = UIButton()
-    private let inputCurLabel = UILabel()
+    let inputCurLabel = UILabel()
     private let inputTF = UITextField()
     private let swapButton = UIButton()
     private let outputCurButton = UIButton()
@@ -11,6 +11,8 @@ class ConverterScreen: UIViewController {
     private let buttonCalc = UIButton()
     private let outputLabel = UILabel()
     private let buttonDiagram = UIButton()
+    
+    public var chosenCur1: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +31,8 @@ class ConverterScreen: UIViewController {
 
         inputCurLabel.textAlignment = .center
         inputCurLabel.backgroundColor = .white
+        inputCurLabel.text = chosenCur1
+        
 
         inputTF.placeholder = NSLocalizedString("writeTheAmount", comment: "")
         inputTF.textAlignment = .center

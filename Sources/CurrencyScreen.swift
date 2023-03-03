@@ -53,7 +53,16 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         symbols.count
     }
 
-    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {}
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCur = symbols[indexPath.row].1
+        let convEx = ConverterScreen()
+        
+        convEx.chosenCur1 = { [weak self] selectedCur in
+            convEx.inputCurLabel.text = selectedCur as! String
+            self?.tableView.reloadData()
+            print(self?.symbols ?? "")
+        }
+    }
     
     private func findCur() {
         let stringUrl = "https://api.apilayer.com/fixer/symbols"
