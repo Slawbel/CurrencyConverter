@@ -7,6 +7,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     private let tableView = UITableView()
     private let backButton = UIButton()
     private var symbols = [(String, String)]()
+    var onCurrencySelected: ((String) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,13 +56,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCur = symbols[indexPath.row].1
-        let convEx = ConverterScreen()
-        
-        convEx.chosenCur1 = { [weak self] selectedCur in
-            convEx.inputCurLabel.text = selectedCur as! String
-            self?.tableView.reloadData()
-            print(self?.symbols ?? "")
-        }
+        onCurrencySelected?(selectedCur)
+        dismiss(animated: true)
     }
     
     private func findCur() {

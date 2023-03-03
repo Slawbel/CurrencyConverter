@@ -3,7 +3,7 @@ import UIKit
 
 class ConverterScreen: UIViewController {
     private let inputCurButton = UIButton()
-    let inputCurLabel = UILabel()
+    private let inputCurLabel = UILabel()
     private let inputTF = UITextField()
     private let swapButton = UIButton()
     private let outputCurButton = UIButton()
@@ -12,7 +12,7 @@ class ConverterScreen: UIViewController {
     private let outputLabel = UILabel()
     private let buttonDiagram = UIButton()
     
-    public var chosenCur1: String!
+    private var chosenCurrency: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +24,10 @@ class ConverterScreen: UIViewController {
         inputCurButton.setTitle(inputCurBut, for: .normal)
         inputCurButton.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
+            currencyScreen.onCurrencySelected = { [weak self] currency in
+                self?.chosenCurrency = currency
+                self?.inputCurLabel.text = currency
+            }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
 
@@ -31,7 +35,6 @@ class ConverterScreen: UIViewController {
 
         inputCurLabel.textAlignment = .center
         inputCurLabel.backgroundColor = .white
-        inputCurLabel.text = chosenCur1
         
 
         inputTF.placeholder = NSLocalizedString("writeTheAmount", comment: "")
