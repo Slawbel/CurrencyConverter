@@ -181,9 +181,8 @@ class ConverterScreen: UIViewController {
             guard let convertResult = ConvertResult(from: data) else {
                 return
             }
-            let processedData = try? JSONSerialization.jsonObject(with: data, options: []) as? [Double: Any]
-            self.outputLabel.text = (String(processedData as? Double ?? 0))
-            print(convertResult.result)
+            let processedData = try? JSONSerialization.jsonObject(with: data, options: []) as? Double
+            self.outputLabel.text = (String(processedData ?? 0))
         }
     }
 }
