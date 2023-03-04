@@ -181,9 +181,8 @@ class ConverterScreen: UIViewController {
             guard let convertResult = ConvertResult(from: data) else {
                 return
             }
-            let processedData = try? JSONSerialization.jsonObject(with: data, options: []) as? Double
             DispatchQueue.main.async {
-                self.outputLabel.text = (String(processedData ?? 0))
+                self.outputLabel.text = (String(convertResult.result ?? 0))
             }
         }
         task.resume()
