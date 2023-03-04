@@ -7,7 +7,10 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     private let tableView = UITableView()
     private let backButton = UIButton()
     private var symbols = [(String, String)]()
-    var onCurrencySelected: ((String) -> Void)?
+    var onCurrencySelected1: ((String) -> Void)?
+    var onCurrencySelected2: ((String) -> Void)?
+    var onCurrencySelectedShort1: ((String) -> Void)?
+    var onCurrencySelectedShort2: ((String) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,8 +59,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCur = symbols[indexPath.row].1
-        onCurrencySelected?(selectedCur)
-        dismiss(animated: true)
+        let selectedCur2 = symbols[indexPath.row].0
+        onCurrencySelected1?(selectedCur)
+        onCurrencySelected2?(selectedCur)
+        onCurrencySelectedShort1?(selectedCur2)
+        onCurrencySelectedShort2?(selectedCur2)
     }
     
     private func findCur() {
