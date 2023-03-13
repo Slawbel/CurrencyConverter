@@ -11,6 +11,11 @@ class ConverterScreen: UIViewController {
     private let buttonCalc = UIButton()
     private let outputLabel = UILabel()
     private let buttonDiagram = UIButton()
+    private var result: String?
+    
+    private var chosenCurrency: String!
+    private var chosenCurShortName1: String!
+    private var chosenCurShortName2: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +27,13 @@ class ConverterScreen: UIViewController {
         inputCurButton.setTitle(inputCurBut, for: .normal)
         inputCurButton.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
+            currencyScreen.onCurrencySelected1 = { [weak self] currency in
+                self?.chosenCurrency = currency
+                self?.inputCurLabel.text = currency
+            }
+            currencyScreen.onCurrencySelectedShort1 = { [weak self] shortName in
+                self?.chosenCurShortName1 = shortName
+            }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
 
@@ -29,6 +41,7 @@ class ConverterScreen: UIViewController {
 
         inputCurLabel.textAlignment = .center
         inputCurLabel.backgroundColor = .white
+        
 
         inputTF.placeholder = NSLocalizedString("writeTheAmount", comment: "")
         inputTF.textAlignment = .center
@@ -50,12 +63,24 @@ class ConverterScreen: UIViewController {
         outputCurButton.setTitle(outputCurBut, for: .normal)
         outputCurButton.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
+            currencyScreen.onCurrencySelected2 = { [weak self] currency in
+                self?.chosenCurrency = currency
+                self?.outputCurLabel.text = currency
+            }
+            currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
+                self?.chosenCurShortName2 = shortName
+            }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
 
         outputCurLabel.textAlignment = .center
         outputCurLabel.backgroundColor = .white
+        
+        buttonCalc.setTitleColor(.black, for: .normal)
+        buttonCalc.addAction( .init {[unowned self] _ in
+            convert()
+        },for: .primaryActionTriggered)
 
         outputLabel.textAlignment = .center
         outputLabel.backgroundColor = .white
@@ -137,5 +162,29 @@ class ConverterScreen: UIViewController {
             make.width.equalTo(120)
             make.height.equalTo(50)
         }
+    }
+    
+    func convert() {
+        let string = "https://api.apilayer.com/fixer/convert?to=" + (chosenCurShortName2 ?? "") + "&from=" + (chosenCurShortName1 ?? "") + "&amount=" + (inputTF.text ?? "0")
+        guard let url = URL(string: string) else {
+            return
+        }
+        var request = URLRequest(url:url)
+        request.httpMethod = "GET"
+        request.addValue("mUGIIf6VCrvec8zDdJv2EofmA4euGt2z", forHTTPHeaderField: "apikey")
+        //let data = Date()
+        let task = URLSession.shared.dataTask(with: request) { data, response, error  in
+            guard let data = data else {
+                return
+            }
+            print(String(data: data, encoding: .utf8)!)
+            guard let convertResult = ConvertResult(from: data) else {
+                return
+            }
+            DispatchQueue.main.async {
+                self.outputLabel.text = (String(convertResult.result ?? 0))
+            }
+        }
+        task.resume()
     }
 }

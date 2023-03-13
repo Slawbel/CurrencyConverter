@@ -7,6 +7,10 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     private let tableView = UITableView()
     private let backButton = UIButton()
     private var symbols = [(String, String)]()
+    var onCurrencySelected1: ((String) -> Void)?
+    var onCurrencySelected2: ((String) -> Void)?
+    var onCurrencySelectedShort1: ((String) -> Void)?
+    var onCurrencySelectedShort2: ((String) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +57,14 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         symbols.count
     }
 
-    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {}
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCur = symbols[indexPath.row].1
+        let selectedCur2 = symbols[indexPath.row].0
+        onCurrencySelected1?(selectedCur)
+        onCurrencySelected2?(selectedCur)
+        onCurrencySelectedShort1?(selectedCur2)
+        onCurrencySelectedShort2?(selectedCur2)
+    }
     
     private func findCur() {
         let stringUrl = "https://api.apilayer.com/fixer/symbols"
