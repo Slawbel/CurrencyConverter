@@ -2,7 +2,6 @@ import SnapKit
 import UIKit
 import SwifterSwift
 
-
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private let tableView = UITableView()
     private let backButton = UIButton()
