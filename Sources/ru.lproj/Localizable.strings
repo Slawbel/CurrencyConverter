@@ -1,7 +1,8 @@
 "writeTheAmount" = "Сумма для конвертации";
 "swap" = "Поменять";
-"convert" = "Конвертировать";
 "transfer" = "Перенести";
-"inputCurBut" = "Валюта для продажи";
-"outputCurBut" = "Валюта для покупки";
+"inputCurBut" = "Продажа";
+"outputCurBut" = "Покупка";
 "buttonBack" = "Выбрать";
+"date" = "Дата";
+

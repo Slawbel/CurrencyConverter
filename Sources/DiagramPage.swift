@@ -3,18 +3,20 @@ import SnapKit
 import SwifterSwift
 
 class DiagramPage: UIViewController {
-    private let label1 = UILabel(frame: .init(x: 10, y: 10, width: 400, height: 50))
-    private let label2 = UILabel(frame: .init(x: 10, y: 70, width: 400, height: 50))
-    private let label3 = UILabel(frame: .init(x: 10, y: 130, width: 400, height: 50))
-    private let label4 = UILabel(frame: .init(x: 10, y: 190, width: 400, height: 50))
-    private let label5 = UILabel(frame: .init(x: 10, y: 250, width: 400, height: 50))
+    private let label1 = UILabel(frame: .init(x: 10, y: 30, width: 400, height: 50))
+    private let label2 = UILabel(frame: .init(x: 10, y: 100, width: 400, height: 50))
+    private let label3 = UILabel(frame: .init(x: 10, y: 160, width: 400, height: 50))
+    private let label4 = UILabel(frame: .init(x: 10, y: 220, width: 400, height: 50))
+    private let label5 = UILabel(frame: .init(x: 10, y: 280, width: 400, height: 50))
     private let dateTextView = UITextView(frame: .init(x: 10, y: 300, width: 300, height: 50))
+    private var rates = [(String, Double)]()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .darkGray
+        label1.backgroundColor = .red
         
         view.addSubview(label1)
         view.addSubview(label2)
@@ -42,5 +44,14 @@ class DiagramPage: UIViewController {
             return
         }
         print(String(data: data, encoding: .utf8)!)
+        
+        guard let rateData = RateData(from: data) else {
+            return
+        }
+        
+        rates = rateData.rates.map { $0 }
+        label1.text = rates.map {$1} as? String
+        
+        
     }
 }

@@ -18,6 +18,7 @@
 		A2B4970629AACC060017A82A /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A2B4970529AACC060017A82A /* SwifterSwift */; };
 		A2B4970829B2B31D0017A82A /* ConvertResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B4970729B2B31D0017A82A /* ConvertResult.swift */; };
 		A2F83E20299AE3AA00FAE989 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A2F83E1F299AE3AA00FAE989 /* SnapKit */; };
+		A2FEBA5529C11BB7006363DB /* RateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FEBA5429C11BB7006363DB /* RateData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellForCurrencyScreen.swift; sourceTree = "<group>"; };
 		A2B496FA29A802A20017A82A /* CurData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurData.swift; sourceTree = "<group>"; };
 		A2B4970729B2B31D0017A82A /* ConvertResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertResult.swift; sourceTree = "<group>"; };
+		A2FEBA5429C11BB7006363DB /* RateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				9E25D2D129998CA700293AB7 /* Media.xcassets */,
 				A2B4970729B2B31D0017A82A /* ConvertResult.swift */,
 				9E25D2D229998CA700293AB7 /* ConverterScreen.swift */,
+				A2FEBA5429C11BB7006363DB /* RateData.swift */,
 				A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */,
 				A2B496FA29A802A20017A82A /* CurData.swift */,
 				A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */,
@@ -175,6 +178,7 @@
 				9E25D2DE29998CA700293AB7 /* DiagramPage.swift in Sources */,
 				A2B4970829B2B31D0017A82A /* ConvertResult.swift in Sources */,
 				A2B496F729A2C5200017A82A /* TableViewCellForCurrencyScreen.swift in Sources */,
+				A2FEBA5529C11BB7006363DB /* RateData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
