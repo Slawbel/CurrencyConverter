@@ -5,14 +5,19 @@ class ConverterScreen: UIViewController {
     private let inputCurButton = UIButton()
     private let inputCurLabel = UILabel()
     private let inputTF = UITextField()
-    private let swapButton = UIButton()
+    
     private let outputCurButton = UIButton()
     private let outputCurLabel = UILabel()
-    private let buttonCalc = UIButton()
     private let outputLabel = UILabel()
-    private let buttonDiagram = UIButton()
-    private var result: String?
     
+    private let rateLabel = UILabel()
+    private let dateButton = UIButton()
+    private let dateLabel = UILabel()
+    
+    private let swapButton = UIButton()
+    private let buttonDiagram = UIButton()
+    
+    private var result: String?
     private var chosenCurrency: String!
     private var chosenCurShortName1: String!
     private var chosenCurShortName2: String!
@@ -21,7 +26,7 @@ class ConverterScreen: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .init(named: "mainBackgroundColor")
 
-        inputCurButton.backgroundColor = .white
+        inputCurButton.backgroundColor = .darkGray
         inputCurButton.setTitleColor(.black, for: .normal)
         let inputCurBut = NSLocalizedString("inputCurBut", comment: "")
         inputCurButton.setTitle(inputCurBut, for: .normal)
@@ -29,10 +34,11 @@ class ConverterScreen: UIViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelected1 = { [weak self] currency in
                 self?.chosenCurrency = currency
-                self?.inputCurLabel.text = currency
+                
             }
             currencyScreen.onCurrencySelectedShort1 = { [weak self] shortName in
                 self?.chosenCurShortName1 = shortName
+                self?.inputCurLabel.text = shortName
             }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
@@ -42,22 +48,11 @@ class ConverterScreen: UIViewController {
         inputCurLabel.textAlignment = .center
         inputCurLabel.backgroundColor = .white
         
-
         inputTF.placeholder = NSLocalizedString("writeTheAmount", comment: "")
         inputTF.textAlignment = .center
         inputTF.backgroundColor = .white
 
-        swapButton.backgroundColor = .white
-        swapButton.setTitleColor(.black, for: .normal)
-        let swap = NSLocalizedString("swap", comment: "")
-        swapButton.setTitle(swap, for: .normal)
-
-        buttonCalc.backgroundColor = .white
-        buttonCalc.setTitleColor(.black, for: .normal)
-        let calc = NSLocalizedString("convert", comment: "")
-        buttonCalc.setTitle(calc, for: .normal)
-
-        outputCurButton.backgroundColor = .white
+        outputCurButton.backgroundColor = .darkGray
         outputCurButton.setTitleColor(.black, for: .normal)
         let outputCurBut = NSLocalizedString("outputCurBut", comment: "")
         outputCurButton.setTitle(outputCurBut, for: .normal)
@@ -69,6 +64,7 @@ class ConverterScreen: UIViewController {
             }
             currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
                 self?.chosenCurShortName2 = shortName
+                self?.outputCurLabel.text = shortName
             }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
@@ -76,16 +72,29 @@ class ConverterScreen: UIViewController {
 
         outputCurLabel.textAlignment = .center
         outputCurLabel.backgroundColor = .white
-        
-        buttonCalc.setTitleColor(.black, for: .normal)
-        buttonCalc.addAction( .init {[unowned self] _ in
-            convert()
-        },for: .primaryActionTriggered)
 
         outputLabel.textAlignment = .center
         outputLabel.backgroundColor = .white
+        
+        rateLabel.textAlignment = .center
+        rateLabel.backgroundColor = .white
 
-        buttonDiagram.backgroundColor = .white
+        
+        dateButton.backgroundColor = .darkGray
+        dateButton.setTitleColor(.black, for: .normal)
+        let dateBut = NSLocalizedString("date", comment: "")
+        dateButton.setTitle(dateBut, for: .normal)
+        
+        dateLabel.textAlignment = .center
+        dateLabel.backgroundColor = .white
+        
+
+        swapButton.backgroundColor = .darkGray
+        swapButton.setTitleColor(.black, for: .normal)
+        let swap = NSLocalizedString("swap", comment: "")
+        swapButton.setTitle(swap, for: .normal)
+        
+        buttonDiagram.backgroundColor = .darkGray
         buttonDiagram.setTitleColor(.black, for: .normal)
         let buttonDiagramText = NSLocalizedString("transfer", comment: "")
         buttonDiagram.setTitle(buttonDiagramText, for: .normal)
@@ -98,69 +107,90 @@ class ConverterScreen: UIViewController {
         view.addSubview(inputCurButton)
         view.addSubview(inputCurLabel)
         view.addSubview(inputTF)
-        view.addSubview(swapButton)
         view.addSubview(outputCurButton)
         view.addSubview(outputCurLabel)
-        view.addSubview(buttonCalc)
         view.addSubview(outputLabel)
+        view.addSubview(rateLabel)
+        view.addSubview(dateButton)
+        view.addSubview(dateLabel)
+        view.addSubview(swapButton)
         view.addSubview(buttonDiagram)
 
         inputCurButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view).inset(70)
-            make.top.equalTo(view).inset(80)
-            make.height.equalTo(50)
+            make.width.equalTo(80)
+            make.top.equalTo(view).inset(40)
+            make.height.equalTo(80)
         }
 
         inputCurLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view).inset(70)
-            make.top.equalTo(view).inset(140)
-            make.height.equalTo(40)
+            make.leading.equalTo(view).inset(85)
+            make.width.equalTo(80)
+            make.top.equalTo(view).inset(40)
+            make.height.equalTo(80)
         }
 
         inputTF.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view).inset(70)
-            make.top.equalTo(view).inset(190)
-            make.height.equalTo(50)
-            make.centerX.equalTo(view)
-        }
-
-        swapButton.snp.makeConstraints { make in
-            make.top.equalTo(view).inset(260)
-            make.centerX.equalTo(view)
-            make.width.equalTo(120)
-            make.height.equalTo(50)
+            make.leading.equalTo(view).inset(170)
+            make.top.equalTo(view).inset(40)
+            make.height.equalTo(80)
+            make.trailing.equalTo(view).inset(0)
         }
 
         outputCurButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view).inset(70)
-            make.top.equalTo(view).inset(340)
-            make.height.equalTo(50)
+            make.width.equalTo(80)
+            make.top.equalTo(view).inset(125)
+            make.height.equalTo(80)
         }
 
         outputCurLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view).inset(70)
-            make.top.equalTo(view).inset(400)
-            make.height.equalTo(40)
-        }
-
-        buttonCalc.snp.makeConstraints { make in
-            make.top.equalTo(view).inset(460)
-            make.centerX.equalTo(view)
-            make.width.equalTo(120)
-            make.height.equalTo(50)
+            make.leading.equalTo(view).inset(85)
+            make.width.equalTo(80)
+            make.top.equalTo(view).inset(125)
+            make.height.equalTo(80)
         }
 
         outputLabel.snp.makeConstraints { make in
-            make.top.equalTo(view).inset(530)
-            make.leading.trailing.equalTo(view).inset(70)
-            make.height.equalTo(40)
+            make.leading.equalTo(view).inset(170)
+            make.top.equalTo(view).inset(125)
+            make.height.equalTo(80)
+            make.trailing.equalTo(view).inset(0)
+        }
+        
+        rateLabel.snp.makeConstraints{ make in
+            make.width.equalTo(165)
+            make.top.equalTo(view).inset(210)
+            make.height.equalTo(80)
+            make.leading.equalTo(view).inset(0)
+        }
+        
+        dateButton.snp.makeConstraints{ make in
+            make.width.equalTo(80)
+            make.top.equalTo(view).inset(210)
+            make.height.equalTo(80)
+            make.leading.equalTo(view).inset(170)
+        }
+        
+        dateLabel.snp.makeConstraints{make in
+            make.leading.equalTo(view).inset(255)
+            make.top.equalTo(view).inset(210)
+            make.height.equalTo(80)
+            make.trailing.equalTo(view).inset(0)
+            
+        }
+
+        
+        swapButton.snp.makeConstraints { make in
+            make.width.equalTo(200)
+            make.top.equalTo(view).inset(295)
+            make.height.equalTo(80)
+            make.leading.equalTo(view).inset(0)
         }
 
         buttonDiagram.snp.makeConstraints { make in
-            make.top.equalTo(view).inset(600)
-            make.centerX.equalTo(view)
-            make.width.equalTo(120)
-            make.height.equalTo(50)
+            make.leading.equalTo(view).inset(205)
+            make.top.equalTo(view).inset(295)
+            make.height.equalTo(80)
+            make.trailing.equalTo(view).inset(0)
         }
     }
     
