@@ -123,8 +123,8 @@ class ConverterScreen: UIViewController {
         }
 
         inputCurLabel.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(85)
-            make.width.equalTo(80)
+            make.leading.equalTo(view).inset(80)
+            make.width.equalTo(85)
             make.top.equalTo(view).inset(40)
             make.height.equalTo(80)
         }
@@ -143,8 +143,8 @@ class ConverterScreen: UIViewController {
         }
 
         outputCurLabel.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(85)
-            make.width.equalTo(80)
+            make.leading.equalTo(view).inset(80)
+            make.width.equalTo(85)
             make.top.equalTo(view).inset(125)
             make.height.equalTo(80)
         }
@@ -171,7 +171,7 @@ class ConverterScreen: UIViewController {
         }
         
         dateLabel.snp.makeConstraints{make in
-            make.leading.equalTo(view).inset(255)
+            make.leading.equalTo(view).inset(250)
             make.top.equalTo(view).inset(210)
             make.height.equalTo(80)
             make.trailing.equalTo(view).inset(0)
