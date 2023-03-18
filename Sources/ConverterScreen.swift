@@ -12,6 +12,7 @@ class ConverterScreen: UIViewController {
     
     private let rateLabel = UILabel()
     private let dateButton = UIButton()
+    private let datePicker = UIDatePicker()
     private let dateLabel = UILabel()
     
     private let swapButton = UIButton()
@@ -85,6 +86,7 @@ class ConverterScreen: UIViewController {
         let dateBut = NSLocalizedString("date", comment: "")
         dateButton.setTitle(dateBut, for: .normal)
         
+        
         dateLabel.textAlignment = .center
         dateLabel.backgroundColor = .white
         
@@ -103,6 +105,11 @@ class ConverterScreen: UIViewController {
             diagramPage.modalPresentationStyle = .fullScreen
             self.present(diagramPage, animated: true)
         }, for: .primaryActionTriggered)
+        
+        datePicker.timeZone = NSTimeZone.local
+        datePicker.backgroundColor = UIColor.white
+        //datePicker.addTarget(self, action: (ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
+        datePickerValueChanged(datePicker)
 
         view.addSubview(inputCurButton)
         view.addSubview(inputCurLabel)
@@ -115,6 +122,7 @@ class ConverterScreen: UIViewController {
         view.addSubview(dateLabel)
         view.addSubview(swapButton)
         view.addSubview(buttonDiagram)
+        view.addSubview(datePicker)
 
         inputCurButton.snp.makeConstraints { make in
             make.width.equalTo(80)
@@ -175,10 +183,8 @@ class ConverterScreen: UIViewController {
             make.top.equalTo(view).inset(210)
             make.height.equalTo(80)
             make.trailing.equalTo(view).inset(0)
-            
         }
 
-        
         swapButton.snp.makeConstraints { make in
             make.width.equalTo(200)
             make.top.equalTo(view).inset(295)
@@ -191,6 +197,13 @@ class ConverterScreen: UIViewController {
             make.top.equalTo(view).inset(295)
             make.height.equalTo(80)
             make.trailing.equalTo(view).inset(0)
+        }
+        
+        datePicker.snp.makeConstraints { make in
+            make.centerX.equalTo(view)
+            make.width.equalTo(self.view.frame.width)
+            make.height.equalTo(50)
+            make.top.equalTo(view).inset(400)
         }
     }
     
@@ -216,5 +229,17 @@ class ConverterScreen: UIViewController {
             }
         }
         task.resume()
+    }
+    
+    func datePickerValueChanged(_ sender: UIDatePicker) {
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        let selectedDate: String = dateFormatter.string(from: sender.date)
+        dateLabel.text = selectedDate
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+            
     }
 }
