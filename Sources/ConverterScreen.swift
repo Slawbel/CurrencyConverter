@@ -49,6 +49,7 @@ class ConverterScreen: UIViewController {
         inputTF.placeholder = NSLocalizedString("writeTheAmount", comment: "")
         inputTF.textAlignment = .center
         inputTF.backgroundColor = .white
+        inputTF.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
 
         outputCurButton.backgroundColor = .darkGray
         outputCurButton.setTitleColor(.black, for: .normal)
@@ -73,6 +74,7 @@ class ConverterScreen: UIViewController {
 
         outputLabel.textAlignment = .center
         outputLabel.backgroundColor = .white
+        convert()
         
         datePicker.timeZone = NSTimeZone.local
         datePicker.backgroundColor = UIColor.white
@@ -198,5 +200,9 @@ class ConverterScreen: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
             
+    }
+    
+    @objc func textFieldDidChange () {
+        convert()
     }
 }
