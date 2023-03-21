@@ -1,7 +1,7 @@
 import SnapKit
 import UIKit
 
-class ConverterScreen: UIViewController {
+class ConverterScreen: UIViewController, UITextFieldDelegate {
     private let inputCurButton = UIButton()
     private let inputCurLabel = UILabel()
     private let inputTF = UITextField()
@@ -49,7 +49,7 @@ class ConverterScreen: UIViewController {
         inputTF.placeholder = NSLocalizedString("writeTheAmount", comment: "")
         inputTF.textAlignment = .center
         inputTF.backgroundColor = .white
-        inputTF.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        
 
         outputCurButton.backgroundColor = .darkGray
         outputCurButton.setTitleColor(.black, for: .normal)
@@ -191,18 +191,24 @@ class ConverterScreen: UIViewController {
         task.resume()
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        inputTF.delegate = self
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        updateLabel(textField: textField)
+    }
+    
+    func updateLabel(textField: UITextField) {
+        guard let text = textField.text else { return }
+        outputLabel.text = text
+        convert()
+    }
+    
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
         let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
         let _: String = dateFormatter.string(from: sender.date)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-            
-    }
-    
-    @objc func textFieldDidChange () {
-        convert()
     }
 }
