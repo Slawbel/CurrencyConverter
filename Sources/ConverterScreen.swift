@@ -10,9 +10,7 @@ class ConverterScreen: UIViewController {
     private let outputCurLabel = UILabel()
     private let outputLabel = UILabel()
     
-    private let rateLabel = UILabel()
-    private let dateButton = UIButton()
-    private let dateLabel = UILabel()
+    private let datePicker = UIDatePicker()
     
     private let swapButton = UIButton()
     private let buttonDiagram = UIButton()
@@ -76,19 +74,11 @@ class ConverterScreen: UIViewController {
         outputLabel.textAlignment = .center
         outputLabel.backgroundColor = .white
         
-        rateLabel.textAlignment = .center
-        rateLabel.backgroundColor = .white
-
-        
-        dateButton.backgroundColor = .darkGray
-        dateButton.setTitleColor(.black, for: .normal)
-        let dateBut = NSLocalizedString("date", comment: "")
-        dateButton.setTitle(dateBut, for: .normal)
-        
-        dateLabel.textAlignment = .center
-        dateLabel.backgroundColor = .white
-        
-
+        datePicker.timeZone = NSTimeZone.local
+        datePicker.backgroundColor = UIColor.white
+        datePicker.datePickerMode = .date
+        datePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
+    
         swapButton.backgroundColor = .darkGray
         swapButton.setTitleColor(.black, for: .normal)
         let swap = NSLocalizedString("swap", comment: "")
@@ -110,11 +100,9 @@ class ConverterScreen: UIViewController {
         view.addSubview(outputCurButton)
         view.addSubview(outputCurLabel)
         view.addSubview(outputLabel)
-        view.addSubview(rateLabel)
-        view.addSubview(dateButton)
-        view.addSubview(dateLabel)
         view.addSubview(swapButton)
         view.addSubview(buttonDiagram)
+        view.addSubview(datePicker)
 
         inputCurButton.snp.makeConstraints { make in
             make.width.equalTo(80)
@@ -123,8 +111,8 @@ class ConverterScreen: UIViewController {
         }
 
         inputCurLabel.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(85)
-            make.width.equalTo(80)
+            make.leading.equalTo(view).inset(80)
+            make.width.equalTo(85)
             make.top.equalTo(view).inset(40)
             make.height.equalTo(80)
         }
@@ -143,8 +131,8 @@ class ConverterScreen: UIViewController {
         }
 
         outputCurLabel.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(85)
-            make.width.equalTo(80)
+            make.leading.equalTo(view).inset(80)
+            make.width.equalTo(85)
             make.top.equalTo(view).inset(125)
             make.height.equalTo(80)
         }
@@ -156,39 +144,22 @@ class ConverterScreen: UIViewController {
             make.trailing.equalTo(view).inset(0)
         }
         
-        rateLabel.snp.makeConstraints{ make in
-            make.width.equalTo(165)
+        datePicker.snp.makeConstraints { make in
+            make.width.equalTo(self.view.frame.width)
+            make.height.equalTo(50)
             make.top.equalTo(view).inset(210)
-            make.height.equalTo(80)
-            make.leading.equalTo(view).inset(0)
-        }
-        
-        dateButton.snp.makeConstraints{ make in
-            make.width.equalTo(80)
-            make.top.equalTo(view).inset(210)
-            make.height.equalTo(80)
-            make.leading.equalTo(view).inset(170)
-        }
-        
-        dateLabel.snp.makeConstraints{make in
-            make.leading.equalTo(view).inset(255)
-            make.top.equalTo(view).inset(210)
-            make.height.equalTo(80)
-            make.trailing.equalTo(view).inset(0)
-            
         }
 
-        
         swapButton.snp.makeConstraints { make in
             make.width.equalTo(200)
-            make.top.equalTo(view).inset(295)
+            make.top.equalTo(view).inset(265)
             make.height.equalTo(80)
             make.leading.equalTo(view).inset(0)
         }
 
         buttonDiagram.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(205)
-            make.top.equalTo(view).inset(295)
+            make.top.equalTo(view).inset(265)
             make.height.equalTo(80)
             make.trailing.equalTo(view).inset(0)
         }
@@ -216,5 +187,16 @@ class ConverterScreen: UIViewController {
             }
         }
         task.resume()
+    }
+    
+    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        let _: String = dateFormatter.string(from: sender.date)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+            
     }
 }
