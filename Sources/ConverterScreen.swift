@@ -1,7 +1,7 @@
 import SnapKit
 import UIKit
 
-class ConverterScreen: UIViewController, UITextFieldDelegate {
+class ConverterScreen: UIViewController {
     private let inputCurButton = UIButton()
     private let inputCurLabel = UILabel()
     private let inputTF = UITextField()
@@ -49,7 +49,7 @@ class ConverterScreen: UIViewController, UITextFieldDelegate {
         inputTF.placeholder = NSLocalizedString("writeTheAmount", comment: "")
         inputTF.textAlignment = .center
         inputTF.backgroundColor = .white
-        
+        inputTF.addTarget(self, action: #selector(ConverterScreen.onTextFieldTextChanged(textField:)), for: .editingChanged)
 
         outputCurButton.backgroundColor = .darkGray
         outputCurButton.setTitleColor(.black, for: .normal)
@@ -74,7 +74,6 @@ class ConverterScreen: UIViewController, UITextFieldDelegate {
 
         outputLabel.textAlignment = .center
         outputLabel.backgroundColor = .white
-        convert()
         
         datePicker.timeZone = NSTimeZone.local
         datePicker.backgroundColor = UIColor.white
@@ -176,7 +175,7 @@ class ConverterScreen: UIViewController, UITextFieldDelegate {
         request.httpMethod = "GET"
         request.addValue("mUGIIf6VCrvec8zDdJv2EofmA4euGt2z", forHTTPHeaderField: "apikey")
         //let data = Date()
-        let task = URLSession.shared.dataTask(with: request) { data, response, error  in
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error  in
             guard let data = data else {
                 return
             }
@@ -185,24 +184,18 @@ class ConverterScreen: UIViewController, UITextFieldDelegate {
                 return
             }
             DispatchQueue.main.async {
-                self.outputLabel.text = (String(convertResult.result ?? 0))
+                self?.outputLabel.text = (String(convertResult.result ?? 0))
             }
         }
         task.resume()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        inputTF.delegate = self
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    @objc func onTextFieldTextChanged(textField: UITextField) {
         updateLabel(textField: textField)
     }
     
     func updateLabel(textField: UITextField) {
         guard let text = textField.text else { return }
-        outputLabel.text = text
         convert()
     }
     
