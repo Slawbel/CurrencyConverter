@@ -166,8 +166,14 @@ class ConverterScreen: UIViewController {
         }
     }
     
+    private var currentDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: datePicker.date)
+    }
+    
     func convert() {
-        let string = "https://api.apilayer.com/fixer/convert?to=" + (chosenCurShortName2 ?? "") + "&from=" + (chosenCurShortName1 ?? "") + "&amount=" + (inputTF.text ?? "0")
+        let string = "https://api.apilayer.com/fixer/convert?to=" + (chosenCurShortName2 ?? "") + "&from=" + (chosenCurShortName1 ?? "") + "&amount=" + (inputTF.text ?? "0") + "&date=" + currentDate
         guard let url = URL(string: string) else {
             return
         }
@@ -195,13 +201,10 @@ class ConverterScreen: UIViewController {
     }
     
     func updateLabel(textField: UITextField) {
-        guard let text = textField.text else { return }
         convert()
     }
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
-        let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        let _: String = dateFormatter.string(from: sender.date)
+        convert()
     }
 }
