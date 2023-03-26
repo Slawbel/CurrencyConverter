@@ -6,12 +6,6 @@ class DiagramPage: UIViewController {
     private let labelChooseTime = UILabel()
     private let startDatePicker = UIDatePicker()
     private let endDatePicker = UIDatePicker()
-    private let convertButton = UIButton()
-    private let label1 = UILabel()
-    private let label2 = UILabel()
-    private let label3 = UILabel()
-    private let label4 = UILabel()
-    private let label5 = UILabel()
     private var rates = [(String, Double)]()
     
     
@@ -34,19 +28,11 @@ class DiagramPage: UIViewController {
         endDatePicker.datePickerMode = .date
         endDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
         
-        convertButton.backgroundColor = .green
-        convertButton.setTitleColor(.black, for: .normal)
-        let convert = NSLocalizedString("convert", comment: "")
-        convertButton.setTitle(convert, for: .normal)
-        convertButton.addAction( .init {[unowned self] _ in
-            curHistory()
-        }, for: .primaryActionTriggered)
         
         
         view.addSubview(labelChooseTime)
         view.addSubview(startDatePicker)
         view.addSubview(endDatePicker)
-        view.addSubview(convertButton)
        
         
         labelChooseTime.snp.makeConstraints { make in
@@ -69,14 +55,6 @@ class DiagramPage: UIViewController {
             make.top.equalTo(view).inset(150)
         }
         
-        
-        
-        convertButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view).inset(50)
-            make.top.equalTo(view).inset(210)
-            make.height.equalTo(50)
-        }
-        
 
     }
     
@@ -93,12 +71,13 @@ class DiagramPage: UIViewController {
     }
     
     func curHistory() {
+        print("Nothing")
         let currencyScr = ConverterScreen()
-        guard (currencyScr.chosenCurShortName1 != nil) || (currencyScr.chosenCurShortName2 != nil) else {
+        guard (currencyScr.chosenCurShortName1 != nil) && (currencyScr.chosenCurShortName2 != nil) else {
             return
         }
         
-        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=\(startChosenDates)&end_date=\(endChosenDates)" + "to=" + (currencyScr.chosenCurShortName2) + "&from=" + (currencyScr.chosenCurShortName1)
+        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&to=" + (currencyScr.chosenCurShortName2) + "&from=" + (currencyScr.chosenCurShortName1)
         guard let url = URL(string: stringUrl) else {
             return
         }
@@ -115,7 +94,9 @@ class DiagramPage: UIViewController {
             return
         }
         
-        rates = rateData.rates.map { $0 }
+        print(rateData)
+        
+        //rates = rateData.rates.map { $0 }
         
         //label.text = rates.map {$1} as? String
     }
