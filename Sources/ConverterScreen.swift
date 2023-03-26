@@ -17,8 +17,8 @@ class ConverterScreen: UIViewController {
     
     private var result: String?
     private var chosenCurrency: String!
-    private var chosenCurShortName1: String!
-    private var chosenCurShortName2: String!
+    var chosenCurShortName1: String!
+    var chosenCurShortName2: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()

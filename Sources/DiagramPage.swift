@@ -3,12 +3,15 @@ import SnapKit
 import SwifterSwift
 
 class DiagramPage: UIViewController {
-    private let label1 = UILabel(frame: .init(x: 10, y: 30, width: 400, height: 50))
-    private let label2 = UILabel(frame: .init(x: 10, y: 100, width: 400, height: 50))
-    private let label3 = UILabel(frame: .init(x: 10, y: 160, width: 400, height: 50))
-    private let label4 = UILabel(frame: .init(x: 10, y: 220, width: 400, height: 50))
-    private let label5 = UILabel(frame: .init(x: 10, y: 280, width: 400, height: 50))
-    private let dateTextView = UITextView(frame: .init(x: 10, y: 300, width: 300, height: 50))
+    private let labelChooseTime = UILabel()
+    private let startDatePicker = UIDatePicker()
+    private let endDatePicker = UIDatePicker()
+    private let convertButton = UIButton()
+    private let label1 = UILabel()
+    private let label2 = UILabel()
+    private let label3 = UILabel()
+    private let label4 = UILabel()
+    private let label5 = UILabel()
     private var rates = [(String, Double)]()
     
     
@@ -16,23 +19,86 @@ class DiagramPage: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .darkGray
-        label1.backgroundColor = .red
         
-        view.addSubview(label1)
-        view.addSubview(label2)
-        view.addSubview(label3)
-        view.addSubview(label4)
-        view.addSubview(label5)
-        view.addSubview(dateTextView)
+        labelChooseTime.backgroundColor = .white
+        labelChooseTime.textAlignment = .center
+        labelChooseTime.text = NSLocalizedString("chooseStartAndEndDates", comment: "")
+        
+        startDatePicker.timeZone = NSTimeZone.local
+        startDatePicker.backgroundColor = UIColor.white
+        startDatePicker.datePickerMode = .date
+        startDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
+        
+        endDatePicker.timeZone = NSTimeZone.local
+        endDatePicker.backgroundColor = UIColor.white
+        endDatePicker.datePickerMode = .date
+        endDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
+        
+        convertButton.backgroundColor = .green
+        convertButton.setTitleColor(.black, for: .normal)
+        let convert = NSLocalizedString("convert", comment: "")
+        convertButton.setTitle(convert, for: .normal)
+        convertButton.addAction( .init {[unowned self] _ in
+            curHistory()
+        }, for: .primaryActionTriggered)
+        
+        
+        view.addSubview(labelChooseTime)
+        view.addSubview(startDatePicker)
+        view.addSubview(endDatePicker)
+        view.addSubview(convertButton)
+       
+        
+        labelChooseTime.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(view).inset(50)
+            make.top.equalTo(view).inset(80)
+            make.height.equalTo(50)
+        }
+        
+        startDatePicker.snp.makeConstraints { make in
+            make.leading.equalTo(view).inset(50)
+            make.width.equalTo(130)
+            make.height.equalTo(50)
+            make.top.equalTo(view).inset(150)
+        }
+        
+        endDatePicker.snp.makeConstraints { make in
+            make.trailing.equalTo(view).inset(50)
+            make.width.equalTo(130)
+            make.height.equalTo(50)
+            make.top.equalTo(view).inset(150)
+        }
+        
+        
+        
+        convertButton.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(view).inset(50)
+            make.top.equalTo(view).inset(210)
+            make.height.equalTo(50)
+        }
+        
+
+    }
+    
+    private var startChosenDates: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: startDatePicker.date)
+    }
+    
+    private var endChosenDates: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: endDatePicker.date)
     }
     
     func curHistory() {
-        let currencyScr = CurrencyScreen()
-        guard (currencyScr.onCurrencySelectedShort1 != nil) || (currencyScr.onCurrencySelectedShort2 != nil) else {
+        let currencyScr = ConverterScreen()
+        guard (currencyScr.chosenCurShortName1 != nil) || (currencyScr.chosenCurShortName2 != nil) else {
             return
         }
         
-        let stringUrl = "https://api.apilayer.com/fixer/\(dateTextView.text)?symbols=\(currencyScr.onCurrencySelectedShort2)&base=\(currencyScr.onCurrencySelectedShort1)"
+        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=\(startChosenDates)&end_date=\(endChosenDates)" + "to=" + (currencyScr.chosenCurShortName2) + "&from=" + (currencyScr.chosenCurShortName1)
         guard let url = URL(string: stringUrl) else {
             return
         }
@@ -50,8 +116,11 @@ class DiagramPage: UIViewController {
         }
         
         rates = rateData.rates.map { $0 }
-        label1.text = rates.map {$1} as? String
         
-        
+        //label.text = rates.map {$1} as? String
     }
+    
+    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
+        curHistory()
+    }    
 }
