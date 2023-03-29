@@ -2,11 +2,17 @@ import UIKit
 import SnapKit
 import SwifterSwift
 
-class DiagramPage: UIViewController {
+class DiagramPage: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private let labelChooseTime = UILabel()
     private let startDatePicker = UIDatePicker()
     private let endDatePicker = UIDatePicker()
+    private let tableView = UITableView()
     private var rates = [(String, Double)]()
+    
+    var short1: String!
+    var short2: String!
+    let rate: [String: Double] = [:]
+    var rateData: Dictionary<String,[String: Double]> = [:]
     
     
     override func viewDidLoad() {
@@ -28,11 +34,14 @@ class DiagramPage: UIViewController {
         endDatePicker.datePickerMode = .date
         endDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
         
-        
+        tableView.register(cellWithClass: MyTableViewCell.self)
+        tableView.delegate = self
+        tableView.dataSource = self
         
         view.addSubview(labelChooseTime)
         view.addSubview(startDatePicker)
         view.addSubview(endDatePicker)
+        view.addSubview(tableView)
        
         
         labelChooseTime.snp.makeConstraints { make in
@@ -55,6 +64,12 @@ class DiagramPage: UIViewController {
             make.top.equalTo(view).inset(150)
         }
         
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(view).inset(220)
+            make.bottom.equalTo(view).inset(50)
+            make.leading.trailing.equalTo(view).inset(50)
+        }
+        
 
     }
     
@@ -71,13 +86,7 @@ class DiagramPage: UIViewController {
     }
     
     func curHistory() {
-        print("Nothing")
-        let currencyScr = ConverterScreen()
-        guard (currencyScr.chosenCurShortName1 != nil) && (currencyScr.chosenCurShortName2 != nil) else {
-            return
-        }
-        
-        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&to=" + (currencyScr.chosenCurShortName2) + "&from=" + (currencyScr.chosenCurShortName1)
+        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + (short2) + "&base=" + (short1)
         guard let url = URL(string: stringUrl) else {
             return
         }
@@ -90,16 +99,36 @@ class DiagramPage: UIViewController {
         }
         print(String(data: data, encoding: .utf8)!)
         
-        guard let rateData = RateData(from: data) else {
+        if rateData = RateData(from: data) {
+            for _ in 0...rateData.rates.count-1 {
+                self.rates = rateData.rates.map { $1 }
+            }
+        } else {
             return
         }
         
-        print(rateData)
         
-        //rates = rateData.rates.map { $0 }
         
+        
+        //rates = rateData.rates.map { $1 }
         //label.text = rates.map {$1} as? String
     }
+    
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell1", for: indexPath) as? MyTableViewCell1
+        cell?.setup(text: rateData[indexPath.row].0 ?? "")
+        return cell!
+    }
+
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        rateData.count
+    }
+
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+    }
+    
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
         curHistory()
