@@ -99,13 +99,13 @@ class DiagramPage: UIViewController, UITableViewDataSource, UITableViewDelegate 
         }
         print(String(data: data, encoding: .utf8)!)
         
-        if rateData = RateData(from: data) {
+        /*if rateData = RateData(from: data) {
             for _ in 0...rateData.rates.count-1 {
                 self.rates = rateData.rates.map { $1 }
             }
         } else {
             return
-        }
+        }*/
         
         
         
@@ -116,7 +116,7 @@ class DiagramPage: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell1", for: indexPath) as? MyTableViewCell1
-        cell?.setup(text: rateData[indexPath.row].0 ?? "")
+        //cell?.setData(dates: rateData[indexPath.row]?.keys ?? "")
         return cell!
     }
 

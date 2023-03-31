@@ -3,7 +3,7 @@ import UIKit
 import Swiftstraints
 
 struct RateAndData {
-    let dateRate: Date
+    let dateRate: String
     let curRate: String
 }
 
@@ -38,10 +38,7 @@ class MyTableViewCell1: UITableViewCell {
     }
     
     func setData(dates: RateAndData) {
-        let date = dates.dateRate
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YY, MM, d"
-        dateLabel.text = dateFormatter.string(from: date)
+        dateLabel.text = dates.dateRate
         curLabel.text = dates.curRate
         
     }
