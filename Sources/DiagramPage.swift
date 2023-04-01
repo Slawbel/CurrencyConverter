@@ -7,13 +7,10 @@ class DiagramPage: UIViewController, UITableViewDataSource, UITableViewDelegate 
     private let startDatePicker = UIDatePicker()
     private let endDatePicker = UIDatePicker()
     private let tableView = UITableView()
-    private var rates = [(String, Double)]()
-    
+
     var short1: String!
     var short2: String!
-    let rate: [String: Double] = [:]
-    var rateData: Dictionary<String,[String: Double]> = [:]
-    
+    private var rateData: RateData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +31,7 @@ class DiagramPage: UIViewController, UITableViewDataSource, UITableViewDelegate 
         endDatePicker.datePickerMode = .date
         endDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
         
-        tableView.register(cellWithClass: MyTableViewCell.self)
+        tableView.register(cellWithClass: MyTableViewCell1.self)
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -98,30 +95,22 @@ class DiagramPage: UIViewController, UITableViewDataSource, UITableViewDelegate 
             return
         }
         print(String(data: data, encoding: .utf8)!)
-        
-        /*if rateData = RateData(from: data) {
-            for _ in 0...rateData.rates.count-1 {
-                self.rates = rateData.rates.map { $1 }
-            }
-        } else {
-            return
-        }*/
-        
-        
-        
-        
-        //rates = rateData.rates.map { $1 }
-        //label.text = rates.map {$1} as? String
+        rateData = RateData(from: data)
+        tableView.reloadData()
     }
     
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell1", for: indexPath) as? MyTableViewCell1
-        //cell?.setData(dates: rateData[indexPath.row]?.keys ?? "")
+        guard let keys = rateData?.rates.keys else {
+            return MyTableViewCell1()
+        }
+        let dateKey = Array(keys)[indexPath.item]
+        cell?.set(date: dateKey)
         return cell!
     }
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        rateData.count
+        rateData?.rates.count ?? 0
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
