@@ -31,7 +31,7 @@ class DiagramPage: UIViewController, UITableViewDataSource, UITableViewDelegate 
         endDatePicker.datePickerMode = .date
         endDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
         
-        tableView.register(cellWithClass: MyTableViewCell1.self)
+        tableView.register(cellWithClass: RatesHistoryList.self)
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -100,12 +100,18 @@ class DiagramPage: UIViewController, UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell1", for: indexPath) as? MyTableViewCell1
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RatesHistoryList", for: indexPath) as? RatesHistoryList
         guard let keys = rateData?.rates.keys else {
-            return MyTableViewCell1()
+            return RatesHistoryList()
         }
         let dateKey = Array(keys)[indexPath.item]
         cell?.set(date: dateKey)
+        
+        
+        let dataValues = rateData!.rates[Array(keys)[indexPath.item]]
+        let rateValues: Double!  = dataValues![short2]
+        cell?.setRate(rateValue: String(rateValues))
+        
         return cell!
     }
 

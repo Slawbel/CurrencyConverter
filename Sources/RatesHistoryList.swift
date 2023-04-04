@@ -7,29 +7,29 @@ struct RateAndData {
     let curRate: String
 }
 
-class MyTableViewCell1: UITableViewCell {
+class RatesHistoryList: UITableViewCell {
     private let dateLabel = UILabel(frame: .zero)
-    private let curLabel = UILabel(frame: .zero)
+    private let rateLabel = UILabel(frame: .zero)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         dateLabel.textAlignment = .center
-        curLabel.textAlignment = .center
+        rateLabel.textAlignment = .center
         contentView.addSubview(dateLabel)
-        contentView.addSubview(curLabel)
+        contentView.addSubview(rateLabel)
         dateLabel.numberOfLines = 0
-        curLabel.numberOfLines = 0
+        rateLabel.numberOfLines = 0
         
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         let labelLeadingConstraint: NSLayoutConstraint = dateLabel.leadingAnchor == contentView.leadingAnchor
         let labelTrailingConstraint: NSLayoutConstraint = dateLabel.trailingAnchor == contentView.trailingAnchor
         let labelTopConstraint: NSLayoutConstraint = dateLabel.topAnchor == contentView.topAnchor
-        let labelBottomConstraint: NSLayoutConstraint = curLabel.topAnchor == dateLabel.bottomAnchor
+        let labelBottomConstraint: NSLayoutConstraint = rateLabel.topAnchor == dateLabel.bottomAnchor
         
-        curLabel.translatesAutoresizingMaskIntoConstraints = false
-        let curLabelLeadingConstraint: NSLayoutConstraint = curLabel.leadingAnchor == contentView.leadingAnchor
-        let curLabelTrailingConstraint: NSLayoutConstraint = curLabel.trailingAnchor == contentView.trailingAnchor
-        let curLabelBottomConstraint: NSLayoutConstraint = curLabel.bottomAnchor == contentView.bottomAnchor
+        rateLabel.translatesAutoresizingMaskIntoConstraints = false
+        let curLabelLeadingConstraint: NSLayoutConstraint = rateLabel.leadingAnchor == contentView.leadingAnchor
+        let curLabelTrailingConstraint: NSLayoutConstraint = rateLabel.trailingAnchor == contentView.trailingAnchor
+        let curLabelBottomConstraint: NSLayoutConstraint = rateLabel.bottomAnchor == contentView.bottomAnchor
         
         NSLayoutConstraint.activate([labelTopConstraint, labelBottomConstraint, labelLeadingConstraint, labelTrailingConstraint])
         NSLayoutConstraint.activate([curLabelLeadingConstraint, curLabelTrailingConstraint, curLabelBottomConstraint])
@@ -39,12 +39,16 @@ class MyTableViewCell1: UITableViewCell {
     
     func setData(dates: RateAndData) {
         dateLabel.text = dates.dateRate
-        curLabel.text = dates.curRate
+        rateLabel.text = dates.curRate
         
     }
     
     func set(date: String) {
         dateLabel.text = date
+    }
+    
+    func setRate(rateValue: String!) {
+        rateLabel.text = rateValue
     }
     
     required init? (coder: NSCoder) {
