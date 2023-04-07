@@ -13,8 +13,8 @@ class RatesHistoryList: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        dateLabel.textAlignment = .center
-        rateLabel.textAlignment = .center
+        dateLabel.textAlignment = .left
+        rateLabel.textAlignment = .right
         contentView.addSubview(dateLabel)
         contentView.addSubview(rateLabel)
         dateLabel.numberOfLines = 0
