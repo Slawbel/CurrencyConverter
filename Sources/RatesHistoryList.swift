@@ -14,7 +14,7 @@ class RatesHistoryList: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         dateLabel.textAlignment = .left
-        rateLabel.textAlignment = .right
+        rateLabel.textAlignment = .left
         contentView.addSubview(dateLabel)
         contentView.addSubview(rateLabel)
         dateLabel.numberOfLines = 0
@@ -22,17 +22,17 @@ class RatesHistoryList: UITableViewCell {
         
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         let labelLeadingConstraint: NSLayoutConstraint = dateLabel.leadingAnchor == contentView.leadingAnchor
-        let labelTrailingConstraint: NSLayoutConstraint = dateLabel.trailingAnchor == contentView.trailingAnchor
         let labelTopConstraint: NSLayoutConstraint = dateLabel.topAnchor == contentView.topAnchor
-        let labelBottomConstraint: NSLayoutConstraint = rateLabel.topAnchor == dateLabel.bottomAnchor
+        let labelBottomConstraint: NSLayoutConstraint = dateLabel.bottomAnchor == contentView.bottomAnchor
         
         rateLabel.translatesAutoresizingMaskIntoConstraints = false
-        let curLabelLeadingConstraint: NSLayoutConstraint = rateLabel.leadingAnchor == contentView.leadingAnchor
+        let curLabelTopConstraint: NSLayoutConstraint = rateLabel.topAnchor == contentView.topAnchor
+        let curLabelLeadingConstraint: NSLayoutConstraint = rateLabel.leadingAnchor == contentView.centerXAnchor
         let curLabelTrailingConstraint: NSLayoutConstraint = rateLabel.trailingAnchor == contentView.trailingAnchor
         let curLabelBottomConstraint: NSLayoutConstraint = rateLabel.bottomAnchor == contentView.bottomAnchor
         
-        NSLayoutConstraint.activate([labelTopConstraint, labelBottomConstraint, labelLeadingConstraint, labelTrailingConstraint])
-        NSLayoutConstraint.activate([curLabelLeadingConstraint, curLabelTrailingConstraint, curLabelBottomConstraint])
+        NSLayoutConstraint.activate([labelTopConstraint, labelBottomConstraint, labelLeadingConstraint])
+        NSLayoutConstraint.activate([curLabelTopConstraint, curLabelTrailingConstraint, curLabelBottomConstraint, curLabelLeadingConstraint])
         
         
     }

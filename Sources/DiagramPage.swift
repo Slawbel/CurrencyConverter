@@ -48,15 +48,15 @@ class DiagramPage: UIViewController, UITableViewDataSource, UITableViewDelegate 
         }
         
         startDatePicker.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(50)
-            make.width.equalTo(130)
+            make.leading.equalTo(view).inset(80)
+            make.width.equalTo(75)
             make.height.equalTo(50)
             make.top.equalTo(view).inset(150)
         }
         
         endDatePicker.snp.makeConstraints { make in
-            make.trailing.equalTo(view).inset(50)
-            make.width.equalTo(130)
+            make.trailing.equalTo(view).inset(80)
+            make.width.equalTo(75)
             make.height.equalTo(50)
             make.top.equalTo(view).inset(150)
         }
