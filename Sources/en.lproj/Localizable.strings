@@ -5,4 +5,6 @@
 "outputCurBut" = "Buy";
 "buttonBack" = "Select";
 "date" = "Date";
+"chooseStartAndEndDates" = "Choose start and end dates";
+"convert" = "Convert";
 

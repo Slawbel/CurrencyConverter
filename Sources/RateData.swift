@@ -1,6 +1,6 @@
 import Foundation
 
 struct RateData: Codable {
-    let rates: Dictionary<String,Double>
+    let rates: Dictionary<String,[String: Double]>
 }
     

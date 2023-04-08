@@ -17,6 +17,15 @@
         "branch" : "master",
         "revision" : "086e88b7ac7feb0da602392666d01424639b71a1"
       }
+    },
+    {
+      "identity" : "swiftstraints",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Skyvive/Swiftstraints",
+      "state" : {
+        "revision" : "f889574286c2acc7a39be9b3ec1162eb6f225148",
+        "version" : "5.2.0"
+      }
     }
   ],
   "version" : 2

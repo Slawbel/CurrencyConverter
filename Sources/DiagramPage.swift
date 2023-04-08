@@ -2,37 +2,88 @@ import UIKit
 import SnapKit
 import SwifterSwift
 
-class DiagramPage: UIViewController {
-    private let label1 = UILabel(frame: .init(x: 10, y: 30, width: 400, height: 50))
-    private let label2 = UILabel(frame: .init(x: 10, y: 100, width: 400, height: 50))
-    private let label3 = UILabel(frame: .init(x: 10, y: 160, width: 400, height: 50))
-    private let label4 = UILabel(frame: .init(x: 10, y: 220, width: 400, height: 50))
-    private let label5 = UILabel(frame: .init(x: 10, y: 280, width: 400, height: 50))
-    private let dateTextView = UITextView(frame: .init(x: 10, y: 300, width: 300, height: 50))
-    private var rates = [(String, Double)]()
-    
+class DiagramPage: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    private let labelChooseTime = UILabel()
+    private let startDatePicker = UIDatePicker()
+    private let endDatePicker = UIDatePicker()
+    private let tableView = UITableView()
+
+    var short1: String!
+    var short2: String!
+    private var rateData: RateData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .darkGray
-        label1.backgroundColor = .red
         
-        view.addSubview(label1)
-        view.addSubview(label2)
-        view.addSubview(label3)
-        view.addSubview(label4)
-        view.addSubview(label5)
-        view.addSubview(dateTextView)
+        labelChooseTime.backgroundColor = .white
+        labelChooseTime.textAlignment = .center
+        labelChooseTime.text = NSLocalizedString("chooseStartAndEndDates", comment: "")
+        
+        startDatePicker.timeZone = NSTimeZone.local
+        startDatePicker.backgroundColor = UIColor.white
+        startDatePicker.datePickerMode = .date
+        startDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
+        
+        endDatePicker.timeZone = NSTimeZone.local
+        endDatePicker.backgroundColor = UIColor.white
+        endDatePicker.datePickerMode = .date
+        endDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
+        
+        tableView.register(cellWithClass: RatesHistoryList.self)
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        view.addSubview(labelChooseTime)
+        view.addSubview(startDatePicker)
+        view.addSubview(endDatePicker)
+        view.addSubview(tableView)
+       
+        
+        labelChooseTime.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(view).inset(50)
+            make.top.equalTo(view).inset(80)
+            make.height.equalTo(50)
+        }
+        
+        startDatePicker.snp.makeConstraints { make in
+            make.leading.equalTo(view).inset(80)
+            make.width.equalTo(75)
+            make.height.equalTo(50)
+            make.top.equalTo(view).inset(150)
+        }
+        
+        endDatePicker.snp.makeConstraints { make in
+            make.trailing.equalTo(view).inset(80)
+            make.width.equalTo(75)
+            make.height.equalTo(50)
+            make.top.equalTo(view).inset(150)
+        }
+        
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(view).inset(220)
+            make.bottom.equalTo(view).inset(50)
+            make.leading.trailing.equalTo(view).inset(50)
+        }
+        
+
+    }
+    
+    private var startChosenDates: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: startDatePicker.date)
+    }
+    
+    private var endChosenDates: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: endDatePicker.date)
     }
     
     func curHistory() {
-        let currencyScr = CurrencyScreen()
-        guard (currencyScr.onCurrencySelectedShort1 != nil) || (currencyScr.onCurrencySelectedShort2 != nil) else {
-            return
-        }
-        
-        let stringUrl = "https://api.apilayer.com/fixer/\(dateTextView.text)?symbols=\(currencyScr.onCurrencySelectedShort2)&base=\(currencyScr.onCurrencySelectedShort1)"
+        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + (short2) + "&base=" + (short1)
         guard let url = URL(string: stringUrl) else {
             return
         }
@@ -44,14 +95,37 @@ class DiagramPage: UIViewController {
             return
         }
         print(String(data: data, encoding: .utf8)!)
-        
-        guard let rateData = RateData(from: data) else {
-            return
+        rateData = RateData(from: data)
+        tableView.reloadData()
+    }
+    
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RatesHistoryList", for: indexPath) as? RatesHistoryList
+        guard let keys = rateData?.rates.keys else {
+            return RatesHistoryList()
         }
+        let dateKey = Array(keys)[indexPath.item]
+        cell?.set(date: dateKey)
         
-        rates = rateData.rates.map { $0 }
-        label1.text = rates.map {$1} as? String
+        
+        let dataValues = rateData!.rates[Array(keys)[indexPath.item]]
+        let rateValues: Double!  = dataValues![short2]
+        cell?.setRate(rateValue: String(rateValues))
+        
+        return cell!
+    }
+
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        rateData?.rates.count ?? 0
+    }
+
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
     }
+    
+    
+    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
+        curHistory()
+    }    
 }

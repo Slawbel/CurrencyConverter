@@ -5,4 +5,6 @@
 "outputCurBut" = "Покупка";
 "buttonBack" = "Выбрать";
 "date" = "Дата";
+"chooseStartAndEndDates" = "Выберите дату начала и конца";
+"convert" = "Конвертировать";
 

@@ -1,6 +1,8 @@
 import SnapKit
 import UIKit
 
+
+
 class ConverterScreen: UIViewController {
     private let inputCurButton = UIButton()
     private let inputCurLabel = UILabel()
@@ -30,10 +32,6 @@ class ConverterScreen: UIViewController {
         inputCurButton.setTitle(inputCurBut, for: .normal)
         inputCurButton.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
-            currencyScreen.onCurrencySelected1 = { [weak self] currency in
-                self?.chosenCurrency = currency
-                
-            }
             currencyScreen.onCurrencySelectedShort1 = { [weak self] shortName in
                 self?.chosenCurShortName1 = shortName
                 self?.inputCurLabel.text = shortName
@@ -57,10 +55,6 @@ class ConverterScreen: UIViewController {
         outputCurButton.setTitle(outputCurBut, for: .normal)
         outputCurButton.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
-            currencyScreen.onCurrencySelected2 = { [weak self] currency in
-                self?.chosenCurrency = currency
-                self?.outputCurLabel.text = currency
-            }
             currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
                 self?.chosenCurShortName2 = shortName
                 self?.outputCurLabel.text = shortName
@@ -91,6 +85,8 @@ class ConverterScreen: UIViewController {
         buttonDiagram.setTitle(buttonDiagramText, for: .normal)
         buttonDiagram.addAction(UIAction { [unowned self] _ in
             let diagramPage = DiagramPage()
+            diagramPage.short1 = self.chosenCurShortName1
+            diagramPage.short2 = self.chosenCurShortName2
             diagramPage.modalPresentationStyle = .fullScreen
             self.present(diagramPage, animated: true)
         }, for: .primaryActionTriggered)
