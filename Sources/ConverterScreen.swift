@@ -19,8 +19,8 @@ class ConverterScreen: UIViewController {
     
     private var result: String?
     private var chosenCurrency: String!
-    var chosenCurShortName1: String!
-    var chosenCurShortName2: String!
+    private var chosenCurShortName1: String!
+    private var chosenCurShortName2: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,12 +83,12 @@ class ConverterScreen: UIViewController {
         buttonDiagram.setTitleColor(.black, for: .normal)
         let buttonDiagramText = NSLocalizedString("transfer", comment: "")
         buttonDiagram.setTitle(buttonDiagramText, for: .normal)
-        buttonDiagram.addAction(UIAction { [weak self] _ in
+        buttonDiagram.addAction(UIAction { [unowned self] _ in
             let diagramPage = DiagramPage()
-            diagramPage.short1 = self?.chosenCurShortName1
-            diagramPage.short2 = self?.chosenCurShortName2
+            diagramPage.short1 = self.chosenCurShortName1
+            diagramPage.short2 = self.chosenCurShortName2
             diagramPage.modalPresentationStyle = .fullScreen
-            self?.present(diagramPage, animated: true)
+            self.present(diagramPage, animated: true)
         }, for: .primaryActionTriggered)
 
         view.addSubview(inputCurButton)
