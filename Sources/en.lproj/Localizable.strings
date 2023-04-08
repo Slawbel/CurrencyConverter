@@ -1,10 +1,11 @@
 "writeTheAmount" = "The amount for convertation";
 "swap" = "Swap ";
-"transfer" = "Transfer";
+"transfer" = "Rate history";
 "inputCurBut" = "Sale";
 "outputCurBut" = "Buy";
 "buttonBack" = "Select";
 "date" = "Date";
 "chooseStartAndEndDates" = "Choose start and end dates";
 "convert" = "Convert";
+"diagramPage" = "Diagram";
 
