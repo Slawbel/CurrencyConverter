@@ -8,4 +8,8 @@
 "chooseStartAndEndDates" = "Выберите дату начала и конца";
 "convert" = "Конвертировать";
 "diagramPage" = "Диаграмма";
-
+"butChosenCurBase" = "Валюта для продажи";
+"labelChooseCur" = "Выберите валюты для конвертации";
+"butChosenCur1" = "Валюта #1 для покупки";
+"butChosenCur2" = "Валюта #2 для покупки";
+"butChosenCur3" = "Валюта #3 для покупки";
