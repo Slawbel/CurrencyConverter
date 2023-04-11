@@ -8,8 +8,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     private var symbols = [(String, String)]()
     var onCurrencySelected1: ((String) -> Void)?
     var onCurrencySelected2: ((String) -> Void)?
+    var onCurrencySelected3: ((String) -> Void)?
+    var onCurrencySelected4: ((String) -> Void)?
     var onCurrencySelectedShort1: ((String) -> Void)?
     var onCurrencySelectedShort2: ((String) -> Void)?
+    var onCurrencySelectedShort3: ((String) -> Void)?
+    var onCurrencySelectedShort4: ((String) -> Void)?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,8 +66,12 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         let selectedCur2 = symbols[indexPath.row].0
         onCurrencySelected1?(selectedCur)
         onCurrencySelected2?(selectedCur)
+        onCurrencySelected3?(selectedCur)
+        onCurrencySelected4?(selectedCur)
         onCurrencySelectedShort1?(selectedCur2)
         onCurrencySelectedShort2?(selectedCur2)
+        onCurrencySelectedShort3?(selectedCur2)
+        onCurrencySelectedShort4?(selectedCur2)
     }
     
     private func findCur() {

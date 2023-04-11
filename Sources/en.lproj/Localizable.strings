@@ -13,3 +13,5 @@
 "butChosenCur1" = "Currency #1 (purchase)";
 "butChosenCur2" = "Currency #2 (purchase)";
 "butChosenCur3" = "Currency #3 (purchase)";
+"butResult" = "Compare";
+"butBack" = "Back";
