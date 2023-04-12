@@ -42,12 +42,12 @@ class DiagramPage: UIViewController {
         startDatePicker.timeZone = NSTimeZone.local
         startDatePicker.backgroundColor = UIColor.white
         startDatePicker.datePickerMode = .date
-        startDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
+        //startDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
         
         endDatePicker.timeZone = NSTimeZone.local
         endDatePicker.backgroundColor = UIColor.white
         endDatePicker.datePickerMode = .date
-        endDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
+        //endDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
         
         buttonChosenCurBase.backgroundColor = .darkGray
         buttonChosenCurBase.setTitleColor(.white, for: .normal)
@@ -135,6 +135,7 @@ class DiagramPage: UIViewController {
         buttonResult.setTitle(butResult, for: .normal)
         buttonResult.addAction(UIAction { [weak self] _ in
             let diagramResultPage = DiagramResult()
+            self?.curHistory()
             diagramResultPage.modalPresentationStyle = .fullScreen
             self?.present(diagramResultPage, animated: true)
         }, for: .primaryActionTriggered)
@@ -203,35 +204,35 @@ class DiagramPage: UIViewController {
         buttonChosenCur2.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(0)
             make.width.equalTo(200)
-            make.top.equalTo(view).inset(270)
+            make.top.equalTo(view).inset(330)
             make.height.equalTo(60)
         }
         
         labelChosenCur2.snp.makeConstraints{ make in
             make.trailing.equalTo(view).inset(0)
             make.leading.equalTo(view).inset(205)
-            make.top.equalTo(view).inset(270)
+            make.top.equalTo(view).inset(330)
             make.height.equalTo(60)
         }
         
         buttonChosenCur3.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(0)
             make.width.equalTo(200)
-            make.top.equalTo(view).inset(340)
+            make.top.equalTo(view).inset(400)
             make.height.equalTo(60)
         }
         
         labelChosenCur3.snp.makeConstraints{ make in
             make.trailing.equalTo(view).inset(0)
             make.leading.equalTo(view).inset(205)
-            make.top.equalTo(view).inset(340)
+            make.top.equalTo(view).inset(400)
             make.height.equalTo(60)
         }
         
         buttonResult.snp.makeConstraints{ make in
             make.trailing.leading.equalTo(view).inset(0)
             make.height.equalTo(60)
-            make.top.equalTo(view).inset(440)
+            make.top.equalTo(view).inset(480)
         }
     }
     
@@ -248,7 +249,7 @@ class DiagramPage: UIViewController {
     }
     
     func curHistory() {
-        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + (chosenCurShortName1) + "&symbols=" + (chosenCurShortName2) + "&symbols=" + (chosenCurShortName3) + "&base=" + (chosenCurShortNameBase)
+        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + (chosenCurShortName1, chosenCurShortName2, chosenCurShortName3) + "&base=" + (chosenCurShortNameBase)
         guard let url = URL(string: stringUrl) else {
             return
         }
@@ -262,6 +263,10 @@ class DiagramPage: UIViewController {
         print(String(data: data, encoding: .utf8)!)
         rateData = RateData(from: data)
     }
+    
+    /*@objc func datePickerValueChanged(_ sender: UIDatePicker) {
+        curHistory()
+    }*/
 }
 
 
