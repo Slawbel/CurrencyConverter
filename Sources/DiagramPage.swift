@@ -29,6 +29,11 @@ class DiagramPage: UIViewController {
     var chosenCurShortName2: String!
     var chosenCurShortName3: String!
     
+    var dataKey: [String] = []
+    var rateValues1: [Double] = []
+    let rateValues2: [Double] = []
+    let rateValues3: [Double] = []
+    
     private var rateData: RateData?
     
     override func viewDidLoad() {
@@ -249,7 +254,8 @@ class DiagramPage: UIViewController {
     }
     
     func curHistory() {
-        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + (chosenCurShortName1, chosenCurShortName2, chosenCurShortName3) + "&base=" + (chosenCurShortNameBase)
+        let symbols = chosenCurShortName1 + "," + chosenCurShortName2 + "," + chosenCurShortName3
+        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + symbols + "&base=" + (chosenCurShortNameBase)
         guard let url = URL(string: stringUrl) else {
             return
         }
@@ -262,11 +268,17 @@ class DiagramPage: UIViewController {
         }
         print(String(data: data, encoding: .utf8)!)
         rateData = RateData(from: data)
+        
+        guard let keys = rateData?.rates.keys else {
+            return
+        }
+        dataKey = Array(keys).sorted()
+        print(dataKey)
+        
+        let dataValues1 = rateData!.rates[dataKey]
+        //rateValues1  = dataValues1![chosenCurShortName1]
     }
     
-    /*@objc func datePickerValueChanged(_ sender: UIDatePicker) {
-        curHistory()
-    }*/
 }
 
 
