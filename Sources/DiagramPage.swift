@@ -275,7 +275,8 @@ class DiagramPage: UIViewController {
         dataKey = Array(keys).sorted()
         print(dataKey)
         
-        let dataValues1 = rateData!.rates[dataKey]
+        let dataValues1 = rateData!.rates[path: dataKey]
+        print(dataValues1)
         //rateValues1  = dataValues1![chosenCurShortName1]
     }
     
