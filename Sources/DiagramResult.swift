@@ -10,6 +10,8 @@ class DiagramResult: UIViewController, ChartViewDelegate {
     }()
     private let buttonBack = UIButton()
     
+    private let example = [ChartDataEntry(x: 1, y: 2), ChartDataEntry(x: 2, y: 4), ChartDataEntry(x: 3, y: 9)]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .init(named: "mainBackgroundColor")
@@ -20,6 +22,8 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         buttonBack.setTitleColor(.white, for: .normal)
         let butBack = NSLocalizedString("butBack", comment: "")
         buttonBack.setTitle(butBack, for: .normal)
+        
+        setData()
         
         view.addSubview(lineChartView)
         view.addSubview(buttonBack)
@@ -40,6 +44,12 @@ class DiagramResult: UIViewController, ChartViewDelegate {
     
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         print(entry)
+    }
+    
+    func setData() {
+        let set1 = LineChartDataSet(entries: example, label: "Result")
+        let data = LineChartData(dataSet: set1)
+        lineChartView.data = data
     }
     
 }

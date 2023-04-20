@@ -254,8 +254,8 @@ class DiagramPage: UIViewController {
     }
     
     func curHistory() {
-        let symbols = chosenCurShortName1 + "," + chosenCurShortName2 + "," + chosenCurShortName3
-        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + symbols + "&base=" + (chosenCurShortNameBase)
+        
+        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + (chosenCurShortName1) + "&base=" + (chosenCurShortNameBase)
         guard let url = URL(string: stringUrl) else {
             return
         }
@@ -275,8 +275,10 @@ class DiagramPage: UIViewController {
         dataKey = Array(keys).sorted()
         print(dataKey)
         
-        let dataValues1 = rateData!.rates[Array(keys)]
-        print(dataValues1)
+        //let dataValues1 = rateData!.rates[dataKey]
+        //print(dataValues1)
+        
+        
         //rateValues1  = dataValues1![chosenCurShortName1]
     }
     
