@@ -1,10 +1,17 @@
 "writeTheAmount" = "The amount for convertation";
 "swap" = "Swap ";
-"transfer" = "Transfer";
+"transfer" = "Rate history";
 "inputCurBut" = "Sale";
 "outputCurBut" = "Buy";
 "buttonBack" = "Select";
 "date" = "Date";
-"chooseStartAndEndDates" = "Choose start and end dates";
+"chooseStartAndEndDates" = "Select start and end dates";
 "convert" = "Convert";
-
+"diagramPage" = "Diagram";
+"butChosenCurBase" = "Currency for sale";
+"labelChooseCur" = "Select currencies for conversion";
+"butChosenCur1" = "Currency #1 (purchase)";
+"butChosenCur2" = "Currency #2 (purchase)";
+"butChosenCur3" = "Currency #3 (purchase)";
+"butResult" = "Compare";
+"butBack" = "Back";

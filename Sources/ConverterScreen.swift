@@ -15,19 +15,20 @@ class ConverterScreen: UIViewController {
     private let datePicker = UIDatePicker()
     
     private let swapButton = UIButton()
-    private let buttonDiagram = UIButton()
+    private let buttonRateHistory = UIButton()
+    private let buttonDiagramPage = UIButton()
     
     private var result: String?
     private var chosenCurrency: String!
-    private var chosenCurShortName1: String!
-    private var chosenCurShortName2: String!
+    var chosenCurShortName1: String!
+    var chosenCurShortName2: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .init(named: "mainBackgroundColor")
 
         inputCurButton.backgroundColor = .darkGray
-        inputCurButton.setTitleColor(.black, for: .normal)
+        inputCurButton.setTitleColor(.white, for: .normal)
         let inputCurBut = NSLocalizedString("inputCurBut", comment: "")
         inputCurButton.setTitle(inputCurBut, for: .normal)
         inputCurButton.addAction(UIAction { [unowned self] _ in
@@ -50,7 +51,7 @@ class ConverterScreen: UIViewController {
         inputTF.addTarget(self, action: #selector(ConverterScreen.onTextFieldTextChanged(textField:)), for: .editingChanged)
 
         outputCurButton.backgroundColor = .darkGray
-        outputCurButton.setTitleColor(.black, for: .normal)
+        outputCurButton.setTitleColor(.white, for: .normal)
         let outputCurBut = NSLocalizedString("outputCurBut", comment: "")
         outputCurButton.setTitle(outputCurBut, for: .normal)
         outputCurButton.addAction(UIAction { [unowned self] _ in
@@ -75,20 +76,30 @@ class ConverterScreen: UIViewController {
         datePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
     
         swapButton.backgroundColor = .darkGray
-        swapButton.setTitleColor(.black, for: .normal)
+        swapButton.setTitleColor(.white, for: .normal)
         let swap = NSLocalizedString("swap", comment: "")
         swapButton.setTitle(swap, for: .normal)
         
-        buttonDiagram.backgroundColor = .darkGray
-        buttonDiagram.setTitleColor(.black, for: .normal)
-        let buttonDiagramText = NSLocalizedString("transfer", comment: "")
-        buttonDiagram.setTitle(buttonDiagramText, for: .normal)
-        buttonDiagram.addAction(UIAction { [unowned self] _ in
+        buttonRateHistory.backgroundColor = .darkGray
+        buttonRateHistory.setTitleColor(.white, for: .normal)
+        let butRateHistory = NSLocalizedString("transfer", comment: "")
+        buttonRateHistory.setTitle(butRateHistory, for: .normal)
+        buttonRateHistory.addAction(UIAction { [weak self] _ in
+            let rateHistoryPage = RateHistoryPage()
+            rateHistoryPage.short1 = self?.chosenCurShortName1
+            rateHistoryPage.short2 = self?.chosenCurShortName2
+            rateHistoryPage.modalPresentationStyle = .fullScreen
+            self?.present(rateHistoryPage, animated: true)
+        }, for: .primaryActionTriggered)
+        
+        buttonDiagramPage.backgroundColor = .darkGray
+        buttonDiagramPage.setTitleColor(.white, for: .normal)
+        let butDiagramPage = NSLocalizedString("diagramPage", comment: "")
+        buttonDiagramPage.setTitle(butDiagramPage, for: .normal)
+        buttonDiagramPage.addAction(UIAction { [weak self] _ in
             let diagramPage = DiagramPage()
-            diagramPage.short1 = self.chosenCurShortName1
-            diagramPage.short2 = self.chosenCurShortName2
             diagramPage.modalPresentationStyle = .fullScreen
-            self.present(diagramPage, animated: true)
+            self?.present(diagramPage, animated: true)
         }, for: .primaryActionTriggered)
 
         view.addSubview(inputCurButton)
@@ -98,8 +109,9 @@ class ConverterScreen: UIViewController {
         view.addSubview(outputCurLabel)
         view.addSubview(outputLabel)
         view.addSubview(swapButton)
-        view.addSubview(buttonDiagram)
+        view.addSubview(buttonRateHistory)
         view.addSubview(datePicker)
+        view.addSubview(buttonDiagramPage)
 
         inputCurButton.snp.makeConstraints { make in
             make.width.equalTo(80)
@@ -154,9 +166,16 @@ class ConverterScreen: UIViewController {
             make.leading.equalTo(view).inset(0)
         }
 
-        buttonDiagram.snp.makeConstraints { make in
+        buttonRateHistory.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(205)
             make.top.equalTo(view).inset(265)
+            make.height.equalTo(80)
+            make.trailing.equalTo(view).inset(0)
+        }
+        
+        buttonDiagramPage.snp.makeConstraints{ make in
+            make.leading.equalTo(view).inset(205)
+            make.top.equalTo(view).inset(350)
             make.height.equalTo(80)
             make.trailing.equalTo(view).inset(0)
         }

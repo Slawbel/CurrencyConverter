@@ -10,13 +10,16 @@
 		9E25D2DA29998CA700293AB7 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E25D2D129998CA700293AB7 /* Media.xcassets */; };
 		9E25D2DB29998CA700293AB7 /* ConverterScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D229998CA700293AB7 /* ConverterScreen.swift */; };
 		9E25D2DC29998CA700293AB7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9E25D2D329998CA700293AB7 /* Localizable.strings */; };
-		9E25D2DE29998CA700293AB7 /* DiagramPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D629998CA700293AB7 /* DiagramPage.swift */; };
+		9E25D2DE29998CA700293AB7 /* RateHistoryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D629998CA700293AB7 /* RateHistoryPage.swift */; };
 		9E25D2DF29998CA700293AB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D829998CA700293AB7 /* AppDelegate.swift */; };
 		A2B496F5299FBDD00017A82A /* CurrencyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */; };
 		A2B496F729A2C5200017A82A /* TableViewCellForCurrencyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */; };
 		A2B496FB29A802A30017A82A /* CurData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496FA29A802A20017A82A /* CurData.swift */; };
 		A2B4970629AACC060017A82A /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A2B4970529AACC060017A82A /* SwifterSwift */; };
 		A2B4970829B2B31D0017A82A /* ConvertResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B4970729B2B31D0017A82A /* ConvertResult.swift */; };
+		A2C48E9329E09FD8004A5594 /* DiagramPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C48E9229E09FD8004A5594 /* DiagramPage.swift */; };
+		A2C48EAD29E47990004A5594 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = A2C48EAC29E47990004A5594 /* Charts */; };
+		A2C48EAF29E5C412004A5594 /* DiagramResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C48EAE29E5C412004A5594 /* DiagramResult.swift */; };
 		A2F83E20299AE3AA00FAE989 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A2F83E1F299AE3AA00FAE989 /* SnapKit */; };
 		A2FEBA5529C11BB7006363DB /* RateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FEBA5429C11BB7006363DB /* RateData.swift */; };
 		A2FEBA7729D4EE5F006363DB /* RatesHistoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FEBA7629D4EE5F006363DB /* RatesHistoryList.swift */; };
@@ -28,7 +31,7 @@
 		9E25D2D129998CA700293AB7 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		9E25D2D229998CA700293AB7 /* ConverterScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConverterScreen.swift; sourceTree = "<group>"; };
 		9E25D2D429998CA700293AB7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		9E25D2D629998CA700293AB7 /* DiagramPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiagramPage.swift; sourceTree = "<group>"; };
+		9E25D2D629998CA700293AB7 /* RateHistoryPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateHistoryPage.swift; sourceTree = "<group>"; };
 		9E25D2D729998CA700293AB7 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9E25D2D829998CA700293AB7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E25D2D929998CA700293AB7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -36,6 +39,8 @@
 		A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellForCurrencyScreen.swift; sourceTree = "<group>"; };
 		A2B496FA29A802A20017A82A /* CurData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurData.swift; sourceTree = "<group>"; };
 		A2B4970729B2B31D0017A82A /* ConvertResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertResult.swift; sourceTree = "<group>"; };
+		A2C48E9229E09FD8004A5594 /* DiagramPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramPage.swift; sourceTree = "<group>"; };
+		A2C48EAE29E5C412004A5594 /* DiagramResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramResult.swift; sourceTree = "<group>"; };
 		A2FEBA5429C11BB7006363DB /* RateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateData.swift; sourceTree = "<group>"; };
 		A2FEBA7629D4EE5F006363DB /* RatesHistoryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatesHistoryList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -48,6 +53,7 @@
 				A2F83E20299AE3AA00FAE989 /* SnapKit in Frameworks */,
 				A2B4970629AACC060017A82A /* SwifterSwift in Frameworks */,
 				A2FEBA7A29D4EF99006363DB /* Swiftstraints in Frameworks */,
+				A2C48EAD29E47990004A5594 /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,12 +83,14 @@
 				9E25D2D129998CA700293AB7 /* Media.xcassets */,
 				A2B4970729B2B31D0017A82A /* ConvertResult.swift */,
 				9E25D2D229998CA700293AB7 /* ConverterScreen.swift */,
+				A2C48E9229E09FD8004A5594 /* DiagramPage.swift */,
+				A2C48EAE29E5C412004A5594 /* DiagramResult.swift */,
 				A2FEBA5429C11BB7006363DB /* RateData.swift */,
 				A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */,
 				A2B496FA29A802A20017A82A /* CurData.swift */,
 				A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */,
 				9E25D2D329998CA700293AB7 /* Localizable.strings */,
-				9E25D2D629998CA700293AB7 /* DiagramPage.swift */,
+				9E25D2D629998CA700293AB7 /* RateHistoryPage.swift */,
 				A2FEBA7629D4EE5F006363DB /* RatesHistoryList.swift */,
 				9E25D2D829998CA700293AB7 /* AppDelegate.swift */,
 				9E25D2D929998CA700293AB7 /* Info.plist */,
@@ -117,6 +125,7 @@
 				A2F83E1F299AE3AA00FAE989 /* SnapKit */,
 				A2B4970529AACC060017A82A /* SwifterSwift */,
 				A2FEBA7929D4EF99006363DB /* Swiftstraints */,
+				A2C48EAC29E47990004A5594 /* Charts */,
 			);
 			productName = CurrencyConverter;
 			productReference = 9E25D2B729998C2B00293AB7 /* CurrencyConverter.app */;
@@ -151,6 +160,7 @@
 				A2F83E1E299AE3AA00FAE989 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				A2B4970429AACC060017A82A /* XCRemoteSwiftPackageReference "SwifterSwift" */,
 				A2FEBA7829D4EF99006363DB /* XCRemoteSwiftPackageReference "Swiftstraints" */,
+				A2C48EAB29E47990004A5594 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 9E25D2B829998C2B00293AB7 /* Products */;
 			projectDirPath = "";
@@ -178,11 +188,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2C48EAF29E5C412004A5594 /* DiagramResult.swift in Sources */,
 				9E25D2DF29998CA700293AB7 /* AppDelegate.swift in Sources */,
 				9E25D2DB29998CA700293AB7 /* ConverterScreen.swift in Sources */,
+				A2C48E9329E09FD8004A5594 /* DiagramPage.swift in Sources */,
 				A2B496FB29A802A30017A82A /* CurData.swift in Sources */,
 				A2B496F5299FBDD00017A82A /* CurrencyScreen.swift in Sources */,
-				9E25D2DE29998CA700293AB7 /* DiagramPage.swift in Sources */,
+				9E25D2DE29998CA700293AB7 /* RateHistoryPage.swift in Sources */,
 				A2FEBA7729D4EE5F006363DB /* RatesHistoryList.swift in Sources */,
 				A2B4970829B2B31D0017A82A /* ConvertResult.swift in Sources */,
 				A2B496F729A2C5200017A82A /* TableViewCellForCurrencyScreen.swift in Sources */,
@@ -399,6 +411,14 @@
 				kind = branch;
 			};
 		};
+		A2C48EAB29E47990004A5594 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.1.0;
+			};
+		};
 		A2F83E1E299AE3AA00FAE989 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -422,6 +442,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A2B4970429AACC060017A82A /* XCRemoteSwiftPackageReference "SwifterSwift" */;
 			productName = SwifterSwift;
+		};
+		A2C48EAC29E47990004A5594 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2C48EAB29E47990004A5594 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
 		};
 		A2F83E1F299AE3AA00FAE989 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
