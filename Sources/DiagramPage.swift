@@ -20,19 +20,16 @@ class DiagramPage: UIViewController {
     
     private let buttonResult = UIButton()
     
-    private var ChosenCurBase: String!
-    private var ChosenCur1: String!
-    private var ChosenCur2: String!
-    private var ChosenCur3: String!
+    private var chosenCurBase: String!
+    private var chosenCur1: String!
+    private var chosenCur2: String!
+    private var chosenCur3: String!
     var chosenCurShortNameBase: String!
     var chosenCurShortName1: String!
     var chosenCurShortName2: String!
     var chosenCurShortName3: String!
     
-    var dataKey: [String] = []
-    var rateValues1: [Double] = []
-    let rateValues2: [Double] = []
-    let rateValues3: [Double] = []
+    var dataValues: [Double?] = []
     
     private var rateData: RateData?
     
@@ -61,7 +58,7 @@ class DiagramPage: UIViewController {
         buttonChosenCurBase.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelected1 = { [weak self] shortName in
-                self?.ChosenCurBase = shortName
+                self?.chosenCurBase = shortName
                 self?.labelChosenCurBase.text = shortName
             }
             currencyScreen.onCurrencySelectedShort1 = { [weak self] longName in
@@ -81,7 +78,7 @@ class DiagramPage: UIViewController {
         buttonChosenCur1.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelected2 = { [weak self] shortName in
-                self?.ChosenCur1 = shortName
+                self?.chosenCur1 = shortName
                 self?.labelChosenCur1.text = shortName
             }
             currencyScreen.onCurrencySelectedShort2 = { [weak self] longName in
@@ -101,7 +98,7 @@ class DiagramPage: UIViewController {
         buttonChosenCur2.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelected3 = { [weak self] shortName in
-                self?.ChosenCur2 = shortName
+                self?.chosenCur2 = shortName
                 self?.labelChosenCur2.text = shortName
             }
             currencyScreen.onCurrencySelectedShort3 = { [weak self] longName in
@@ -121,7 +118,7 @@ class DiagramPage: UIViewController {
         buttonChosenCur3.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelected4 = { [weak self] shortName in
-                self?.ChosenCur3 = shortName
+                self?.chosenCur3 = shortName
                 self?.labelChosenCur3.text = shortName
             }
             currencyScreen.onCurrencySelectedShort4 = { [weak self] longName in
@@ -272,8 +269,18 @@ class DiagramPage: UIViewController {
         guard let keys = rateData?.rates.keys else {
             return
         }
-        dataKey = Array(keys).sorted()
-        print(dataKey)
+        guard let values = rateData?.rates.values else {
+            return
+        }
+        let dataKey = Array(keys).sorted()
+        guard chosenCurShortName1 != nil else { return }
+        
+        for n in dataKey {
+            dataValues.append(rateData!.rates[n]![chosenCurShortName1])
+        }
+        
+        
+        
         
         //let dataValues1 = rateData!.rates[dataKey]
         //print(dataValues1)
