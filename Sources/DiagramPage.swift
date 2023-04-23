@@ -1,4 +1,5 @@
 import UIKit
+import Charts
 
 class DiagramPage: UIViewController {
     private let labelChooseCur = UILabel()
@@ -275,11 +276,12 @@ class DiagramPage: UIViewController {
         dataKey = Array(keys).sorted()
         print(dataKey)
         
-        //let dataValues1 = rateData!.rates[dataKey]
-        //print(dataValues1)
-        
-        
-        //rateValues1  = dataValues1![chosenCurShortName1]
+        var x = -1
+        let diagramData = rateData?.rates.map { key, value in
+            let currency = value[chosenCurShortName1]!
+            x += 1
+            return ChartDataEntry(x: 0, y: currency)
+        }
     }
     
 }
