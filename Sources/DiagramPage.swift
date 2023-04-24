@@ -29,7 +29,7 @@ class DiagramPage: UIViewController {
     var chosenCurShortName2: String!
     var chosenCurShortName3: String!
     
-    var dataValues: [Double?] = []
+    var dataValues: [Double] = []
     
     private var rateData: RateData?
     
@@ -276,7 +276,7 @@ class DiagramPage: UIViewController {
         guard chosenCurShortName1 != nil else { return }
         
         for n in dataKey {
-            dataValues.append(rateData!.rates[n]![chosenCurShortName1])
+            dataValues.append(rateData!.rates[n]![chosenCurShortName1]!)
         }
         
         
