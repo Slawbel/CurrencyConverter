@@ -10,7 +10,7 @@ class DiagramResult: UIViewController, ChartViewDelegate {
     }()
     private let buttonBack = UIButton()
     
-    private let example = [ChartDataEntry(x: 1, y: 2), ChartDataEntry(x: 2, y: 4), ChartDataEntry(x: 3, y: 9)]
+    private var example: [ChartDataEntry] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +24,9 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         buttonBack.setTitle(butBack, for: .normal)
         
         setData()
+        let coordinates1 = DiagramPage()
+        example = coordinates1.coordinates()
+        
         
         view.addSubview(lineChartView)
         view.addSubview(buttonBack)
