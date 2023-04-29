@@ -148,10 +148,7 @@ class DiagramPage: UIViewController {
         let butResult = NSLocalizedString("butResult", comment: "")
         buttonResult.setTitle(butResult, for: .normal)
         buttonResult.addAction(UIAction { [weak self] _ in
-            let diagramResultPage = DiagramResult()
             self?.curHistory()
-            diagramResultPage.modalPresentationStyle = .fullScreen
-            self?.present(diagramResultPage, animated: true)
         }, for: .primaryActionTriggered)
         
         view.addSubview(labelChooseCur)
@@ -278,24 +275,20 @@ class DiagramPage: UIViewController {
         print(String(data: data, encoding: .utf8)!)
         rateData = RateData(from: data)
         
-        guard let keys = rateData?.rates.keys else {
-            return
-        }
-        
-        
-        let dataKey = Array(keys).sorted()
-        guard chosenCurShortName1 != nil else { return }
-        
+        let diagramResultPage = DiagramResult()
+        diagramResultPage.setData(coordinates: coordinates())
+        diagramResultPage.modalPresentationStyle = .fullScreen
+        present(diagramResultPage, animated: true)
     }
         
-    func coordinates () -> [ChartDataEntry] {
+    func coordinates() -> [ChartDataEntry] {
         var x = -1
         let diagramData = (rateData?.rates.map { key, value in
             let currency = value[chosenCurShortName1]!
             x += 1
             return ChartDataEntry(x: Double(x), y: currency)
         })
-        return diagramData
+        return diagramData!
     }
 }
 
