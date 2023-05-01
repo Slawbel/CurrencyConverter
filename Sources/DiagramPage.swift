@@ -260,8 +260,9 @@ class DiagramPage: UIViewController {
     }
     
     func curHistory() {
+        let symbols = chosenCurShortName1 + "," + chosenCurShortName2 + "," + chosenCurShortName3
+        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + symbols + "&base=" + (chosenCurShortNameBase)
         
-        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + (chosenCurShortName1) + "&base=" + (chosenCurShortNameBase)
         guard let url = URL(string: stringUrl) else {
             return
         }
@@ -277,6 +278,7 @@ class DiagramPage: UIViewController {
         
         let diagramResultPage = DiagramResult()
         diagramResultPage.setData(coordinates: coordinates())
+        diagramResultPage.setData(coordinates: coordinates2())
         diagramResultPage.modalPresentationStyle = .fullScreen
         present(diagramResultPage, animated: true)
     }
@@ -289,6 +291,16 @@ class DiagramPage: UIViewController {
             return ChartDataEntry(x: Double(x), y: currency)
         })
         return diagramData!
+    }
+    
+    func coordinates2() -> [ChartDataEntry] {
+        var y = -1
+        let diagramData2 = (rateData?.rates.map { key, value in
+            let currency2 = value[chosenCurShortName2]!
+            y += 1
+            return ChartDataEntry(x: Double(y), y: currency2)
+        })
+        return diagramData2!
     }
 }
 
