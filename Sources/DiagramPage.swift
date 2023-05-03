@@ -295,7 +295,9 @@ class DiagramPage: UIViewController {
     
     func coordinates2() -> [ChartDataEntry] {
         var y = -1
-        let diagramData2 = (rateData?.rates.map { key, value in
+        let diagramData2 = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
+            return dateAndRateLeft.key < dateAndRateRight.key
+        }).map { key, value in
             let currency2 = value[chosenCurShortName2]!
             y += 1
             return ChartDataEntry(x: Double(y), y: currency2)
