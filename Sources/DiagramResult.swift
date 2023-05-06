@@ -45,9 +45,14 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         print(entry)
     }
     
-    func setData(coordinates: [ChartDataEntry]) {
-        let set1 = LineChartDataSet(entries: coordinates, label: "Result")
-        let data = LineChartData(dataSet: set1)
+    func setData(coordinates: [ChartDataEntry], coordinates2 : [ChartDataEntry], coordinates3: [ChartDataEntry], chosenCur1: String, chosenCur2: String, chosenCur3: String) {
+        let set1 = LineChartDataSet(entries: coordinates, label: chosenCur1)
+        let set2 = LineChartDataSet(entries: coordinates2, label: chosenCur2)
+        let set3 = LineChartDataSet(entries: coordinates3, label: chosenCur3)
+        set1.colors = [NSUIColor.blue]
+        set2.colors = [NSUIColor.red]
+        set3.colors = [NSUIColor.black]
+        let data = LineChartData(dataSets: [set1, set2, set3])
         lineChartView.data = data
     }
     

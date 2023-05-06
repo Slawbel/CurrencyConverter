@@ -277,15 +277,16 @@ class DiagramPage: UIViewController {
         rateData = RateData(from: data)
         
         let diagramResultPage = DiagramResult()
-        diagramResultPage.setData(coordinates: coordinates())
-        diagramResultPage.setData(coordinates: coordinates2())
+        diagramResultPage.setData(coordinates: coordinates(), coordinates2: coordinates2(), coordinates3: coordinates3(), chosenCur1: chosenCurShortName1, chosenCur2: chosenCurShortName2, chosenCur3: chosenCurShortName3)
         diagramResultPage.modalPresentationStyle = .fullScreen
         present(diagramResultPage, animated: true)
     }
         
     func coordinates() -> [ChartDataEntry] {
         var x = -1
-        let diagramData = (rateData?.rates.map { key, value in
+        let diagramData = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
+            return dateAndRateLeft.key < dateAndRateRight.key
+        }).map { key, value in
             let currency = value[chosenCurShortName1]!
             x += 1
             return ChartDataEntry(x: Double(x), y: currency)
@@ -303,6 +304,18 @@ class DiagramPage: UIViewController {
             return ChartDataEntry(x: Double(y), y: currency2)
         })
         return diagramData2!
+    }
+    
+    func coordinates3() -> [ChartDataEntry] {
+        var z = -1
+        let diagramData3 = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
+            return dateAndRateLeft.key < dateAndRateRight.key
+        }).map { key, value in
+            let currency3 = value[chosenCurShortName3]!
+            z += 1
+            return ChartDataEntry(x: Double(z), y: currency3)
+        })
+        return diagramData3!
     }
 }
 
