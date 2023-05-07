@@ -10,8 +10,6 @@ class DiagramResult: UIViewController, ChartViewDelegate {
     }()
     private let buttonBack = UIButton()
     
-    private let example = [ChartDataEntry(x: 1, y: 2), ChartDataEntry(x: 2, y: 4), ChartDataEntry(x: 3, y: 9)]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .init(named: "mainBackgroundColor")
@@ -22,8 +20,9 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         buttonBack.setTitleColor(.white, for: .normal)
         let butBack = NSLocalizedString("butBack", comment: "")
         buttonBack.setTitle(butBack, for: .normal)
-        
-        setData()
+        buttonBack.addAction(.init { [unowned self] _ in
+            dismiss(animated: true)
+        }, for: .primaryActionTriggered)
         
         view.addSubview(lineChartView)
         view.addSubview(buttonBack)
@@ -46,9 +45,14 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         print(entry)
     }
     
-    func setData() {
-        let set1 = LineChartDataSet(entries: example, label: "Result")
-        let data = LineChartData(dataSet: set1)
+    func setData(coordinates: [ChartDataEntry], coordinates2 : [ChartDataEntry], coordinates3: [ChartDataEntry], chosenCur1: String, chosenCur2: String, chosenCur3: String) {
+        let set1 = LineChartDataSet(entries: coordinates, label: chosenCur1)
+        let set2 = LineChartDataSet(entries: coordinates2, label: chosenCur2)
+        let set3 = LineChartDataSet(entries: coordinates3, label: chosenCur3)
+        set1.colors = [NSUIColor.blue]
+        set2.colors = [NSUIColor.red]
+        set3.colors = [NSUIColor.black]
+        let data = LineChartData(dataSets: [set1, set2, set3])
         lineChartView.data = data
     }
     

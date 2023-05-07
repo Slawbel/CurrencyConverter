@@ -1,5 +1,7 @@
 import UIKit
+import SnapKit
 import Charts
+
 
 class DiagramPage: UIViewController {
     private let labelChooseCur = UILabel()
@@ -21,19 +23,25 @@ class DiagramPage: UIViewController {
     
     private let buttonResult = UIButton()
     
-    private var ChosenCurBase: String!
-    private var ChosenCur1: String!
-    private var ChosenCur2: String!
-    private var ChosenCur3: String!
+
+    private var сhosenCurBase: String!
+    private var сhosenCur1: String!
+    private var сhosenCur2: String!
+    private var сhosenCur3: String!
+
     var chosenCurShortNameBase: String!
     var chosenCurShortName1: String!
     var chosenCurShortName2: String!
     var chosenCurShortName3: String!
     
+
+    var dataValues: [Double] = []
+
     var dataKey: [String] = []
     var rateValues1: [Double] = []
     let rateValues2: [Double] = []
     let rateValues3: [Double] = []
+
     
     private var rateData: RateData?
     
@@ -62,7 +70,7 @@ class DiagramPage: UIViewController {
         buttonChosenCurBase.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelected1 = { [weak self] shortName in
-                self?.ChosenCurBase = shortName
+                self?.сhosenCurBase = shortName
                 self?.labelChosenCurBase.text = shortName
             }
             currencyScreen.onCurrencySelectedShort1 = { [weak self] longName in
@@ -82,7 +90,7 @@ class DiagramPage: UIViewController {
         buttonChosenCur1.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelected2 = { [weak self] shortName in
-                self?.ChosenCur1 = shortName
+                self?.сhosenCur1 = shortName
                 self?.labelChosenCur1.text = shortName
             }
             currencyScreen.onCurrencySelectedShort2 = { [weak self] longName in
@@ -102,7 +110,7 @@ class DiagramPage: UIViewController {
         buttonChosenCur2.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelected3 = { [weak self] shortName in
-                self?.ChosenCur2 = shortName
+                self?.сhosenCur2 = shortName
                 self?.labelChosenCur2.text = shortName
             }
             currencyScreen.onCurrencySelectedShort3 = { [weak self] longName in
@@ -122,7 +130,7 @@ class DiagramPage: UIViewController {
         buttonChosenCur3.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelected4 = { [weak self] shortName in
-                self?.ChosenCur3 = shortName
+                self?.сhosenCur3 = shortName
                 self?.labelChosenCur3.text = shortName
             }
             currencyScreen.onCurrencySelectedShort4 = { [weak self] longName in
@@ -140,10 +148,7 @@ class DiagramPage: UIViewController {
         let butResult = NSLocalizedString("butResult", comment: "")
         buttonResult.setTitle(butResult, for: .normal)
         buttonResult.addAction(UIAction { [weak self] _ in
-            let diagramResultPage = DiagramResult()
             self?.curHistory()
-            diagramResultPage.modalPresentationStyle = .fullScreen
-            self?.present(diagramResultPage, animated: true)
         }, for: .primaryActionTriggered)
         
         view.addSubview(labelChooseCur)
@@ -255,8 +260,9 @@ class DiagramPage: UIViewController {
     }
     
     func curHistory() {
+        let symbols = chosenCurShortName1 + "," + chosenCurShortName2 + "," + chosenCurShortName3
+        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + symbols + "&base=" + (chosenCurShortNameBase)
         
-        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + (chosenCurShortName1) + "&base=" + (chosenCurShortNameBase)
         guard let url = URL(string: stringUrl) else {
             return
         }
@@ -270,20 +276,47 @@ class DiagramPage: UIViewController {
         print(String(data: data, encoding: .utf8)!)
         rateData = RateData(from: data)
         
-        guard let keys = rateData?.rates.keys else {
-            return
-        }
-        dataKey = Array(keys).sorted()
-        print(dataKey)
+        let diagramResultPage = DiagramResult()
+        diagramResultPage.setData(coordinates: coordinates(), coordinates2: coordinates2(), coordinates3: coordinates3(), chosenCur1: chosenCurShortName1, chosenCur2: chosenCurShortName2, chosenCur3: chosenCurShortName3)
+        diagramResultPage.modalPresentationStyle = .fullScreen
+        present(diagramResultPage, animated: true)
+    }
         
+    func coordinates() -> [ChartDataEntry] {
         var x = -1
-        let diagramData = rateData?.rates.map { key, value in
+        let diagramData = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
+            return dateAndRateLeft.key < dateAndRateRight.key
+        }).map { key, value in
             let currency = value[chosenCurShortName1]!
             x += 1
-            return ChartDataEntry(x: 0, y: currency)
-        }
+            return ChartDataEntry(x: Double(x), y: currency)
+        })
+        return diagramData!
     }
     
+    func coordinates2() -> [ChartDataEntry] {
+        var y = -1
+        let diagramData2 = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
+            return dateAndRateLeft.key < dateAndRateRight.key
+        }).map { key, value in
+            let currency2 = value[chosenCurShortName2]!
+            y += 1
+            return ChartDataEntry(x: Double(y), y: currency2)
+        })
+        return diagramData2!
+    }
+    
+    func coordinates3() -> [ChartDataEntry] {
+        var z = -1
+        let diagramData3 = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
+            return dateAndRateLeft.key < dateAndRateRight.key
+        }).map { key, value in
+            let currency3 = value[chosenCurShortName3]!
+            z += 1
+            return ChartDataEntry(x: Double(z), y: currency3)
+        })
+        return diagramData3!
+    }
 }
 
 
