@@ -260,10 +260,11 @@ class DiagramPage: UIViewController {
     }
     
     func curHistory() {
-        let symbols = chosenCurShortName1 + "," + chosenCurShortName2 + "," + chosenCurShortName3
-        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + symbols + "&base=" + (chosenCurShortNameBase)
+        guard let symbols: String? = chosenCurShortName1 + "," + chosenCurShortName2 + "," + chosenCurShortName3 else { return }
         
-        guard let url = URL(string: stringUrl) else {
+        guard let stringUrl: String? = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + symbols + "&base=" + (chosenCurShortNameBase) else { return }
+        
+        guard let url = URL(string: stringUrl!) else {
             return
         }
         var request = URLRequest(url: url)
@@ -284,38 +285,50 @@ class DiagramPage: UIViewController {
         
     func coordinates() -> [ChartDataEntry] {
         var x = -1
-        let diagramData = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
-            return dateAndRateLeft.key < dateAndRateRight.key
-        }).map { key, value in
-            let currency = value[chosenCurShortName1]!
-            x += 1
-            return ChartDataEntry(x: Double(x), y: currency)
-        })
-        return diagramData!
+        if chosenCurShortName1 != nil {
+            let diagramData = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
+                return dateAndRateLeft.key < dateAndRateRight.key
+            }).map { key, value in
+                let currency = value[chosenCurShortName1]!
+                x += 1
+                return ChartDataEntry(x: Double(x), y: currency)
+            })
+            return diagramData!
+        } else {
+            return []
+        }
     }
     
-    func coordinates2() -> [ChartDataEntry] {
-        var y = -1
-        let diagramData2 = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
-            return dateAndRateLeft.key < dateAndRateRight.key
-        }).map { key, value in
-            let currency2 = value[chosenCurShortName2]!
-            y += 1
-            return ChartDataEntry(x: Double(y), y: currency2)
-        })
-        return diagramData2!
-    }
+        func coordinates2() -> [ChartDataEntry] {
+            var y = -1
+            if chosenCurShortName2 != nil {
+                let diagramData2 = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
+                    return dateAndRateLeft.key < dateAndRateRight.key
+                }).map { key, value in
+                    let currency2 = value[chosenCurShortName2]!
+                    y += 1
+                    return ChartDataEntry(x: Double(y), y: currency2)
+                })
+                return diagramData2!
+            } else {
+                return []
+            }
+        }
     
     func coordinates3() -> [ChartDataEntry] {
         var z = -1
-        let diagramData3 = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
-            return dateAndRateLeft.key < dateAndRateRight.key
-        }).map { key, value in
-            let currency3 = value[chosenCurShortName3]!
-            z += 1
-            return ChartDataEntry(x: Double(z), y: currency3)
-        })
-        return diagramData3!
+        if chosenCurShortName3 != nil {
+            let diagramData3 = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
+                return dateAndRateLeft.key < dateAndRateRight.key
+            }).map { key, value in
+                let currency3 = value[chosenCurShortName3]!
+                z += 1
+                return ChartDataEntry(x: Double(z), y: currency3)
+            })
+            return diagramData3!
+        } else {
+            return []
+        }
     }
 }
 
