@@ -261,25 +261,38 @@ class DiagramPage: UIViewController {
     
     func curHistory() {
         guard let chosenCurShortName1 = chosenCurShortName1 else {
-            // TODO: show something about missing `chosenCurShortName1`
+            let alertMissedCur1 = UIAlertController(title: "Missing currency #1", message: "Please, select currency #1", preferredStyle: .alert)
+            let okAction1 = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertMissedCur1.addAction(okAction1)
+            present(alertMissedCur1, animated:  true, completion: nil)
             return
         }
-        guard let chosenCurShortName2 = chosenCurShortName2 else {
-            // And here
-            return
-        }
-        guard let chosenCurShortName3 = chosenCurShortName3 else {
-            // And here
-            return
-        }
+        
         guard let chosenCurShortNameBase = chosenCurShortNameBase else {
-            // And here
+            let alertMissedCurBase = UIAlertController(title: "Missing based currency", message: "Please, select based currency", preferredStyle: .alert)
+            let okActionBase = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertMissedCurBase.addAction(okActionBase)
+            present(alertMissedCurBase, animated:  true, completion: nil)
             return
         }
         
-        let symbols = chosenCurShortName1 + "," + chosenCurShortName2 + "," + chosenCurShortName3
+        if chosenCurShortName2 == nil {
+            chosenCurShortName2 = ""
+        }
+        if chosenCurShortName3 == nil {
+            chosenCurShortName3 = ""
+        }
         
-        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + symbols + "&base=" + (chosenCurShortNameBase)
+        guard let symbols2: Optional = "," + chosenCurShortName2! else {
+            let symbols2 = ""
+        }
+        guard let symbols3: Optional = "," + chosenCurShortName3! else {
+            let symbols3 = ""
+        }
+        
+        let symbols1: Optional = chosenCurShortName1 + symbols2! + symbols3!
+        
+        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + symbols1! + "&base=" + (chosenCurShortNameBase)
         
         guard let url = URL(string: stringUrl) else {
             return
@@ -295,7 +308,7 @@ class DiagramPage: UIViewController {
         rateData = RateData(from: data)
         
         let diagramResultPage = DiagramResult()
-        diagramResultPage.setData(coordinates: coordinates(), coordinates2: coordinates2(), coordinates3: coordinates3(), chosenCur1: chosenCurShortName1, chosenCur2: chosenCurShortName2, chosenCur3: chosenCurShortName3)
+        diagramResultPage.setData(coordinates: coordinates(), coordinates2: coordinates2(), coordinates3: coordinates3(), chosenCur1: chosenCurShortName1, chosenCur2: chosenCurShortName2!, chosenCur3: chosenCurShortName3!)
         diagramResultPage.modalPresentationStyle = .fullScreen
         present(diagramResultPage, animated: true)
     }
