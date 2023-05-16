@@ -34,7 +34,6 @@ class DiagramPage: UIViewController {
     var chosenCurShortName2: String?
     var chosenCurShortName3: String?
     
-
     var dataValues: [Double] = []
 
     var dataKey: [String] = []
@@ -275,6 +274,7 @@ class DiagramPage: UIViewController {
     }
     
     func curHistory() {
+
         guard let chosenCurShortNameBase = chosenCurShortNameBase else {
             let alertMissedCurBase = UIAlertController(title: "Missing based currency", message: "Please, select based currency", preferredStyle: .alert)
             let okActionBase = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -324,11 +324,13 @@ class DiagramPage: UIViewController {
         
         let diagramResultPage = DiagramResult()
         diagramResultPage.setData(coordinates: coordinates(), coordinates2: coordinates2(), coordinates3: coordinates3(), chosenCur1: chosenCurShortName1, chosenCur2: chosenCurShortName2!, chosenCur3: chosenCurShortName3!)
+
         diagramResultPage.modalPresentationStyle = .fullScreen
         present(diagramResultPage, animated: true)
     }
         
     func coordinates() -> [ChartDataEntry] {
+
         guard let chosenCurShortName1 = chosenCurShortName1 else {
             return []
         }
