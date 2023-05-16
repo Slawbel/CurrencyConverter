@@ -286,6 +286,12 @@ class DiagramPage: UIViewController {
         var symbols = ""
         if let chosenCurShortName1 = chosenCurShortName1 {
             symbols += chosenCurShortName1
+        } else {
+            let alertMissedCur1 = UIAlertController(title: "Missing currency 1", message: "Please, select currency #1", preferredStyle: .alert)
+            let okAction1 = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertMissedCur1.addAction(okAction1)
+            present(alertMissedCur1, animated:  true, completion: nil)
+            return
         }
         if let chosenCurShortName2 = chosenCurShortName2 {
             if symbols != "" {
@@ -298,13 +304,6 @@ class DiagramPage: UIViewController {
                 symbols += ","
             }
             symbols += chosenCurShortName3
-        }
-        if symbols == "" {
-            let alertMissedCur1 = UIAlertController(title: "Missing currency", message: "Please, select currency #1", preferredStyle: .alert)
-            let okAction1 = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alertMissedCur1.addAction(okAction1)
-            present(alertMissedCur1, animated:  true, completion: nil)
-            return
         }
 
         let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + symbols + "&base=" + (chosenCurShortNameBase)
