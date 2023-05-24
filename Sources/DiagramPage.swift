@@ -261,6 +261,8 @@ class DiagramPage: UIViewController {
         }
     }
     
+
+    
     private var startChosenDates: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"

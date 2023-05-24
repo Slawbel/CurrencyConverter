@@ -51,6 +51,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         findCur()
     }
 
+
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
         cell?.setup(text: symbols[indexPath.row].1)

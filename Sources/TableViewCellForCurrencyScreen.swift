@@ -18,6 +18,7 @@ class MyTableViewCell: UITableViewCell {
             make.bottom.equalTo(contentView)
         }
     }
+    
 
     func setup(text: String) {
         fullName.text = text
