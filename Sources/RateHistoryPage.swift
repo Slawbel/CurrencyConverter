@@ -69,6 +69,7 @@ class RateHistoryPage: UIViewController, UITableViewDataSource, UITableViewDeleg
         
 
     }
+
     
     private var startChosenDates: String {
         let dateFormatter = DateFormatter()

@@ -40,6 +40,7 @@ class DiagramResult: UIViewController, ChartViewDelegate {
             make.bottom.equalTo(view).inset(20)
         }
     }
+
     
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         print(entry)

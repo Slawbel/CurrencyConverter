@@ -37,6 +37,7 @@ class RatesHistoryList: UITableViewCell {
         
     }
     
+    
     func setData(dates: RateAndData) {
         dateLabel.text = dates.dateRate
         rateLabel.text = dates.curRate
