@@ -20,6 +20,7 @@
 		A2C48E9329E09FD8004A5594 /* DiagramPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C48E9229E09FD8004A5594 /* DiagramPage.swift */; };
 		A2C48EAD29E47990004A5594 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = A2C48EAC29E47990004A5594 /* Charts */; };
 		A2C48EAF29E5C412004A5594 /* DiagramResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C48EAE29E5C412004A5594 /* DiagramResult.swift */; };
+		A2EA87582A23E2FA00AAC943 /* CurrencyApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA87572A23E2FA00AAC943 /* CurrencyApi.swift */; };
 		A2F83E20299AE3AA00FAE989 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A2F83E1F299AE3AA00FAE989 /* SnapKit */; };
 		A2FEBA5529C11BB7006363DB /* RateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FEBA5429C11BB7006363DB /* RateData.swift */; };
 		A2FEBA7729D4EE5F006363DB /* RatesHistoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FEBA7629D4EE5F006363DB /* RatesHistoryList.swift */; };
@@ -41,6 +42,7 @@
 		A2B4970729B2B31D0017A82A /* ConvertResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertResult.swift; sourceTree = "<group>"; };
 		A2C48E9229E09FD8004A5594 /* DiagramPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramPage.swift; sourceTree = "<group>"; };
 		A2C48EAE29E5C412004A5594 /* DiagramResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramResult.swift; sourceTree = "<group>"; };
+		A2EA87572A23E2FA00AAC943 /* CurrencyApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyApi.swift; sourceTree = "<group>"; };
 		A2FEBA5429C11BB7006363DB /* RateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateData.swift; sourceTree = "<group>"; };
 		A2FEBA7629D4EE5F006363DB /* RatesHistoryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatesHistoryList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,6 +84,7 @@
 			children = (
 				9E25D2D129998CA700293AB7 /* Media.xcassets */,
 				A2B4970729B2B31D0017A82A /* ConvertResult.swift */,
+				A2EA87572A23E2FA00AAC943 /* CurrencyApi.swift */,
 				9E25D2D229998CA700293AB7 /* ConverterScreen.swift */,
 				A2C48E9229E09FD8004A5594 /* DiagramPage.swift */,
 				A2C48EAE29E5C412004A5594 /* DiagramResult.swift */,
@@ -193,6 +196,7 @@
 				9E25D2DB29998CA700293AB7 /* ConverterScreen.swift in Sources */,
 				A2C48E9329E09FD8004A5594 /* DiagramPage.swift in Sources */,
 				A2B496FB29A802A30017A82A /* CurData.swift in Sources */,
+				A2EA87582A23E2FA00AAC943 /* CurrencyApi.swift in Sources */,
 				A2B496F5299FBDD00017A82A /* CurrencyScreen.swift in Sources */,
 				9E25D2DE29998CA700293AB7 /* RateHistoryPage.swift in Sources */,
 				A2FEBA7729D4EE5F006363DB /* RatesHistoryList.swift in Sources */,
