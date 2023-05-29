@@ -22,12 +22,11 @@ class ConverterScreen: UIViewController {
     private var chosenCurrency: String!
     var chosenCurShortName1: String!
     var chosenCurShortName2: String!
-    var chosenDate: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .init(named: "mainBackgroundColor")
-
+        
         inputCurButton.backgroundColor = .darkGray
         inputCurButton.setTitleColor(.white, for: .normal)
         let inputCurBut = NSLocalizedString("inputCurBut", comment: "")
@@ -187,22 +186,16 @@ class ConverterScreen: UIViewController {
         self.view.endEditing(true)
     }
     
-    private var currentDate: String {
+    var currentDate: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        self.chosenDate = dateFormatter.string(from: datePicker.date)
-        return chosenDate
-    }
-    
-    func convert() {
-        
+        return dateFormatter.string(from: datePicker.date)
     }
     
     func swapFunction () {
         let temp = chosenCurShortName1
         chosenCurShortName1 = chosenCurShortName2
         chosenCurShortName2 = temp
-        
         
     }
     
@@ -211,11 +204,19 @@ class ConverterScreen: UIViewController {
     }
     
     func updateLabel(textField: UITextField) {
-        let currencyApi = CurrencyApi()
-        currencyApi.conversion()
+        convert()
     }
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
         convert()
+    }
+    
+    func convert() {
+        let currencyApi = CurrencyApi()
+        currencyApi.apiChosenCurShortName1 = chosenCurShortName1
+        currencyApi.apiChosenCurShortName2 = chosenCurShortName2
+        currencyApi.apiInputTF = inputTF.text
+        currencyApi.conversion()
+        outputLabel.text = currencyApi.textForOutputLabel
     }
 }
