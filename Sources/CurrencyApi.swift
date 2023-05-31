@@ -15,9 +15,6 @@ class CurrencyApi: CurrencyApiProtocol {
     
 
     func conversion() {
-        let mainPage = ConverterScreen()
-        apiChosenDate = mainPage.currentDate
-        
         let string = "https://api.apilayer.com/fixer/convert?to=" + (apiChosenCurShortName2 ?? "") + "&from=" + (apiChosenCurShortName1 ?? "") + "&amount=" + (apiInputTF ?? "0") + "&date=" + apiChosenDate
         guard let url = URL(string: string) else {
             return
