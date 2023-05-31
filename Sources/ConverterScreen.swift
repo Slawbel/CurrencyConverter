@@ -186,7 +186,7 @@ class ConverterScreen: UIViewController {
         self.view.endEditing(true)
     }
     
-    private var currentDate: String {
+    var currentDate: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.string(from: datePicker.date)
