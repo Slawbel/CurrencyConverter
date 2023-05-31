@@ -217,7 +217,8 @@ class ConverterScreen: UIViewController {
         currencyApi.apiChosenCurShortName2 = chosenCurShortName2
         currencyApi.apiInputTF = inputTF.text
         currencyApi.apiChosenDate = currentDate
-        currencyApi.conversion()
-        outputLabel.text = currencyApi.textForOutputLabel
+        currencyApi.conversion { [weak self] convertResult in
+            self?.outputLabel.text = String(convertResult.result ?? 0)
+        }
     }
 }

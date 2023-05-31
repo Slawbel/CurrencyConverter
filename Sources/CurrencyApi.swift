@@ -2,7 +2,7 @@ import SnapKit
 import UIKit
 
 protocol CurrencyApiProtocol {
-    func conversion()
+    func conversion(onCompletion: @escaping (ConvertResult) -> Void)
 }
 
 class CurrencyApi: CurrencyApiProtocol {
@@ -11,10 +11,8 @@ class CurrencyApi: CurrencyApiProtocol {
     public var apiChosenCurShortName1: String!
     public var apiChosenCurShortName2: String!
     public var apiChosenDate: String = ""
-    public var textForOutputLabel: String!
-    
 
-    func conversion() {
+    func conversion(onCompletion: @escaping (ConvertResult) -> Void) {
         let string = "https://api.apilayer.com/fixer/convert?to=" + (apiChosenCurShortName2 ?? "") + "&from=" + (apiChosenCurShortName1 ?? "") + "&amount=" + (apiInputTF ?? "0") + "&date=" + apiChosenDate
         guard let url = URL(string: string) else {
             return
@@ -31,10 +29,8 @@ class CurrencyApi: CurrencyApiProtocol {
             guard let convertResult = ConvertResult(from: data) else {
                 return
             }
-            DispatchQueue.main.async {
-                //self?.outputLabel.text
-                self?.textForOutputLabel = (String(convertResult.result ?? 0))
-                print(self?.textForOutputLabel! ?? "0")
+            DispatchQueue.main.async {                
+                onCompletion(convertResult)
             }
         }
         task.resume()
