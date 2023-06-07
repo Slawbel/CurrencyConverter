@@ -26,7 +26,7 @@ class ConverterScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .init(named: "mainBackgroundColor")
-
+        
         inputCurButton.backgroundColor = .darkGray
         inputCurButton.setTitleColor(.white, for: .normal)
         let inputCurBut = NSLocalizedString("inputCurBut", comment: "")
@@ -115,40 +115,40 @@ class ConverterScreen: UIViewController {
 
         inputCurButton.snp.makeConstraints { make in
             make.width.equalTo(80)
-            make.top.equalTo(view).inset(40)
+            make.top.equalTo(view).inset(100)
             make.height.equalTo(80)
         }
 
         inputCurLabel.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(80)
             make.width.equalTo(85)
-            make.top.equalTo(view).inset(40)
+            make.top.equalTo(view).inset(100)
             make.height.equalTo(80)
         }
 
         inputTF.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(170)
-            make.top.equalTo(view).inset(40)
+            make.top.equalTo(view).inset(100)
             make.height.equalTo(80)
             make.trailing.equalTo(view).inset(0)
         }
 
         outputCurButton.snp.makeConstraints { make in
             make.width.equalTo(80)
-            make.top.equalTo(view).inset(125)
+            make.top.equalTo(view).inset(185)
             make.height.equalTo(80)
         }
 
         outputCurLabel.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(80)
             make.width.equalTo(85)
-            make.top.equalTo(view).inset(125)
+            make.top.equalTo(view).inset(185)
             make.height.equalTo(80)
         }
 
         outputLabel.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(170)
-            make.top.equalTo(view).inset(125)
+            make.top.equalTo(view).inset(185)
             make.height.equalTo(80)
             make.trailing.equalTo(view).inset(0)
         }
@@ -156,26 +156,26 @@ class ConverterScreen: UIViewController {
         datePicker.snp.makeConstraints { make in
             make.width.equalTo(self.view.frame.width)
             make.height.equalTo(50)
-            make.top.equalTo(view).inset(210)
+            make.top.equalTo(view).inset(270)
         }
 
         swapButton.snp.makeConstraints { make in
             make.width.equalTo(200)
-            make.top.equalTo(view).inset(265)
+            make.top.equalTo(view).inset(325)
             make.height.equalTo(80)
             make.leading.equalTo(view).inset(0)
         }
 
         buttonRateHistory.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(205)
-            make.top.equalTo(view).inset(265)
+            make.top.equalTo(view).inset(325)
             make.height.equalTo(80)
             make.trailing.equalTo(view).inset(0)
         }
         
         buttonDiagramPage.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(205)
-            make.top.equalTo(view).inset(350)
+            make.top.equalTo(view).inset(410)
             make.height.equalTo(80)
             make.trailing.equalTo(view).inset(0)
         }
@@ -186,34 +186,17 @@ class ConverterScreen: UIViewController {
         self.view.endEditing(true)
     }
     
-    private var currentDate: String {
+    var currentDate: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.string(from: datePicker.date)
     }
     
-    func convert() {
-        let string = "https://api.apilayer.com/fixer/convert?to=" + (chosenCurShortName2 ?? "") + "&from=" + (chosenCurShortName1 ?? "") + "&amount=" + (inputTF.text ?? "0") + "&date=" + currentDate
-        guard let url = URL(string: string) else {
-            return
-        }
-        var request = URLRequest(url:url)
-        request.httpMethod = "GET"
-        request.addValue("mUGIIf6VCrvec8zDdJv2EofmA4euGt2z", forHTTPHeaderField: "apikey")
-        //let data = Date()
-        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error  in
-            guard let data = data else {
-                return
-            }
-            print(String(data: data, encoding: .utf8)!)
-            guard let convertResult = ConvertResult(from: data) else {
-                return
-            }
-            DispatchQueue.main.async {
-                self?.outputLabel.text = (String(convertResult.result ?? 0))
-            }
-        }
-        task.resume()
+    func swapFunction () {
+        let temp = chosenCurShortName1
+        chosenCurShortName1 = chosenCurShortName2
+        chosenCurShortName2 = temp
+        
     }
     
     @objc func onTextFieldTextChanged(textField: UITextField) {
@@ -226,5 +209,16 @@ class ConverterScreen: UIViewController {
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
         convert()
+    }
+    
+    func convert() {
+        let currencyApi = CurrencyApi()
+        currencyApi.apiChosenCurShortName1 = chosenCurShortName1
+        currencyApi.apiChosenCurShortName2 = chosenCurShortName2
+        currencyApi.apiInputTF = inputTF.text
+        currencyApi.apiChosenDate = currentDate
+        currencyApi.conversion { [weak self] convertResult in
+            self?.outputLabel.text = String(convertResult.result ?? 0)
+        }
     }
 }
