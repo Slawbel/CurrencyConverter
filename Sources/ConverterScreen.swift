@@ -122,7 +122,8 @@ class ConverterScreen: UIViewController {
         //view.addSubview(buttonDiagramPage)
         
         scrollViewMain.snp.makeConstraints{ make in
-            make.width.height.equalTo(view)
+            make.width.height.equalTo(view).priority(.low)
+            make.edges.equalTo(view)
         }
         
         stackView.snp.makeConstraints{ make in
@@ -139,7 +140,7 @@ class ConverterScreen: UIViewController {
             make.height.equalTo(30)
         }
 
-        inputCurLabel.snp.makeConstraints { make in
+        /*inputCurLabel.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(80)
             make.width.equalTo(85)
             make.top.equalTo(view).inset(100)
@@ -198,7 +199,7 @@ class ConverterScreen: UIViewController {
             make.top.equalTo(view).inset(410)
             make.height.equalTo(80)
             make.trailing.equalTo(view).inset(0)
-        }
+        }*/
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
