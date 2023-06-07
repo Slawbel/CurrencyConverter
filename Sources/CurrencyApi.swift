@@ -1,4 +1,3 @@
-import SnapKit
 import UIKit
 
 protocol CurrencyApiProtocol {
@@ -20,7 +19,6 @@ class CurrencyApi: CurrencyApiProtocol {
         var request = URLRequest(url:url)
         request.httpMethod = "GET"
         request.addValue("mUGIIf6VCrvec8zDdJv2EofmA4euGt2z", forHTTPHeaderField: "apikey")
-        //let data = Date()
         let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error  in
             guard let data = data else {
                 return
