@@ -32,6 +32,7 @@ class ConverterScreen: UIViewController {
         view.backgroundColor = .init(named: "mainBackgroundColor")
         
         stackView.axis = .vertical
+        stackView.backgroundColor = .white
         
         inputCurButton.backgroundColor = .darkGray
         inputCurButton.setTitleColor(.white, for: .normal)
@@ -130,14 +131,14 @@ class ConverterScreen: UIViewController {
             make.leading.equalTo(scrollViewMain.snp.leading).inset(10)
             make.trailing.equalTo(scrollViewMain.snp.trailing).inset(10)
             make.top.equalTo(scrollViewMain.snp.top).inset(100)
-            make.height.equalTo(100)
+            make.height.equalTo(80)
         }
 
         inputCurButton.snp.makeConstraints { make in
-            make.leading.equalTo(stackView.snp.leading).inset(30)
-            make.top.equalTo(stackView.snp.top).inset(60)
-            make.width.equalTo(80)
-            make.height.equalTo(30)
+            make.leading.equalTo(stackView.snp.leading).inset(20)
+            make.top.equalTo(stackView.snp.top).inset(20)
+            make.trailing.equalTo(stackView.snp.trailing).inset(20)
+            make.bottom.equalTo(stackView.snp.bottom).inset(20)
         }
 
         /*inputCurLabel.snp.makeConstraints { make in
