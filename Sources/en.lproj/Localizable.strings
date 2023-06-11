@@ -1,7 +1,7 @@
 "writeTheAmount" = "The amount for convertation";
 "swap" = "Swap ";
 "transfer" = "Rate history";
-"inputCurBut" = "Sell";
+"inputCurBut" = "Your currency type";
 "outputCurBut" = "Buy";
 "buttonBack" = "Select";
 "date" = "Date";

@@ -32,9 +32,13 @@ class ConverterScreen: UIViewController {
         view.backgroundColor = .init(named: "mainBackgroundColor")
         
         stackView.axis = .vertical
-        stackView.backgroundColor = .white
+        let colorForStackView = hexStringToUIColor(hex: "#181B20")
+        stackView.backgroundColor = colorForStackView
+        stackView.layer.cornerRadius = 20
         
         inputCurButton.backgroundColor = .darkGray
+        inputCurButton.layer.cornerRadius = 10
+        let colorForInputCurButton = hexStringToUIColor(hex: "#2B333A")
         inputCurButton.setTitleColor(.white, for: .normal)
         let inputCurBut = NSLocalizedString("inputCurBut", comment: "")
         inputCurButton.setTitle(inputCurBut, for: .normal)
@@ -50,7 +54,9 @@ class ConverterScreen: UIViewController {
         }, for: .primaryActionTriggered)
 
         inputCurLabel.textAlignment = .center
-        inputCurLabel.backgroundColor = .white
+        let colorForInputCurLabelText = hexStringToUIColor(hex: "#FFFEFE")
+        inputCurLabel.textColor = colorForInputCurLabelText
+        inputCurLabel.backgroundColor = nil
         
         inputTF.placeholder = NSLocalizedString("writeTheAmount", comment: "")
         inputTF.textAlignment = .center
@@ -112,7 +118,7 @@ class ConverterScreen: UIViewController {
         view.addSubview(scrollViewMain)
         view.addSubview(stackView)
         stackView.addArrangedSubview(inputCurButton)
-        //view.addSubview(inputCurLabel)
+        stackView.addArrangedSubview(inputCurLabel)
         //view.addSubview(inputTF)
         //view.addSubview(outputCurButton)
         //view.addSubview(outputCurLabel)
@@ -128,26 +134,26 @@ class ConverterScreen: UIViewController {
         }
         
         stackView.snp.makeConstraints{ make in
-            make.leading.equalTo(scrollViewMain.snp.leading).inset(10)
-            make.trailing.equalTo(scrollViewMain.snp.trailing).inset(10)
-            make.top.equalTo(scrollViewMain.snp.top).inset(100)
-            make.height.equalTo(80)
+            make.leading.equalTo(scrollViewMain.snp.leading).inset(15)
+            make.width.equalTo(360)
+            make.top.equalTo(scrollViewMain.snp.top).inset(115)
+            make.height.equalTo(97)
         }
 
         inputCurButton.snp.makeConstraints { make in
-            make.leading.equalTo(stackView.snp.leading).inset(20)
-            make.top.equalTo(stackView.snp.top).inset(20)
-            make.trailing.equalTo(stackView.snp.trailing).inset(20)
-            make.bottom.equalTo(stackView.snp.bottom).inset(20)
+            make.leading.equalTo(scrollViewMain.snp.leading).inset(40)
+            make.top.equalTo(scrollViewMain.snp.top).inset(165)
+            make.width.equalTo(103)
+            make.height.equalTo(28)
         }
 
-        /*inputCurLabel.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(80)
-            make.width.equalTo(85)
-            make.top.equalTo(view).inset(100)
-            make.height.equalTo(80)
+        inputCurLabel.snp.makeConstraints { make in
+            make.leading.equalTo(scrollViewMain.snp.leading).inset(40)
+            make.width.equalTo(124)
+            make.top.equalTo(scrollViewMain.snp.top).inset(123)
+            make.height.equalTo(40)
         }
-
+         /*
         inputTF.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(170)
             make.top.equalTo(view).inset(100)
@@ -243,4 +249,28 @@ class ConverterScreen: UIViewController {
             self?.outputLabel.text = String(convertResult.result ?? 0)
         }
     }
+    
+    func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+
+        if (cString.hasPrefix("#")) {
+            cString.remove(at: cString.startIndex)
+        }
+
+        if ((cString.count) != 6) {
+            return UIColor.gray
+        }
+
+        var rgbValue:UInt64 = 0
+        Scanner(string: cString).scanHexInt64(&rgbValue)
+
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
 }
+
+
