@@ -1,8 +1,8 @@
 "writeTheAmount" = "Сумма для конвертации";
 "swap" = "Поменять";
 "transfer" = "История курсов";
-"inputCurBut" = "Ваша валюта";
-"outputCurBut" = "Покупка";
+"inputCurLabelText" = "Ваша валюта";
+"outputCurLabelText" = "Конвертированная валюта";
 "buttonBack" = "Выбрать";
 "date" = "Дата";
 "chooseStartAndEndDates" = "Выберите дату начала и конца";
@@ -16,3 +16,4 @@
 "butResult" = "Сравнить";
 "butBack" = "Назад";
 "butBackCur" = "Назад";
+"nameLabelText" = "Конвертор валют";
