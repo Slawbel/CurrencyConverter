@@ -49,14 +49,13 @@ class ConverterScreen: UIViewController {
         inputCurLabel.textAlignment = .center
         inputCurLabel.font = inputCurLabel.font.withSize(14)
         inputCurLabel.textColor = .white
-        inputCurLabel.backgroundColor = nil
+        inputCurLabel.backgroundColor = .clear
         inputCurLabel.text = NSLocalizedString("inputCurLabelText", comment: "")
         
         inputCurrencyLabel.textAlignment = .center
         inputCurrencyLabel.font = inputCurrencyLabel.font.withSize(14)
         inputCurrencyLabel.textColor = .white
         inputCurrencyLabel.backgroundColor = nil
-        
         
         inputCurButton.layer.cornerRadius = 10
         let colorForInputCurButton = hexStringToUIColor(hex: "#2B333A")
@@ -80,11 +79,15 @@ class ConverterScreen: UIViewController {
         datePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
         datePicker.layer.cornerRadius = 8
         
-        inputTF.placeholder = NSLocalizedString("writeTheAmount", comment: "")
-        inputTF.textAlignment = .center
-        inputTF.backgroundColor = nil
+        let placeholderForInputTF = NSLocalizedString("writeTheAmount", comment: "")
+        inputTF.textAlignment = .right
+        inputTF.backgroundColor = .clear
         inputTF.textColor = .white
         inputTF.addTarget(self, action: #selector(ConverterScreen.onTextFieldTextChanged(textField:)), for: .editingChanged)
+        inputTF.attributedPlaceholder = NSAttributedString(
+            string: placeholderForInputTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
+        )
+        
         
         
         
@@ -97,13 +100,12 @@ class ConverterScreen: UIViewController {
         outputCurLabel.textAlignment = .left
         outputCurLabel.font = outputCurLabel.font.withSize(14)
         outputCurLabel.textColor = .white
-        outputCurLabel.backgroundColor = nil
+        outputCurLabel.backgroundColor = .clear
         outputCurLabel.text = NSLocalizedString("outputCurLabelText", comment: "")
         
         outputCurrencyLabel.textAlignment = .center
         outputCurrencyLabel.font = outputCurrencyLabel.font.withSize(14)
-        let colorForOutputCurrencyLabelText = hexStringToUIColor(hex: "#FFEFE")
-        outputCurrencyLabel.textColor = colorForOutputCurrencyLabelText
+        outputCurrencyLabel.textColor = .white
         outputCurrencyLabel.backgroundColor = nil
         
         outputCurButton.layer.cornerRadius = 10
@@ -120,7 +122,7 @@ class ConverterScreen: UIViewController {
             self.present(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
         
-        outputLabel.backgroundColor = nil
+        outputLabel.backgroundColor = .clear
         outputLabel.textAlignment = .right
         outputLabel.textColor = .white
         outputLabel.font = outputCurrencyLabel.font.withSize(18)
@@ -160,15 +162,15 @@ class ConverterScreen: UIViewController {
         scrollViewMain.addSubview(nameLabel)
         scrollViewMain.addSubview(stackView)
         stackView.addSubview(inputCurLabel)
-        stackView.addSubview(inputCurrencyLabel)
         stackView.addSubview(inputCurButton)
+        inputCurButton.addSubview(inputCurrencyLabel)
         stackView.addSubview(datePicker)
         stackView.addSubview(inputTF)
         
         view.addSubview(stackView2)
         stackView2.addSubview(outputCurLabel)
-        stackView2.addSubview(outputCurrencyLabel)
         stackView2.addSubview(outputCurButton)
+        outputCurButton.addSubview(outputCurrencyLabel)
         stackView2.addSubview(outputLabel)
         //view.addSubview(swapButton)
         //view.addSubview(buttonRateHistory)
