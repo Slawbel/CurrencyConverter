@@ -20,10 +20,16 @@ class ConverterScreen: UIViewController {
     private let outputLabel = UILabel()
     
     private let datePicker = UIDatePicker()
-    
     private let swapButton = UIButton()
+    private let addButton = UIButton()
+    
     private let buttonRateHistory = UIButton()
+    private let rateHistoryLabel = UILabel()
+    private let rateHistorySymbol = UILabel()
+    
     private let buttonDiagramPage = UIButton()
+    private let diagramLabel = UILabel()
+    private let diagramSymbol = UILabel()
     
     private var result: String?
     private var chosenCurrency: String!
@@ -55,7 +61,7 @@ class ConverterScreen: UIViewController {
         inputCurrencyLabel.textAlignment = .center
         inputCurrencyLabel.font = inputCurrencyLabel.font.withSize(14)
         inputCurrencyLabel.textColor = .white
-        inputCurrencyLabel.backgroundColor = nil
+        inputCurrencyLabel.backgroundColor = .clear
         
         inputCurButton.layer.cornerRadius = 10
         let colorForInputCurButton = hexStringToUIColor(hex: "#2B333A")
@@ -70,7 +76,7 @@ class ConverterScreen: UIViewController {
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
-
+        
         datePicker.timeZone = NSTimeZone.local
         datePicker.overrideUserInterfaceStyle = .light
         let colorForIDatePickerText = hexStringToUIColor(hex: "#2B333A")
@@ -89,14 +95,11 @@ class ConverterScreen: UIViewController {
         )
         
         
-        
-        
-        
         stackView2.axis = .vertical
         let colorForStackView2 = hexStringToUIColor(hex: "#181B20")
         stackView2.backgroundColor = colorForStackView2
         stackView2.layer.cornerRadius = 20
-
+        
         outputCurLabel.textAlignment = .left
         outputCurLabel.font = outputCurLabel.font.withSize(14)
         outputCurLabel.textColor = .white
@@ -106,7 +109,7 @@ class ConverterScreen: UIViewController {
         outputCurrencyLabel.textAlignment = .center
         outputCurrencyLabel.font = outputCurrencyLabel.font.withSize(14)
         outputCurrencyLabel.textColor = .white
-        outputCurrencyLabel.backgroundColor = nil
+        outputCurrencyLabel.backgroundColor = .clear
         
         outputCurButton.layer.cornerRadius = 10
         let colorForOutputCurButton = hexStringToUIColor(hex: "#2B333A")
@@ -127,19 +130,28 @@ class ConverterScreen: UIViewController {
         outputLabel.textColor = .white
         outputLabel.font = outputCurrencyLabel.font.withSize(18)
         outputLabel.text = "0"
-
         
         
-    
-        swapButton.backgroundColor = .darkGray
-        swapButton.setTitleColor(.white, for: .normal)
-        let swap = NSLocalizedString("swap", comment: "")
-        swapButton.setTitle(swap, for: .normal)
+        let colorForSwapButton = hexStringToUIColor(hex: "#0F0F0F")
+        swapButton.backgroundColor = colorForSwapButton
+        swapButton.layer.cornerRadius = 19
+        let swapSymbol = UIImage(named: "icon_swap_vertical")
+        swapButton.setImage(swapSymbol, for: .normal)
         
-        buttonRateHistory.backgroundColor = .darkGray
+        addButton.backgroundColor = colorForStackView
+        addButton.layer.cornerRadius = 18.5
+        let addSymbol = UIImage(named: "icon_plus")
+        addButton.setImage(addSymbol, for: .normal)
+        
+        rateHistoryLabel.textAlignment = .center
+        rateHistoryLabel.textColor = .white
+        rateHistoryLabel.backgroundColor = .clear
+        rateHistoryLabel.font = rateHistoryLabel.font.withSize(12)
+        rateHistoryLabel.text = NSLocalizedString("transfer", comment: "")
+        
+        buttonRateHistory.backgroundColor = colorForStackView
+        buttonRateHistory.layer.cornerRadius = 12
         buttonRateHistory.setTitleColor(.white, for: .normal)
-        let butRateHistory = NSLocalizedString("transfer", comment: "")
-        buttonRateHistory.setTitle(butRateHistory, for: .normal)
         buttonRateHistory.addAction(UIAction { [weak self] _ in
             let rateHistoryPage = RateHistoryPage()
             rateHistoryPage.short1 = self?.chosenCurShortName1
@@ -148,10 +160,15 @@ class ConverterScreen: UIViewController {
             self?.present(rateHistoryPage, animated: true)
         }, for: .primaryActionTriggered)
         
-        buttonDiagramPage.backgroundColor = .darkGray
+        diagramLabel.textAlignment = .center
+        diagramLabel.textColor = .white
+        diagramLabel.backgroundColor = .clear
+        diagramLabel.font = diagramLabel.font.withSize(12)
+        diagramLabel.text = NSLocalizedString("diagramPage", comment: "")
+        
+        buttonDiagramPage.backgroundColor = colorForStackView
+        buttonDiagramPage.layer.cornerRadius = 12
         buttonDiagramPage.setTitleColor(.white, for: .normal)
-        let butDiagramPage = NSLocalizedString("diagramPage", comment: "")
-        buttonDiagramPage.setTitle(butDiagramPage, for: .normal)
         buttonDiagramPage.addAction(UIAction { [weak self] _ in
             let diagramPage = DiagramPage()
             diagramPage.modalPresentationStyle = .fullScreen
@@ -167,14 +184,21 @@ class ConverterScreen: UIViewController {
         stackView.addSubview(datePicker)
         stackView.addSubview(inputTF)
         
-        view.addSubview(stackView2)
+        scrollViewMain.addSubview(stackView2)
         stackView2.addSubview(outputCurLabel)
         stackView2.addSubview(outputCurButton)
         outputCurButton.addSubview(outputCurrencyLabel)
         stackView2.addSubview(outputLabel)
-        //view.addSubview(swapButton)
-        //view.addSubview(buttonRateHistory)
-        //view.addSubview(buttonDiagramPage)
+        
+        scrollViewMain.addSubview(swapButton)
+        scrollViewMain.addSubview(addButton)
+        scrollViewMain.addSubview(buttonRateHistory)
+        buttonRateHistory.addSubview(rateHistoryLabel)
+    
+        scrollViewMain.addSubview(buttonDiagramPage)
+        buttonDiagramPage.addSubview(diagramLabel)
+        buttonDiagramPage.addSubview(diagramSymbol)
+        
         
         scrollViewMain.snp.makeConstraints{ make in
             make.width.height.equalTo(view).priority(.low)
@@ -208,7 +232,7 @@ class ConverterScreen: UIViewController {
             make.width.equalTo(32)
             make.height.equalTo(13)
         }
-
+        
         inputCurButton.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(38)
             make.top.equalTo(view).inset(165)
@@ -265,38 +289,62 @@ class ConverterScreen: UIViewController {
             make.height.equalTo(40)
             make.leading.equalTo(view).inset(276)
         }
-
-        /*
-       
-        outputLabel.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(170)
-            make.top.equalTo(view).inset(185)
-            make.height.equalTo(80)
-            make.trailing.equalTo(view).inset(0)
-        }
         
-        
-
         swapButton.snp.makeConstraints { make in
-            make.width.equalTo(200)
-            make.top.equalTo(view).inset(325)
-            make.height.equalTo(80)
-            make.leading.equalTo(view).inset(0)
+            make.width.equalTo(38)
+            make.top.equalTo(view).inset(196)
+            make.height.equalTo(38)
+            make.leading.equalTo(view).inset(229)
         }
-
+        
+        addButton.snp.makeConstraints { make in
+            make.leading.equalTo(view).inset(177)
+            make.top.equalTo(view).inset(349)
+            make.width.height.equalTo(37)
+        }
+        
         buttonRateHistory.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(205)
-            make.top.equalTo(view).inset(325)
-            make.height.equalTo(80)
-            make.trailing.equalTo(view).inset(0)
+            make.leading.equalTo(view).inset(16)
+            make.top.equalTo(view).inset(424)
+            make.height.equalTo(40)
+            make.width.equalTo(176)
+        }
+        
+        rateHistoryLabel.snp.makeConstraints{ make in
+            make.leading.equalTo(buttonRateHistory.snp.leading).inset(66)
+            make.top.equalTo(buttonRateHistory.snp.top).inset(5)
+            make.height.equalTo(33)
+            make.width.equalTo(66)
+        }
+        
+        rateHistorySymbol.snp.makeConstraints { make in
+            make.leading.equalTo(buttonRateHistory.snp.leading).inset(44)
+            make.top.equalTo(buttonRateHistory.snp.top).inset(13)
+            make.height.equalTo(14)
+            make.width.equalTo(14)
         }
         
         buttonDiagramPage.snp.makeConstraints{ make in
-            make.leading.equalTo(view).inset(205)
-            make.top.equalTo(view).inset(410)
-            make.height.equalTo(80)
-            make.trailing.equalTo(view).inset(0)
-        }*/
+            make.leading.equalTo(view).inset(198)
+            make.top.equalTo(view).inset(424)
+            make.height.equalTo(40)
+            make.width.equalTo(176)
+        }
+        
+        diagramLabel.snp.makeConstraints{ make in
+            make.leading.equalTo(buttonDiagramPage.snp.leading).inset(75)
+            make.top.equalTo(buttonDiagramPage.snp.top).inset(11)
+            make.height.equalTo(20)
+            make.width.equalTo(46)
+        }
+        
+        diagramSymbol.snp.makeConstraints{ make in
+            make.leading.equalTo(buttonDiagramPage.snp.leading).inset(54)
+            make.top.equalTo(buttonDiagramPage.snp.top).inset(13)
+            make.height.equalTo(15)
+            make.width.equalTo(15)
+        }
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
