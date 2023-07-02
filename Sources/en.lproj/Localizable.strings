@@ -1,12 +1,12 @@
 "writeTheAmount" = "The amount ____";
-"transfer" = "Rate history";
+"transfer" = " Rate history";
 "inputCurLabelText" = "Your currency type";
 "outputCurLabelText" = "Conveted currency type";
 "buttonBack" = "Select";
 "date" = "Date";
 "chooseStartAndEndDates" = "Select start and end dates";
 "convert" = "Convert";
-"diagramPage" = "Diagram";
+"diagramPage" = " Diagram";
 "butChosenCurBase" = "Currency for sale";
 "labelChooseCur" = "Select currencies for conversion";
 "butChosenCur1" = "Currency #1 (purchase)";

@@ -4,7 +4,7 @@ import UIKit
 
 
 class ConverterScreen: UIViewController {
-    private let scrollViewMain = UIScrollView()
+
     private let nameLabel = UILabel()
     
     private let stackView = UIStackView()
@@ -24,12 +24,8 @@ class ConverterScreen: UIViewController {
     private let addButton = UIButton()
     
     private let buttonRateHistory = UIButton()
-    private let rateHistoryLabel = UILabel()
-    private let rateHistorySymbol = UILabel()
-    
     private let buttonDiagramPage = UIButton()
-    private let diagramLabel = UILabel()
-    private let diagramSymbol = UILabel()
+   
     
     private var result: String?
     private var chosenCurrency: String!
@@ -76,15 +72,20 @@ class ConverterScreen: UIViewController {
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
+        inputCurButton.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
         
         datePicker.timeZone = NSTimeZone.local
         datePicker.overrideUserInterfaceStyle = .light
         let colorForIDatePickerText = hexStringToUIColor(hex: "#2B333A")
         datePicker.backgroundColor = colorForIDatePickerText
         datePicker.datePickerMode = .date
+        datePicker.setDate(.now, animated: true)
         datePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
         datePicker.layer.cornerRadius = 8
+        datePicker.setValue(UIColor.white, forKey: "textColor")
         
+        inputTF.keyboardType = .asciiCapableNumberPad
+        inputTF.keyboardAppearance = .dark
         let placeholderForInputTF = NSLocalizedString("writeTheAmount", comment: "")
         inputTF.textAlignment = .right
         inputTF.backgroundColor = .clear
@@ -124,6 +125,7 @@ class ConverterScreen: UIViewController {
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
+        outputCurButton.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
         
         outputLabel.backgroundColor = .clear
         outputLabel.textAlignment = .right
@@ -143,14 +145,9 @@ class ConverterScreen: UIViewController {
         let addSymbol = UIImage(named: "icon_plus")
         addButton.setImage(addSymbol, for: .normal)
         
-        rateHistoryLabel.textAlignment = .center
-        rateHistoryLabel.textColor = .white
-        rateHistoryLabel.backgroundColor = .clear
-        rateHistoryLabel.font = rateHistoryLabel.font.withSize(12)
-        rateHistoryLabel.text = NSLocalizedString("transfer", comment: "")
-        
         buttonRateHistory.backgroundColor = colorForStackView
         buttonRateHistory.layer.cornerRadius = 12
+        buttonRateHistory.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonRateHistory.setTitleColor(.white, for: .normal)
         buttonRateHistory.addAction(UIAction { [weak self] _ in
             let rateHistoryPage = RateHistoryPage()
@@ -159,63 +156,57 @@ class ConverterScreen: UIViewController {
             rateHistoryPage.modalPresentationStyle = .fullScreen
             self?.present(rateHistoryPage, animated: true)
         }, for: .primaryActionTriggered)
-        
-        diagramLabel.textAlignment = .center
-        diagramLabel.textColor = .white
-        diagramLabel.backgroundColor = .clear
-        diagramLabel.font = diagramLabel.font.withSize(12)
-        diagramLabel.text = NSLocalizedString("diagramPage", comment: "")
+        let buttonRateHistoryImage = UIImage(named: "icon_history")
+        buttonRateHistory.setImage(buttonRateHistoryImage, for: .normal)
+        let buttonRateHistoryTitle = NSLocalizedString("transfer", comment: "")
+        buttonRateHistory.setTitle(buttonRateHistoryTitle, for: .normal)
         
         buttonDiagramPage.backgroundColor = colorForStackView
         buttonDiagramPage.layer.cornerRadius = 12
+        buttonDiagramPage.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonDiagramPage.setTitleColor(.white, for: .normal)
         buttonDiagramPage.addAction(UIAction { [weak self] _ in
             let diagramPage = DiagramPage()
             diagramPage.modalPresentationStyle = .fullScreen
             self?.present(diagramPage, animated: true)
         }, for: .primaryActionTriggered)
+        let buttonDiagramPageImage = UIImage(named: "icon_graph")
+        buttonDiagramPage.setImage(buttonDiagramPageImage, for: .normal)
+        let buttonDiagramPageTitle = NSLocalizedString("diagramPage", comment: "")
+        buttonDiagramPage.setTitle(buttonDiagramPageTitle, for: .normal)
         
-        view.addSubview(scrollViewMain)
-        scrollViewMain.addSubview(nameLabel)
-        scrollViewMain.addSubview(stackView)
+    
+        view.addSubview(nameLabel)
+        view.addSubview(stackView)
         stackView.addSubview(inputCurLabel)
         stackView.addSubview(inputCurButton)
         inputCurButton.addSubview(inputCurrencyLabel)
         stackView.addSubview(datePicker)
         stackView.addSubview(inputTF)
         
-        scrollViewMain.addSubview(stackView2)
+        view.addSubview(stackView2)
         stackView2.addSubview(outputCurLabel)
         stackView2.addSubview(outputCurButton)
         outputCurButton.addSubview(outputCurrencyLabel)
         stackView2.addSubview(outputLabel)
         
-        scrollViewMain.addSubview(swapButton)
-        scrollViewMain.addSubview(addButton)
-        scrollViewMain.addSubview(buttonRateHistory)
-        buttonRateHistory.addSubview(rateHistoryLabel)
+        view.addSubview(swapButton)
+        view.addSubview(addButton)
+        view.addSubview(buttonRateHistory)
+        view.addSubview(buttonDiagramPage)
     
-        scrollViewMain.addSubview(buttonDiagramPage)
-        buttonDiagramPage.addSubview(diagramLabel)
-        buttonDiagramPage.addSubview(diagramSymbol)
-        
-        
-        scrollViewMain.snp.makeConstraints{ make in
-            make.width.height.equalTo(view).priority(.low)
-            make.edges.equalTo(view)
-        }
         
         nameLabel.snp.makeConstraints{ make in
             make.width.equalTo(222)
             make.height.equalTo(40)
-            make.leading.equalTo(scrollViewMain.snp.leading).inset(84)
-            make.top.equalTo(scrollViewMain.snp.top).inset(58)
+            make.leading.equalTo(view).inset(84)
+            make.top.equalTo(view.snp.top).inset(58)
         }
         
         stackView.snp.makeConstraints{ make in
-            make.leading.equalTo(scrollViewMain.snp.leading).inset(15)
+            make.leading.equalTo(view.snp.leading).inset(15)
             make.width.equalTo(360)
-            make.top.equalTo(scrollViewMain.snp.top).inset(115)
+            make.top.equalTo(view.snp.top).inset(115)
             make.height.equalTo(97)
         }
         
@@ -310,39 +301,11 @@ class ConverterScreen: UIViewController {
             make.width.equalTo(176)
         }
         
-        rateHistoryLabel.snp.makeConstraints{ make in
-            make.leading.equalTo(buttonRateHistory.snp.leading).inset(66)
-            make.top.equalTo(buttonRateHistory.snp.top).inset(5)
-            make.height.equalTo(33)
-            make.width.equalTo(66)
-        }
-        
-        rateHistorySymbol.snp.makeConstraints { make in
-            make.leading.equalTo(buttonRateHistory.snp.leading).inset(44)
-            make.top.equalTo(buttonRateHistory.snp.top).inset(13)
-            make.height.equalTo(14)
-            make.width.equalTo(14)
-        }
-        
         buttonDiagramPage.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(198)
             make.top.equalTo(view).inset(424)
             make.height.equalTo(40)
             make.width.equalTo(176)
-        }
-        
-        diagramLabel.snp.makeConstraints{ make in
-            make.leading.equalTo(buttonDiagramPage.snp.leading).inset(75)
-            make.top.equalTo(buttonDiagramPage.snp.top).inset(11)
-            make.height.equalTo(20)
-            make.width.equalTo(46)
-        }
-        
-        diagramSymbol.snp.makeConstraints{ make in
-            make.leading.equalTo(buttonDiagramPage.snp.leading).inset(54)
-            make.top.equalTo(buttonDiagramPage.snp.top).inset(13)
-            make.height.equalTo(15)
-            make.width.equalTo(15)
         }
         
     }
@@ -374,6 +337,10 @@ class ConverterScreen: UIViewController {
     }
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
+        convert()
+    }
+    
+    @objc func currencyChanged(_ sender: UILabel) {
         convert()
     }
     
