@@ -68,14 +68,16 @@ class ConverterScreen: UIViewController {
             currencyScreen.onCurrencySelectedShort1 = { [weak self] shortName in
                 self?.chosenCurShortName1 = shortName
                 self?.inputCurrencyLabel.text = shortName
+                self?.inputCurButton.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
             }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
-        inputCurButton.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
+        
+
         
         datePicker.timeZone = NSTimeZone.local
-        datePicker.overrideUserInterfaceStyle = .light
+        datePicker.overrideUserInterfaceStyle = .dark
         let colorForIDatePickerText = hexStringToUIColor(hex: "#2B333A")
         datePicker.backgroundColor = colorForIDatePickerText
         datePicker.datePickerMode = .date
@@ -90,7 +92,7 @@ class ConverterScreen: UIViewController {
         inputTF.textAlignment = .right
         inputTF.backgroundColor = .clear
         inputTF.textColor = .white
-        inputTF.addTarget(self, action: #selector(ConverterScreen.onTextFieldTextChanged(textField:)), for: .editingChanged)
+        inputTF.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .editingChanged)
         inputTF.attributedPlaceholder = NSAttributedString(
             string: placeholderForInputTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
         )
@@ -121,11 +123,12 @@ class ConverterScreen: UIViewController {
             currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
                 self?.chosenCurShortName2 = shortName
                 self?.outputCurrencyLabel.text = shortName
+                self?.inputCurButton.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
             }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
-        outputCurButton.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
+        
         
         outputLabel.backgroundColor = .clear
         outputLabel.textAlignment = .right
@@ -139,6 +142,8 @@ class ConverterScreen: UIViewController {
         swapButton.layer.cornerRadius = 19
         let swapSymbol = UIImage(named: "icon_swap_vertical")
         swapButton.setImage(swapSymbol, for: .normal)
+        swapButton.addTarget(self, action: #selector(swapCurrency), for: .touchUpInside)
+        
         
         addButton.backgroundColor = colorForStackView
         addButton.layer.cornerRadius = 18.5
@@ -220,7 +225,7 @@ class ConverterScreen: UIViewController {
         inputCurrencyLabel.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(77)
             make.top.equalTo(view).inset(172)
-            make.width.equalTo(32)
+            make.width.equalTo(36)
             make.height.equalTo(13)
         }
         
@@ -232,7 +237,7 @@ class ConverterScreen: UIViewController {
         }
         
         datePicker.snp.makeConstraints { make in
-            make.width.equalTo(118)
+            make.width.equalTo(110)
             make.height.equalTo(25)
             make.top.equalTo(view).inset(115)
             make.leading.equalTo(view).inset(258)
@@ -262,7 +267,7 @@ class ConverterScreen: UIViewController {
         
         outputCurrencyLabel.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(77)
-            make.width.equalTo(30)
+            make.width.equalTo(36)
             make.top.equalTo(view).inset(276)
             make.height.equalTo(13)
         }
@@ -321,18 +326,17 @@ class ConverterScreen: UIViewController {
         return dateFormatter.string(from: datePicker.date)
     }
     
-    func swapFunction () {
-        let temp = chosenCurShortName1
-        chosenCurShortName1 = chosenCurShortName2
-        chosenCurShortName2 = temp
-        
+    @objc func onTextFieldTextChanged(_ textField: UITextField) {
+        updateLabel(textField)
     }
     
-    @objc func onTextFieldTextChanged(textField: UITextField) {
-        updateLabel(textField: textField)
+    @objc func swapCurrency() {
+        let tempCur = inputCurrencyLabel.text
+        inputCurrencyLabel.text = outputCurrencyLabel.text
+        outputCurrencyLabel.text = tempCur
     }
     
-    func updateLabel(textField: UITextField) {
+    func updateLabel(_ textField: UITextField) {
         convert()
     }
     
