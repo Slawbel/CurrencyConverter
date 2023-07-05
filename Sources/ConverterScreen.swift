@@ -68,7 +68,7 @@ class ConverterScreen: UIViewController {
             currencyScreen.onCurrencySelectedShort1 = { [weak self] shortName in
                 self?.chosenCurShortName1 = shortName
                 self?.inputCurrencyLabel.text = shortName
-                self?.inputCurButton.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
+                self?.convert()
             }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
@@ -123,7 +123,7 @@ class ConverterScreen: UIViewController {
             currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
                 self?.chosenCurShortName2 = shortName
                 self?.outputCurrencyLabel.text = shortName
-                self?.inputCurButton.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
+                self?.convert()
             }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
