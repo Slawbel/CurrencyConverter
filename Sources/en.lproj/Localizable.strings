@@ -1,13 +1,12 @@
-"writeTheAmount" = "The amount for convertation";
-"swap" = "Swap ";
-"transfer" = "Rate history";
-"inputCurBut" = "Sell";
-"outputCurBut" = "Buy";
+"writeTheAmount" = "The amount ____";
+"transfer" = " Rate history";
+"inputCurLabelText" = "Your currency type";
+"outputCurLabelText" = "Conveted currency type";
 "buttonBack" = "Select";
 "date" = "Date";
 "chooseStartAndEndDates" = "Select start and end dates";
 "convert" = "Convert";
-"diagramPage" = "Diagram";
+"diagramPage" = " Diagram";
 "butChosenCurBase" = "Currency for sale";
 "labelChooseCur" = "Select currencies for conversion";
 "butChosenCur1" = "Currency #1 (purchase)";
@@ -16,3 +15,4 @@
 "butResult" = "Compare";
 "butBack" = "Back";
 "butBackCur" = "Back";
+"nameLabelText" = "Currency converter";
