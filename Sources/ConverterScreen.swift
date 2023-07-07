@@ -67,8 +67,17 @@ class ConverterScreen: UIViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort1 = { [weak self] shortName in
                 self?.chosenCurShortName1 = shortName
-                self?.inputCurrencyLabel.text = shortName
+                
                 self?.convert()
+                var cutShortName = shortName
+                cutShortName.removeLast()
+                var cutShortNameFlag = self?.flag(country: cutShortName)
+                if cutShortNameFlag != nil {
+                    self?.inputCurrencyLabel.text = cutShortNameFlag! + shortName
+                    print(shortName)
+                    print(cutShortName)
+                    print(cutShortNameFlag)
+                } else { return }
             }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
@@ -223,7 +232,7 @@ class ConverterScreen: UIViewController {
         }
         
         inputCurrencyLabel.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(77)
+            make.leading.equalTo(view).inset(49)
             make.top.equalTo(view).inset(172)
             make.width.equalTo(36)
             make.height.equalTo(13)
@@ -266,7 +275,7 @@ class ConverterScreen: UIViewController {
         }
         
         outputCurrencyLabel.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(77)
+            make.leading.equalTo(view).inset(49)
             make.width.equalTo(36)
             make.top.equalTo(view).inset(276)
             make.height.equalTo(13)
@@ -379,6 +388,15 @@ class ConverterScreen: UIViewController {
             blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
             alpha: CGFloat(1.0)
         )
+    }
+    
+    func flag(country:String) -> String {
+        let base : UInt32 = 127397
+        var s = ""
+        for v in country.unicodeScalars {
+            s.unicodeScalars.append(UnicodeScalar(base + v.value)!)
+        }
+        return String(s)
     }
 }
 
