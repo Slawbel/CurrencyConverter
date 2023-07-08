@@ -54,6 +54,7 @@ class ConverterScreen: UIViewController {
         inputCurLabel.backgroundColor = .clear
         inputCurLabel.text = NSLocalizedString("inputCurLabelText", comment: "")
         
+        inputCurrencyLabel.text = "               >"
         inputCurrencyLabel.textAlignment = .center
         inputCurrencyLabel.font = inputCurrencyLabel.font.withSize(14)
         inputCurrencyLabel.textColor = .white
@@ -67,17 +68,16 @@ class ConverterScreen: UIViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort1 = { [weak self] shortName in
                 self?.chosenCurShortName1 = shortName
-                
+                self?.inputCurrencyLabel.text = shortName + "      >"
                 self?.convert()
-                var cutShortName = shortName
-                cutShortName.removeLast()
-                var cutShortNameFlag = self?.flag(country: cutShortName)
-                if cutShortNameFlag != nil {
-                    self?.inputCurrencyLabel.text = cutShortNameFlag! + shortName
-                    print(shortName)
-                    print(cutShortName)
-                    print(cutShortNameFlag)
-                } else { return }
+                if shortName != "BTC" && shortName != "XOF" && shortName != "XAF" && shortName != "XPF" && shortName != "STD" && shortName != "XAG" && shortName != "XAU" {
+                    var cutShortName = shortName
+                    cutShortName.removeLast()
+                    let cutShortNameFlag = self?.flag(country: cutShortName)
+                    if cutShortNameFlag != nil {
+                        self?.inputCurrencyLabel.text = cutShortNameFlag! + " " + shortName + " >"
+                    } else { return }
+                }
             }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
@@ -118,6 +118,7 @@ class ConverterScreen: UIViewController {
         outputCurLabel.backgroundColor = .clear
         outputCurLabel.text = NSLocalizedString("outputCurLabelText", comment: "")
         
+        outputCurrencyLabel.text = "               >"
         outputCurrencyLabel.textAlignment = .center
         outputCurrencyLabel.font = outputCurrencyLabel.font.withSize(14)
         outputCurrencyLabel.textColor = .white
@@ -131,8 +132,16 @@ class ConverterScreen: UIViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
                 self?.chosenCurShortName2 = shortName
-                self?.outputCurrencyLabel.text = shortName
+                self?.outputCurrencyLabel.text = shortName + "      >"
                 self?.convert()
+                if shortName != "BTC" && shortName != "XOF" && shortName != "XAF" && shortName != "XPF" && shortName != "STD" && shortName != "XAG" && shortName != "XAU" {
+                    var cutShortName = shortName
+                    cutShortName.removeLast()
+                    let cutShortNameFlag = self?.flag(country: cutShortName)
+                    if cutShortNameFlag != nil {
+                        self?.outputCurrencyLabel.text = cutShortNameFlag! + " " + shortName + " >"
+                    } else { return }
+                }
             }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
@@ -234,7 +243,7 @@ class ConverterScreen: UIViewController {
         inputCurrencyLabel.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(49)
             make.top.equalTo(view).inset(172)
-            make.width.equalTo(36)
+            make.width.equalTo(75)
             make.height.equalTo(13)
         }
         
@@ -276,7 +285,7 @@ class ConverterScreen: UIViewController {
         
         outputCurrencyLabel.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(49)
-            make.width.equalTo(36)
+            make.width.equalTo(75)
             make.top.equalTo(view).inset(276)
             make.height.equalTo(13)
         }
