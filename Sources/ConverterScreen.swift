@@ -70,14 +70,12 @@ class ConverterScreen: UIViewController {
                 self?.chosenCurShortName1 = shortName
                 self?.inputCurrencyLabel.text = shortName + "      >"
                 self?.convert()
-                if shortName != "BTC" && shortName != "XOF" && shortName != "XAF" && shortName != "XPF" && shortName != "STD" && shortName != "XAG" && shortName != "XAU" {
-                    var cutShortName = shortName
-                    cutShortName.removeLast()
-                    let cutShortNameFlag = self?.flag(country: cutShortName)
-                    if cutShortNameFlag != nil {
-                        self?.inputCurrencyLabel.text = cutShortNameFlag! + " " + shortName + " >"
-                    } else { return }
-                }
+                var cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
+                guard cutShortNameFlag != nil else { return }
+                if cutShortNameFlag != nil {
+                    self?.inputCurrencyLabel.text = cutShortNameFlag! + " " + shortName + " >"
+                } else { return }
+                 
             }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
@@ -134,14 +132,11 @@ class ConverterScreen: UIViewController {
                 self?.chosenCurShortName2 = shortName
                 self?.outputCurrencyLabel.text = shortName + "      >"
                 self?.convert()
-                if shortName != "BTC" && shortName != "XOF" && shortName != "XAF" && shortName != "XPF" && shortName != "STD" && shortName != "XAG" && shortName != "XAU" {
-                    var cutShortName = shortName
-                    cutShortName.removeLast()
-                    let cutShortNameFlag = self?.flag(country: cutShortName)
-                    if cutShortNameFlag != nil {
-                        self?.outputCurrencyLabel.text = cutShortNameFlag! + " " + shortName + " >"
-                    } else { return }
-                }
+                var cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
+                guard cutShortNameFlag != nil else { return }
+                if cutShortNameFlag != nil {
+                    self?.outputCurrencyLabel.text = cutShortNameFlag! + " " + shortName + " >"
+                } else { return }
             }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
@@ -406,6 +401,17 @@ class ConverterScreen: UIViewController {
             s.unicodeScalars.append(UnicodeScalar(base + v.value)!)
         }
         return String(s)
+    }
+    
+    func getFlagToLabel (shortName: String) -> String? {
+        var cutShortNameFlag: String?
+        if shortName != "BTC" && shortName != "XOF" && shortName != "XAF" && shortName != "XPF" && shortName != "STD" && shortName != "XAG" && shortName != "XAU" {
+            var cutShortName = shortName
+            cutShortName.removeLast()
+            cutShortNameFlag = flag(country: cutShortName)
+            
+        }
+        return cutShortNameFlag
     }
 }
 
