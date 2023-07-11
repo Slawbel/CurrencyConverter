@@ -70,10 +70,8 @@ class ConverterScreen: UIViewController {
                 self?.chosenCurShortName1 = shortName
                 self?.inputCurrencyLabel.text = shortName + "      >"
                 self?.convert()
-                var cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
-                guard cutShortNameFlag != nil else { return }
-                if cutShortNameFlag != nil {
-                    self?.inputCurrencyLabel.text = cutShortNameFlag! + " " + shortName + " >"
+                if let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName) {
+                    self?.inputCurrencyLabel.text = cutShortNameFlag + " " + shortName + " >"
                 } else { return }
                  
             }
@@ -132,10 +130,8 @@ class ConverterScreen: UIViewController {
                 self?.chosenCurShortName2 = shortName
                 self?.outputCurrencyLabel.text = shortName + "      >"
                 self?.convert()
-                var cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
-                guard cutShortNameFlag != nil else { return }
-                if cutShortNameFlag != nil {
-                    self?.outputCurrencyLabel.text = cutShortNameFlag! + " " + shortName + " >"
+                if let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName) {
+                    self?.outputCurrencyLabel.text = cutShortNameFlag + " " + shortName + " >"
                 } else { return }
             }
             currencyScreen.modalPresentationStyle = .fullScreen
