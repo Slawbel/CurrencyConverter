@@ -15,19 +15,25 @@ class ConverterScreen: UIViewController {
     private let inputTF = UITextField()
     
     // currency #1
+    private let stackView1 = UIStackView()
+    private let outputCurLabel1 = UILabel()
+    private let outputCurrencyLabel1 = UILabel()
+    private let outputCurButton1 = UIButton()
+    private let outputLabel1 = UILabel()
+    
+    //currency#2
     private let stackView2 = UIStackView()
     private let outputCurLabel2 = UILabel()
     private let outputCurrencyLabel2 = UILabel()
     private let outputCurButton2 = UIButton()
     private let outputLabel2 = UILabel()
     
-    //currency#2
+    //currency#3
     private let stackView3 = UIStackView()
     private let outputCurLabel3 = UILabel()
     private let outputCurrencyLabel3 = UILabel()
     private let outputCurButton3 = UIButton()
     private let outputLabel3 = UILabel()
-    
 
     private let datePicker = UIDatePicker()
     private let swapButton = UIButton()
@@ -39,9 +45,12 @@ class ConverterScreen: UIViewController {
     
     private var result: String?
     private var chosenCurrency: String!
+    var chosenCurShortName: String!
     var chosenCurShortName1: String!
     var chosenCurShortName2: String!
     var chosenCurShortName3: String!
+    
+    var counterOfClick = 0
    
 
     override func viewDidLoad() {
@@ -79,10 +88,10 @@ class ConverterScreen: UIViewController {
         inputCurButton.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort1 = { [weak self] shortName in
-                self?.chosenCurShortName1 = shortName
+                self?.chosenCurShortName = shortName
                 self?.inputCurrencyLabel.text = shortName + "      >"
                 self?.convert()
-                var cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
+                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
                 guard cutShortNameFlag != nil else { return }
                 if cutShortNameFlag != nil {
                     self?.inputCurrencyLabel.text = cutShortNameFlag! + " " + shortName + " >"
@@ -115,35 +124,82 @@ class ConverterScreen: UIViewController {
             string: placeholderForInputTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
         )
         
+        // currency #1
+        stackView1.axis = .vertical
+        let colorForStackView1 = hexStringToUIColor(hex: "#181B20")
+        stackView1.backgroundColor = colorForStackView1
+        stackView1.layer.cornerRadius = 20
+        
+        outputCurLabel1.textAlignment = .left
+        outputCurLabel1.font = outputCurLabel1.font.withSize(14)
+        outputCurLabel1.textColor = .white
+        outputCurLabel1.backgroundColor = .clear
+        outputCurLabel1.text = NSLocalizedString("outputCurLabelText", comment: "")
+        
+        outputCurrencyLabel1.text = "               >"
+        outputCurrencyLabel1.textAlignment = .center
+        outputCurrencyLabel1.font = outputCurrencyLabel1.font.withSize(14)
+        outputCurrencyLabel1.textColor = .white
+        outputCurrencyLabel1.backgroundColor = .clear
+        
+        outputCurButton1.layer.cornerRadius = 10
+        let colorForOutputCurButton = hexStringToUIColor(hex: "#2B333A")
+        outputCurButton1.backgroundColor = colorForOutputCurButton
+        outputCurButton1.setTitleColor(.white, for: .normal)
+        outputCurButton1.addAction(UIAction { [unowned self] _ in
+            let currencyScreen = CurrencyScreen()
+            currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
+                self?.chosenCurShortName1 = shortName
+                self?.outputCurrencyLabel1.text = shortName + "      >"
+                self?.convert()
+                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
+                guard cutShortNameFlag != nil else { return }
+                if cutShortNameFlag != nil {
+                    self?.outputCurrencyLabel1.text = cutShortNameFlag! + " " + shortName + " >"
+                } else { return }
+            }
+            currencyScreen.modalPresentationStyle = .fullScreen
+            self.present(currencyScreen, animated: true)
+        }, for: .primaryActionTriggered)
+        
+        outputLabel1.backgroundColor = .clear
+        outputLabel1.textAlignment = .right
+        outputLabel1.textColor = .white
+        outputLabel1.font = outputCurrencyLabel1.font.withSize(18)
+        outputLabel1.text = "0"
+        
         // currency #2
         stackView2.axis = .vertical
         let colorForStackView2 = hexStringToUIColor(hex: "#181B20")
         stackView2.backgroundColor = colorForStackView2
         stackView2.layer.cornerRadius = 20
+        stackView2.isHidden = true
         
         outputCurLabel2.textAlignment = .left
         outputCurLabel2.font = outputCurLabel2.font.withSize(14)
         outputCurLabel2.textColor = .white
         outputCurLabel2.backgroundColor = .clear
         outputCurLabel2.text = NSLocalizedString("outputCurLabelText", comment: "")
+        outputCurLabel2.isHidden = true
         
         outputCurrencyLabel2.text = "               >"
         outputCurrencyLabel2.textAlignment = .center
         outputCurrencyLabel2.font = outputCurrencyLabel2.font.withSize(14)
         outputCurrencyLabel2.textColor = .white
         outputCurrencyLabel2.backgroundColor = .clear
+        outputCurrencyLabel2.isHidden = true
         
         outputCurButton2.layer.cornerRadius = 10
-        let colorForOutputCurButton = hexStringToUIColor(hex: "#2B333A")
-        outputCurButton2.backgroundColor = colorForOutputCurButton
+        let colorForOutputCurButton2 = hexStringToUIColor(hex: "#2B333A")
+        outputCurButton2.backgroundColor = colorForOutputCurButton2
         outputCurButton2.setTitleColor(.white, for: .normal)
         outputCurButton2.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
-            currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
+            currencyScreen.onCurrencySelectedShort3 = { [weak self] shortName in
                 self?.chosenCurShortName2 = shortName
                 self?.outputCurrencyLabel2.text = shortName + "      >"
                 self?.convert()
-                var cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
+                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
                 guard cutShortNameFlag != nil else { return }
                 if cutShortNameFlag != nil {
                     self?.outputCurrencyLabel2.text = cutShortNameFlag! + " " + shortName + " >"
@@ -152,12 +208,14 @@ class ConverterScreen: UIViewController {
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
+        outputCurButton2.isHidden = true
         
         outputLabel2.backgroundColor = .clear
         outputLabel2.textAlignment = .right
         outputLabel2.textColor = .white
-        outputLabel2.font = outputCurrencyLabel2.font.withSize(18)
+        outputLabel2.font = outputCurrencyLabel1.font.withSize(18)
         outputLabel2.text = "0"
+        outputLabel2.isHidden = true
         
         // currency #3
         stackView3.axis = .vertical
@@ -175,7 +233,7 @@ class ConverterScreen: UIViewController {
         
         outputCurrencyLabel3.text = "               >"
         outputCurrencyLabel3.textAlignment = .center
-        outputCurrencyLabel3.font = outputCurrencyLabel2.font.withSize(14)
+        outputCurrencyLabel3.font = outputCurrencyLabel3.font.withSize(14)
         outputCurrencyLabel3.textColor = .white
         outputCurrencyLabel3.backgroundColor = .clear
         outputCurrencyLabel3.isHidden = true
@@ -186,11 +244,11 @@ class ConverterScreen: UIViewController {
         outputCurButton3.setTitleColor(.white, for: .normal)
         outputCurButton3.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
-            currencyScreen.onCurrencySelectedShort3 = { [weak self] shortName in
-                self?.chosenCurShortName3 = shortName
+            currencyScreen.onCurrencySelectedShort4 = { [weak self] shortName in
+                self?.chosenCurShortName2 = shortName
                 self?.outputCurrencyLabel3.text = shortName + "      >"
                 self?.convert()
-                var cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
+                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
                 guard cutShortNameFlag != nil else { return }
                 if cutShortNameFlag != nil {
                     self?.outputCurrencyLabel3.text = cutShortNameFlag! + " " + shortName + " >"
@@ -204,7 +262,7 @@ class ConverterScreen: UIViewController {
         outputLabel3.backgroundColor = .clear
         outputLabel3.textAlignment = .right
         outputLabel3.textColor = .white
-        outputLabel3.font = outputCurrencyLabel2.font.withSize(18)
+        outputLabel3.font = outputCurrencyLabel1.font.withSize(18)
         outputLabel3.text = "0"
         outputLabel3.isHidden = true
         
@@ -229,8 +287,8 @@ class ConverterScreen: UIViewController {
         buttonRateHistory.setTitleColor(.white, for: .normal)
         buttonRateHistory.addAction(UIAction { [weak self] _ in
             let rateHistoryPage = RateHistoryPage()
-            rateHistoryPage.short1 = self?.chosenCurShortName1
-            rateHistoryPage.short2 = self?.chosenCurShortName2
+            rateHistoryPage.short1 = self?.chosenCurShortName
+            rateHistoryPage.short2 = self?.chosenCurShortName1
             rateHistoryPage.modalPresentationStyle = .fullScreen
             self?.present(rateHistoryPage, animated: true)
         }, for: .primaryActionTriggered)
@@ -261,6 +319,12 @@ class ConverterScreen: UIViewController {
         inputCurButton.addSubview(inputCurrencyLabel)
         stackView.addSubview(datePicker)
         stackView.addSubview(inputTF)
+        
+        view.addSubview(stackView1)
+        stackView1.addSubview(outputCurLabel1)
+        stackView1.addSubview(outputCurButton1)
+        outputCurButton1.addSubview(outputCurrencyLabel1)
+        stackView1.addSubview(outputLabel1)
         
         view.addSubview(stackView2)
         stackView2.addSubview(outputCurLabel2)
@@ -330,10 +394,46 @@ class ConverterScreen: UIViewController {
             make.width.equalTo(186)
         }
         
+        // currency #1
+        stackView1.snp.makeConstraints{ make in
+            make.leading.equalTo(view).inset(15)
+            make.top.equalTo(view).inset(218)
+            make.width.equalTo(360)
+            make.height.equalTo(97)
+        }
+        
+        outputCurLabel1.snp.makeConstraints { make in
+            make.leading.equalTo(view).inset(40)
+            make.width.equalTo(255)
+            make.top.equalTo(view).inset(238)
+            make.height.equalTo(17)
+        }
+        
+        outputCurrencyLabel1.snp.makeConstraints { make in
+            make.leading.equalTo(view).inset(49)
+            make.width.equalTo(75)
+            make.top.equalTo(view).inset(276)
+            make.height.equalTo(13)
+        }
+        
+        outputCurButton1.snp.makeConstraints { make in
+            make.width.equalTo(103)
+            make.top.equalTo(view).inset(268)
+            make.height.equalTo(28)
+            make.leading.equalTo(view).inset(38)
+        }
+        
+        outputLabel1.snp.makeConstraints { make in
+            make.width.equalTo(75)
+            make.top.equalTo(view).inset(263)
+            make.height.equalTo(40)
+            make.leading.equalTo(view).inset(276)
+        }
+        
         // currency #2
         stackView2.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(15)
-            make.top.equalTo(view).inset(218)
+            make.top.equalTo(view).inset(321)
             make.width.equalTo(360)
             make.height.equalTo(97)
         }
@@ -341,35 +441,35 @@ class ConverterScreen: UIViewController {
         outputCurLabel2.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(40)
             make.width.equalTo(255)
-            make.top.equalTo(view).inset(238)
+            make.top.equalTo(view).inset(341)
             make.height.equalTo(17)
         }
-        
+
         outputCurrencyLabel2.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(49)
             make.width.equalTo(75)
-            make.top.equalTo(view).inset(276)
+            make.top.equalTo(view).inset(380)
             make.height.equalTo(13)
         }
         
         outputCurButton2.snp.makeConstraints { make in
             make.width.equalTo(103)
-            make.top.equalTo(view).inset(268)
+            make.top.equalTo(view).inset(371)
             make.height.equalTo(28)
             make.leading.equalTo(view).inset(38)
         }
         
         outputLabel2.snp.makeConstraints { make in
             make.width.equalTo(75)
-            make.top.equalTo(view).inset(263)
+            make.top.equalTo(view).inset(366)
             make.height.equalTo(40)
             make.leading.equalTo(view).inset(276)
         }
         
-        // currency #3
+        //currency #3
         stackView3.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(15)
-            make.top.equalTo(view).inset(321)
+            make.top.equalTo(view).inset(424)
             make.width.equalTo(360)
             make.height.equalTo(97)
         }
@@ -377,31 +477,32 @@ class ConverterScreen: UIViewController {
         outputCurLabel3.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(40)
             make.width.equalTo(255)
-            make.top.equalTo(view).inset(341)
+            make.top.equalTo(view).inset(444)
             make.height.equalTo(17)
         }
 
         outputCurrencyLabel3.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(49)
             make.width.equalTo(75)
-            make.top.equalTo(view).inset(380)
+            make.top.equalTo(view).inset(484)
             make.height.equalTo(13)
         }
         
         outputCurButton3.snp.makeConstraints { make in
             make.width.equalTo(103)
-            make.top.equalTo(view).inset(371)
+            make.top.equalTo(view).inset(474)
             make.height.equalTo(28)
             make.leading.equalTo(view).inset(38)
         }
         
         outputLabel3.snp.makeConstraints { make in
             make.width.equalTo(75)
-            make.top.equalTo(view).inset(366)
+            make.top.equalTo(view).inset(469)
             make.height.equalTo(40)
             make.leading.equalTo(view).inset(276)
         }
         
+        // buttons
         swapButton.snp.makeConstraints { make in
             make.width.equalTo(38)
             make.top.equalTo(view).inset(196)
@@ -417,14 +518,14 @@ class ConverterScreen: UIViewController {
         
         buttonRateHistory.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(16)
-            make.top.equalTo(view).inset(424)
+            make.top.equalTo(view).inset(528)
             make.height.equalTo(40)
             make.width.equalTo(176)
         }
         
         buttonDiagramPage.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(198)
-            make.top.equalTo(view).inset(424)
+            make.top.equalTo(view).inset(528)
             make.height.equalTo(40)
             make.width.equalTo(176)
         }
@@ -448,17 +549,35 @@ class ConverterScreen: UIViewController {
     
     @objc func swapCurrency() {
         let tempCur = inputCurrencyLabel.text
-        inputCurrencyLabel.text = outputCurrencyLabel2.text
-        outputCurrencyLabel2.text = tempCur
+        inputCurrencyLabel.text = outputCurrencyLabel1.text
+        outputCurrencyLabel1.text = tempCur
     }
     
     @objc func addCurrency() {
-        stackView3.isHidden = false
-        stackView3.isHidden = false
-        outputCurButton3.isHidden = false
-        stackView3.isHidden = false
-        addButton.isHidden = true
+        if counterOfClick == 0 {
+            stackView2.isHidden = false
+            outputCurLabel2.isHidden = false
+            outputCurrencyLabel2.isHidden = false
+            outputCurButton2.isHidden = false
+            outputLabel2.isHidden = false
+            counterOfClick+=1
+            
+            addButton.snp.makeConstraints { make in
+                make.leading.equalTo(view).inset(177)
+                make.top.equalTo(view).inset(453)
+                make.width.height.equalTo(37)
+            }
+        }else {
+            stackView3.isHidden = false
+            outputCurLabel3.isHidden = false
+            outputCurrencyLabel3.isHidden = false
+            outputCurButton3.isHidden = false
+            outputLabel3.isHidden = false
+            addButton.isHidden = true
+            counterOfClick = 0
+        }
     }
+    
     
     func updateLabel(_ textField: UITextField) {
         convert()
@@ -474,12 +593,12 @@ class ConverterScreen: UIViewController {
     
     func convert() {
         let currencyApi = CurrencyApi()
-        currencyApi.apiChosenCurShortName1 = chosenCurShortName1
-        currencyApi.apiChosenCurShortName2 = chosenCurShortName2
+        currencyApi.apiChosenCurShortName1 = chosenCurShortName
+        currencyApi.apiChosenCurShortName2 = chosenCurShortName1
         currencyApi.apiInputTF = inputTF.text
         currencyApi.apiChosenDate = currentDate
         currencyApi.conversion { [weak self] convertResult in
-            self?.outputLabel2.text = String(convertResult.result ?? 0)
+            self?.outputLabel1.text = String(convertResult.result ?? 0)
         }
     }
     
