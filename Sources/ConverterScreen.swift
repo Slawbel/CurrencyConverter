@@ -36,7 +36,9 @@ class ConverterScreen: UIViewController {
     private let outputLabel3 = UILabel()
 
     private let datePicker = UIDatePicker()
-    private let swapButton = UIButton()
+    private let swapButton1 = UIButton()
+    private let swapButton2 = UIButton()
+    private let swapButton3 = UIButton()
     private let addButton = UIButton()
     
     private let buttonRateHistory = UIButton()
@@ -267,12 +269,25 @@ class ConverterScreen: UIViewController {
         outputLabel3.isHidden = true
         
         
-        let colorForSwapButton = hexStringToUIColor(hex: "#0F0F0F")
-        swapButton.backgroundColor = colorForSwapButton
-        swapButton.layer.cornerRadius = 19
-        let swapSymbol = UIImage(named: "icon_swap_vertical")
-        swapButton.setImage(swapSymbol, for: .normal)
-        swapButton.addTarget(self, action: #selector(swapCurrency), for: .touchUpInside)
+        let colorForSwapButton1 = hexStringToUIColor(hex: "#0F0F0F")
+        swapButton1.backgroundColor = colorForSwapButton1
+        swapButton1.layer.cornerRadius = 19
+        let swapSymbol1 = UIImage(named: "icon_swap_vertical")
+        swapButton1.setImage(swapSymbol1, for: .normal)
+        swapButton1.addTarget(self, action: #selector(swapCurrency1), for: .touchUpInside)
+        
+        swapButton2.backgroundColor = colorForSwapButton1
+        swapButton2.layer.cornerRadius = 19
+        swapButton2.setImage(swapSymbol1, for: .normal)
+        swapButton2.addTarget(self, action: #selector(swapCurrency2), for: .touchUpInside)
+        swapButton2.isHidden = true
+        
+
+        swapButton3.backgroundColor = colorForSwapButton1
+        swapButton3.layer.cornerRadius = 19
+        swapButton3.setImage(swapSymbol1, for: .normal)
+        swapButton3.addTarget(self, action: #selector(swapCurrency3), for: .touchUpInside)
+        swapButton3.isHidden = true
         
         
         addButton.backgroundColor = colorForStackView
@@ -338,7 +353,9 @@ class ConverterScreen: UIViewController {
         outputCurButton3.addSubview(outputCurrencyLabel3)
         stackView3.addSubview(outputLabel3)
         
-        view.addSubview(swapButton)
+        view.addSubview(swapButton1)
+        view.addSubview(swapButton2)
+        view.addSubview(swapButton3)
         view.addSubview(addButton)
         view.addSubview(buttonRateHistory)
         view.addSubview(buttonDiagramPage)
@@ -348,184 +365,198 @@ class ConverterScreen: UIViewController {
             make.width.equalTo(222)
             make.height.equalTo(40)
             make.leading.equalTo(view).inset(84)
-            make.top.equalTo(view.snp.top).inset(58)
+            make.top.equalTo(view.snp.top).inset(44)
         }
         
         // basic currency for conversion
         stackView.snp.makeConstraints{ make in
-            make.leading.equalTo(view.snp.leading).inset(15)
+            make.leading.equalTo(view.snp.leading).inset(13)
             make.width.equalTo(360)
-            make.top.equalTo(view.snp.top).inset(115)
-            make.height.equalTo(97)
+            make.top.equalTo(view.snp.top).inset(94)
+            make.height.equalTo(95)
         }
         
         inputCurLabel.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(40)
-            make.width.equalTo(124)
-            make.top.equalTo(view).inset(123)
-            make.height.equalTo(40)
+            make.leading.equalTo(view).inset(38)
+            make.width.equalTo(186)
+            make.top.equalTo(view).inset(114)
+            make.height.equalTo(17)
         }
         
         inputCurrencyLabel.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(49)
-            make.top.equalTo(view).inset(172)
+            make.leading.equalTo(view).inset(47)
+            make.top.equalTo(view).inset(152)
             make.width.equalTo(75)
             make.height.equalTo(13)
         }
         
         inputCurButton.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(38)
-            make.top.equalTo(view).inset(165)
+            make.leading.equalTo(view).inset(36)
+            make.top.equalTo(view).inset(143)
             make.width.equalTo(103)
             make.height.equalTo(28)
         }
         
         datePicker.snp.makeConstraints { make in
-            make.width.equalTo(110)
+            make.width.equalTo(116)
             make.height.equalTo(25)
-            make.top.equalTo(view).inset(115)
+            make.top.equalTo(view).inset(91)
             make.leading.equalTo(view).inset(258)
         }
         
         inputTF.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(165)
-            make.top.equalTo(view).inset(160)
+            make.leading.equalTo(view).inset(202)
+            make.top.equalTo(view).inset(138)
             make.height.equalTo(40)
-            make.width.equalTo(186)
+            make.width.equalTo(147)
         }
         
         // currency #1
         stackView1.snp.makeConstraints{ make in
-            make.leading.equalTo(view).inset(15)
-            make.top.equalTo(view).inset(218)
+            make.leading.equalTo(view).inset(13)
+            make.top.equalTo(view).inset(195)
             make.width.equalTo(360)
-            make.height.equalTo(97)
+            make.height.equalTo(95)
         }
         
         outputCurLabel1.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(40)
+            make.leading.equalTo(view).inset(38)
             make.width.equalTo(255)
-            make.top.equalTo(view).inset(238)
+            make.top.equalTo(view).inset(215)
             make.height.equalTo(17)
         }
         
         outputCurrencyLabel1.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(49)
+            make.leading.equalTo(view).inset(47)
             make.width.equalTo(75)
-            make.top.equalTo(view).inset(276)
+            make.top.equalTo(view).inset(253)
             make.height.equalTo(13)
         }
         
         outputCurButton1.snp.makeConstraints { make in
             make.width.equalTo(103)
-            make.top.equalTo(view).inset(268)
-            make.height.equalTo(28)
-            make.leading.equalTo(view).inset(38)
+            make.top.equalTo(view).inset(244)
+            make.height.equalTo(27)
+            make.leading.equalTo(view).inset(36)
         }
         
         outputLabel1.snp.makeConstraints { make in
-            make.width.equalTo(75)
-            make.top.equalTo(view).inset(263)
+            make.width.equalTo(73)
+            make.top.equalTo(view).inset(239)
             make.height.equalTo(40)
-            make.leading.equalTo(view).inset(276)
+            make.leading.equalTo(view).inset(278)
         }
         
         // currency #2
         stackView2.snp.makeConstraints{ make in
-            make.leading.equalTo(view).inset(15)
-            make.top.equalTo(view).inset(321)
+            make.leading.equalTo(view).inset(13)
+            make.top.equalTo(view).inset(296)
             make.width.equalTo(360)
-            make.height.equalTo(97)
+            make.height.equalTo(95)
         }
         
         outputCurLabel2.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(40)
+            make.leading.equalTo(view).inset(38)
             make.width.equalTo(255)
-            make.top.equalTo(view).inset(341)
+            make.top.equalTo(view).inset(316)
             make.height.equalTo(17)
         }
 
         outputCurrencyLabel2.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(49)
+            make.leading.equalTo(view).inset(47)
             make.width.equalTo(75)
-            make.top.equalTo(view).inset(380)
+            make.top.equalTo(view).inset(354)
             make.height.equalTo(13)
         }
         
         outputCurButton2.snp.makeConstraints { make in
             make.width.equalTo(103)
-            make.top.equalTo(view).inset(371)
-            make.height.equalTo(28)
-            make.leading.equalTo(view).inset(38)
+            make.top.equalTo(view).inset(345)
+            make.height.equalTo(27)
+            make.leading.equalTo(view).inset(36)
         }
         
         outputLabel2.snp.makeConstraints { make in
-            make.width.equalTo(75)
-            make.top.equalTo(view).inset(366)
+            make.width.equalTo(60)
+            make.top.equalTo(view).inset(339)
             make.height.equalTo(40)
-            make.leading.equalTo(view).inset(276)
+            make.leading.equalTo(view).inset(289)
         }
         
         //currency #3
         stackView3.snp.makeConstraints{ make in
-            make.leading.equalTo(view).inset(15)
-            make.top.equalTo(view).inset(424)
+            make.leading.equalTo(view).inset(13)
+            make.top.equalTo(view).inset(397)
             make.width.equalTo(360)
-            make.height.equalTo(97)
+            make.height.equalTo(95)
         }
         
         outputCurLabel3.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(40)
+            make.leading.equalTo(view).inset(38)
             make.width.equalTo(255)
-            make.top.equalTo(view).inset(444)
+            make.top.equalTo(view).inset(417)
             make.height.equalTo(17)
         }
 
         outputCurrencyLabel3.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(49)
+            make.leading.equalTo(view).inset(47)
             make.width.equalTo(75)
-            make.top.equalTo(view).inset(484)
+            make.top.equalTo(view).inset(455)
             make.height.equalTo(13)
         }
         
         outputCurButton3.snp.makeConstraints { make in
             make.width.equalTo(103)
-            make.top.equalTo(view).inset(474)
-            make.height.equalTo(28)
-            make.leading.equalTo(view).inset(38)
+            make.top.equalTo(view).inset(446)
+            make.height.equalTo(27)
+            make.leading.equalTo(view).inset(36)
         }
         
         outputLabel3.snp.makeConstraints { make in
-            make.width.equalTo(75)
-            make.top.equalTo(view).inset(469)
+            make.width.equalTo(60)
+            make.top.equalTo(view).inset(440)
             make.height.equalTo(40)
-            make.leading.equalTo(view).inset(276)
+            make.leading.equalTo(view).inset(289)
         }
         
         // buttons
-        swapButton.snp.makeConstraints { make in
+        swapButton1.snp.makeConstraints { make in
             make.width.equalTo(38)
-            make.top.equalTo(view).inset(196)
+            make.top.equalTo(view).inset(175)
+            make.height.equalTo(38)
+            make.leading.equalTo(view).inset(227)
+        }
+        
+        swapButton2.snp.makeConstraints { make in
+            make.width.equalTo(38)
+            make.top.equalTo(view).inset(276)
+            make.height.equalTo(38)
+            make.leading.equalTo(view).inset(227)
+        }
+        
+        swapButton3.snp.makeConstraints { make in
+            make.width.equalTo(38)
+            make.top.equalTo(view).inset(377)
             make.height.equalTo(38)
             make.leading.equalTo(view).inset(229)
         }
         
         addButton.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(177)
-            make.top.equalTo(view).inset(349)
+            make.top.equalTo(view).inset(370)
             make.width.height.equalTo(37)
         }
         
         buttonRateHistory.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(16)
-            make.top.equalTo(view).inset(528)
+            make.top.equalTo(view).inset(296)
             make.height.equalTo(40)
             make.width.equalTo(176)
         }
         
         buttonDiagramPage.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(198)
-            make.top.equalTo(view).inset(528)
+            make.top.equalTo(view).inset(296)
             make.height.equalTo(40)
             make.width.equalTo(176)
         }
@@ -547,11 +578,24 @@ class ConverterScreen: UIViewController {
         updateLabel(textField)
     }
     
-    @objc func swapCurrency() {
+    @objc func swapCurrency1() {
         let tempCur = inputCurrencyLabel.text
         inputCurrencyLabel.text = outputCurrencyLabel1.text
         outputCurrencyLabel1.text = tempCur
     }
+    
+    @objc func swapCurrency2() {
+        let tempCur = inputCurrencyLabel.text
+        inputCurrencyLabel.text = outputCurrencyLabel2.text
+        outputCurrencyLabel2.text = tempCur
+    }
+    
+    @objc func swapCurrency3() {
+        let tempCur = inputCurrencyLabel.text
+        inputCurrencyLabel.text = outputCurrencyLabel3.text
+        outputCurrencyLabel3.text = tempCur
+    }
+
     
     @objc func addCurrency() {
         if counterOfClick == 0 {
@@ -560,21 +604,52 @@ class ConverterScreen: UIViewController {
             outputCurrencyLabel2.isHidden = false
             outputCurButton2.isHidden = false
             outputLabel2.isHidden = false
+            swapButton2.isHidden = false
             counterOfClick+=1
+            
             
             addButton.snp.remakeConstraints { make in
                 make.leading.equalTo(view).inset(177)
-                make.top.equalTo(view).inset(453)
+                make.top.equalTo(view).inset(471)
                 make.width.height.equalTo(37)
             }
-        }else {
+            
+            buttonRateHistory.snp.remakeConstraints { make in
+                make.leading.equalTo(view).inset(16)
+                make.top.equalTo(view).inset(397)
+                make.height.equalTo(40)
+                make.width.equalTo(176)
+            }
+            
+            buttonDiagramPage.snp.remakeConstraints{ make in
+                make.leading.equalTo(view).inset(198)
+                make.top.equalTo(view).inset(397)
+                make.height.equalTo(40)
+                make.width.equalTo(176)
+            }
+        } else {
             stackView3.isHidden = false
             outputCurLabel3.isHidden = false
             outputCurrencyLabel3.isHidden = false
             outputCurButton3.isHidden = false
             outputLabel3.isHidden = false
             addButton.isHidden = true
+            swapButton3.isHidden = false
             counterOfClick = 0
+            
+            buttonRateHistory.snp.remakeConstraints { make in
+                make.leading.equalTo(view).inset(16)
+                make.top.equalTo(view).inset(498)
+                make.height.equalTo(40)
+                make.width.equalTo(176)
+            }
+            
+            buttonDiagramPage.snp.remakeConstraints{ make in
+                make.leading.equalTo(view).inset(198)
+                make.top.equalTo(view).inset(498)
+                make.height.equalTo(40)
+                make.width.equalTo(176)
+            }
         }
     }
     
@@ -584,10 +659,10 @@ class ConverterScreen: UIViewController {
     }
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
-        convert()
-    }
+            convert()
+        }
     
-    @objc func currencyChanged(_ sender: UILabel) {
+    @objc func currencyChanged(sender: UILabel) {
         convert()
     }
     
