@@ -562,7 +562,7 @@ class ConverterScreen: UIViewController {
             outputLabel2.isHidden = false
             counterOfClick+=1
             
-            addButton.snp.makeConstraints { make in
+            addButton.snp.remakeConstraints { make in
                 make.leading.equalTo(view).inset(177)
                 make.top.equalTo(view).inset(453)
                 make.width.height.equalTo(37)
