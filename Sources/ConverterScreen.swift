@@ -45,7 +45,9 @@ class ConverterScreen: UIViewController {
     private let buttonDiagramPage = UIButton()
    
     
-    private var result: String?
+    private var result1: String?
+    private var result2: String?
+    private var result3: String?
     private var chosenCurrency: String!
     var chosenCurShortName: String!
     var chosenCurShortName1: String!
@@ -111,7 +113,7 @@ class ConverterScreen: UIViewController {
         datePicker.backgroundColor = colorForIDatePickerText
         datePicker.datePickerMode = .date
         datePicker.setDate(.now, animated: true)
-        datePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
+        datePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
         datePicker.layer.cornerRadius = 8
         datePicker.setValue(UIColor.white, forKey: "textColor")
         
@@ -121,7 +123,7 @@ class ConverterScreen: UIViewController {
         inputTF.textAlignment = .right
         inputTF.backgroundColor = .clear
         inputTF.textColor = .white
-        inputTF.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .editingChanged)
+        inputTF.addTarget(self, action: #selector(ConverterScreen.convert), for: .editingChanged)
         inputTF.attributedPlaceholder = NSAttributedString(
             string: placeholderForInputTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
         )
@@ -247,7 +249,7 @@ class ConverterScreen: UIViewController {
         outputCurButton3.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort4 = { [weak self] shortName in
-                self?.chosenCurShortName2 = shortName
+                self?.chosenCurShortName3 = shortName
                 self?.outputCurrencyLabel3.text = shortName + "      >"
                 self?.convert()
                 let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
@@ -574,9 +576,6 @@ class ConverterScreen: UIViewController {
         return dateFormatter.string(from: datePicker.date)
     }
     
-    @objc func onTextFieldTextChanged(_ textField: UITextField) {
-        updateLabel(textField)
-    }
     
     @objc func swapCurrency1() {
         let tempCur = inputCurrencyLabel.text
@@ -652,30 +651,26 @@ class ConverterScreen: UIViewController {
             }
         }
     }
+
     
-    
-    func updateLabel(_ textField: UITextField) {
-        convert()
-    }
-    
-    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
-            convert()
-        }
-    
-    @objc func currencyChanged(sender: UILabel) {
-        convert()
-    }
-    
-    func convert() {
+    @objc func convert() {
         let currencyApi = CurrencyApi()
         currencyApi.apiChosenCurShortName1 = chosenCurShortName
         currencyApi.apiChosenCurShortName2 = chosenCurShortName1
+        currencyApi.apiChosenCurShortName3 = chosenCurShortName2
+        //currencyApi.apiChosenCurShortName2 = chosenCurShortName3
+        
         currencyApi.apiInputTF = inputTF.text
         currencyApi.apiChosenDate = currentDate
         currencyApi.conversion { [weak self] convertResult in
             self?.outputLabel1.text = String(convertResult.result ?? 0)
         }
+        currencyApi.conversion2 { [weak self] convertResult in
+            self?.outputLabel2.text = String(convertResult.result2 ?? 0)
+        }
     }
+    
+    
     
     func hexStringToUIColor (hex:String) -> UIColor {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
