@@ -24,12 +24,12 @@ class RateHistoryPage: UIViewController, UITableViewDataSource, UITableViewDeleg
         startDatePicker.timeZone = NSTimeZone.local
         startDatePicker.backgroundColor = UIColor.white
         startDatePicker.datePickerMode = .date
-        startDatePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
+        //startDatePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
         
         endDatePicker.timeZone = NSTimeZone.local
         endDatePicker.backgroundColor = UIColor.white
         endDatePicker.datePickerMode = .date
-        endDatePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
+        //endDatePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
         
         tableView.register(cellWithClass: RatesHistoryList.self)
         tableView.delegate = self
