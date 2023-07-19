@@ -113,7 +113,7 @@ class ConverterScreen: UIViewController {
         datePicker.backgroundColor = colorForIDatePickerText
         datePicker.datePickerMode = .date
         datePicker.setDate(.now, animated: true)
-        //datePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
+        datePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
         datePicker.layer.cornerRadius = 8
         datePicker.setValue(UIColor.white, forKey: "textColor")
         
@@ -123,7 +123,7 @@ class ConverterScreen: UIViewController {
         inputTF.textAlignment = .right
         inputTF.backgroundColor = .clear
         inputTF.textColor = .white
-        //inputTF.addTarget(self, action: #selector(ConverterScreen.convert), for: .editingChanged)
+        inputTF.addTarget(self, action: #selector(ConverterScreen.convert), for: .editingChanged)
         inputTF.attributedPlaceholder = NSAttributedString(
             string: placeholderForInputTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
         )
@@ -652,18 +652,24 @@ class ConverterScreen: UIViewController {
         }
     }
 
-    
+    @objc
     func convert() {
         let currencyApi = CurrencyApi()
         currencyApi.apiChosenCurShortName1 = chosenCurShortName
         currencyApi.apiChosenCurShortName2 = chosenCurShortName1
         currencyApi.apiChosenCurShortName3 = chosenCurShortName2
-        //currencyApi.apiChosenCurShortName2 = chosenCurShortName3
+        currencyApi.apiChosenCurShortName4 = chosenCurShortName3
         
         currencyApi.apiInputTF = inputTF.text
         currencyApi.apiChosenDate = currentDate
-        currencyApi.conversion { [weak self] convertResult in
+        currencyApi.conversion2 { [weak self] convertResult in
             self?.outputLabel1.text = String(convertResult.result ?? 0)
+        }
+        currencyApi.conversion3 { [weak self] convertResult in
+            self?.outputLabel2.text = String(convertResult.result ?? 0)
+        }
+        currencyApi.conversion4 { [weak self] convertResult in
+            self?.outputLabel3.text = String(convertResult.result ?? 0)
         }
     }
     
