@@ -402,10 +402,10 @@ class ConverterScreen: UIViewController {
         }
         
         datePicker.snp.makeConstraints { make in
-            make.width.equalTo(116)
+            make.width.equalTo(117)
             make.height.equalTo(25)
-            make.top.equalTo(view).inset(91)
-            make.leading.equalTo(view).inset(258)
+            make.top.equalTo(view).inset(94)
+            make.leading.equalTo(view).inset(256)
         }
         
         inputTF.snp.makeConstraints { make in
