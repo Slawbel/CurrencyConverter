@@ -8,9 +8,11 @@ class MyTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         fullName.textAlignment = .center
-        contentView.addSubview(fullName)
         fullName.numberOfLines = 0
-    
+        fullName.backgroundColor = .black
+        fullName.textColor = .white
+        
+        contentView.addSubview(fullName)
 
         fullName.snp.makeConstraints { make in
             make.leading.equalTo(contentView)

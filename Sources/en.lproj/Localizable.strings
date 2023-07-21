@@ -16,3 +16,5 @@
 "butBack" = "Back";
 "butBackCur" = "Back";
 "nameLabelText" = "Currency converter";
+"nameOfScreen" = "Select currency";
+"searchCurrency" = "Search currency";

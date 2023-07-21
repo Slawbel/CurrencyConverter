@@ -64,7 +64,7 @@ class ConverterScreen: UIViewController {
         view.backgroundColor = .init(named: "mainBackgroundColor")
         
         nameLabel.textAlignment = .center
-        nameLabel.backgroundColor = nil
+        nameLabel.backgroundColor = .clear
         nameLabel.textColor = .white
         nameLabel.text = NSLocalizedString("nameLabelText", comment: "")
         nameLabel.font = nameLabel.font.withSize(24)

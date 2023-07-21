@@ -16,3 +16,5 @@
 "butBack" = "Назад";
 "butBackCur" = "Назад";
 "nameLabelText" = "Конвертор валют";
+"nameOfScreen" = "Выберите валюту";
+"searchCurrency" = "Искать валюту";
