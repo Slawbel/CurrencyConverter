@@ -57,6 +57,7 @@ class ConverterScreen: UIViewController {
     var counterOfClick = 0
    
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -361,6 +362,7 @@ class ConverterScreen: UIViewController {
         view.addSubview(addButton)
         view.addSubview(buttonRateHistory)
         view.addSubview(buttonDiagramPage)
+
     
         
         nameLabel.snp.makeConstraints{ make in
@@ -571,9 +573,9 @@ class ConverterScreen: UIViewController {
     }
     
     var currentDate: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.string(from: datePicker.date)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            return dateFormatter.string(from: datePicker.date)
     }
     
     
@@ -697,6 +699,7 @@ class ConverterScreen: UIViewController {
         )
     }
     
+
     func flag(country:String) -> String {
         let base : UInt32 = 127397
         var s = ""

@@ -11,6 +11,7 @@ class CurrencyApi: CurrencyApiProtocol {
     public var apiInputTF: String!
     public var apiChosenCurShortName1: String!
     public var apiChosenCurShortName2: String!
+
     public var apiChosenCurShortName3: String!
     public var apiChosenCurShortName4: String!
     public var apiChosenDate: String = ""
