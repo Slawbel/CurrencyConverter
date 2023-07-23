@@ -93,6 +93,7 @@ class ConverterScreen: UIViewController {
         inputCurButton.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort1 = { [weak self] shortName in
+<<<<<<< HEAD
                 self?.chosenCurShortName = shortName
                 self?.inputCurrencyLabel.text = shortName + "      >"
                 self?.convert()
@@ -101,6 +102,15 @@ class ConverterScreen: UIViewController {
                 if cutShortNameFlag != nil {
                     self?.inputCurrencyLabel.text = cutShortNameFlag! + " " + shortName + " >"
                 } else { return }
+=======
+                self?.chosenCurShortName1 = shortName
+                self?.inputCurrencyLabel.text = shortName + "      >"
+                self?.convert()
+                if let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName) {
+                    self?.inputCurrencyLabel.text = cutShortNameFlag + " " + shortName + " >"
+                } else { return }
+                 
+>>>>>>> main
             }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
@@ -147,13 +157,24 @@ class ConverterScreen: UIViewController {
         outputCurrencyLabel1.textColor = .white
         outputCurrencyLabel1.backgroundColor = .clear
         
+<<<<<<< HEAD
         outputCurButton1.layer.cornerRadius = 10
+=======
+        outputCurrencyLabel.text = "               >"
+        outputCurrencyLabel.textAlignment = .center
+        outputCurrencyLabel.font = outputCurrencyLabel.font.withSize(14)
+        outputCurrencyLabel.textColor = .white
+        outputCurrencyLabel.backgroundColor = .clear
+        
+        outputCurButton.layer.cornerRadius = 10
+>>>>>>> main
         let colorForOutputCurButton = hexStringToUIColor(hex: "#2B333A")
         outputCurButton1.backgroundColor = colorForOutputCurButton
         outputCurButton1.setTitleColor(.white, for: .normal)
         outputCurButton1.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
+<<<<<<< HEAD
                 self?.chosenCurShortName1 = shortName
                 self?.outputCurrencyLabel1.text = shortName + "      >"
                 self?.convert()
@@ -161,6 +182,13 @@ class ConverterScreen: UIViewController {
                 guard cutShortNameFlag != nil else { return }
                 if cutShortNameFlag != nil {
                     self?.outputCurrencyLabel1.text = cutShortNameFlag! + " " + shortName + " >"
+=======
+                self?.chosenCurShortName2 = shortName
+                self?.outputCurrencyLabel.text = shortName + "      >"
+                self?.convert()
+                if let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName) {
+                    self?.outputCurrencyLabel.text = cutShortNameFlag + " " + shortName + " >"
+>>>>>>> main
                 } else { return }
             }
             currencyScreen.modalPresentationStyle = .fullScreen
@@ -388,8 +416,13 @@ class ConverterScreen: UIViewController {
         }
         
         inputCurrencyLabel.snp.makeConstraints { make in
+<<<<<<< HEAD
             make.leading.equalTo(view).inset(47)
             make.top.equalTo(view).inset(152)
+=======
+            make.leading.equalTo(view).inset(49)
+            make.top.equalTo(view).inset(172)
+>>>>>>> main
             make.width.equalTo(75)
             make.height.equalTo(13)
         }
@@ -430,10 +463,17 @@ class ConverterScreen: UIViewController {
             make.height.equalTo(17)
         }
         
+<<<<<<< HEAD
         outputCurrencyLabel1.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(47)
             make.width.equalTo(75)
             make.top.equalTo(view).inset(253)
+=======
+        outputCurrencyLabel.snp.makeConstraints { make in
+            make.leading.equalTo(view).inset(49)
+            make.width.equalTo(75)
+            make.top.equalTo(view).inset(276)
+>>>>>>> main
             make.height.equalTo(13)
         }
         
@@ -699,7 +739,10 @@ class ConverterScreen: UIViewController {
         )
     }
     
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
     func flag(country:String) -> String {
         let base : UInt32 = 127397
         var s = ""
