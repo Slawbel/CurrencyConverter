@@ -7,30 +7,56 @@ class ConverterScreen: UIViewController {
 
     private let nameLabel = UILabel()
     
+    // currency for conversion
     private let stackView = UIStackView()
     private let inputCurLabel = UILabel()
     private let inputCurrencyLabel = UILabel()
     private let inputCurButton = UIButton()
     private let inputTF = UITextField()
     
-    private let stackView2 = UIStackView()
-    private let outputCurLabel = UILabel()
-    private let outputCurrencyLabel = UILabel()
-    private let outputCurButton = UIButton()
-    private let outputLabel = UILabel()
+    // currency #1
+    private let stackView1 = UIStackView()
+    private let outputCurLabel1 = UILabel()
+    private let outputCurrencyLabel1 = UILabel()
+    private let outputCurButton1 = UIButton()
+    private let outputLabel1 = UILabel()
     
+    //currency#2
+    private let stackView2 = UIStackView()
+    private let outputCurLabel2 = UILabel()
+    private let outputCurrencyLabel2 = UILabel()
+    private let outputCurButton2 = UIButton()
+    private let outputLabel2 = UILabel()
+    
+    //currency#3
+    private let stackView3 = UIStackView()
+    private let outputCurLabel3 = UILabel()
+    private let outputCurrencyLabel3 = UILabel()
+    private let outputCurButton3 = UIButton()
+    private let outputLabel3 = UILabel()
+
     private let datePicker = UIDatePicker()
-    private let swapButton = UIButton()
+    private let swapButton1 = UIButton()
+    private let swapButton2 = UIButton()
+    private let swapButton3 = UIButton()
     private let addButton = UIButton()
     
     private let buttonRateHistory = UIButton()
     private let buttonDiagramPage = UIButton()
    
     
-    private var result: String?
+    private var result1: String?
+    private var result2: String?
+    private var result3: String?
     private var chosenCurrency: String!
+    var chosenCurShortName: String!
     var chosenCurShortName1: String!
     var chosenCurShortName2: String!
+    var chosenCurShortName3: String!
+    
+    var counterOfClick = 0
+   
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,13 +93,14 @@ class ConverterScreen: UIViewController {
         inputCurButton.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort1 = { [weak self] shortName in
-                self?.chosenCurShortName1 = shortName
+                self?.chosenCurShortName = shortName
                 self?.inputCurrencyLabel.text = shortName + "      >"
                 self?.convert()
-                if let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName) {
-                    self?.inputCurrencyLabel.text = cutShortNameFlag + " " + shortName + " >"
+                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
+                guard cutShortNameFlag != nil else { return }
+                if cutShortNameFlag != nil {
+                    self?.inputCurrencyLabel.text = cutShortNameFlag! + " " + shortName + " >"
                 } else { return }
-                 
             }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
@@ -87,7 +114,7 @@ class ConverterScreen: UIViewController {
         datePicker.backgroundColor = colorForIDatePickerText
         datePicker.datePickerMode = .date
         datePicker.setDate(.now, animated: true)
-        datePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
+        datePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
         datePicker.layer.cornerRadius = 8
         datePicker.setValue(UIColor.white, forKey: "textColor")
         
@@ -97,67 +124,179 @@ class ConverterScreen: UIViewController {
         inputTF.textAlignment = .right
         inputTF.backgroundColor = .clear
         inputTF.textColor = .white
-        inputTF.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .editingChanged)
+        inputTF.addTarget(self, action: #selector(ConverterScreen.convert), for: .editingChanged)
         inputTF.attributedPlaceholder = NSAttributedString(
             string: placeholderForInputTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
         )
         
+        // currency #1
+        stackView1.axis = .vertical
+        let colorForStackView1 = hexStringToUIColor(hex: "#181B20")
+        stackView1.backgroundColor = colorForStackView1
+        stackView1.layer.cornerRadius = 20
         
-        stackView2.axis = .vertical
-        let colorForStackView2 = hexStringToUIColor(hex: "#181B20")
-        stackView2.backgroundColor = colorForStackView2
-        stackView2.layer.cornerRadius = 20
+        outputCurLabel1.textAlignment = .left
+        outputCurLabel1.font = outputCurLabel1.font.withSize(14)
+        outputCurLabel1.textColor = .white
+        outputCurLabel1.backgroundColor = .clear
+        outputCurLabel1.text = NSLocalizedString("outputCurLabelText", comment: "")
         
-        outputCurLabel.textAlignment = .left
-        outputCurLabel.font = outputCurLabel.font.withSize(14)
-        outputCurLabel.textColor = .white
-        outputCurLabel.backgroundColor = .clear
-        outputCurLabel.text = NSLocalizedString("outputCurLabelText", comment: "")
-        
-        outputCurrencyLabel.text = "               >"
-        outputCurrencyLabel.textAlignment = .center
-        outputCurrencyLabel.font = outputCurrencyLabel.font.withSize(14)
-        outputCurrencyLabel.textColor = .white
-        outputCurrencyLabel.backgroundColor = .clear
-        
-        outputCurButton.layer.cornerRadius = 10
+        outputCurrencyLabel1.text = "               >"
+        outputCurrencyLabel1.textAlignment = .center
+        outputCurrencyLabel1.font = outputCurrencyLabel1.font.withSize(14)
+        outputCurrencyLabel1.textColor = .white
+        outputCurrencyLabel1.backgroundColor = .clear
+        outputCurButton1.layer.cornerRadius = 10
         let colorForOutputCurButton = hexStringToUIColor(hex: "#2B333A")
-        outputCurButton.backgroundColor = colorForOutputCurButton
-        outputCurButton.setTitleColor(.white, for: .normal)
-        outputCurButton.addAction(UIAction { [unowned self] _ in
+        outputCurButton1.backgroundColor = colorForOutputCurButton
+        outputCurButton1.setTitleColor(.white, for: .normal)
+        outputCurButton1.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
-                self?.chosenCurShortName2 = shortName
-                self?.outputCurrencyLabel.text = shortName + "      >"
+                self?.chosenCurShortName1 = shortName
+                self?.outputCurrencyLabel1.text = shortName + "      >"
                 self?.convert()
-                if let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName) {
-                    self?.outputCurrencyLabel.text = cutShortNameFlag + " " + shortName + " >"
+                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
+                guard cutShortNameFlag != nil else { return }
+                if cutShortNameFlag != nil {
+                    self?.outputCurrencyLabel1.text = cutShortNameFlag! + " " + shortName + " >"
                 } else { return }
             }
             currencyScreen.modalPresentationStyle = .fullScreen
             self.present(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
         
+        outputLabel1.backgroundColor = .clear
+        outputLabel1.textAlignment = .right
+        outputLabel1.textColor = .white
+        outputLabel1.font = outputCurrencyLabel1.font.withSize(18)
+        outputLabel1.text = "0"
         
-        outputLabel.backgroundColor = .clear
-        outputLabel.textAlignment = .right
-        outputLabel.textColor = .white
-        outputLabel.font = outputCurrencyLabel.font.withSize(18)
-        outputLabel.text = "0"
+        // currency #2
+        stackView2.axis = .vertical
+        let colorForStackView2 = hexStringToUIColor(hex: "#181B20")
+        stackView2.backgroundColor = colorForStackView2
+        stackView2.layer.cornerRadius = 20
+        stackView2.isHidden = true
+        
+        outputCurLabel2.textAlignment = .left
+        outputCurLabel2.font = outputCurLabel2.font.withSize(14)
+        outputCurLabel2.textColor = .white
+        outputCurLabel2.backgroundColor = .clear
+        outputCurLabel2.text = NSLocalizedString("outputCurLabelText", comment: "")
+        outputCurLabel2.isHidden = true
+        
+        outputCurrencyLabel2.text = "               >"
+        outputCurrencyLabel2.textAlignment = .center
+        outputCurrencyLabel2.font = outputCurrencyLabel2.font.withSize(14)
+        outputCurrencyLabel2.textColor = .white
+        outputCurrencyLabel2.backgroundColor = .clear
+        outputCurrencyLabel2.isHidden = true
+        
+        outputCurButton2.layer.cornerRadius = 10
+        let colorForOutputCurButton2 = hexStringToUIColor(hex: "#2B333A")
+        outputCurButton2.backgroundColor = colorForOutputCurButton2
+        outputCurButton2.setTitleColor(.white, for: .normal)
+        outputCurButton2.addAction(UIAction { [unowned self] _ in
+            let currencyScreen = CurrencyScreen()
+            currencyScreen.onCurrencySelectedShort3 = { [weak self] shortName in
+                self?.chosenCurShortName2 = shortName
+                self?.outputCurrencyLabel2.text = shortName + "      >"
+                self?.convert()
+                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
+                guard cutShortNameFlag != nil else { return }
+                if cutShortNameFlag != nil {
+                    self?.outputCurrencyLabel2.text = cutShortNameFlag! + " " + shortName + " >"
+                } else { return }
+            }
+            currencyScreen.modalPresentationStyle = .fullScreen
+            self.present(currencyScreen, animated: true)
+        }, for: .primaryActionTriggered)
+        outputCurButton2.isHidden = true
+        
+        outputLabel2.backgroundColor = .clear
+        outputLabel2.textAlignment = .right
+        outputLabel2.textColor = .white
+        outputLabel2.font = outputCurrencyLabel1.font.withSize(18)
+        outputLabel2.text = "0"
+        outputLabel2.isHidden = true
+        
+        // currency #3
+        stackView3.axis = .vertical
+        let colorForStackView3 = hexStringToUIColor(hex: "#181B20")
+        stackView3.backgroundColor = colorForStackView3
+        stackView3.layer.cornerRadius = 20
+        stackView3.isHidden = true
+        
+        outputCurLabel3.textAlignment = .left
+        outputCurLabel3.font = outputCurLabel3.font.withSize(14)
+        outputCurLabel3.textColor = .white
+        outputCurLabel3.backgroundColor = .clear
+        outputCurLabel3.text = NSLocalizedString("outputCurLabelText", comment: "")
+        outputCurLabel3.isHidden = true
+        
+        outputCurrencyLabel3.text = "               >"
+        outputCurrencyLabel3.textAlignment = .center
+        outputCurrencyLabel3.font = outputCurrencyLabel3.font.withSize(14)
+        outputCurrencyLabel3.textColor = .white
+        outputCurrencyLabel3.backgroundColor = .clear
+        outputCurrencyLabel3.isHidden = true
+        
+        outputCurButton3.layer.cornerRadius = 10
+        let colorForOutputCurButton3 = hexStringToUIColor(hex: "#2B333A")
+        outputCurButton3.backgroundColor = colorForOutputCurButton3
+        outputCurButton3.setTitleColor(.white, for: .normal)
+        outputCurButton3.addAction(UIAction { [unowned self] _ in
+            let currencyScreen = CurrencyScreen()
+            currencyScreen.onCurrencySelectedShort4 = { [weak self] shortName in
+                self?.chosenCurShortName3 = shortName
+                self?.outputCurrencyLabel3.text = shortName + "      >"
+                self?.convert()
+                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
+                guard cutShortNameFlag != nil else { return }
+                if cutShortNameFlag != nil {
+                    self?.outputCurrencyLabel3.text = cutShortNameFlag! + " " + shortName + " >"
+                } else { return }
+            }
+            currencyScreen.modalPresentationStyle = .fullScreen
+            self.present(currencyScreen, animated: true)
+        }, for: .primaryActionTriggered)
+        outputCurButton3.isHidden = true
+        
+        outputLabel3.backgroundColor = .clear
+        outputLabel3.textAlignment = .right
+        outputLabel3.textColor = .white
+        outputLabel3.font = outputCurrencyLabel1.font.withSize(18)
+        outputLabel3.text = "0"
+        outputLabel3.isHidden = true
         
         
-        let colorForSwapButton = hexStringToUIColor(hex: "#0F0F0F")
-        swapButton.backgroundColor = colorForSwapButton
-        swapButton.layer.cornerRadius = 19
-        let swapSymbol = UIImage(named: "icon_swap_vertical")
-        swapButton.setImage(swapSymbol, for: .normal)
-        swapButton.addTarget(self, action: #selector(swapCurrency), for: .touchUpInside)
+        let colorForSwapButton1 = hexStringToUIColor(hex: "#0F0F0F")
+        swapButton1.backgroundColor = colorForSwapButton1
+        swapButton1.layer.cornerRadius = 19
+        let swapSymbol1 = UIImage(named: "icon_swap_vertical")
+        swapButton1.setImage(swapSymbol1, for: .normal)
+        swapButton1.addTarget(self, action: #selector(swapCurrency1), for: .touchUpInside)
+        
+        swapButton2.backgroundColor = colorForSwapButton1
+        swapButton2.layer.cornerRadius = 19
+        swapButton2.setImage(swapSymbol1, for: .normal)
+        swapButton2.addTarget(self, action: #selector(swapCurrency2), for: .touchUpInside)
+        swapButton2.isHidden = true
+        
+
+        swapButton3.backgroundColor = colorForSwapButton1
+        swapButton3.layer.cornerRadius = 19
+        swapButton3.setImage(swapSymbol1, for: .normal)
+        swapButton3.addTarget(self, action: #selector(swapCurrency3), for: .touchUpInside)
+        swapButton3.isHidden = true
         
         
         addButton.backgroundColor = colorForStackView
         addButton.layer.cornerRadius = 18.5
         let addSymbol = UIImage(named: "icon_plus")
         addButton.setImage(addSymbol, for: .normal)
+        addButton.addTarget(self, action: #selector(addCurrency), for: .touchUpInside)
         
         buttonRateHistory.backgroundColor = colorForStackView
         buttonRateHistory.layer.cornerRadius = 12
@@ -165,8 +304,8 @@ class ConverterScreen: UIViewController {
         buttonRateHistory.setTitleColor(.white, for: .normal)
         buttonRateHistory.addAction(UIAction { [weak self] _ in
             let rateHistoryPage = RateHistoryPage()
-            rateHistoryPage.short1 = self?.chosenCurShortName1
-            rateHistoryPage.short2 = self?.chosenCurShortName2
+            rateHistoryPage.short1 = self?.chosenCurShortName
+            rateHistoryPage.short2 = self?.chosenCurShortName1
             rateHistoryPage.modalPresentationStyle = .fullScreen
             self?.present(rateHistoryPage, animated: true)
         }, for: .primaryActionTriggered)
@@ -198,126 +337,229 @@ class ConverterScreen: UIViewController {
         stackView.addSubview(datePicker)
         stackView.addSubview(inputTF)
         
-        view.addSubview(stackView2)
-        stackView2.addSubview(outputCurLabel)
-        stackView2.addSubview(outputCurButton)
-        outputCurButton.addSubview(outputCurrencyLabel)
-        stackView2.addSubview(outputLabel)
+        view.addSubview(stackView1)
+        stackView1.addSubview(outputCurLabel1)
+        stackView1.addSubview(outputCurButton1)
+        outputCurButton1.addSubview(outputCurrencyLabel1)
+        stackView1.addSubview(outputLabel1)
         
-        view.addSubview(swapButton)
+        view.addSubview(stackView2)
+        stackView2.addSubview(outputCurLabel2)
+        stackView2.addSubview(outputCurButton2)
+        outputCurButton2.addSubview(outputCurrencyLabel2)
+        stackView2.addSubview(outputLabel2)
+        
+        view.addSubview(stackView3)
+        stackView3.addSubview(outputCurLabel3)
+        stackView3.addSubview(outputCurButton3)
+        outputCurButton3.addSubview(outputCurrencyLabel3)
+        stackView3.addSubview(outputLabel3)
+        
+        view.addSubview(swapButton1)
+        view.addSubview(swapButton2)
+        view.addSubview(swapButton3)
         view.addSubview(addButton)
         view.addSubview(buttonRateHistory)
         view.addSubview(buttonDiagramPage)
+
     
         
         nameLabel.snp.makeConstraints{ make in
             make.width.equalTo(222)
             make.height.equalTo(40)
             make.leading.equalTo(view).inset(84)
-            make.top.equalTo(view.snp.top).inset(58)
+            make.top.equalTo(view.snp.top).inset(44)
         }
         
+        // basic currency for conversion
         stackView.snp.makeConstraints{ make in
-            make.leading.equalTo(view.snp.leading).inset(15)
+            make.leading.equalTo(view.snp.leading).inset(13)
             make.width.equalTo(360)
-            make.top.equalTo(view.snp.top).inset(115)
-            make.height.equalTo(97)
+            make.top.equalTo(view.snp.top).inset(94)
+            make.height.equalTo(95)
         }
         
         inputCurLabel.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(40)
-            make.width.equalTo(124)
-            make.top.equalTo(view).inset(123)
-            make.height.equalTo(40)
+            make.leading.equalTo(view).inset(38)
+            make.width.equalTo(186)
+            make.top.equalTo(view).inset(114)
+            make.height.equalTo(17)
         }
         
         inputCurrencyLabel.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(49)
-            make.top.equalTo(view).inset(172)
+            make.leading.equalTo(view).inset(47)
+            make.top.equalTo(view).inset(152)
             make.width.equalTo(75)
             make.height.equalTo(13)
         }
         
         inputCurButton.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(38)
-            make.top.equalTo(view).inset(165)
+            make.leading.equalTo(view).inset(36)
+            make.top.equalTo(view).inset(143)
             make.width.equalTo(103)
             make.height.equalTo(28)
         }
         
         datePicker.snp.makeConstraints { make in
-            make.width.equalTo(110)
+            make.width.equalTo(116)
             make.height.equalTo(25)
-            make.top.equalTo(view).inset(115)
+            make.top.equalTo(view).inset(91)
             make.leading.equalTo(view).inset(258)
         }
         
         inputTF.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(165)
-            make.top.equalTo(view).inset(160)
+            make.leading.equalTo(view).inset(202)
+            make.top.equalTo(view).inset(138)
             make.height.equalTo(40)
-            make.width.equalTo(186)
+            make.width.equalTo(147)
         }
         
-        
-        stackView2.snp.makeConstraints{ make in
-            make.leading.equalTo(view).inset(15)
-            make.top.equalTo(view).inset(218)
+        // currency #1
+        stackView1.snp.makeConstraints{ make in
+            make.leading.equalTo(view).inset(13)
+            make.top.equalTo(view).inset(195)
             make.width.equalTo(360)
-            make.height.equalTo(97)
+            make.height.equalTo(95)
         }
         
-        outputCurLabel.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(40)
+        outputCurLabel1.snp.makeConstraints { make in
+            make.leading.equalTo(view).inset(38)
             make.width.equalTo(255)
-            make.top.equalTo(view).inset(238)
+            make.top.equalTo(view).inset(215)
             make.height.equalTo(17)
         }
         
-        outputCurrencyLabel.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(49)
+        outputCurrencyLabel1.snp.makeConstraints { make in
+            make.leading.equalTo(view).inset(47)
             make.width.equalTo(75)
-            make.top.equalTo(view).inset(276)
+            make.top.equalTo(view).inset(253)
             make.height.equalTo(13)
         }
         
-        outputCurButton.snp.makeConstraints { make in
+        outputCurButton1.snp.makeConstraints { make in
             make.width.equalTo(103)
-            make.top.equalTo(view).inset(268)
-            make.height.equalTo(28)
-            make.leading.equalTo(view).inset(38)
+            make.top.equalTo(view).inset(244)
+            make.height.equalTo(27)
+            make.leading.equalTo(view).inset(36)
         }
         
-        outputLabel.snp.makeConstraints { make in
-            make.width.equalTo(75)
-            make.top.equalTo(view).inset(263)
+        outputLabel1.snp.makeConstraints { make in
+            make.width.equalTo(73)
+            make.top.equalTo(view).inset(239)
             make.height.equalTo(40)
-            make.leading.equalTo(view).inset(276)
+            make.leading.equalTo(view).inset(278)
         }
         
-        swapButton.snp.makeConstraints { make in
+        // currency #2
+        stackView2.snp.makeConstraints{ make in
+            make.leading.equalTo(view).inset(13)
+            make.top.equalTo(view).inset(296)
+            make.width.equalTo(360)
+            make.height.equalTo(95)
+        }
+        
+        outputCurLabel2.snp.makeConstraints { make in
+            make.leading.equalTo(view).inset(38)
+            make.width.equalTo(255)
+            make.top.equalTo(view).inset(316)
+            make.height.equalTo(17)
+        }
+
+        outputCurrencyLabel2.snp.makeConstraints { make in
+            make.leading.equalTo(view).inset(47)
+            make.width.equalTo(75)
+            make.top.equalTo(view).inset(354)
+            make.height.equalTo(13)
+        }
+        
+        outputCurButton2.snp.makeConstraints { make in
+            make.width.equalTo(103)
+            make.top.equalTo(view).inset(345)
+            make.height.equalTo(27)
+            make.leading.equalTo(view).inset(36)
+        }
+        
+        outputLabel2.snp.makeConstraints { make in
+            make.width.equalTo(60)
+            make.top.equalTo(view).inset(339)
+            make.height.equalTo(40)
+            make.leading.equalTo(view).inset(289)
+        }
+        
+        //currency #3
+        stackView3.snp.makeConstraints{ make in
+            make.leading.equalTo(view).inset(13)
+            make.top.equalTo(view).inset(397)
+            make.width.equalTo(360)
+            make.height.equalTo(95)
+        }
+        
+        outputCurLabel3.snp.makeConstraints { make in
+            make.leading.equalTo(view).inset(38)
+            make.width.equalTo(255)
+            make.top.equalTo(view).inset(417)
+            make.height.equalTo(17)
+        }
+
+        outputCurrencyLabel3.snp.makeConstraints { make in
+            make.leading.equalTo(view).inset(47)
+            make.width.equalTo(75)
+            make.top.equalTo(view).inset(455)
+            make.height.equalTo(13)
+        }
+        
+        outputCurButton3.snp.makeConstraints { make in
+            make.width.equalTo(103)
+            make.top.equalTo(view).inset(446)
+            make.height.equalTo(27)
+            make.leading.equalTo(view).inset(36)
+        }
+        
+        outputLabel3.snp.makeConstraints { make in
+            make.width.equalTo(60)
+            make.top.equalTo(view).inset(440)
+            make.height.equalTo(40)
+            make.leading.equalTo(view).inset(289)
+        }
+        
+        // buttons
+        swapButton1.snp.makeConstraints { make in
             make.width.equalTo(38)
-            make.top.equalTo(view).inset(196)
+            make.top.equalTo(view).inset(175)
+            make.height.equalTo(38)
+            make.leading.equalTo(view).inset(227)
+        }
+        
+        swapButton2.snp.makeConstraints { make in
+            make.width.equalTo(38)
+            make.top.equalTo(view).inset(276)
+            make.height.equalTo(38)
+            make.leading.equalTo(view).inset(227)
+        }
+        
+        swapButton3.snp.makeConstraints { make in
+            make.width.equalTo(38)
+            make.top.equalTo(view).inset(377)
             make.height.equalTo(38)
             make.leading.equalTo(view).inset(229)
         }
         
         addButton.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(177)
-            make.top.equalTo(view).inset(349)
+            make.top.equalTo(view).inset(370)
             make.width.height.equalTo(37)
         }
         
         buttonRateHistory.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(16)
-            make.top.equalTo(view).inset(424)
+            make.top.equalTo(view).inset(296)
             make.height.equalTo(40)
             make.width.equalTo(176)
         }
         
         buttonDiagramPage.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(198)
-            make.top.equalTo(view).inset(424)
+            make.top.equalTo(view).inset(296)
             make.height.equalTo(40)
             make.width.equalTo(176)
         }
@@ -330,43 +572,109 @@ class ConverterScreen: UIViewController {
     }
     
     var currentDate: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.string(from: datePicker.date)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            return dateFormatter.string(from: datePicker.date)
     }
     
-    @objc func onTextFieldTextChanged(_ textField: UITextField) {
-        updateLabel(textField)
-    }
     
-    @objc func swapCurrency() {
+    @objc func swapCurrency1() {
         let tempCur = inputCurrencyLabel.text
-        inputCurrencyLabel.text = outputCurrencyLabel.text
-        outputCurrencyLabel.text = tempCur
+        inputCurrencyLabel.text = outputCurrencyLabel1.text
+        outputCurrencyLabel1.text = tempCur
     }
     
-    func updateLabel(_ textField: UITextField) {
-        convert()
+    @objc func swapCurrency2() {
+        let tempCur = inputCurrencyLabel.text
+        inputCurrencyLabel.text = outputCurrencyLabel2.text
+        outputCurrencyLabel2.text = tempCur
     }
     
-    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
-        convert()
+    @objc func swapCurrency3() {
+        let tempCur = inputCurrencyLabel.text
+        inputCurrencyLabel.text = outputCurrencyLabel3.text
+        outputCurrencyLabel3.text = tempCur
     }
+
     
-    @objc func currencyChanged(_ sender: UILabel) {
-        convert()
-    }
-    
-    func convert() {
-        let currencyApi = CurrencyApi()
-        currencyApi.apiChosenCurShortName1 = chosenCurShortName1
-        currencyApi.apiChosenCurShortName2 = chosenCurShortName2
-        currencyApi.apiInputTF = inputTF.text
-        currencyApi.apiChosenDate = currentDate
-        currencyApi.conversion { [weak self] convertResult in
-            self?.outputLabel.text = String(convertResult.result ?? 0)
+    @objc func addCurrency() {
+        if counterOfClick == 0 {
+            stackView2.isHidden = false
+            outputCurLabel2.isHidden = false
+            outputCurrencyLabel2.isHidden = false
+            outputCurButton2.isHidden = false
+            outputLabel2.isHidden = false
+            swapButton2.isHidden = false
+            counterOfClick+=1
+            
+            
+            addButton.snp.remakeConstraints { make in
+                make.leading.equalTo(view).inset(177)
+                make.top.equalTo(view).inset(471)
+                make.width.height.equalTo(37)
+            }
+            
+            buttonRateHistory.snp.remakeConstraints { make in
+                make.leading.equalTo(view).inset(16)
+                make.top.equalTo(view).inset(397)
+                make.height.equalTo(40)
+                make.width.equalTo(176)
+            }
+            
+            buttonDiagramPage.snp.remakeConstraints{ make in
+                make.leading.equalTo(view).inset(198)
+                make.top.equalTo(view).inset(397)
+                make.height.equalTo(40)
+                make.width.equalTo(176)
+            }
+        } else {
+            stackView3.isHidden = false
+            outputCurLabel3.isHidden = false
+            outputCurrencyLabel3.isHidden = false
+            outputCurButton3.isHidden = false
+            outputLabel3.isHidden = false
+            addButton.isHidden = true
+            swapButton3.isHidden = false
+            counterOfClick = 0
+            
+            buttonRateHistory.snp.remakeConstraints { make in
+                make.leading.equalTo(view).inset(16)
+                make.top.equalTo(view).inset(498)
+                make.height.equalTo(40)
+                make.width.equalTo(176)
+            }
+            
+            buttonDiagramPage.snp.remakeConstraints{ make in
+                make.leading.equalTo(view).inset(198)
+                make.top.equalTo(view).inset(498)
+                make.height.equalTo(40)
+                make.width.equalTo(176)
+            }
         }
     }
+
+    @objc
+    func convert() {
+        let currencyApi = CurrencyApi()
+        currencyApi.apiChosenCurShortName1 = chosenCurShortName
+        currencyApi.apiChosenCurShortName2 = chosenCurShortName1
+        currencyApi.apiChosenCurShortName3 = chosenCurShortName2
+        currencyApi.apiChosenCurShortName4 = chosenCurShortName3
+        
+        currencyApi.apiInputTF = inputTF.text
+        currencyApi.apiChosenDate = currentDate
+        currencyApi.conversion2 { [weak self] convertResult in
+            self?.outputLabel1.text = String(convertResult.result ?? 0)
+        }
+        currencyApi.conversion3 { [weak self] convertResult in
+            self?.outputLabel2.text = String(convertResult.result ?? 0)
+        }
+        currencyApi.conversion4 { [weak self] convertResult in
+            self?.outputLabel3.text = String(convertResult.result ?? 0)
+        }
+    }
+    
+    
     
     func hexStringToUIColor (hex:String) -> UIColor {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
