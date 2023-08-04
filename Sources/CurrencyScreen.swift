@@ -45,9 +45,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         findCur()
         
         backButton.backgroundColor = .white
+        backButton.layer.cornerRadius = 20
         backButton.setTitleColor(.black, for: .normal)
         let buttonBack = NSLocalizedString("buttonBack", comment: "")
         backButton.setTitle(buttonBack, for: .normal)
+        testGradientButton()
         backButton.addAction(UIAction { [weak self] _ in
             self?.dismiss(animated: true)
         }, for: .primaryActionTriggered)
@@ -116,6 +118,16 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         onCurrencySelectedShort4?(selectedCur2)
     }
     
+    func testGradientButton() -> Void {
+        let gradientColor = CAGradientLayer()
+        gradientColor.frame = backButton.frame
+        let color1 = UIColor(red: 183.0/255.0, green: 46.0/255.0, blue: 79.0/255.0, alpha: 1)
+        let color2 = UIColor(red: 232.0/255.0, green: 79.0/255.0, blue: 80.0/255.0, alpha: 1)
+        let color3 = UIColor(red: 145.0/255.0, green: 21.0/255.0, blue: 79.0/255.0, alpha: 1)
+        gradientColor.colors = [color1.cgColor,color2.cgColor,color3.cgColor]
+        self.backButton.layer.insertSublayer(gradientColor, at: 0)
+    }
+    
     private func findCur() {
         let stringUrl = "https://api.apilayer.com/fixer/symbols"
         guard let url = URL(string: stringUrl) else {
@@ -139,3 +151,4 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.reloadData()
     }
 }
+
