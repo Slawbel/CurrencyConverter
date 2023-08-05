@@ -97,7 +97,12 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
-        cell?.setup(text: symbols[indexPath.row].1)
+        let curShortNameFlag = ConverterScreen.getFlagToLabel(symbols[indexPath.row].0)
+        guard curShortNameFlag != nil else { return }
+        let textWithCurrencyAndFlag = symbols[indexPath.row].1
+        cell?.setup(text: textWithCurrencyAndFlag)
+        cell?.backgroundColor = .black
+        
         return cell!
     }
 
