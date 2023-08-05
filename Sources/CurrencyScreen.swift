@@ -121,11 +121,14 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     func testGradientButton() -> Void {
         let gradientColor = CAGradientLayer()
         gradientColor.frame = backButton.frame
+        gradientColor.locations = [0.0 , 1.0]
         let color1 = UIColor(red: 183.0/255.0, green: 46.0/255.0, blue: 79.0/255.0, alpha: 1)
         let color2 = UIColor(red: 232.0/255.0, green: 79.0/255.0, blue: 80.0/255.0, alpha: 1)
         let color3 = UIColor(red: 145.0/255.0, green: 21.0/255.0, blue: 79.0/255.0, alpha: 1)
         gradientColor.colors = [color1.cgColor,color2.cgColor,color3.cgColor]
+        gradientColor.frame = backButton.bounds
         self.backButton.layer.insertSublayer(gradientColor, at: 0)
+        self.backButton.layer.addSublayer(gradientColor)
     }
     
     private func findCur() {
