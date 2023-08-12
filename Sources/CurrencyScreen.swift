@@ -49,7 +49,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         backButton.setTitleColor(.black, for: .normal)
         let buttonBack = NSLocalizedString("buttonBack", comment: "")
         backButton.setTitle(buttonBack, for: .normal)
-        testGradientButton()
         backButton.addAction(UIAction { [weak self] _ in
             self?.dismiss(animated: true)
         }, for: .primaryActionTriggered)
@@ -97,8 +96,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
-        let curShortNameFlag = ConverterScreen.getFlagToLabel(symbols[indexPath.row].0)
-        guard curShortNameFlag != nil else { return }
+        //let curShortNameFlag = ConverterScreen.getFlagToLabel(symbols[indexPath.row].0)
+        //guard curShortNameFlag != nil else { return }
         let textWithCurrencyAndFlag = symbols[indexPath.row].1
         cell?.setup(text: textWithCurrencyAndFlag)
         cell?.backgroundColor = .black
@@ -158,5 +157,14 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         tableView.reloadData()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        testGradientButton()
+        
+        
+    }
 }
+
+
 
