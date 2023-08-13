@@ -128,7 +128,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         gradientColor.colors = [color1.cgColor,color2.cgColor,color3.cgColor]
         gradientColor.frame = backButton.bounds
         self.backButton.layer.insertSublayer(gradientColor, at: 0)
-        self.backButton.layer.addSublayer(gradientColor)
     }
     
     private func findCur() {
@@ -156,13 +155,15 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         testGradientButton()
         
-        backButton.backgroundColor = .white
         backButton.layer.cornerRadius = 20
         backButton.setTitleColor(.black, for: .normal)
         let buttonBack = NSLocalizedString("buttonBack", comment: "")
         backButton.setTitle(buttonBack, for: .normal)
+                
+        backButton.masksToBounds = true
     }
 }
 
