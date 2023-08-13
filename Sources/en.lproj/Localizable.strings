@@ -2,7 +2,7 @@
 "transfer" = " Rate history";
 "inputCurLabelText" = "Your currency type";
 "outputCurLabelText" = "Conveted currency type";
-"buttonBack" = "Select";
+"buttonBack" = "SELECT";
 "date" = "Date";
 "chooseStartAndEndDates" = "Select start and end dates";
 "convert" = "Convert";

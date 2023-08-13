@@ -120,12 +120,14 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func testGradientButton() -> Void {
         let gradientColor = CAGradientLayer()
-        gradientColor.frame = backButton.frame
+        gradientColor.startPoint = CGPoint(x: 1, y: 0.5)
+        gradientColor.endPoint = CGPoint(x: 0, y: 0.5)
         gradientColor.locations = [0.0 , 1.0]
-        let color1 = UIColor(red: 183.0/255.0, green: 46.0/255.0, blue: 79.0/255.0, alpha: 1)
-        let color2 = UIColor(red: 232.0/255.0, green: 79.0/255.0, blue: 80.0/255.0, alpha: 1)
-        let color3 = UIColor(red: 145.0/255.0, green: 21.0/255.0, blue: 79.0/255.0, alpha: 1)
-        gradientColor.colors = [color1.cgColor,color2.cgColor,color3.cgColor]
+        let color0 = UIColor(red: 8.0/255.0, green: 0.0/255.0, blue: 12.0/255.0, alpha: 1)
+        let color1 = UIColor(red: 197.0/255.0, green: 83.0/255.0, blue: 237.0/255.0, alpha: 1)
+        let color2 = UIColor(red: 237.0/255.0, green: 98.0/255.0, blue: 177.0/255.0, alpha: 1)
+        let color3 = UIColor(red: 255.0/255.0, green: 143.0/255.0, blue: 52.0/255.0, alpha: 1)
+        gradientColor.colors = [color0.cgColor, color1.cgColor,color2.cgColor,color3.cgColor]
         gradientColor.frame = backButton.bounds
         self.backButton.layer.insertSublayer(gradientColor, at: 0)
     }
@@ -159,6 +161,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         testGradientButton()
         
         backButton.layer.cornerRadius = 20
+        backButton.titleLabel!.font = UIFont(name: "DMSans-Regular", size: 16)
+        backButton.titleLabel?.textColor = .white
         backButton.setTitleColor(.black, for: .normal)
         let buttonBack = NSLocalizedString("buttonBack", comment: "")
         backButton.setTitle(buttonBack, for: .normal)
