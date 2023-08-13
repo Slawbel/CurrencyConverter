@@ -44,11 +44,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.dataSource = self
         findCur()
         
-        backButton.backgroundColor = .white
-        backButton.layer.cornerRadius = 20
-        backButton.setTitleColor(.black, for: .normal)
-        let buttonBack = NSLocalizedString("buttonBack", comment: "")
-        backButton.setTitle(buttonBack, for: .normal)
+        
         backButton.addAction(UIAction { [weak self] _ in
             self?.dismiss(animated: true)
         }, for: .primaryActionTriggered)
@@ -162,7 +158,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidAppear(animated)
         testGradientButton()
         
-        
+        backButton.backgroundColor = .white
+        backButton.layer.cornerRadius = 20
+        backButton.setTitleColor(.black, for: .normal)
+        let buttonBack = NSLocalizedString("buttonBack", comment: "")
+        backButton.setTitle(buttonBack, for: .normal)
     }
 }
 
