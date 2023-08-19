@@ -75,7 +75,9 @@ class ConverterScreen: UIViewController {
         stackView.layer.cornerRadius = 20
         
         inputCurLabel.textAlignment = .center
-        inputCurLabel.font = inputCurLabel.font.withSize(14)
+        
+        let font = UIFont(name: "DMSans-Regular", size: 14)
+        inputCurLabel.font = font
         inputCurLabel.textColor = .white
         inputCurLabel.backgroundColor = .clear
         inputCurLabel.text = NSLocalizedString("inputCurLabelText", comment: "")

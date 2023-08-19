@@ -4,7 +4,7 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>DMSans-Regular</string>
+		<string>DMSans-Regular.ttf</string>
 	</array>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
