@@ -161,8 +161,9 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         testGradientButton()
         
         backButton.layer.cornerRadius = 20
-        backButton.titleLabel?.font = UIFont(name: "DMSans-Regular", size: 30)
-        backButton.setTitleColor(.green, for: .normal)
+        backButton.titleLabel?.font = UIFont(name: "DMSans-Bold", size: 20)
+        print(backButton.titleLabel!.font!)
+        backButton.setTitleColor(.white, for: .normal)
         let buttonBack = NSLocalizedString("buttonBack", comment: "")
         backButton.setTitle(buttonBack, for: .normal)
                 
