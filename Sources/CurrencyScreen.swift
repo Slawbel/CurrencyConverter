@@ -5,7 +5,7 @@ import SwifterSwift
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private let nameOfScreen = UILabel()
     private let tableView = UITableView()
-    private let backButton = UIButton()
+    private var backButton = UIButton()
     private let search = UITextField()
     
     private var symbols = [(String, String)]()
@@ -161,11 +161,14 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         testGradientButton()
         
         backButton.layer.cornerRadius = 20
-        backButton.titleLabel?.font = UIFont(name: "DMSans-Bold", size: 20)
-        print(backButton.titleLabel!.font!)
-        backButton.setTitleColor(.white, for: .normal)
         let buttonBack = NSLocalizedString("buttonBack", comment: "")
-        backButton.setTitle(buttonBack, for: .normal)
+        let font1 = UIFont(name: "DMSans-Bold", size: 16)
+        let attributes1: [NSAttributedString.Key: Any] = [
+            .font: font1 ?? "DMSans-Regular",
+            .foregroundColor: UIColor.white,
+            .kern: 2]
+        let attributeButtonText = NSAttributedString(string: buttonBack, attributes: attributes1)
+        backButton.setAttributedTitle(attributeButtonText, for: .normal)
                 
         backButton.masksToBounds = true
     }
