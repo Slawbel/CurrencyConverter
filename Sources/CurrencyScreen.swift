@@ -2,11 +2,14 @@ import SnapKit
 import UIKit
 import SwifterSwift
 
-class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
+
+    
     private let nameOfScreen = UILabel()
     private let tableView = UITableView()
     private var backButton = UIButton()
-    private let search = UITextField()
+    private let searchContr = UISearchController(searchResultsController: nil)
+
     
     private var symbols = [(String, String)]()
     var onCurrencySelected1: ((String) -> Void)?
@@ -28,7 +31,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         nameOfScreen.text = NSLocalizedString("nameOfScreen", comment: "")
         nameOfScreen.font = nameOfScreen.font.withSize(24)
         
-        //search.keyboardType = .asciiCapableNumberPad
+        searchContr.searchResultsUpdater = self
+        searchContr.obscuresBackgroundDuringPresentation = false
+        searchContr.searchBar.placeholder = "Search"
+        navigationItem.searchController = searchContr
+        definesPresentationContext = true
+        
+        /*//search.keyboardType = .asciiCapableNumberPad
         search.keyboardAppearance = .dark
         let placeholderForSearchtTF = NSLocalizedString("searchCurrency", comment: "")
         search.textAlignment = .left
@@ -37,7 +46,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         //search.addTarget(self, action: #selector(CurrencyScreen.search), for: .editingChanged)
         search.attributedPlaceholder = NSAttributedString(
             string: placeholderForSearchtTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
-        )
+        )*/
         
         tableView.register(cellWithClass: MyTableViewCell.self)
         tableView.delegate = self
@@ -51,7 +60,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     
 
         view.addSubview(nameOfScreen)
-        view.addSubview(search)
+        //view.addSubview(searchContr)
         view.addSubview(tableView)
         view.addSubview(backButton)
 
@@ -63,12 +72,12 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.height.equalTo(40)
         }
         
-        search.snp.makeConstraints { make in
+        /*searchContr.snp.makeConstraints { make in
             make.top.equalTo(view).inset(114)
             make.leading.equalTo(view).inset(15)
             make.width.equalTo(360)
             make.height.equalTo(45)
-        }
+        }*/
         
         backButton.snp.makeConstraints { make in
             make.top.equalTo(view).inset(746)
@@ -84,9 +93,10 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.leading.trailing.equalTo(view).inset(21)
         }
         
-        
-
-        
+    }
+    
+    @objc(updateSearchResultsForSearchController:) func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else { return }
     }
 
 
@@ -116,7 +126,21 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         onCurrencySelectedShort2?(selectedCur2)
         onCurrencySelectedShort3?(selectedCur2)
         onCurrencySelectedShort4?(selectedCur2)
+        if let cell = tableView.cellForRow(at: indexPath) {
+            cell.accessoryType = .checkmark
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        }
     }
+    
+   
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath as IndexPath) {
+            cell.accessoryType = .none
+            
+        }
+    }
+    
     
     func testGradientButton() -> Void {
         let gradientColor = CAGradientLayer()
@@ -173,6 +197,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         backButton.masksToBounds = true
     }
 }
+
+extension CurrencyScreen {
+    
+    
+}
+
+
 
 
 
