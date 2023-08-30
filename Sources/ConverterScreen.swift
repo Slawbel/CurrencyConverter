@@ -148,7 +148,7 @@ class ConverterScreen: UIViewController {
         outputCurrencyLabel1.font = outputCurrencyLabel1.font.withSize(14)
         outputCurrencyLabel1.textColor = .white
         outputCurrencyLabel1.backgroundColor = .clear
-        
+
         outputCurButton1.layer.cornerRadius = 10
         let colorForOutputCurButton = hexStringToUIColor(hex: "#2B333A")
         outputCurButton1.backgroundColor = colorForOutputCurButton
@@ -408,6 +408,7 @@ class ConverterScreen: UIViewController {
             make.height.equalTo(25)
             make.top.equalTo(view).inset(94)
             make.leading.equalTo(view).inset(256)
+
         }
         
         inputTF.snp.makeConstraints { make in
@@ -701,7 +702,6 @@ class ConverterScreen: UIViewController {
         )
     }
     
-
     func flag(country:String) -> String {
         let base : UInt32 = 127397
         var s = ""
