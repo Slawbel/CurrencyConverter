@@ -12,6 +12,8 @@
 		9E25D2DC29998CA700293AB7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9E25D2D329998CA700293AB7 /* Localizable.strings */; };
 		9E25D2DE29998CA700293AB7 /* RateHistoryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D629998CA700293AB7 /* RateHistoryPage.swift */; };
 		9E25D2DF29998CA700293AB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D829998CA700293AB7 /* AppDelegate.swift */; };
+		9EFEB4852A91413D00860A54 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9EFEB4842A91413D00860A54 /* DMSans-Regular.ttf */; };
+		A22FC4942A9FD5420037B6D6 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A22FC4932A9FD5420037B6D6 /* DMSans-Bold.ttf */; };
 		A2B496F5299FBDD00017A82A /* CurrencyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */; };
 		A2B496F729A2C5200017A82A /* TableViewCellForCurrencyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */; };
 		A2B496FB29A802A30017A82A /* CurData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496FA29A802A20017A82A /* CurData.swift */; };
@@ -36,6 +38,8 @@
 		9E25D2D729998CA700293AB7 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9E25D2D829998CA700293AB7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E25D2D929998CA700293AB7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9EFEB4842A91413D00860A54 /* DMSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Regular.ttf"; sourceTree = "<group>"; };
+		A22FC4932A9FD5420037B6D6 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DMSans-Bold.ttf"; path = "../../../Downloads/DM_Sans 2/static/DMSans-Bold.ttf"; sourceTree = "<group>"; };
 		A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyScreen.swift; sourceTree = "<group>"; };
 		A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellForCurrencyScreen.swift; sourceTree = "<group>"; };
 		A2B496FA29A802A20017A82A /* CurData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurData.swift; sourceTree = "<group>"; };
@@ -82,6 +86,7 @@
 		9E25D2D029998CA700293AB7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				9EFEB4832A91413D00860A54 /* Fonts */,
 				9E25D2D129998CA700293AB7 /* Media.xcassets */,
 				A2B4970729B2B31D0017A82A /* ConvertResult.swift */,
 				A2EA87572A23E2FA00AAC943 /* CurrencyApi.swift */,
@@ -99,6 +104,15 @@
 				9E25D2D929998CA700293AB7 /* Info.plist */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		9EFEB4832A91413D00860A54 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				9EFEB4842A91413D00860A54 /* DMSans-Regular.ttf */,
+				A22FC4932A9FD5420037B6D6 /* DMSans-Bold.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		A2B496FF29AAC9660017A82A /* Frameworks */ = {
@@ -179,8 +193,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EFEB4852A91413D00860A54 /* DMSans-Regular.ttf in Resources */,
 				9E25D2DC29998CA700293AB7 /* Localizable.strings in Resources */,
 				9E25D2DA29998CA700293AB7 /* Media.xcassets in Resources */,
+				A22FC4942A9FD5420037B6D6 /* DMSans-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
