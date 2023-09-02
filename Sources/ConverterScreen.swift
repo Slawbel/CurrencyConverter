@@ -166,7 +166,7 @@ class ConverterScreen: UIViewController {
                 } else { return }
             }
             currencyScreen.modalPresentationStyle = .fullScreen
-            self.present(currencyScreen, animated: true)
+            self.navigationController?.pushViewController(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
         
         outputLabel1.backgroundColor = .clear

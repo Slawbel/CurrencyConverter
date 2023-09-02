@@ -8,7 +8,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     private let nameOfScreen = UILabel()
     private let tableView = UITableView()
     private var backButton = UIButton()
-    private let searchContr = UISearchController(searchResultsController: nil)
+    private lazy var searchContr = UISearchController(searchResultsController: self)
 
     
     private var symbols = [(String, String)]()
