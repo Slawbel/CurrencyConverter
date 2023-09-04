@@ -37,16 +37,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         navigationItem.searchController = searchContr
         definesPresentationContext = true
         
-        /*//search.keyboardType = .asciiCapableNumberPad
-        search.keyboardAppearance = .dark
-        let placeholderForSearchtTF = NSLocalizedString("searchCurrency", comment: "")
-        search.textAlignment = .left
-        search.backgroundColor = .clear
-        search.textColor = .white
-        //search.addTarget(self, action: #selector(CurrencyScreen.search), for: .editingChanged)
-        search.attributedPlaceholder = NSAttributedString(
-            string: placeholderForSearchtTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
-        )*/
         
         tableView.register(cellWithClass: MyTableViewCell.self)
         tableView.delegate = self
@@ -72,12 +62,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.height.equalTo(40)
         }
         
-        /*searchContr.snp.makeConstraints { make in
-            make.top.equalTo(view).inset(114)
-            make.leading.equalTo(view).inset(15)
-            make.width.equalTo(360)
-            make.height.equalTo(45)
-        }*/
         
         backButton.snp.makeConstraints { make in
             make.top.equalTo(view).inset(746)
@@ -183,6 +167,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidAppear(animated)
         
         testGradientButton()
+        
+        let colorForSearchBar = ConverterScreen().hexStringToUIColor(hex: "#181B20")
+        searchContr.searchBar.searchTextField.backgroundColor = colorForSearchBar
+        searchContr.searchBar.layerCornerRadius = 20
+        let colorForSearchBarPlaceholder = ConverterScreen().hexStringToUIColor(hex: "#646464")
+        searchContr.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("searchCurrency", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : colorForSearchBarPlaceholder])
+        searchContr.searchBar.textField?.textColor = .white
         
         backButton.layer.cornerRadius = 20
         let buttonBack = NSLocalizedString("buttonBack", comment: "")
