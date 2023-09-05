@@ -168,12 +168,14 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         testGradientButton()
         
+        searchContr.searchBar.searchTextField.layer.cornerRadius = 20
+        searchContr.searchBar.searchTextField.layer.masksToBounds = true
         let colorForSearchBar = ConverterScreen().hexStringToUIColor(hex: "#181B20")
         searchContr.searchBar.searchTextField.backgroundColor = colorForSearchBar
-        searchContr.searchBar.layerCornerRadius = 20
         let colorForSearchBarPlaceholder = ConverterScreen().hexStringToUIColor(hex: "#646464")
         searchContr.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("searchCurrency", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : colorForSearchBarPlaceholder])
         searchContr.searchBar.textField?.textColor = .white
+        
         
         backButton.layer.cornerRadius = 20
         let buttonBack = NSLocalizedString("buttonBack", comment: "")
