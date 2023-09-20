@@ -44,19 +44,20 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         findCur()
         
         
+        
         backButton.addAction(UIAction { [weak self] _ in
             self?.dismiss(animated: true)
         }, for: .primaryActionTriggered)
+        
+        
     
-
         view.addSubview(nameOfScreen)
-        //view.addSubview(searchContr)
         view.addSubview(tableView)
         view.addSubview(backButton)
 
         
         nameOfScreen.snp.makeConstraints { make in
-            make.top.equalTo(view).inset(58)
+            make.top.equalTo(view).inset(50)
             make.leading.equalTo(view).inset(105)
             make.width.equalTo(180)
             make.height.equalTo(40)
@@ -71,7 +72,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
 
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(view).inset(183)
+            make.top.equalTo(view).inset(150)
             make.height.equalTo(529)
             make.width.equalTo(336)
             make.leading.trailing.equalTo(view).inset(21)
@@ -80,18 +81,16 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     @objc(updateSearchResultsForSearchController:) func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else { return }
+        guard searchController.searchBar.text != nil else { return }
     }
 
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
-        //let curShortNameFlag = ConverterScreen.getFlagToLabel(symbols[indexPath.row].0)
-        //guard curShortNameFlag != nil else { return }
         let textWithCurrencyAndFlag = symbols[indexPath.row].1
         cell?.setup(text: textWithCurrencyAndFlag)
         cell?.backgroundColor = .black
-        
+                
         return cell!
     }
 
@@ -160,6 +159,10 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         symbols = curData.symbols.map { $0 }
         symbols.sort{ $0.1 < $1.1 }
         
+        //adding of letters for searching of currencies
+        
+        //print(symbols)
+        
         tableView.reloadData()
     }
     
@@ -189,12 +192,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                 
         backButton.masksToBounds = true
     }
+    
+    
+    
+
 }
 
-extension CurrencyScreen {
-    
-    
-}
+
 
 
 

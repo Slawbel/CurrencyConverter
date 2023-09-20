@@ -7,7 +7,7 @@ class MyTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        fullName.textAlignment = .center
+        fullName.textAlignment = .left
         fullName.numberOfLines = 0
         fullName.backgroundColor = .black
         fullName.textColor = .white
