@@ -2,13 +2,13 @@ import SnapKit
 import UIKit
 import SwifterSwift
 
-class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
+class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     
     private let nameOfScreen = UILabel()
     private let tableView = UITableView()
     private var backButton = UIButton()
-    private lazy var searchContr = UISearchController(searchResultsController: self)
+    private lazy var searchContr = UISearchTextField()
 
     
     private var symbols = [(String, String)]()
@@ -31,29 +31,20 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         nameOfScreen.text = NSLocalizedString("nameOfScreen", comment: "")
         nameOfScreen.font = nameOfScreen.font.withSize(24)
         
-        searchContr.searchResultsUpdater = self
-        searchContr.obscuresBackgroundDuringPresentation = false
-        searchContr.searchBar.placeholder = "Search"
-        navigationItem.searchController = searchContr
-        definesPresentationContext = true
-        
-        
         tableView.register(cellWithClass: MyTableViewCell.self)
         tableView.delegate = self
         tableView.dataSource = self
         findCur()
         
-        
-        
-        backButton.addAction(UIAction { [weak self] _ in
-            self?.dismiss(animated: true)
-        }, for: .primaryActionTriggered)
+        let colorForSearchContr = ConverterScreen().hexStringToUIColor(hex: "#181B20")
+        searchContr.backgroundColor = colorForSearchContr
         
         
     
         view.addSubview(nameOfScreen)
         view.addSubview(tableView)
         view.addSubview(backButton)
+        view.addSubview(searchContr)
 
         
         nameOfScreen.snp.makeConstraints { make in
@@ -61,6 +52,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.leading.equalTo(view).inset(105)
             make.width.equalTo(180)
             make.height.equalTo(40)
+        }
+        
+        searchContr.snp.makeConstraints{ make in
+            make.top.equalTo(view).inset(114)
+            make.leading.equalTo(view).inset(15)
+            make.width.equalTo(360)
+            make.height.equalTo(45)
         }
         
         
@@ -80,9 +78,9 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    @objc(updateSearchResultsForSearchController:) func updateSearchResults(for searchController: UISearchController) {
+    /*@objc(updateSearchResultsForSearchController:) func updateSearchResults(for searchController: UISearchController) {
         guard searchController.searchBar.text != nil else { return }
-    }
+    }*/
 
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -159,10 +157,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         symbols = curData.symbols.map { $0 }
         symbols.sort{ $0.1 < $1.1 }
         
-        //adding of letters for searching of currencies
-        
-        //print(symbols)
-        
         tableView.reloadData()
     }
     
@@ -171,13 +165,16 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         testGradientButton()
         
-        searchContr.searchBar.searchTextField.layer.cornerRadius = 20
-        searchContr.searchBar.searchTextField.layer.masksToBounds = true
-        let colorForSearchBar = ConverterScreen().hexStringToUIColor(hex: "#181B20")
-        searchContr.searchBar.searchTextField.backgroundColor = colorForSearchBar
-        let colorForSearchBarPlaceholder = ConverterScreen().hexStringToUIColor(hex: "#646464")
-        searchContr.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("searchCurrency", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : colorForSearchBarPlaceholder])
-        searchContr.searchBar.textField?.textColor = .white
+        searchContr.layerCornerRadius = 20
+        
+        let colorForSearchPlaceholder = ConverterScreen().hexStringToUIColor(hex: "#646464")
+        searchContr.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("searchCurrency", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : colorForSearchPlaceholder])
+        searchContr.font = UIFont(name: "DMSans-Regular", size: 14)
+        searchContr.textColor = .white
+        
+        backButton.addAction(UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
+        }, for: .primaryActionTriggered)
         
         
         backButton.layer.cornerRadius = 20

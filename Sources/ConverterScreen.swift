@@ -128,8 +128,7 @@ class ConverterScreen: UIViewController {
         inputTF.textColor = .white
         inputTF.addTarget(self, action: #selector(ConverterScreen.convert), for: .editingChanged)
         inputTF.attributedPlaceholder = NSAttributedString(
-            string: placeholderForInputTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
-        )
+            string: placeholderForInputTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         
         // currency #1
         stackView1.axis = .vertical
