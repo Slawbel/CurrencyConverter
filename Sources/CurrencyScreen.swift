@@ -36,17 +36,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.dataSource = self
         findCur()
         
-        let colorForSearchContr = ConverterScreen().hexStringToUIColor(hex: "#181B20")
-        searchContr.backgroundColor = colorForSearchContr
         
         
-    
         view.addSubview(nameOfScreen)
         view.addSubview(tableView)
         view.addSubview(backButton)
         view.addSubview(searchContr)
 
-        
         nameOfScreen.snp.makeConstraints { make in
             make.top.equalTo(view).inset(50)
             make.leading.equalTo(view).inset(105)
@@ -61,7 +57,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.height.equalTo(45)
         }
         
-        
         backButton.snp.makeConstraints { make in
             make.top.equalTo(view).inset(746)
             make.leading.equalTo(view).inset(15)
@@ -75,12 +70,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.width.equalTo(336)
             make.leading.trailing.equalTo(view).inset(21)
         }
-        
     }
-    
-    /*@objc(updateSearchResultsForSearchController:) func updateSearchResults(for searchController: UISearchController) {
-        guard searchController.searchBar.text != nil else { return }
-    }*/
 
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -94,6 +84,17 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         symbols.count
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return symbols.count
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
+        let lbl = UILabel(frame: CGRect(x: 15, y: 0, width: view.frame.width - 15, height: 40))
+        lbl.text = symbols[section].0
+        return view
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -165,12 +166,15 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         testGradientButton()
         
-        searchContr.layerCornerRadius = 20
+        tableView.backgroundColor = .black
         
+        searchContr.layerCornerRadius = 20
         let colorForSearchPlaceholder = ConverterScreen().hexStringToUIColor(hex: "#646464")
         searchContr.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("searchCurrency", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : colorForSearchPlaceholder])
         searchContr.font = UIFont(name: "DMSans-Regular", size: 14)
         searchContr.textColor = .white
+        let colorForSearchContr = ConverterScreen().hexStringToUIColor(hex: "#181B20")
+        searchContr.backgroundColor = colorForSearchContr
         
         backButton.addAction(UIAction { [weak self] _ in
             self?.dismiss(animated: true)
@@ -189,10 +193,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                 
         backButton.masksToBounds = true
     }
-    
-    
-    
-
 }
 
 
