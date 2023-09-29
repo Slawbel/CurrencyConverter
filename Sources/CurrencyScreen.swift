@@ -9,6 +9,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     private let tableView = UITableView()
     private var backButton = UIButton()
     private lazy var searchContr = UISearchTextField()
+    private var dictCurrency: Dictionary<Character,[String]> = [:]
 
     
     private var symbols = [(String, String)]()
@@ -31,10 +32,32 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         nameOfScreen.text = NSLocalizedString("nameOfScreen", comment: "")
         nameOfScreen.font = nameOfScreen.font.withSize(24)
         
+
+        
+        findCur()
+        
+        // create dictionary with keys as the first letter of currencies
+        var currencyDict = Set<String>()
+        
+        for n in symbols {
+            currencyDict.insert(n.1)
+        }
+        for n in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
+            var tempArray: Array<String> = []
+            for m in currencyDict {
+                let letter = m[m.startIndex]
+                if n == letter {
+                    tempArray.append(m)
+                }
+            }
+            dictCurrency[n] = tempArray
+        }
+        
+        
         tableView.register(cellWithClass: MyTableViewCell.self)
         tableView.delegate = self
         tableView.dataSource = self
-        findCur()
+        
         
         
         
