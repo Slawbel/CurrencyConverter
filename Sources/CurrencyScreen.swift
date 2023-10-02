@@ -38,7 +38,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         // create dictionary with keys as the first letter of currencies
         var currencyDict = Set<String>()
-        
+
         for n in symbols {
             currencyDict.insert(n.1)
         }
@@ -52,7 +52,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             dictCurrency[n] = tempArray
         }
-        
+
         
         tableView.register(cellWithClass: MyTableViewCell.self)
         tableView.delegate = self
@@ -105,12 +105,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell!
     }
 
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        symbols.count
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let key = Array(dictCurrency.keys)[section]
+        return dictCurrency[key]?.count ?? 0
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return symbols.count
+        return dictCurrency.keys.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
