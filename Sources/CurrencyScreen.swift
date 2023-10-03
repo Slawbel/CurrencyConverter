@@ -12,6 +12,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     private var dictCurrency: Dictionary<Character,[String]> = [:]
 
     
+    
     private var symbols = [(String, String)]()
     var onCurrencySelected1: ((String) -> Void)?
     var onCurrencySelected2: ((String) -> Void)?
@@ -52,7 +53,15 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             dictCurrency[n] = tempArray
         }
-
+        
+        // removing of empty elements and its key
+        for i in dictCurrency.keys {
+            if dictCurrency[i] == [] {
+                dictCurrency.removeValue(forKey: i)
+            }
+        }
+  
+        
         
         tableView.register(cellWithClass: MyTableViewCell.self)
         tableView.delegate = self
@@ -88,7 +97,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
 
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(view).inset(150)
+            make.top.equalTo(view).inset(160)
             make.height.equalTo(529)
             make.width.equalTo(336)
             make.leading.trailing.equalTo(view).inset(21)
@@ -98,8 +107,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
-        let textWithCurrencyAndFlag = symbols[indexPath.row].1
-        cell?.setup(text: textWithCurrencyAndFlag)
+        let keyArray = Array(dictCurrency.keys)
+        let sectionKey = keyArray[indexPath.section]
+        let contactSection = dictCurrency[sectionKey]
+        let contact = contactSection?[indexPath.row]
+        cell?.setup(text: contact ?? "")
         cell?.backgroundColor = .black
                 
         return cell!
@@ -116,8 +128,14 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
-        let lbl = UILabel(frame: CGRect(x: 15, y: 0, width: view.frame.width - 15, height: 40))
-        lbl.text = symbols[section].0
+        let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - 15, height: 40))
+        let key = Array(dictCurrency.keys)
+        lbl.text = String(key[section])
+        lbl.font = UIFont(name: "DMSans-Regular", size: 20)
+        let colorForSectionTitle = ConverterScreen().hexStringToUIColor(hex: "#646464")
+        lbl.textColor = colorForSectionTitle
+        view.addSubview(lbl)
+  
         return view
     }
 
