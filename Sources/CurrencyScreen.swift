@@ -51,7 +51,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                     tempArray.append(m)
                 }
             }
-            dictCurrency[n] = tempArray
+            dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
         }
         
         // removing of empty elements and its key
