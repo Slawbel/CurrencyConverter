@@ -22,6 +22,9 @@
 		A2C48E9329E09FD8004A5594 /* DiagramPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C48E9229E09FD8004A5594 /* DiagramPage.swift */; };
 		A2C48EAD29E47990004A5594 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = A2C48EAC29E47990004A5594 /* Charts */; };
 		A2C48EAF29E5C412004A5594 /* DiagramResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C48EAE29E5C412004A5594 /* DiagramResult.swift */; };
+		A2EA57312AD2DA6F0043EB27 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = A2EA57302AD2DA6F0043EB27 /* Collections */; };
+		A2EA57332AD2DA6F0043EB27 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = A2EA57322AD2DA6F0043EB27 /* DequeModule */; };
+		A2EA57352AD2DA6F0043EB27 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = A2EA57342AD2DA6F0043EB27 /* OrderedCollections */; };
 		A2EA87582A23E2FA00AAC943 /* CurrencyApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA87572A23E2FA00AAC943 /* CurrencyApi.swift */; };
 		A2F83E20299AE3AA00FAE989 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A2F83E1F299AE3AA00FAE989 /* SnapKit */; };
 		A2FEBA5529C11BB7006363DB /* RateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FEBA5429C11BB7006363DB /* RateData.swift */; };
@@ -58,8 +61,11 @@
 			files = (
 				A2F83E20299AE3AA00FAE989 /* SnapKit in Frameworks */,
 				A2B4970629AACC060017A82A /* SwifterSwift in Frameworks */,
+				A2EA57312AD2DA6F0043EB27 /* Collections in Frameworks */,
 				A2FEBA7A29D4EF99006363DB /* Swiftstraints in Frameworks */,
 				A2C48EAD29E47990004A5594 /* Charts in Frameworks */,
+				A2EA57352AD2DA6F0043EB27 /* OrderedCollections in Frameworks */,
+				A2EA57332AD2DA6F0043EB27 /* DequeModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +149,9 @@
 				A2B4970529AACC060017A82A /* SwifterSwift */,
 				A2FEBA7929D4EF99006363DB /* Swiftstraints */,
 				A2C48EAC29E47990004A5594 /* Charts */,
+				A2EA57302AD2DA6F0043EB27 /* Collections */,
+				A2EA57322AD2DA6F0043EB27 /* DequeModule */,
+				A2EA57342AD2DA6F0043EB27 /* OrderedCollections */,
 			);
 			productName = CurrencyConverter;
 			productReference = 9E25D2B729998C2B00293AB7 /* CurrencyConverter.app */;
@@ -178,6 +187,7 @@
 				A2B4970429AACC060017A82A /* XCRemoteSwiftPackageReference "SwifterSwift" */,
 				A2FEBA7829D4EF99006363DB /* XCRemoteSwiftPackageReference "Swiftstraints" */,
 				A2C48EAB29E47990004A5594 /* XCRemoteSwiftPackageReference "Charts" */,
+				A2EA572F2AD2DA6F0043EB27 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = 9E25D2B829998C2B00293AB7 /* Products */;
 			projectDirPath = "";
@@ -439,6 +449,14 @@
 				minimumVersion = 4.1.0;
 			};
 		};
+		A2EA572F2AD2DA6F0043EB27 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.5;
+			};
+		};
 		A2F83E1E299AE3AA00FAE989 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -467,6 +485,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A2C48EAB29E47990004A5594 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = Charts;
+		};
+		A2EA57302AD2DA6F0043EB27 /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2EA572F2AD2DA6F0043EB27 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
+		A2EA57322AD2DA6F0043EB27 /* DequeModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2EA572F2AD2DA6F0043EB27 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = DequeModule;
+		};
+		A2EA57342AD2DA6F0043EB27 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2EA572F2AD2DA6F0043EB27 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
 		};
 		A2F83E1F299AE3AA00FAE989 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

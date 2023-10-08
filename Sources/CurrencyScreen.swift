@@ -1,6 +1,8 @@
 import SnapKit
 import UIKit
 import SwifterSwift
+import OrderedCollections
+
 
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -9,7 +11,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     private let tableView = UITableView()
     private var backButton = UIButton()
     private lazy var searchContr = UISearchTextField()
-    private var dictCurrency: Dictionary<Character,[String]> = [:]
+    private var dictCurrency: OrderedDictionary<Character,[String]> = [:]
 
     
     
@@ -49,10 +51,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                 let letter = m[m.startIndex]
                 if n == letter {
                     tempArray.append(m)
+                    
                 }
             }
             dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
         }
+        
+        
         
         // removing of empty elements and its key
         for i in dictCurrency.keys {
@@ -113,6 +118,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         let contact = contactSection?[indexPath.row]
         cell?.setup(text: contact ?? "")
         cell?.backgroundColor = .black
+        cell?.accessoryView = CheckMarkView.init()
+        cell?.accessoryView?.isHidden = true
                 
         return cell!
     }
@@ -154,26 +161,28 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             cell.accessoryType = .checkmark
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
         }
+        tableView.cellForRow(at: indexPath)?.accessoryView?.isHidden = false
+
     }
-    
-   
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath as IndexPath) {
             cell.accessoryType = .none
-            
         }
+        tableView.cellForRow(at: indexPath)?.accessoryView?.isHidden = true
     }
+    
+    
     
     
     func testGradientButton() -> Void {
         let gradientColor = CAGradientLayer()
-        gradientColor.startPoint = CGPoint(x: 1, y: 0.5)
+        gradientColor.startPoint = CGPoint(x: 1, y: 0)
         gradientColor.endPoint = CGPoint(x: 0, y: 0.5)
         gradientColor.locations = [0.0 , 1.0]
-        let color0 = UIColor(red: 8.0/255.0, green: 0.0/255.0, blue: 12.0/255.0, alpha: 1)
-        let color1 = UIColor(red: 197.0/255.0, green: 83.0/255.0, blue: 237.0/255.0, alpha: 1)
-        let color2 = UIColor(red: 237.0/255.0, green: 98.0/255.0, blue: 177.0/255.0, alpha: 1)
+        let color0 = UIColor(red: 77.0/255.0, green: 30.0/255.0, blue: 95.0/255.0, alpha: 1)
+        let color1 = UIColor(red: 237.0/255.0, green: 98.0/255.0, blue: 177.0/255.0, alpha: 1)
+        let color2 = UIColor(red: 249.0/255.0, green: 128.0/255.0, blue: 93.0/255.0, alpha: 1)
         let color3 = UIColor(red: 255.0/255.0, green: 143.0/255.0, blue: 52.0/255.0, alpha: 1)
         gradientColor.colors = [color0.cgColor, color1.cgColor,color2.cgColor,color3.cgColor]
         gradientColor.frame = backButton.bounds
@@ -235,6 +244,23 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                 
         backButton.masksToBounds = true
     }
+    
+    
+    class CheckMarkView: UIView {
+        override init(frame: CGRect) {
+            super.init(frame: frame) // calls designated initializer
+            let img = UIImage(named: "circle.png") //replace with your image name
+            let imageView: UIImageView = UIImageView(image: img)
+            self.addSubview(imageView)
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+
+    
+    
 }
 
 
