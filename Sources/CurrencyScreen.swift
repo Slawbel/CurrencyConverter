@@ -72,9 +72,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.delegate = self
         tableView.dataSource = self
         
-        
-        
-        
         view.addSubview(nameOfScreen)
         view.addSubview(tableView)
         view.addSubview(backButton)
@@ -117,6 +114,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         let contactSection = dictCurrency[sectionKey]
         let contact = contactSection?[indexPath.row]
         cell?.setup(text: contact ?? "")
+        
         cell?.backgroundColor = .black
         cell?.accessoryView = CheckMarkView.init()
         cell?.accessoryView?.isHidden = true
@@ -162,7 +160,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
         }
         tableView.cellForRow(at: indexPath)?.accessoryView?.isHidden = false
-
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -245,22 +242,17 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         backButton.masksToBounds = true
     }
     
-    
     class CheckMarkView: UIView {
         override init(frame: CGRect) {
             super.init(frame: frame) // calls designated initializer
-            let img = UIImage(named: "circle.png") //replace with your image name
+            let img = UIImage(named: "Ellipse61") //replace with your image name
             let imageView: UIImageView = UIImageView(image: img)
             self.addSubview(imageView)
         }
-        
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
     }
-
-    
-    
 }
 
 
