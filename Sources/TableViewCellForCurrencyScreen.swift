@@ -19,6 +19,7 @@ class MyTableViewCell: UITableViewCell {
         contentView.addSubview(fullName)
         contentView.addSubview(checkmImage)
 
+        fullName.translatesAutoresizingMaskIntoConstraints = false
         checkmImage.translatesAutoresizingMaskIntoConstraints = false
         
         let viewsDict = [
