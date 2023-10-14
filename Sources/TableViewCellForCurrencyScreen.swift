@@ -13,37 +13,22 @@ class MyTableViewCell: UITableViewCell {
         fullName.numberOfLines = 0
         fullName.backgroundColor = .black
         fullName.textColor = .white
-        
-        
-        
+
         contentView.addSubview(fullName)
         contentView.addSubview(checkmImage)
 
-        fullName.translatesAutoresizingMaskIntoConstraints = false
-        checkmImage.translatesAutoresizingMaskIntoConstraints = false
-        
-        let viewsDict = [
-                   "image" : checkmImage,
-                   "fullName" : fullName,
-                   ] as [String : Any]
-        
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[image]", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[fullName]-[image]-|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[fullName]", options: [], metrics: nil, views: viewsDict))
+        fullName.snp.makeConstraints { make in
+            make.leading.top.bottom.equalToSuperview()
+        }
 
-        
-
-        /*fullName.snp.makeConstraints { make in
-            make.leading.equalTo(contentView)
-            make.trailing.equalTo(contentView).inset(50)
-            make.bottom.equalTo(contentView)
-        }*/
-        
-        
+        checkmImage.snp.makeConstraints { make in
+            make.trailing.centerY.equalToSuperview()
+        }
     }
     
-    func setup(text: String) {
+    func setup(text: String, isChecked: Bool) {
         fullName.text = text
+        checkmImage.image = isChecked ? .init(named: "Ellipse61") : .init(named: "Ellipse59")
     }
 
     

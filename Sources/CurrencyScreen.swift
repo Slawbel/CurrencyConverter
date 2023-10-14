@@ -115,7 +115,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             let sectionKey = keyArray[indexPath.section]
             let contactSection = dictCurrency[sectionKey]
             let contact = contactSection?[indexPath.row]
-            cell?.setup(text: contact ?? "")
+            cell?.setup(text: contact ?? "", isChecked: true)
             cell?.backgroundColor = .black
             let image = UIImage(named: "Ellipse59")
             cell?.checkmImage = UIImageView(image: image)
