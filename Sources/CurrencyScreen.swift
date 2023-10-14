@@ -8,10 +8,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
     
     private let nameOfScreen = UILabel()
-    private let tableView = UITableView()
+    private var tableView = UITableView()
     private var backButton = UIButton()
     private lazy var searchContr = UISearchTextField()
     private var dictCurrency: OrderedDictionary<Character,[String]> = [:]
+  
 
     
     
@@ -35,7 +36,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         nameOfScreen.text = NSLocalizedString("nameOfScreen", comment: "")
         nameOfScreen.font = nameOfScreen.font.withSize(24)
         
-
+        tableView.dataSource = self
+        tableView.delegate = self
         
         findCur()
         
@@ -108,18 +110,15 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
         let keyArray = Array(dictCurrency.keys)
-        let sectionKey = keyArray[indexPath.section]
-        let contactSection = dictCurrency[sectionKey]
-        let contact = contactSection?[indexPath.row]
-        cell?.setup(text: contact ?? "")
-        
-        cell?.backgroundColor = .black
-        cell?.accessoryView = CheckMarkView.init()
-        cell?.accessoryView?.isHidden = true
-                
-        return cell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
+            let sectionKey = keyArray[indexPath.section]
+            let contactSection = dictCurrency[sectionKey]
+            let contact = contactSection?[indexPath.row]
+            cell?.setup(text: contact ?? "")
+            cell?.backgroundColor = .black
+                       
+            return cell!
     }
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -166,9 +165,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         if let cell = tableView.cellForRow(at: indexPath as IndexPath) {
             cell.accessoryType = .none
         }
-        tableView.cellForRow(at: indexPath)?.accessoryView?.isHidden = true
     }
-    
     
     
     
@@ -240,18 +237,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         backButton.setAttributedTitle(attributeButtonText, for: .normal)
                 
         backButton.masksToBounds = true
-    }
-    
-    class CheckMarkView: UIView {
-        override init(frame: CGRect) {
-            super.init(frame: frame) // calls designated initializer
-            let img = UIImage(named: "Ellipse61") //replace with your image name
-            let imageView: UIImageView = UIImageView(image: img)
-            self.addSubview(imageView)
-        }
-        required init?(coder aDecoder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
     }
 }
 
