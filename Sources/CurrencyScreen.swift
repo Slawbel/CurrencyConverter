@@ -117,6 +117,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             let contact = contactSection?[indexPath.row]
             cell?.setup(text: contact ?? "")
             cell?.backgroundColor = .black
+            let image = UIImage(named: "Ellipse59")
+            cell?.checkmImage = UIImageView(image: image)
                        
             return cell!
     }
