@@ -28,7 +28,7 @@ class MyTableViewCell: UITableViewCell {
     
     func setup(text: String, isChecked: Bool) {
         fullName.text = text
-        checkmImage.image = isChecked ? .init(named: "Ellipse61") : .init(named: "Ellipse59")
+        checkmImage.image = isChecked ? .init(named: "Ellipse59") : .init(named: "Ellipse61")
     }
 
     

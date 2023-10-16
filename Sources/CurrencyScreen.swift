@@ -12,6 +12,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     private var backButton = UIButton()
     private lazy var searchContr = UISearchTextField()
     private var dictCurrency: OrderedDictionary<Character,[String]> = [:]
+    private var chosenRow: IndexPath = []
   
 
     
@@ -112,15 +113,16 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let keyArray = Array(dictCurrency.keys)
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
-            let sectionKey = keyArray[indexPath.section]
-            let contactSection = dictCurrency[sectionKey]
-            let contact = contactSection?[indexPath.row]
+        let sectionKey = keyArray[indexPath.section]
+        let contactSection = dictCurrency[sectionKey]
+        let contact = contactSection?[indexPath.row]
+        if indexPath != chosenRow {
             cell?.setup(text: contact ?? "", isChecked: true)
-            cell?.backgroundColor = .black
-            let image = UIImage(named: "Ellipse59")
-            cell?.checkmImage = UIImageView(image: image)
-                       
-            return cell!
+        } else {
+            cell?.setup(text: contact ?? "", isChecked: false)
+        }
+        cell?.backgroundColor = .black
+        return cell!
     }
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -156,17 +158,18 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         onCurrencySelectedShort2?(selectedCur2)
         onCurrencySelectedShort3?(selectedCur2)
         onCurrencySelectedShort4?(selectedCur2)
-        if let cell = tableView.cellForRow(at: indexPath) {
-            cell.accessoryType = .checkmark
-            cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        }
-        tableView.cellForRow(at: indexPath)?.accessoryView?.isHidden = false
+        chosenRow = indexPath
+        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath as IndexPath) {
             cell.accessoryType = .none
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 40
     }
     
     
