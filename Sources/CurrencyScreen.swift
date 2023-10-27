@@ -1,11 +1,12 @@
 import SnapKit
+import CoreData
 import UIKit
 import SwifterSwift
 import OrderedCollections
 
 
-class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     private let nameOfScreen = UILabel()
     private var tableView = UITableView()
@@ -14,9 +15,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     private var dictCurrency: OrderedDictionary<Character,[String]> = [:]
     private var chosenRow: IndexPath = []
   
-
-    
-    
     private var symbols = [(String, String)]()
     var onCurrencySelected1: ((String) -> Void)?
     var onCurrencySelected2: ((String) -> Void)?
@@ -26,7 +24,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     var onCurrencySelectedShort2: ((String) -> Void)?
     var onCurrencySelectedShort3: ((String) -> Void)?
     var onCurrencySelectedShort4: ((String) -> Void)?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -207,8 +204,9 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         symbols = curData.symbols.map { $0 }
         symbols.sort{ $0.1 < $1.1 }
-        
         tableView.reloadData()
+        
+        createData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -242,6 +240,25 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         backButton.setAttributedTitle(attributeButtonText, for: .normal)
                 
         backButton.masksToBounds = true
+    }
+    
+    func createData() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let entity = NSEntityDescription.entity(forEntityName: "Currencies", in: managedContext)
+        let currency = NSManagedObject(entity: entity!, insertInto: managedContext)
+        
+        for i in self.symbols {
+            currency.setValue(i.0, forKey: "shortNameOfCurrency")
+            currency.setValue(i.1, forKey: "longNameOfCurrency")
+        }
+        
+        do {
+            try managedContext.save()
+        } catch {
+            print("Failed while saving")
+        }
     }
 }
 
