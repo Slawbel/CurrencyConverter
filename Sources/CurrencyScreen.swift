@@ -242,6 +242,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         backButton.masksToBounds = true
     }
     
+    // recording of data in CoreData
     func createData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -259,6 +260,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         } catch {
             print("Failed while saving")
         }
+    }
+    
+    func returnData(){
+        let fetchRequest: NSFetchRequest<Entity>
+        fetchRequest = Entity.fetchRequest()
     }
 }
 
