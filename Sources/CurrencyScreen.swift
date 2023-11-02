@@ -156,9 +156,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         onCurrencySelectedShort3?(selectedCur2)
         onCurrencySelectedShort4?(selectedCur2)
         chosenRow = indexPath
-        //tableView.reloadData()
-        returnData()
-        
+        // tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -209,6 +207,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.reloadData()
         
         createData()
+
+        returnData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -248,19 +248,18 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     func createData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let entity = NSEntityDescription.entity(forEntityName: "Currencies", in: managedContext)
-        let currency = NSManagedObject(entity: entity!, insertInto: managedContext)
-        
+
         for i in self.symbols {
+            let entity = NSEntityDescription.entity(forEntityName: "Currencies", in: managedContext)
+            let currency = NSManagedObject(entity: entity!, insertInto: managedContext)
             currency.setValue(i.0, forKey: "shortNameOfCurrency")
             currency.setValue(i.1, forKey: "longNameOfCurrency")
-        }
-        
-        do {
-            try managedContext.save()
-        } catch {
-            print("Failed while saving")
+
+            do {
+                try managedContext.save()
+            } catch {
+                print("Failed while saving")
+            }
         }
     }
     
