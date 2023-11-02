@@ -156,7 +156,9 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         onCurrencySelectedShort3?(selectedCur2)
         onCurrencySelectedShort4?(selectedCur2)
         chosenRow = indexPath
-        tableView.reloadData()
+        //tableView.reloadData()
+        returnData()
+        
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -263,8 +265,20 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func returnData(){
-        let fetchRequest: NSFetchRequest<Entity>
-        fetchRequest = Entity.fetchRequest()
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        print("1111111")
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Currencies")
+        print("22222222")
+        request.returnsObjectsAsFaults = false
+        do {
+        let result = try managedContext.fetch(request)
+        for data in result as! [NSManagedObject] {
+        print(data.value(forKey: "shortNameOfCurrency") as! String)
+        }
+        } catch {
+        print("Failed")
+        }
     }
 }
 
