@@ -64,7 +64,7 @@ class ConverterScreen: UIViewController {
         view.backgroundColor = .init(named: "mainBackgroundColor")
         
         nameLabel.textAlignment = .center
-        nameLabel.backgroundColor = nil
+        nameLabel.backgroundColor = .clear
         nameLabel.textColor = .white
         nameLabel.text = NSLocalizedString("nameLabelText", comment: "")
         nameLabel.font = nameLabel.font.withSize(24)
@@ -75,7 +75,9 @@ class ConverterScreen: UIViewController {
         stackView.layer.cornerRadius = 20
         
         inputCurLabel.textAlignment = .center
-        inputCurLabel.font = inputCurLabel.font.withSize(14)
+        
+        let font = UIFont(name: "DMSans-Regular", size: 14)
+        inputCurLabel.font = font
         inputCurLabel.textColor = .white
         inputCurLabel.backgroundColor = .clear
         inputCurLabel.text = NSLocalizedString("inputCurLabelText", comment: "")
@@ -103,7 +105,7 @@ class ConverterScreen: UIViewController {
                 } else { return }
             }
             currencyScreen.modalPresentationStyle = .fullScreen
-            self.present(currencyScreen, animated: true)
+            self.navigationController?.pushViewController(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
         
 
@@ -126,8 +128,7 @@ class ConverterScreen: UIViewController {
         inputTF.textColor = .white
         inputTF.addTarget(self, action: #selector(ConverterScreen.convert), for: .editingChanged)
         inputTF.attributedPlaceholder = NSAttributedString(
-            string: placeholderForInputTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
-        )
+            string: placeholderForInputTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         
         // currency #1
         stackView1.axis = .vertical
@@ -146,6 +147,7 @@ class ConverterScreen: UIViewController {
         outputCurrencyLabel1.font = outputCurrencyLabel1.font.withSize(14)
         outputCurrencyLabel1.textColor = .white
         outputCurrencyLabel1.backgroundColor = .clear
+        
         outputCurButton1.layer.cornerRadius = 10
         let colorForOutputCurButton = hexStringToUIColor(hex: "#2B333A")
         outputCurButton1.backgroundColor = colorForOutputCurButton
@@ -163,7 +165,7 @@ class ConverterScreen: UIViewController {
                 } else { return }
             }
             currencyScreen.modalPresentationStyle = .fullScreen
-            self.present(currencyScreen, animated: true)
+            self.navigationController?.pushViewController(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
         
         outputLabel1.backgroundColor = .clear
@@ -210,7 +212,7 @@ class ConverterScreen: UIViewController {
                 } else { return }
             }
             currencyScreen.modalPresentationStyle = .fullScreen
-            self.present(currencyScreen, animated: true)
+            self.navigationController?.pushViewController(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
         outputCurButton2.isHidden = true
         
@@ -259,7 +261,7 @@ class ConverterScreen: UIViewController {
                 } else { return }
             }
             currencyScreen.modalPresentationStyle = .fullScreen
-            self.present(currencyScreen, animated: true)
+            self.navigationController?.pushViewController(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
         outputCurButton3.isHidden = true
         
@@ -401,10 +403,10 @@ class ConverterScreen: UIViewController {
         }
         
         datePicker.snp.makeConstraints { make in
-            make.width.equalTo(116)
+            make.width.equalTo(117)
             make.height.equalTo(25)
-            make.top.equalTo(view).inset(91)
-            make.leading.equalTo(view).inset(258)
+            make.top.equalTo(view).inset(94)
+            make.leading.equalTo(view).inset(256)
         }
         
         inputTF.snp.makeConstraints { make in
@@ -698,6 +700,7 @@ class ConverterScreen: UIViewController {
         )
     }
     
+
     func flag(country:String) -> String {
         let base : UInt32 = 127397
         var s = ""
@@ -718,5 +721,4 @@ class ConverterScreen: UIViewController {
         return cutShortNameFlag
     }
 }
-
 
