@@ -157,7 +157,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         onCurrencySelectedShort3?(selectedCur2)
         onCurrencySelectedShort4?(selectedCur2)
         chosenRow = indexPath
-        // tableView.reloadData()
+        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -207,9 +207,9 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         symbols.sort{ $0.1 < $1.1 }
         tableView.reloadData()
         
-        createData()
+        //createData()
 
-        returnData()
+        //returnData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
