@@ -267,9 +267,9 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     func returnData(){
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
-        print("1111111")
+
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Currencies")
-        print("22222222")
+
         request.returnsObjectsAsFaults = false
         do {
         let result = try managedContext.fetch(request)
