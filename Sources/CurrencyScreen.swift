@@ -1,13 +1,20 @@
 import SnapKit
+import CoreData
 import UIKit
 import SwifterSwift
+import OrderedCollections
+
+
 
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    private let nameOfScreen = UILabel()
-    private let tableView = UITableView()
-    private var backButton = UIButton()
-    private let search = UITextField()
+
     
+    private let nameOfScreen = UILabel()
+    private var tableView = UITableView()
+    private var backButton = UIButton()
+    private lazy var searchContr = UISearchTextField()
+    private var dictCurrency: OrderedDictionary<Character,[String]> = [:]
+    private var chosenRow: IndexPath = []
     private var symbols = [(String, String)]()
     var onCurrencySelected1: ((String) -> Void)?
     var onCurrencySelected2: ((String) -> Void)?
@@ -18,7 +25,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     var onCurrencySelectedShort3: ((String) -> Void)?
     var onCurrencySelectedShort4: ((String) -> Void)?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,42 +34,57 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         nameOfScreen.text = NSLocalizedString("nameOfScreen", comment: "")
         nameOfScreen.font = nameOfScreen.font.withSize(24)
         
-        //search.keyboardType = .asciiCapableNumberPad
-        search.keyboardAppearance = .dark
-        let placeholderForSearchtTF = NSLocalizedString("searchCurrency", comment: "")
-        search.textAlignment = .left
-        search.backgroundColor = .clear
-        search.textColor = .white
-        //search.addTarget(self, action: #selector(CurrencyScreen.search), for: .editingChanged)
-        search.attributedPlaceholder = NSAttributedString(
-            string: placeholderForSearchtTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
-        )
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        findCur()
+        
+        // create dictionary with keys as the first letter of currencies
+        var currencyDict = Set<String>()
+
+        for n in symbols {
+            currencyDict.insert(n.1)
+        }
+        for n in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
+            var tempArray: Array<String> = []
+            for m in currencyDict {
+                let letter = m[m.startIndex]
+                if n == letter {
+                    tempArray.append(m)
+                    
+                }
+            }
+            dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
+        }
+        
+        
+        
+        // removing of empty elements and its key
+        for i in dictCurrency.keys {
+            if dictCurrency[i] == [] {
+                dictCurrency.removeValue(forKey: i)
+            }
+        }
+  
+        
         
         tableView.register(cellWithClass: MyTableViewCell.self)
         tableView.delegate = self
         tableView.dataSource = self
-        findCur()
         
-        
-        backButton.addAction(UIAction { [weak self] _ in
-            self?.dismiss(animated: true)
-        }, for: .primaryActionTriggered)
-    
-
         view.addSubview(nameOfScreen)
-        view.addSubview(search)
         view.addSubview(tableView)
         view.addSubview(backButton)
+        view.addSubview(searchContr)
 
-        
         nameOfScreen.snp.makeConstraints { make in
-            make.top.equalTo(view).inset(58)
+            make.top.equalTo(view).inset(50)
             make.leading.equalTo(view).inset(105)
             make.width.equalTo(180)
             make.height.equalTo(40)
         }
         
-        search.snp.makeConstraints { make in
+        searchContr.snp.makeConstraints{ make in
             make.top.equalTo(view).inset(114)
             make.leading.equalTo(view).inset(15)
             make.width.equalTo(360)
@@ -78,31 +99,50 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
 
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(view).inset(183)
+            make.top.equalTo(view).inset(160)
             make.height.equalTo(529)
             make.width.equalTo(336)
             make.leading.trailing.equalTo(view).inset(21)
         }
-        
-        
 
-        
     }
 
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let keyArray = Array(dictCurrency.keys)
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
-        //let curShortNameFlag = ConverterScreen.getFlagToLabel(symbols[indexPath.row].0)
-        //guard curShortNameFlag != nil else { return }
-        let textWithCurrencyAndFlag = symbols[indexPath.row].1
-        cell?.setup(text: textWithCurrencyAndFlag)
+        let sectionKey = keyArray[indexPath.section]
+        let contactSection = dictCurrency[sectionKey]
+        let contact = contactSection?[indexPath.row]
+        if indexPath != chosenRow {
+            cell?.setup(text: contact ?? "", isChecked: true)
+        } else {
+            cell?.setup(text: contact ?? "", isChecked: false)
+        }
         cell?.backgroundColor = .black
-        
         return cell!
     }
 
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        symbols.count
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let key = Array(dictCurrency.keys)[section]
+        return dictCurrency[key]?.count ?? 0
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return dictCurrency.keys.count
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
+        let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - 15, height: 40))
+        let key = Array(dictCurrency.keys)
+        lbl.text = String(key[section])
+        lbl.font = UIFont(name: "DMSans-Regular", size: 20)
+        let colorForSectionTitle = ConverterScreen().hexStringToUIColor(hex: "#646464")
+        lbl.textColor = colorForSectionTitle
+        view.addSubview(lbl)
+  
+        return view
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -116,16 +156,30 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         onCurrencySelectedShort2?(selectedCur2)
         onCurrencySelectedShort3?(selectedCur2)
         onCurrencySelectedShort4?(selectedCur2)
+        chosenRow = indexPath
+        tableView.reloadData()
     }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath as IndexPath) {
+            cell.accessoryType = .none
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 40
+    }
+    
+    
     
     func testGradientButton() -> Void {
         let gradientColor = CAGradientLayer()
-        gradientColor.startPoint = CGPoint(x: 1, y: 0.5)
+        gradientColor.startPoint = CGPoint(x: 1, y: 0)
         gradientColor.endPoint = CGPoint(x: 0, y: 0.5)
         gradientColor.locations = [0.0 , 1.0]
-        let color0 = UIColor(red: 8.0/255.0, green: 0.0/255.0, blue: 12.0/255.0, alpha: 1)
-        let color1 = UIColor(red: 197.0/255.0, green: 83.0/255.0, blue: 237.0/255.0, alpha: 1)
-        let color2 = UIColor(red: 237.0/255.0, green: 98.0/255.0, blue: 177.0/255.0, alpha: 1)
+        let color0 = UIColor(red: 77.0/255.0, green: 30.0/255.0, blue: 95.0/255.0, alpha: 1)
+        let color1 = UIColor(red: 237.0/255.0, green: 98.0/255.0, blue: 177.0/255.0, alpha: 1)
+        let color2 = UIColor(red: 249.0/255.0, green: 128.0/255.0, blue: 93.0/255.0, alpha: 1)
         let color3 = UIColor(red: 255.0/255.0, green: 143.0/255.0, blue: 52.0/255.0, alpha: 1)
         gradientColor.colors = [color0.cgColor, color1.cgColor,color2.cgColor,color3.cgColor]
         gradientColor.frame = backButton.bounds
@@ -151,14 +205,32 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         symbols = curData.symbols.map { $0 }
         symbols.sort{ $0.1 < $1.1 }
-        
         tableView.reloadData()
+        
+        createData()
+
+        returnData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         testGradientButton()
+        
+        tableView.backgroundColor = .black
+        
+        searchContr.layerCornerRadius = 20
+        let colorForSearchPlaceholder = ConverterScreen().hexStringToUIColor(hex: "#646464")
+        searchContr.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("searchCurrency", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : colorForSearchPlaceholder])
+        searchContr.font = UIFont(name: "DMSans-Regular", size: 14)
+        searchContr.textColor = .white
+        let colorForSearchContr = ConverterScreen().hexStringToUIColor(hex: "#181B20")
+        searchContr.backgroundColor = colorForSearchContr
+        
+        backButton.addAction(UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
+        }, for: .primaryActionTriggered)
+        
         
         backButton.layer.cornerRadius = 20
         let buttonBack = NSLocalizedString("buttonBack", comment: "")
@@ -172,7 +244,40 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                 
         backButton.masksToBounds = true
     }
+    
+    // recording of data in CoreData
+    func createData() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+
+        for i in self.symbols {
+            let entity = NSEntityDescription.entity(forEntityName: "Currencies", in: managedContext)
+            let currency = NSManagedObject(entity: entity!, insertInto: managedContext)
+            currency.setValue(i.0, forKey: "shortNameOfCurrency")
+            currency.setValue(i.1, forKey: "longNameOfCurrency")
+        }
+        
+        do {
+            try managedContext.save()
+        } catch {
+            print("Failed while saving")
+        }
+    }
+    
+    func returnData(){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Currencies")
+
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try managedContext.fetch(request)
+            for data in result as! [NSManagedObject] {
+                print(data.value(forKey: "shortNameOfCurrency") as! String)
+            }
+        } catch {
+            print("Failed")
+        }
+    }
 }
-
-
-
