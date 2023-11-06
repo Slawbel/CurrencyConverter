@@ -141,7 +141,6 @@ class ConverterScreen: UIViewController {
         outputCurLabel1.textColor = .white
         outputCurLabel1.backgroundColor = .clear
         outputCurLabel1.text = NSLocalizedString("outputCurLabelText", comment: "")
-        
         outputCurrencyLabel1.text = "               >"
         outputCurrencyLabel1.textAlignment = .center
         outputCurrencyLabel1.font = outputCurrencyLabel1.font.withSize(14)
@@ -272,6 +271,11 @@ class ConverterScreen: UIViewController {
         outputLabel3.text = "0"
         outputLabel3.isHidden = true
         
+        outputLabel1.backgroundColor = .clear
+        outputLabel1.textAlignment = .right
+        outputLabel1.textColor = .white
+        outputLabel1.font = outputCurrencyLabel1.font.withSize(18)
+        outputLabel1.text = "0"
         
         let colorForSwapButton1 = hexStringToUIColor(hex: "#0F0F0F")
         swapButton1.backgroundColor = colorForSwapButton1
@@ -285,7 +289,6 @@ class ConverterScreen: UIViewController {
         swapButton2.setImage(swapSymbol1, for: .normal)
         swapButton2.addTarget(self, action: #selector(swapCurrency2), for: .touchUpInside)
         swapButton2.isHidden = true
-        
 
         swapButton3.backgroundColor = colorForSwapButton1
         swapButton3.layer.cornerRadius = 19
@@ -700,7 +703,6 @@ class ConverterScreen: UIViewController {
         )
     }
     
-
     func flag(country:String) -> String {
         let base : UInt32 = 127397
         var s = ""

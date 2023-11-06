@@ -7,6 +7,7 @@ import OrderedCollections
 
 
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
+
     
     private let nameOfScreen = UILabel()
     private var tableView = UITableView()
@@ -14,7 +15,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     private lazy var searchContr = UISearchTextField()
     private var dictCurrency: OrderedDictionary<Character,[String]> = [:]
     private var chosenRow: IndexPath = []
-  
     private var symbols = [(String, String)]()
     var onCurrencySelected1: ((String) -> Void)?
     var onCurrencySelected2: ((String) -> Void)?
@@ -104,6 +104,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.width.equalTo(336)
             make.leading.trailing.equalTo(view).inset(21)
         }
+
     }
 
 
@@ -280,10 +281,3 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
 }
-
-
-
-
-
-
-
