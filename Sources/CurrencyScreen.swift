@@ -207,9 +207,9 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         symbols.sort{ $0.1 < $1.1 }
         tableView.reloadData()
         
-        //createData()
+        createData()
 
-        //returnData()
+        returnData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -255,12 +255,12 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             let currency = NSManagedObject(entity: entity!, insertInto: managedContext)
             currency.setValue(i.0, forKey: "shortNameOfCurrency")
             currency.setValue(i.1, forKey: "longNameOfCurrency")
-
-            do {
-                try managedContext.save()
-            } catch {
-                print("Failed while saving")
-            }
+        }
+        
+        do {
+            try managedContext.save()
+        } catch {
+            print("Failed while saving")
         }
     }
     
@@ -272,12 +272,12 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
         request.returnsObjectsAsFaults = false
         do {
-        let result = try managedContext.fetch(request)
-        for data in result as! [NSManagedObject] {
-        print(data.value(forKey: "shortNameOfCurrency") as! String)
-        }
+            let result = try managedContext.fetch(request)
+            for data in result as! [NSManagedObject] {
+                print(data.value(forKey: "shortNameOfCurrency") as! String)
+            }
         } catch {
-        print("Failed")
+            print("Failed")
         }
     }
 }
