@@ -3,8 +3,24 @@ import CoreData
 import UIKit
 import SwifterSwift
 import OrderedCollections
+import RealmSwift
 
+class Currency: Object {
+    @Persisted var shortName: String
+    @Persisted var longName: String
 
+    override init() {
+        super.init()
+        self.shortName = ""
+        self.longName = ""
+    }
+
+    init(shortName: String, longName: String) {
+        super.init()
+        self.shortName = shortName
+        self.longName = longName
+    }
+}
 
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -25,6 +41,21 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     var onCurrencySelectedShort3: ((String) -> Void)?
     var onCurrencySelectedShort4: ((String) -> Void)?
     
+    func storeToRealm() {
+        let realm = try! Realm()
+        for currency in symbols {
+            try! realm.write {
+                realm.add(Currency(shortName: currency.0, longName: currency.1))
+            }
+        }
+    }
+
+    func readFromRealm() {
+        let realm = try! Realm()
+        let curs = realm.objects(Currency.self)
+        print(curs)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -209,6 +240,10 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         //createData()
 
         //returnData()
+
+        storeToRealm()
+
+        readFromRealm()
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -1,8 +1,6 @@
 import SnapKit
 import UIKit
 
-
-
 class ConverterScreen: UIViewController {
 
     private let nameLabel = UILabel()
