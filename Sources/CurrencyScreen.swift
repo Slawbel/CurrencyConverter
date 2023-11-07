@@ -24,6 +24,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     var onCurrencySelectedShort2: ((String) -> Void)?
     var onCurrencySelectedShort3: ((String) -> Void)?
     var onCurrencySelectedShort4: ((String) -> Void)?
+    var cachedSymbols = [(String, String)]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,34 +39,35 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.delegate = self
         
         findCur()
-        
-        // create dictionary with keys as the first letter of currencies
-        var currencyDict = Set<String>()
-
-        for n in symbols {
-            currencyDict.insert(n.1)
-        }
-        for n in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
-            var tempArray: Array<String> = []
-            for m in currencyDict {
-                let letter = m[m.startIndex]
-                if n == letter {
-                    tempArray.append(m)
-                    
+        returnData()
+        // check if cachedSymbols is empty, then we need to call API
+        /*if cachedSymbols.isEmpty {
+            // create dictionary with keys as the first letter of currencies
+            var currencyDict = Set<String>()
+            for n in symbols {
+                currencyDict.insert(n.1)
+            }
+            for n in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
+                var tempArray: Array<String> = []
+                for m in currencyDict {
+                    let letter = m[m.startIndex]
+                    if n == letter {
+                        tempArray.append(m)
+                        
+                    }
+                }
+                dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
+            }
+            
+            // removing of empty elements and its key
+            for i in dictCurrency.keys {
+                if dictCurrency[i] == [] {
+                    dictCurrency.removeValue(forKey: i)
                 }
             }
-            dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
-        }
-        
-        
-        
-        // removing of empty elements and its key
-        for i in dictCurrency.keys {
-            if dictCurrency[i] == [] {
-                dictCurrency.removeValue(forKey: i)
-            }
-        }
-  
+        } else {
+            returnData()
+        }*/
         
         
         tableView.register(cellWithClass: MyTableViewCell.self)
@@ -208,8 +210,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.reloadData()
         
         createData()
-
-        returnData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -274,10 +274,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         do {
             let result = try managedContext.fetch(request)
             for data in result as! [NSManagedObject] {
-                print(data.value(forKey: "shortNameOfCurrency") as! String)
+                self.cachedSymbols.append((data.value(forKey: "shortNameOfCurrency") as! String, data.value(forKey: "longNameOfCurrency") as! String))
             }
         } catch {
             print("Failed")
         }
+        print(self.cachedSymbols)
     }
 }
