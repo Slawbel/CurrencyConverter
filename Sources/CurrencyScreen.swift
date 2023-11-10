@@ -39,7 +39,9 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.delegate = self
         
         findCur()
-        returnData()
+        
+        //returnData()
+        //removeData()
         // check if cachedSymbols is empty, then we need to call API
         /*if cachedSymbols.isEmpty {
             // create dictionary with keys as the first letter of currencies
@@ -277,8 +279,31 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                 self.cachedSymbols.append((data.value(forKey: "shortNameOfCurrency") as! String, data.value(forKey: "longNameOfCurrency") as! String))
             }
         } catch {
-            print("Failed")
+            print("Failed returning")
         }
         print(self.cachedSymbols)
+    }
+    
+    func removeData() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Currencies")
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try managedContext.executeAndMergeChanges(using: batchDeleteRequest)
+        } catch {
+            print("Failed removing")
+        }
+    }
+}
+
+
+extension NSManagedObjectContext {
+    public func executeAndMergeChanges(using batchDeleteRequest: NSBatchDeleteRequest) throws {
+        batchDeleteRequest.resultType = .resultTypeObjectIDs
+        let result = try execute(batchDeleteRequest) as? NSBatchDeleteResult
+        let changes: [AnyHashable: Any] = [NSDeletedObjectsKey: result?.result as? [NSManagedObject] ?? []]
+        NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [self])
     }
 }
