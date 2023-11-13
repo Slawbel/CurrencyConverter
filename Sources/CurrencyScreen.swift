@@ -37,25 +37,37 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         tableView.dataSource = self
         tableView.delegate = self
-        
-        findCur()
-        
-        //returnData()
         //removeData()
+        if cachedSymbols.isEmpty {
+            returnData()
+            print("RETURNING WAS DONE")
+        }
+        
         // check if cachedSymbols is empty, then we need to call API
-        /*if cachedSymbols.isEmpty {
+
             // create dictionary with keys as the first letter of currencies
-            var currencyDict = Set<String>()
+        
+        var currencyDict = Set<String>()
+        
+        if cachedSymbols.isEmpty {
+            findCur()
+            print("Way1")
             for n in symbols {
                 currencyDict.insert(n.1)
+                
             }
+        } else {
+            print("Way2")
+            for n in cachedSymbols {
+                currencyDict.insert(n.1)
+            }
+        }
             for n in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
                 var tempArray: Array<String> = []
                 for m in currencyDict {
                     let letter = m[m.startIndex]
                     if n == letter {
                         tempArray.append(m)
-                        
                     }
                 }
                 dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
@@ -67,9 +79,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                     dictCurrency.removeValue(forKey: i)
                 }
             }
-        } else {
-            returnData()
-        }*/
         
         
         tableView.register(cellWithClass: MyTableViewCell.self)
@@ -150,8 +159,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCur = symbols[indexPath.row].1
-        let selectedCur2 = symbols[indexPath.row].0
+        let selectedCur = cachedSymbols[indexPath.row].1
+        let selectedCur2 = cachedSymbols[indexPath.row].0
         onCurrencySelected1?(selectedCur)
         onCurrencySelected2?(selectedCur)
         onCurrencySelected3?(selectedCur)
@@ -161,7 +170,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         onCurrencySelectedShort3?(selectedCur2)
         onCurrencySelectedShort4?(selectedCur2)
         chosenRow = indexPath
-        tableView.reloadData()
+        viewDidLoad()
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -202,7 +211,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         guard let data = try? URLSession.shared.dataSync(with: request).0 else {
             return
         }
-        print(String(data: data, encoding: .utf8)!)
+        //print(String(data: data, encoding: .utf8)!)
         
         guard let curData = CurData(from: data) else {
             return
@@ -261,6 +270,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         do {
             try managedContext.save()
+            print("SAVING WAS DONE")
         } catch {
             print("Failed while saving")
         }
@@ -281,7 +291,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         } catch {
             print("Failed returning")
         }
-        print(self.cachedSymbols)
     }
     
     func removeData() {
