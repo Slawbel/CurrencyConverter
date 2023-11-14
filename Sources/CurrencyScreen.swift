@@ -37,7 +37,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         tableView.dataSource = self
         tableView.delegate = self
-        //removeData()
         if cachedSymbols.isEmpty {
             returnData()
             print("RETURNING WAS DONE")
@@ -170,7 +169,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         onCurrencySelectedShort3?(selectedCur2)
         onCurrencySelectedShort4?(selectedCur2)
         chosenRow = indexPath
-        viewDidLoad()
+        viewDidLoad() // I am 100% sure it should not be there
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -258,6 +257,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // recording of data in CoreData
     func createData() {
+        removeData()
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
 
@@ -276,7 +276,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    func returnData(){
+    func returnData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
 
