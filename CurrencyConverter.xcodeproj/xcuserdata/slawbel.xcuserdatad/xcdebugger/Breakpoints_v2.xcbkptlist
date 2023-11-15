@@ -14,8 +14,8 @@
             filePath = "Sources/CurrencyScreen.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
+            startingLineNumber = "298"
+            endingLineNumber = "298"
             landmarkName = "removeData()"
             landmarkType = "7">
          </BreakpointContent>

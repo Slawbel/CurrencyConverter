@@ -74,7 +74,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
         
-        
         tableView.register(cellWithClass: MyTableViewCell.self)
         tableView.delegate = self
         tableView.dataSource = self
@@ -239,11 +238,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         let colorForSearchContr = ConverterScreen().hexStringToUIColor(hex: "#181B20")
         searchContr.backgroundColor = colorForSearchContr
         
-        backButton.addAction(UIAction { [weak self] _ in
-            self?.dismiss(animated: true)
-        }, for: .primaryActionTriggered)
-        
-        
         backButton.layer.cornerRadius = 20
         let buttonBack = NSLocalizedString("buttonBack", comment: "")
         let font1 = UIFont(name: "DMSans-Bold", size: 16)
@@ -253,6 +247,10 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             .kern: 2]
         let attributeButtonText = NSAttributedString(string: buttonBack, attributes: attributes1)
         backButton.setAttributedTitle(attributeButtonText, for: .normal)
+        
+        backButton.addAction(UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
+        }, for: .primaryActionTriggered)
                 
         backButton.masksToBounds = true
     }
