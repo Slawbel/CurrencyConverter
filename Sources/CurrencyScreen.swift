@@ -42,10 +42,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             print("RETURNING WAS DONE")
         }
         
-        // check if cachedSymbols is empty, then we need to call API
-
-            // create dictionary with keys as the first letter of currencies
-        
         var currencyDict = Set<String>()
         
         if cachedSymbols.isEmpty {
@@ -53,7 +49,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             print("Way1")
             for n in symbols {
                 currencyDict.insert(n.1)
-                
             }
         } else {
             print("Way2")
@@ -61,23 +56,23 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                 currencyDict.insert(n.1)
             }
         }
-            for n in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
-                var tempArray: Array<String> = []
-                for m in currencyDict {
-                    let letter = m[m.startIndex]
-                    if n == letter {
-                        tempArray.append(m)
-                    }
-                }
-                dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
+        for n in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
+        var tempArray: Array<String> = []
+        for m in currencyDict {
+            let letter = m[m.startIndex]
+            if n == letter {
+                tempArray.append(m)
             }
+        }
+        dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
+        }
             
-            // removing of empty elements and its key
-            for i in dictCurrency.keys {
-                if dictCurrency[i] == [] {
-                    dictCurrency.removeValue(forKey: i)
-                }
+        // removing of empty elements and its key
+        for i in dictCurrency.keys {
+            if dictCurrency[i] == [] {
+                dictCurrency.removeValue(forKey: i)
             }
+        }
         
         
         tableView.register(cellWithClass: MyTableViewCell.self)
@@ -158,8 +153,15 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCur = cachedSymbols[indexPath.row].1
-        let selectedCur2 = cachedSymbols[indexPath.row].0
+        var selectedCur = ""
+        var selectedCur2 = ""
+        if cachedSymbols.isEmpty {
+            selectedCur = symbols[indexPath.row].1
+            selectedCur2 = symbols[indexPath.row].0
+        } else {
+            selectedCur = cachedSymbols[indexPath.row].1
+            selectedCur2 = cachedSymbols[indexPath.row].0
+        }
         onCurrencySelected1?(selectedCur)
         onCurrencySelected2?(selectedCur)
         onCurrencySelected3?(selectedCur)
