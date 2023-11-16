@@ -152,8 +152,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var selectedCur = ""
-        var selectedCur2 = ""
+        let selectedCur: String
+        var selectedCur2: String
         if cachedSymbols.isEmpty {
             selectedCur = symbols[indexPath.row].1
             selectedCur2 = symbols[indexPath.row].0
