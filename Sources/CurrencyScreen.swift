@@ -7,7 +7,7 @@ import OrderedCollections
 
 
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
     
     private let nameOfScreen = UILabel()
     private var tableView = UITableView()
@@ -25,10 +25,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     var onCurrencySelectedShort3: ((String) -> Void)?
     var onCurrencySelectedShort4: ((String) -> Void)?
     var cachedSymbols = [(String, String)]()
+    private var dateString: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         nameOfScreen.textAlignment = .center
         nameOfScreen.backgroundColor = .clear
         nameOfScreen.textColor = .white
@@ -39,10 +40,12 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.delegate = self
         if cachedSymbols.isEmpty {
             returnData()
-            print("RETURNING WAS DONE")
+            print("Returning was done")
         }
         
         var currencyDict = Set<String>()
+        
+        dateRecording()
         
         if cachedSymbols.isEmpty {
             findCur()
@@ -57,16 +60,16 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
         for n in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
-        var tempArray: Array<String> = []
-        for m in currencyDict {
-            let letter = m[m.startIndex]
-            if n == letter {
-                tempArray.append(m)
+            var tempArray: Array<String> = []
+            for m in currencyDict {
+                let letter = m[m.startIndex]
+                if n == letter {
+                    tempArray.append(m)
+                }
             }
+            dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
         }
-        dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
-        }
-            
+        
         // removing of empty elements and its key
         for i in dictCurrency.keys {
             if dictCurrency[i] == [] {
@@ -82,7 +85,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         view.addSubview(tableView)
         view.addSubview(backButton)
         view.addSubview(searchContr)
-
+        
         nameOfScreen.snp.makeConstraints { make in
             make.top.equalTo(view).inset(50)
             make.leading.equalTo(view).inset(105)
@@ -103,17 +106,17 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.width.equalTo(360)
             make.height.equalTo(50)
         }
-
+        
         tableView.snp.makeConstraints { make in
             make.top.equalTo(view).inset(160)
             make.height.equalTo(529)
             make.width.equalTo(336)
             make.leading.trailing.equalTo(view).inset(21)
         }
-
+        
     }
-
-
+    
+    
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let keyArray = Array(dictCurrency.keys)
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
@@ -128,7 +131,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         cell?.backgroundColor = .black
         return cell!
     }
-
+    
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         let key = Array(dictCurrency.keys)[section]
         return dictCurrency[key]?.count ?? 0
@@ -147,10 +150,10 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         let colorForSectionTitle = ConverterScreen().hexStringToUIColor(hex: "#646464")
         lbl.textColor = colorForSectionTitle
         view.addSubview(lbl)
-  
+        
         return view
     }
-
+    
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCur: String
         var selectedCur2: String
@@ -251,7 +254,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         backButton.addAction(UIAction { [weak self] _ in
             self?.dismiss(animated: true)
         }, for: .primaryActionTriggered)
-                
+        
         backButton.masksToBounds = true
     }
     
@@ -260,7 +263,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         removeData()
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
-
+        
         for i in self.symbols {
             let entity = NSEntityDescription.entity(forEntityName: "Currencies", in: managedContext)
             let currency = NSManagedObject(entity: entity!, insertInto: managedContext)
@@ -279,9 +282,9 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     func returnData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
-
+        
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Currencies")
-
+        
         request.returnsObjectsAsFaults = false
         do {
             let result = try managedContext.fetch(request)
@@ -304,6 +307,20 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         } catch {
             print("Failed removing")
         }
+    }
+    
+    func dateRecording() {
+        // save as String
+        let df = DateFormatter()
+        df.dateFormat = "dd/MM/yyyy HH:mm"
+        let str = df.string(from: Date())
+        UserDefaults.standard.setValue(str, forKey: "key")
+        
+        if str != self.dateString {
+            removeData()
+            self.dateString = str
+        }
+        
     }
 }
 
