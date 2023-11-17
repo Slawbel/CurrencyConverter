@@ -24,6 +24,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     var onCurrencySelectedShort2: ((String) -> Void)?
     var onCurrencySelectedShort3: ((String) -> Void)?
     var onCurrencySelectedShort4: ((String) -> Void)?
+    var cachedSymbols = [(String, String)]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,37 +37,42 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         tableView.dataSource = self
         tableView.delegate = self
+        if cachedSymbols.isEmpty {
+            returnData()
+            print("RETURNING WAS DONE")
+        }
         
-        findCur()
-        
-        // create dictionary with keys as the first letter of currencies
         var currencyDict = Set<String>()
-
-        for n in symbols {
-            currencyDict.insert(n.1)
+        
+        if cachedSymbols.isEmpty {
+            findCur()
+            print("Way1")
+            for n in symbols {
+                currencyDict.insert(n.1)
+            }
+        } else {
+            print("Way2")
+            for n in cachedSymbols {
+                currencyDict.insert(n.1)
+            }
         }
         for n in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
-            var tempArray: Array<String> = []
-            for m in currencyDict {
-                let letter = m[m.startIndex]
-                if n == letter {
-                    tempArray.append(m)
-                    
-                }
+        var tempArray: Array<String> = []
+        for m in currencyDict {
+            let letter = m[m.startIndex]
+            if n == letter {
+                tempArray.append(m)
             }
-            dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
         }
-        
-        
-        
+        dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
+        }
+            
         // removing of empty elements and its key
         for i in dictCurrency.keys {
             if dictCurrency[i] == [] {
                 dictCurrency.removeValue(forKey: i)
             }
         }
-  
-        
         
         tableView.register(cellWithClass: MyTableViewCell.self)
         tableView.delegate = self
@@ -146,8 +152,15 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCur = symbols[indexPath.row].1
-        let selectedCur2 = symbols[indexPath.row].0
+        let selectedCur: String
+        var selectedCur2: String
+        if cachedSymbols.isEmpty {
+            selectedCur = symbols[indexPath.row].1
+            selectedCur2 = symbols[indexPath.row].0
+        } else {
+            selectedCur = cachedSymbols[indexPath.row].1
+            selectedCur2 = cachedSymbols[indexPath.row].0
+        }
         onCurrencySelected1?(selectedCur)
         onCurrencySelected2?(selectedCur)
         onCurrencySelected3?(selectedCur)
@@ -198,7 +211,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         guard let data = try? URLSession.shared.dataSync(with: request).0 else {
             return
         }
-        print(String(data: data, encoding: .utf8)!)
+        //print(String(data: data, encoding: .utf8)!)
         
         guard let curData = CurData(from: data) else {
             return
@@ -208,8 +221,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.reloadData()
         
         createData()
-
-        returnData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -227,11 +238,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         let colorForSearchContr = ConverterScreen().hexStringToUIColor(hex: "#181B20")
         searchContr.backgroundColor = colorForSearchContr
         
-        backButton.addAction(UIAction { [weak self] _ in
-            self?.dismiss(animated: true)
-        }, for: .primaryActionTriggered)
-        
-        
         backButton.layer.cornerRadius = 20
         let buttonBack = NSLocalizedString("buttonBack", comment: "")
         let font1 = UIFont(name: "DMSans-Bold", size: 16)
@@ -241,12 +247,17 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             .kern: 2]
         let attributeButtonText = NSAttributedString(string: buttonBack, attributes: attributes1)
         backButton.setAttributedTitle(attributeButtonText, for: .normal)
+        
+        backButton.addAction(UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
+        }, for: .primaryActionTriggered)
                 
         backButton.masksToBounds = true
     }
     
     // recording of data in CoreData
     func createData() {
+        removeData()
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
 
@@ -259,12 +270,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         do {
             try managedContext.save()
+            print("SAVING WAS DONE")
         } catch {
             print("Failed while saving")
         }
     }
     
-    func returnData(){
+    func returnData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
 
@@ -274,10 +286,33 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         do {
             let result = try managedContext.fetch(request)
             for data in result as! [NSManagedObject] {
-                print(data.value(forKey: "shortNameOfCurrency") as! String)
+                self.cachedSymbols.append((data.value(forKey: "shortNameOfCurrency") as! String, data.value(forKey: "longNameOfCurrency") as! String))
             }
         } catch {
-            print("Failed")
+            print("Failed returning")
         }
+    }
+    
+    func removeData() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Currencies")
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try managedContext.executeAndMergeChanges(using: batchDeleteRequest)
+        } catch {
+            print("Failed removing")
+        }
+    }
+}
+
+
+extension NSManagedObjectContext {
+    public func executeAndMergeChanges(using batchDeleteRequest: NSBatchDeleteRequest) throws {
+        batchDeleteRequest.resultType = .resultTypeObjectIDs
+        let result = try execute(batchDeleteRequest) as? NSBatchDeleteResult
+        let changes: [AnyHashable: Any] = [NSDeletedObjectsKey: result?.result as? [NSManagedObject] ?? []]
+        NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [self])
     }
 }
