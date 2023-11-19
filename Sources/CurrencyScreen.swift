@@ -41,12 +41,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         if cachedSymbols.isEmpty {
             returnData()
             print("Returning was done")
-        }
         
         var currencyDict = Set<String>()
         
         dateRecording()
-        
+
         if cachedSymbols.isEmpty {
             findCur()
             print("Way1")
@@ -67,9 +66,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                     tempArray.append(m)
                 }
             }
-            dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
         }
-        
+
         // removing of empty elements and its key
         for i in dictCurrency.keys {
             if dictCurrency[i] == [] {
@@ -254,7 +252,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         backButton.addAction(UIAction { [weak self] _ in
             self?.dismiss(animated: true)
         }, for: .primaryActionTriggered)
-        
         backButton.masksToBounds = true
     }
     
