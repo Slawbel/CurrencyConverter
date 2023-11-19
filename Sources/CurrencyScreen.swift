@@ -320,7 +320,32 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             removeData()
             self.dateString = str
         }
-        
+    }
+    
+    func createDirectoryForFile() {
+        let fileManager = FileManager.default
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let checkDateURL = documentsURL.appendingPathComponent("CheckDate")
+
+        do {
+            try FileManager.default.createDirectory(at: checkDateURL, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            print("Error creating directory: \(error)")
+        }
+        let userProfileURL = checkDateURL.appendingPathComponent("userProfile.txt")
+    }
+    
+    func writingToFile() {
+        let dateString = "Hello, World!"
+
+        if let data = dateString.data(using: .utf8) {
+            do {
+                try data.write(to: userProfileURL)
+                print("Successfully wrote to file!")
+            } catch {
+                print("Error writing to file: \(error)")
+            }
+        }
     }
 }
 
