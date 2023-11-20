@@ -665,6 +665,7 @@ class ConverterScreen: UIViewController {
         
         currencyApi.apiInputTF = inputTF.text
         currencyApi.apiChosenDate = currentDate
+        writingToFile(currentDate)
         currencyApi.conversion2 { [weak self] convertResult in
             self?.outputLabel1.text = String(convertResult.result ?? 0)
         }
@@ -719,6 +720,32 @@ class ConverterScreen: UIViewController {
             
         }
         return cutShortNameFlag
+    }
+    
+    
+    
+    func createDirectoryForFile() {
+        let fileManager = FileManager.default
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let checkDateURL = documentsURL.appendingPathComponent("CheckDate")
+                
+        do {
+            try FileManager.default.createDirectory(at: checkDateURL, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            print("Error creating directory: \(error)")
+        }
+        let userProfileURL = checkDateURL.appendingPathComponent("userProfile.txt")
+    }
+            
+    func writingToFile(_ dateString: String) {
+        if let data = dateString.data(using: .utf8) {
+            do {
+                try data.write(to: userProfileURL)
+                print("Successfully wrote to file!")
+            } catch {
+                print("Error writing to file: \(error)")
+            }
+        }
     }
 }
 
