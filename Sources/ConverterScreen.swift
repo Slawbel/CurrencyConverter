@@ -5,7 +5,8 @@ import UIKit
 
 class ConverterScreen: UIViewController {
 
-    let userProfileURL: URL =
+    let userProfileURL: URL = URL(string: "")!
+    var controlDate: String = ""
     
     private let nameLabel = UILabel()
     
@@ -63,6 +64,7 @@ class ConverterScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        createDirectoryForFile()
         view.backgroundColor = .init(named: "mainBackgroundColor")
         
         nameLabel.textAlignment = .center
@@ -741,6 +743,7 @@ class ConverterScreen: UIViewController {
     }
     
     func writingDateToTheFile(_ dateString: String) {
+        deleteSavedDate()
         if let data = dateString.data(using: .utf8) {
             do {
                 try data.write(to: userProfileURL)
@@ -748,6 +751,17 @@ class ConverterScreen: UIViewController {
             } catch {
                 print("Error writing to file: \(error)")
             }
+        }
+    }
+    
+    func readingForControlDate() {
+        do {
+            let data = try Data(contentsOf: userProfileURL)
+            if let string = String(data: data, encoding: .utf8) {
+                print("File contents: \(string)")
+            }
+        } catch {
+            print("Error reading file: \(error)")
         }
     }
     
