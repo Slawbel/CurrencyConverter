@@ -25,6 +25,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     var onCurrencySelectedShort3: ((String) -> Void)?
     var onCurrencySelectedShort4: ((String) -> Void)?
     var cachedSymbols = [(String, String)]()
+    var controlDate: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -303,6 +304,18 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             try managedContext.executeAndMergeChanges(using: batchDeleteRequest)
         } catch {
             print("Failed removing")
+        }
+    }
+    
+    
+    func readingForControlDate() {
+        do {
+            let data = try Data(contentsOf: userProfileURL)
+            if let string = String(data: data, encoding: .utf8) {
+                print("File contents: \(string)")
+            }
+        } catch {
+            print("Error reading file: \(error)")
         }
     }
 }

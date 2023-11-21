@@ -5,6 +5,8 @@ import UIKit
 
 class ConverterScreen: UIViewController {
 
+    let userProfileURL: URL =
+    
     private let nameLabel = UILabel()
     
     // currency for conversion
@@ -576,7 +578,9 @@ class ConverterScreen: UIViewController {
     var currentDate: String {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
-            return dateFormatter.string(from: datePicker.date)
+            var stringDate = dateFormatter.string(from: datePicker.date)
+            writingDateToTheFile(stringDate)
+            return stringDate
     }
     
     
@@ -665,7 +669,6 @@ class ConverterScreen: UIViewController {
         
         currencyApi.apiInputTF = inputTF.text
         currencyApi.apiChosenDate = currentDate
-        writingToFile(currentDate)
         currencyApi.conversion2 { [weak self] convertResult in
             self?.outputLabel1.text = String(convertResult.result ?? 0)
         }
@@ -728,7 +731,7 @@ class ConverterScreen: UIViewController {
         let fileManager = FileManager.default
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let checkDateURL = documentsURL.appendingPathComponent("CheckDate")
-                
+        
         do {
             try FileManager.default.createDirectory(at: checkDateURL, withIntermediateDirectories: true, attributes: nil)
         } catch {
@@ -736,8 +739,8 @@ class ConverterScreen: UIViewController {
         }
         let userProfileURL = checkDateURL.appendingPathComponent("userProfile.txt")
     }
-            
-    func writingToFile(_ dateString: String) {
+    
+    func writingDateToTheFile(_ dateString: String) {
         if let data = dateString.data(using: .utf8) {
             do {
                 try data.write(to: userProfileURL)
@@ -747,5 +750,15 @@ class ConverterScreen: UIViewController {
             }
         }
     }
+    
+    func deleteSavedDate() {
+        do {
+            try FileManager.default.removeItem(at: userProfileURL)
+            print("Successfully deleted file!")
+        } catch {
+            print("Error deleting file: \(error)")
+        }
+    }
+
 }
 

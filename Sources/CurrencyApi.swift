@@ -50,4 +50,6 @@ class CurrencyApi: CurrencyApiProtocol {
     public func conversion4(onCompletion: @escaping (ConvertResult) -> Void) {
         conversion(to: apiChosenCurShortName4, onCompletion: onCompletion)
     }
+    
+    
 }
