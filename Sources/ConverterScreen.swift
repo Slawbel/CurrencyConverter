@@ -5,7 +5,7 @@ import UIKit
 
 class ConverterScreen: UIViewController {
 
-    let userProfileURL: URL = URL(string: "")!
+    var userProfileURL: URL!
     var controlDate: String = ""
     
     private let nameLabel = UILabel()
