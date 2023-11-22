@@ -15,6 +15,8 @@ class CurrencyApi: CurrencyApiProtocol {
     public var apiChosenCurShortName3: String!
     public var apiChosenCurShortName4: String!
     public var apiChosenDate: String = ""
+    
+    public var controlDate: String = ""
 
     private func conversion(to: String!, onCompletion: @escaping (ConvertResult) -> Void) {
         let string = "https://api.apilayer.com/fixer/convert?to=" + (to ?? "") + "&from=" + (apiChosenCurShortName1 ?? "") + "&amount=" + (apiInputTF ?? "0") + "&date=" + apiChosenDate

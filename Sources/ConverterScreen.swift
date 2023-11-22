@@ -6,7 +6,8 @@ import UIKit
 class ConverterScreen: UIViewController {
 
     var userProfileURL: URL!
-    var controlDate: String = ""
+    
+    var dateForControl: String = ""
     
     private let nameLabel = UILabel()
     
@@ -580,7 +581,7 @@ class ConverterScreen: UIViewController {
     var currentDate: String {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
-            var stringDate = dateFormatter.string(from: datePicker.date)
+            let stringDate = dateFormatter.string(from: datePicker.date)
             writingDateToTheFile(stringDate)
             return stringDate
     }
@@ -730,24 +731,24 @@ class ConverterScreen: UIViewController {
     
     
     func createDirectoryForFile() {
-        let fileManager = FileManager.default
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let checkDateURL = documentsURL.appendingPathComponent("CheckDate")
         
         do {
-            try FileManager.default.createDirectory(at: checkDateURL, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(at: documentsURL, withIntermediateDirectories: true, attributes: nil)
         } catch {
             print("Error creating directory: \(error)")
         }
-        let userProfileURL = checkDateURL.appendingPathComponent("userProfile.txt")
+        self.userProfileURL = checkDateURL.appendingPathComponent("userProfile.txt")
     }
     
     func writingDateToTheFile(_ dateString: String) {
-        deleteSavedDate()
+        //deleteSavedDate()
         if let data = dateString.data(using: .utf8) {
             do {
-                try data.write(to: userProfileURL)
+                try data.write(to: self.userProfileURL)
                 print("Successfully wrote to file!")
+                readingForControlDate()
             } catch {
                 print("Error writing to file: \(error)")
             }
@@ -756,23 +757,23 @@ class ConverterScreen: UIViewController {
     
     func readingForControlDate() {
         do {
-            let data = try Data(contentsOf: userProfileURL)
-            if let string = String(data: data, encoding: .utf8) {
-                print("File contents: \(string)")
+            let data = try Data(contentsOf: self.userProfileURL)
+            if let dateForControl = String(data: data, encoding: .utf8) {
+                print("File contents: \(dateForControl)")
             }
         } catch {
             print("Error reading file: \(error)")
         }
     }
     
-    func deleteSavedDate() {
+    /*func deleteSavedDate() {
         do {
-            try FileManager.default.removeItem(at: userProfileURL)
+            try FileManager.default.removeItem(at: self.userProfileURL)
             print("Successfully deleted file!")
         } catch {
             print("Error deleting file: \(error)")
         }
-    }
+    }*/
 
 }
 
