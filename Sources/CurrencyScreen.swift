@@ -13,7 +13,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     private var tableView = UITableView()
     private var backButton = UIButton()
     private lazy var searchContr = UISearchTextField()
-    private var dictCurrency: OrderedDictionary<Character,[String]> = [:]
+    private var dictCurrency: OrderedDictionary<Character,[(String,String)]> = [:]
     private var chosenRow: IndexPath = []
     private var symbols = [(String, String)]()
     var onCurrencySelected1: ((String) -> Void)?
@@ -43,37 +43,41 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             print("RETURNING WAS DONE")
         }
         
-        var currencyDict = Set<String>()
+        var currencyDict = [String: String]()
         
         if cachedSymbols.isEmpty {
             findCur()
             print("Way1")
             for n in symbols {
-                currencyDict.insert(n.1)
+                currencyDict[n.0] = n.1
             }
         } else {
             print("Way2")
             for n in cachedSymbols {
-                currencyDict.insert(n.1)
+                currencyDict[n.0] = n.1
             }
         }
         for n in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
-        var tempArray: Array<String> = []
-        for m in currencyDict {
-            let letter = m[m.startIndex]
-            if n == letter {
-                tempArray.append(m)
+            var tempArray: [(String,String)] = []
+            for m in currencyDict {
+                let letter = m.value[0]
+                if n == letter {
+                    tempArray.append((m.key, m.value))
+                }
             }
+            dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
         }
-        dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
-        }
+        print(dictCurrency)
+        
+        
             
         // removing of empty elements and its key
         for i in dictCurrency.keys {
-            if dictCurrency[i] == [] {
+            if dictCurrency[i] == nil {
                 dictCurrency.removeValue(forKey: i)
             }
         }
+        
         
         tableView.register(cellWithClass: MyTableViewCell.self)
         tableView.delegate = self
@@ -122,9 +126,9 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         let contactSection = dictCurrency[sectionKey]
         let contact = contactSection?[indexPath.row]
         if indexPath != chosenRow {
-            cell?.setup(text: contact ?? "", isChecked: true)
+            cell?.setup(text: contact?.1 ?? "", isChecked: true)
         } else {
-            cell?.setup(text: contact ?? "", isChecked: false)
+            cell?.setup(text: contact?.1 ?? "", isChecked: false)
         }
         cell?.backgroundColor = .black
         return cell!
