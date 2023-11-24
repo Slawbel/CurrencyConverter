@@ -112,7 +112,8 @@ class ConverterScreen: UIViewController {
         }, for: .primaryActionTriggered)
         
 
-        
+        createDirectoryForFile()
+        writingDateToTheFile(currentDate)
         datePicker.timeZone = NSTimeZone.local
         datePicker.overrideUserInterfaceStyle = .dark
         let colorForIDatePickerText = hexStringToUIColor(hex: "#2B333A")
@@ -120,10 +121,10 @@ class ConverterScreen: UIViewController {
         datePicker.datePickerMode = .date
         datePicker.setDate(.now, animated: true)
         datePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
+        datePicker.addTarget(self, action: #selector(writingDateToTheFile(currentDate)), for: .valueChanged)
         datePicker.layer.cornerRadius = 8
         datePicker.setValue(UIColor.white, forKey: "textColor")
-        createDirectoryForFile()
-        writingDateToTheFile(currentDate)
+        
         
         inputTF.keyboardType = .asciiCapableNumberPad
         inputTF.keyboardAppearance = .dark
