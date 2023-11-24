@@ -7,8 +7,6 @@ class ConverterScreen: UIViewController {
 
     var userProfileURL: URL!
     
-    var dateForControl: String = ""
-    
     private let nameLabel = UILabel()
     
     // currency for conversion
@@ -124,6 +122,8 @@ class ConverterScreen: UIViewController {
         datePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
         datePicker.layer.cornerRadius = 8
         datePicker.setValue(UIColor.white, forKey: "textColor")
+        createDirectoryForFile()
+        writingDateToTheFile(currentDate)
         
         inputTF.keyboardType = .asciiCapableNumberPad
         inputTF.keyboardAppearance = .dark
@@ -582,7 +582,7 @@ class ConverterScreen: UIViewController {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             let stringDate = dateFormatter.string(from: datePicker.date)
-            writingDateToTheFile(stringDate)
+            //writingDateToTheFile(stringDate)
             return stringDate
     }
     
@@ -733,12 +733,6 @@ class ConverterScreen: UIViewController {
     func createDirectoryForFile() {
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let checkDateURL = documentsURL.appendingPathComponent("CheckDate")
-        
-        do {
-            try FileManager.default.createDirectory(at: documentsURL, withIntermediateDirectories: true, attributes: nil)
-        } catch {
-            print("Error creating directory: \(error)")
-        }
         self.userProfileURL = checkDateURL.appendingPathComponent("userProfile.txt")
     }
     
