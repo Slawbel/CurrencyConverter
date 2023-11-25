@@ -121,7 +121,7 @@ class ConverterScreen: UIViewController {
         datePicker.datePickerMode = .date
         datePicker.setDate(.now, animated: true)
         datePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
-        datePicker.addTarget(self, action: #selector(callWriting(currentDate)), for: .valueChanged)
+        // datePicker.addTarget(self, action: #selector(callWriting(currentDate)), for: .valueChanged)
         datePicker.layer.cornerRadius = 8
         datePicker.setValue(UIColor.white, forKey: "textColor")
         
@@ -733,8 +733,7 @@ class ConverterScreen: UIViewController {
     
     func createDirectoryForFile() {
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let checkDateURL = documentsURL.appendingPathComponent("CheckDate")
-        self.userProfileURL = checkDateURL.appendingPathComponent("userProfile.txt")
+        self.userProfileURL = documentsURL.appendingPathComponent("userProfile.txt")
     }
     
     func callWriting(_ dateString: String) {
