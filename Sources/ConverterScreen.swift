@@ -121,7 +121,7 @@ class ConverterScreen: UIViewController {
         datePicker.datePickerMode = .date
         datePicker.setDate(.now, animated: true)
         datePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
-        // datePicker.addTarget(self, action: #selector(callWriting(currentDate)), for: .valueChanged)
+        datePicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
         datePicker.layer.cornerRadius = 8
         datePicker.setValue(UIColor.white, forKey: "textColor")
         
@@ -729,6 +729,9 @@ class ConverterScreen: UIViewController {
         return cutShortNameFlag
     }
     
+    @objc func datePickerChanged(picker: UIDatePicker) {
+        callWriting(currentDate)
+    }
     
     
     func createDirectoryForFile() {
