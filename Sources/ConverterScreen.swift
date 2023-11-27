@@ -112,7 +112,6 @@ class ConverterScreen: UIViewController {
         }, for: .primaryActionTriggered)
         
 
-        createDirectoryForFile()
         writingDateToTheFile(currentDate)
         datePicker.timeZone = NSTimeZone.local
         datePicker.overrideUserInterfaceStyle = .dark
