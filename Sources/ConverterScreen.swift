@@ -3,6 +3,8 @@ import UIKit
 
 class ConverterScreen: UIViewController {
 
+    var userProfileURL: URL!
+    
     private let nameLabel = UILabel()
     
     // currency for conversion
@@ -59,6 +61,7 @@ class ConverterScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        createDirectoryForFile()
         view.backgroundColor = .init(named: "mainBackgroundColor")
         
         nameLabel.textAlignment = .center
@@ -107,7 +110,7 @@ class ConverterScreen: UIViewController {
         }, for: .primaryActionTriggered)
         
 
-        
+        writingDateToTheFile(currentDate)
         datePicker.timeZone = NSTimeZone.local
         datePicker.overrideUserInterfaceStyle = .dark
         let colorForIDatePickerText = hexStringToUIColor(hex: "#2B333A")
@@ -115,8 +118,10 @@ class ConverterScreen: UIViewController {
         datePicker.datePickerMode = .date
         datePicker.setDate(.now, animated: true)
         datePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
+        datePicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
         datePicker.layer.cornerRadius = 8
         datePicker.setValue(UIColor.white, forKey: "textColor")
+        
         
         inputTF.keyboardType = .asciiCapableNumberPad
         inputTF.keyboardAppearance = .dark
@@ -574,7 +579,9 @@ class ConverterScreen: UIViewController {
     var currentDate: String {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
-            return dateFormatter.string(from: datePicker.date)
+            let stringDate = dateFormatter.string(from: datePicker.date)
+            //writingDateToTheFile(stringDate)
+            return stringDate
     }
     
     
@@ -718,5 +725,54 @@ class ConverterScreen: UIViewController {
         }
         return cutShortNameFlag
     }
+    
+    @objc func datePickerChanged(picker: UIDatePicker) {
+        callWriting(currentDate)
+    }
+    
+    
+    func createDirectoryForFile() {
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        self.userProfileURL = documentsURL.appendingPathComponent("userProfile.txt")
+    }
+    
+    func callWriting(_ dateString: String) {
+        writingDateToTheFile(dateString)
+    }
+    
+    
+    func writingDateToTheFile(_ dateString: String) {
+        //deleteSavedDate()
+        if let data = dateString.data(using: .utf8) {
+            do {
+                try data.write(to: self.userProfileURL)
+                print("Successfully wrote to file!")
+                readingForControlDate()
+            } catch {
+                print("Error writing to file: \(error)")
+            }
+        }
+    }
+    
+    func readingForControlDate() {
+        do {
+            let data = try Data(contentsOf: self.userProfileURL)
+            if let dateForControl = String(data: data, encoding: .utf8) {
+                print("File contents: \(dateForControl)")
+            }
+        } catch {
+            print("Error reading file: \(error)")
+        }
+    }
+    
+    /*func deleteSavedDate() {
+        do {
+            try FileManager.default.removeItem(at: self.userProfileURL)
+            print("Successfully deleted file!")
+        } catch {
+            print("Error deleting file: \(error)")
+        }
+    }*/
+
 }
 
