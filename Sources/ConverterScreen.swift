@@ -73,8 +73,7 @@ class ConverterScreen: UIViewController {
         nameLabel.font = nameLabel.font.withSize(24)
         
         stackView.axis = .vertical
-        let colorForStackView = ConverterScreen.hexStringToUIColor(hex: "#181B20")
-        stackView.backgroundColor = colorForStackView
+        stackView.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         stackView.layer.cornerRadius = 20
         
         inputCurLabel.textAlignment = .center
@@ -92,8 +91,7 @@ class ConverterScreen: UIViewController {
         inputCurrencyLabel.backgroundColor = .clear
         
         inputCurButton.layer.cornerRadius = 10
-        let colorForInputCurButton = ConverterScreen.hexStringToUIColor(hex: "#2B333A")
-        inputCurButton.backgroundColor = colorForInputCurButton
+        inputCurButton.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         inputCurButton.setTitleColor(.white, for: .normal)
         inputCurButton.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
@@ -115,8 +113,7 @@ class ConverterScreen: UIViewController {
         writingDateToTheFile(currentDate)
         datePicker.timeZone = NSTimeZone.local
         datePicker.overrideUserInterfaceStyle = .dark
-        let colorForIDatePickerText = ConverterScreen.hexStringToUIColor(hex: "#2B333A")
-        datePicker.backgroundColor = colorForIDatePickerText
+        datePicker.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         datePicker.datePickerMode = .date
         datePicker.setDate(.now, animated: true)
         datePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
@@ -137,8 +134,7 @@ class ConverterScreen: UIViewController {
         
         // currency #1
         stackView1.axis = .vertical
-        let colorForStackView1 = ConverterScreen.hexStringToUIColor(hex: "#181B20")
-        stackView1.backgroundColor = colorForStackView1
+        stackView1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         stackView1.layer.cornerRadius = 20
         
         outputCurLabel1.textAlignment = .left
@@ -154,8 +150,7 @@ class ConverterScreen: UIViewController {
         outputCurrencyLabel1.backgroundColor = .clear
         
         outputCurButton1.layer.cornerRadius = 10
-        let colorForOutputCurButton = ConverterScreen.hexStringToUIColor(hex: "#2B333A")
-        outputCurButton1.backgroundColor = colorForOutputCurButton
+        outputCurButton1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton1.setTitleColor(.white, for: .normal)
         outputCurButton1.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
@@ -181,8 +176,7 @@ class ConverterScreen: UIViewController {
         
         // currency #2
         stackView2.axis = .vertical
-        let colorForStackView2 = ConverterScreen.hexStringToUIColor(hex: "#181B20")
-        stackView2.backgroundColor = colorForStackView2
+        stackView2.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         stackView2.layer.cornerRadius = 20
         stackView2.isHidden = true
         
@@ -201,8 +195,7 @@ class ConverterScreen: UIViewController {
         outputCurrencyLabel2.isHidden = true
         
         outputCurButton2.layer.cornerRadius = 10
-        let colorForOutputCurButton2 = ConverterScreen.hexStringToUIColor(hex: "#2B333A")
-        outputCurButton2.backgroundColor = colorForOutputCurButton2
+        outputCurButton2.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton2.setTitleColor(.white, for: .normal)
         outputCurButton2.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
@@ -230,8 +223,7 @@ class ConverterScreen: UIViewController {
         
         // currency #3
         stackView3.axis = .vertical
-        let colorForStackView3 = ConverterScreen.hexStringToUIColor(hex: "#181B20")
-        stackView3.backgroundColor = colorForStackView3
+        stackView3.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         stackView3.layer.cornerRadius = 20
         stackView3.isHidden = true
         
@@ -250,8 +242,7 @@ class ConverterScreen: UIViewController {
         outputCurrencyLabel3.isHidden = true
         
         outputCurButton3.layer.cornerRadius = 10
-        let colorForOutputCurButton3 = ConverterScreen.hexStringToUIColor(hex: "#2B333A")
-        outputCurButton3.backgroundColor = colorForOutputCurButton3
+        outputCurButton3.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton3.setTitleColor(.white, for: .normal)
         outputCurButton3.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
@@ -277,35 +268,33 @@ class ConverterScreen: UIViewController {
         outputLabel3.text = "0"
         outputLabel3.isHidden = true
         
-        
-        let colorForSwapButton1 = ConverterScreen.hexStringToUIColor(hex: "#0F0F0F")
-        swapButton1.backgroundColor = colorForSwapButton1
+        swapButton1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#0F0F0F")
         swapButton1.layer.cornerRadius = 19
         let swapSymbol1 = UIImage(named: "icon_swap_vertical")
         swapButton1.setImage(swapSymbol1, for: .normal)
         swapButton1.addTarget(self, action: #selector(swapCurrency1), for: .touchUpInside)
         
-        swapButton2.backgroundColor = colorForSwapButton1
+        swapButton2.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#0F0F0F")
         swapButton2.layer.cornerRadius = 19
         swapButton2.setImage(swapSymbol1, for: .normal)
         swapButton2.addTarget(self, action: #selector(swapCurrency2), for: .touchUpInside)
         swapButton2.isHidden = true
         
 
-        swapButton3.backgroundColor = colorForSwapButton1
+        swapButton3.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#0F0F0F")
         swapButton3.layer.cornerRadius = 19
         swapButton3.setImage(swapSymbol1, for: .normal)
         swapButton3.addTarget(self, action: #selector(swapCurrency3), for: .touchUpInside)
         swapButton3.isHidden = true
         
         
-        addButton.backgroundColor = colorForStackView
+        addButton.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         addButton.layer.cornerRadius = 18.5
         let addSymbol = UIImage(named: "icon_plus")
         addButton.setImage(addSymbol, for: .normal)
         addButton.addTarget(self, action: #selector(addCurrency), for: .touchUpInside)
         
-        buttonRateHistory.backgroundColor = colorForStackView
+        buttonRateHistory.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         buttonRateHistory.layer.cornerRadius = 12
         buttonRateHistory.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonRateHistory.setTitleColor(.white, for: .normal)
@@ -321,7 +310,7 @@ class ConverterScreen: UIViewController {
         let buttonRateHistoryTitle = NSLocalizedString("transfer", comment: "")
         buttonRateHistory.setTitle(buttonRateHistoryTitle, for: .normal)
         
-        buttonDiagramPage.backgroundColor = colorForStackView
+        buttonDiagramPage.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         buttonDiagramPage.layer.cornerRadius = 12
         buttonDiagramPage.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonDiagramPage.setTitleColor(.white, for: .normal)
@@ -685,27 +674,7 @@ class ConverterScreen: UIViewController {
     
     
     
-    static func hexStringToUIColor(hex: String) -> UIColor {
-        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-
-        if (cString.hasPrefix("#")) {
-            cString.remove(at: cString.startIndex)
-        }
-
-        if ((cString.count) != 6) {
-            return UIColor.gray
-        }
-
-        var rgbValue:UInt64 = 0
-        Scanner(string: cString).scanHexInt64(&rgbValue)
-
-        return UIColor(
-            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-            alpha: CGFloat(1.0)
-        )
-    }
+    
     
 
     func flag(country:String) -> String {
