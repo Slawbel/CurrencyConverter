@@ -149,7 +149,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         let key = Array(dictCurrency.keys)
         lbl.text = String(key[section])
         lbl.font = UIFont(name: "DMSans-Regular", size: 20)
-        let colorForSectionTitle = ConverterScreen().hexStringToUIColor(hex: "#646464")
+        let colorForSectionTitle = ConverterScreen.hexStringToUIColor(hex: "#646464")
         lbl.textColor = colorForSectionTitle
         view.addSubview(lbl)
   
@@ -236,11 +236,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.backgroundColor = .black
         
         searchContr.layerCornerRadius = 20
-        let colorForSearchPlaceholder = ConverterScreen().hexStringToUIColor(hex: "#646464")
+        let colorForSearchPlaceholder = ConverterScreen.hexStringToUIColor(hex: "#646464")
         searchContr.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("searchCurrency", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : colorForSearchPlaceholder])
         searchContr.font = UIFont(name: "DMSans-Regular", size: 14)
         searchContr.textColor = .white
-        let colorForSearchContr = ConverterScreen().hexStringToUIColor(hex: "#181B20")
+        let colorForSearchContr = ConverterScreen.hexStringToUIColor(hex: "#181B20")
         searchContr.backgroundColor = colorForSearchContr
         
         backButton.layer.cornerRadius = 20
