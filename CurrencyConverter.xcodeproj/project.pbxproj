@@ -15,6 +15,7 @@
 		9EFEB4852A91413D00860A54 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9EFEB4842A91413D00860A54 /* DMSans-Regular.ttf */; };
 		A22FC4902A9A44A50037B6D6 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A22FC48F2A9A445B0037B6D6 /* DMSans-Bold.ttf */; };
 		A261608D2AEC7CAC00C6DF13 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A261608B2AEC7CAC00C6DF13 /* Model.xcdatamodeld */; };
+		A2616D462B173E58000AF9A7 /* SetColorByCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2616D452B173E58000AF9A7 /* SetColorByCode.swift */; };
 		A2B496F5299FBDD00017A82A /* CurrencyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */; };
 		A2B496F729A2C5200017A82A /* TableViewCellForCurrencyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */; };
 		A2B496FB29A802A30017A82A /* CurData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496FA29A802A20017A82A /* CurData.swift */; };
@@ -45,6 +46,7 @@
 		9EFEB4842A91413D00860A54 /* DMSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Regular.ttf"; sourceTree = "<group>"; };
 		A22FC48F2A9A445B0037B6D6 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Bold.ttf"; sourceTree = "<group>"; };
 		A261608C2AEC7CAC00C6DF13 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		A2616D452B173E58000AF9A7 /* SetColorByCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetColorByCode.swift; sourceTree = "<group>"; };
 		A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyScreen.swift; sourceTree = "<group>"; };
 		A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellForCurrencyScreen.swift; sourceTree = "<group>"; };
 		A2B496FA29A802A20017A82A /* CurData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurData.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				9E25D2D829998CA700293AB7 /* AppDelegate.swift */,
 				A261608B2AEC7CAC00C6DF13 /* Model.xcdatamodeld */,
 				9E25D2D929998CA700293AB7 /* Info.plist */,
+				A2616D452B173E58000AF9A7 /* SetColorByCode.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -222,6 +225,7 @@
 			files = (
 				A2C48EAF29E5C412004A5594 /* DiagramResult.swift in Sources */,
 				9E25D2DF29998CA700293AB7 /* AppDelegate.swift in Sources */,
+				A2616D462B173E58000AF9A7 /* SetColorByCode.swift in Sources */,
 				9E25D2DB29998CA700293AB7 /* ConverterScreen.swift in Sources */,
 				A2C48E9329E09FD8004A5594 /* DiagramPage.swift in Sources */,
 				A2B496FB29A802A30017A82A /* CurData.swift in Sources */,
