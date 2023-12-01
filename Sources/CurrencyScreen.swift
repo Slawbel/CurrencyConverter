@@ -65,7 +65,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                     tempArray.append((m.key, m.value))
                 }
             }
-            dictCurrency[n] = tempArray.sorted(by: { $0 < $1 })
+            dictCurrency[n] = tempArray.sorted(by: { $0.1 < $1.1 })
         }
         print(dictCurrency)
         
