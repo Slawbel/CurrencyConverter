@@ -69,7 +69,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         print(dictCurrency)
         
-        
             
         // removing of empty elements and its key
         for i in dictCurrency.keys {
@@ -136,6 +135,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         let key = Array(dictCurrency.keys)[section]
+        print(key)
         return dictCurrency[key]?.count ?? 0
     }
     
@@ -166,6 +166,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             selectedCur2 = cachedSymbols[indexPath.row].0
         }
         onCurrencySelected1?(selectedCur)
+        print(selectedCur)
         onCurrencySelected2?(selectedCur)
         onCurrencySelected3?(selectedCur)
         onCurrencySelected4?(selectedCur)
@@ -174,6 +175,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         onCurrencySelectedShort3?(selectedCur2)
         onCurrencySelectedShort4?(selectedCur2)
         chosenRow = indexPath
+        print(chosenRow)
         tableView.reloadData()
     }
     
