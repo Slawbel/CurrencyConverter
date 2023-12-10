@@ -24,7 +24,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     var onCurrencySelectedShort2: ((String) -> Void)?
     var onCurrencySelectedShort3: ((String) -> Void)?
     var onCurrencySelectedShort4: ((String) -> Void)?
-    var cachedSymbols = [(String, String)]()
     
     
     override func viewDidLoad() {
@@ -38,24 +37,19 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         tableView.dataSource = self
         tableView.delegate = self
-        if cachedSymbols.isEmpty {
-            returnData()
-            print("RETURNING WAS DONE")
-        }
+        returnData()
+        print("RETURNING WAS DONE")
         
         var currencyDict = [String: String]()
         
-        if cachedSymbols.isEmpty {
-            findCur()
+        if symbols.isEmpty {
             print("Way1")
-            for n in symbols {
-                currencyDict[n.0] = n.1
-            }
+            findCur()
         } else {
             print("Way2")
-            for n in cachedSymbols {
-                currencyDict[n.0] = n.1
-            }
+        }
+        for n in symbols {
+            currencyDict[n.0] = n.1
         }
         for n in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
             var tempArray: [(String,String)] = []
@@ -120,11 +114,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let keyArray = Array(dictCurrency.keys)
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
-        let sectionKey = keyArray[indexPath.section]
-        let contactSection = dictCurrency[sectionKey]
-        let contact = contactSection?[indexPath.row]
+        let contact = contact(for: indexPath)
         if indexPath != chosenRow {
             cell?.setup(text: contact?.1 ?? "", isChecked: true)
         } else {
@@ -132,6 +123,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         cell?.backgroundColor = .black
         return cell!
+    }
+
+    private func contact(for indexPath: IndexPath) -> (String, String)? {
+        let keyArray = Array(dictCurrency.keys)
+        let sectionKey = keyArray[indexPath.section]
+        let contactSection = dictCurrency[sectionKey]
+        return contactSection?[indexPath.row]
     }
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -156,15 +154,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let contact = contact(for: indexPath)
         let selectedCur: String
-        var selectedCur2: String
-        if cachedSymbols.isEmpty {
-            selectedCur = symbols[indexPath.row].1
-            selectedCur2 = symbols[indexPath.row].0
-        } else {
-            selectedCur = cachedSymbols[indexPath.row].1
-            selectedCur2 = cachedSymbols[indexPath.row].0
-        }
+        let selectedCur2: String
+        selectedCur = contact?.1 ?? ""
+        selectedCur2 = contact?.0 ?? ""
         onCurrencySelected1?(selectedCur)
         onCurrencySelected2?(selectedCur)
         onCurrencySelected3?(selectedCur)
@@ -289,7 +283,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         do {
             let result = try managedContext.fetch(request)
             for data in result as! [NSManagedObject] {
-                self.cachedSymbols.append((data.value(forKey: "shortNameOfCurrency") as! String, data.value(forKey: "longNameOfCurrency") as! String))
+                self.symbols.append((data.value(forKey: "shortNameOfCurrency") as! String, data.value(forKey: "longNameOfCurrency") as! String))
             }
         } catch {
             print("Failed returning")
