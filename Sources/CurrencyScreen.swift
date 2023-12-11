@@ -166,7 +166,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             selectedCur2 = cachedSymbols[indexPath.row].0
         }
         onCurrencySelected1?(selectedCur)
-        print(selectedCur)
         onCurrencySelected2?(selectedCur)
         onCurrencySelected3?(selectedCur)
         onCurrencySelected4?(selectedCur)

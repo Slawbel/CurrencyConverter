@@ -1,12 +1,12 @@
 import SnapKit
 import UIKit
 
-
-
 class ConverterScreen: UIViewController {
-
+    
+    // profile for saving data in file
     var userProfileURL: URL!
     
+    // the main name-label on the first screen
     private let nameLabel = UILabel()
     
     // currency for conversion
@@ -37,25 +37,25 @@ class ConverterScreen: UIViewController {
     private let outputCurButton3 = UIButton()
     private let outputLabel3 = UILabel()
 
+    // calendar, swap buttons and button for adding one more currency
     private let datePicker = UIDatePicker()
     private let swapButton1 = UIButton()
     private let swapButton2 = UIButton()
     private let swapButton3 = UIButton()
     private let addButton = UIButton()
     
+    // buttons to call diagram and rate history
     private let buttonRateHistory = UIButton()
     private let buttonDiagramPage = UIButton()
    
-    
-    private var result1: String?
-    private var result2: String?
-    private var result3: String?
+    // chosen basic currency and currencies to compare with
     private var chosenCurrency: String!
     var chosenCurShortName: String!
     var chosenCurShortName1: String!
     var chosenCurShortName2: String!
     var chosenCurShortName3: String!
     
+    // needed counter for adding of currency on the screen
     var counterOfClick = 0
    
 
@@ -63,33 +63,42 @@ class ConverterScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // defining user url for saving data into file
         createDirectoryForFile()
+        
+        // setting of background color
         view.backgroundColor = .init(named: "mainBackgroundColor")
         
+        // style setting of the main name-label
         nameLabel.textAlignment = .center
         nameLabel.backgroundColor = .clear
         nameLabel.textColor = .white
         nameLabel.text = NSLocalizedString("nameLabelText", comment: "")
         nameLabel.font = nameLabel.font.withSize(24)
         
+        
+        // BLOCK OF BASIC CURRENCY
+        // style setting of block of basic currency
         stackView.axis = .vertical
         stackView.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         stackView.layer.cornerRadius = 20
         
-        inputCurLabel.textAlignment = .center
-        
+        // style setting of block label of basic currency
+        inputCurLabel.textAlignment = .left
         let font = UIFont(name: "DMSans-Regular", size: 14)
         inputCurLabel.font = font
         inputCurLabel.textColor = .white
         inputCurLabel.backgroundColor = .clear
         inputCurLabel.text = NSLocalizedString("inputCurLabelText", comment: "")
         
+        // style setting of label of chosen basic currency
         inputCurrencyLabel.text = "               >"
         inputCurrencyLabel.textAlignment = .center
         inputCurrencyLabel.font = inputCurrencyLabel.font.withSize(14)
         inputCurrencyLabel.textColor = .white
         inputCurrencyLabel.backgroundColor = .clear
         
+        // style setting of button of chosen basic currency
         inputCurButton.layer.cornerRadius = 10
         inputCurButton.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         inputCurButton.setTitleColor(.white, for: .normal)
@@ -109,8 +118,9 @@ class ConverterScreen: UIViewController {
             self.navigationController?.pushViewController(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
         
-
+        // saving date from calendar into file
         writingDateToTheFile(currentDate)
+        // style setting of calendar
         datePicker.timeZone = NSTimeZone.local
         datePicker.overrideUserInterfaceStyle = .dark
         datePicker.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
@@ -121,7 +131,7 @@ class ConverterScreen: UIViewController {
         datePicker.layer.cornerRadius = 8
         datePicker.setValue(UIColor.white, forKey: "textColor")
         
-        
+        // style setting of textfield for input of amount to be converted
         inputTF.keyboardType = .asciiCapableNumberPad
         inputTF.keyboardAppearance = .dark
         let placeholderForInputTF = NSLocalizedString("writeTheAmount", comment: "")
@@ -132,23 +142,28 @@ class ConverterScreen: UIViewController {
         inputTF.attributedPlaceholder = NSAttributedString(
             string: placeholderForInputTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         
-        // currency #1
+        
+        // BLOCK OF CURRENCY #1 FOR COMPARISON
+        // style setting of block of currency #1 for comparison
         stackView1.axis = .vertical
         stackView1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         stackView1.layer.cornerRadius = 20
         
+        // style setting of block label of currency #1 for comparison
         outputCurLabel1.textAlignment = .left
         outputCurLabel1.font = outputCurLabel1.font.withSize(14)
         outputCurLabel1.textColor = .white
         outputCurLabel1.backgroundColor = .clear
         outputCurLabel1.text = NSLocalizedString("outputCurLabelText", comment: "")
         
+        // style setting of label of currency #1 for comparison
         outputCurrencyLabel1.text = "               >"
         outputCurrencyLabel1.textAlignment = .center
         outputCurrencyLabel1.font = outputCurrencyLabel1.font.withSize(14)
         outputCurrencyLabel1.textColor = .white
         outputCurrencyLabel1.backgroundColor = .clear
         
+        // style setting of button of currency #1 for comparison
         outputCurButton1.layer.cornerRadius = 10
         outputCurButton1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton1.setTitleColor(.white, for: .normal)
@@ -168,6 +183,7 @@ class ConverterScreen: UIViewController {
             self.navigationController?.pushViewController(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
         
+        // style setting of convertion result of currency #1 for comparison
         outputLabel1.backgroundColor = .clear
         outputLabel1.textAlignment = .right
         outputLabel1.textColor = .white
