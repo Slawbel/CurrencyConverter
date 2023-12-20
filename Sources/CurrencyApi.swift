@@ -1,23 +1,26 @@
 import UIKit
 
+// protocol is used as pattern for function "conversion"
 protocol CurrencyApiProtocol {
     func conversion2(onCompletion: @escaping (ConvertResult) -> Void)
     func conversion3(onCompletion: @escaping (ConvertResult) -> Void)
     func conversion4(onCompletion: @escaping (ConvertResult) -> Void)
 }
 
+
 class CurrencyApi: CurrencyApiProtocol {
     
+    // input data for conversion api request
+    // amount to convert
     public var apiInputTF: String!
+    // currencies to convert or to be converted
     public var apiChosenCurShortName1: String!
     public var apiChosenCurShortName2: String!
-
     public var apiChosenCurShortName3: String!
     public var apiChosenCurShortName4: String!
     public var apiChosenDate: String = ""
-    
-    public var controlDate: String = ""
 
+    // api to convert amount of money of currency to another one
     private func conversion(to: String!, onCompletion: @escaping (ConvertResult) -> Void) {
         let string = "https://api.apilayer.com/fixer/convert?to=" + (to ?? "") + "&from=" + (apiChosenCurShortName1 ?? "") + "&amount=" + (apiInputTF ?? "0") + "&date=" + apiChosenDate
         guard let url = URL(string: string) else {
@@ -40,15 +43,14 @@ class CurrencyApi: CurrencyApiProtocol {
         }
         task.resume()
     }
-        
+    
+    // those functions help to convert chosen currency from three below to currency "apiChosenCurShortName1"
     public func conversion2(onCompletion: @escaping (ConvertResult) -> Void) {
         conversion(to: apiChosenCurShortName2, onCompletion: onCompletion)
     }
-    
     public func conversion3(onCompletion: @escaping (ConvertResult) -> Void) {
         conversion(to: apiChosenCurShortName3, onCompletion: onCompletion)
     }
-    
     public func conversion4(onCompletion: @escaping (ConvertResult) -> Void) {
         conversion(to: apiChosenCurShortName4, onCompletion: onCompletion)
     }

@@ -8,34 +8,47 @@ import OrderedCollections
 
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    
+    // elements of screen
     private let nameOfScreen = UILabel()
     private var tableView = UITableView()
     private var backButton = UIButton()
     private lazy var searchContr = UISearchTextField()
+    
+    // temporary collection to order data of every currency from list
     private var dictCurrency: OrderedDictionary<Character,[(String,String)]> = [:]
+    
+    // chosen row of currency that is needed to use in convertion operation
     private var chosenRow: IndexPath = []
+    
+    // list of currencies with short and long names which is used to show up on the tableView
     private var symbols = [(String, String)]()
+    
+    // chosen full name of currency for cells #1...4 are stored here or cell is empty
     var onCurrencySelected1: ((String) -> Void)?
     var onCurrencySelected2: ((String) -> Void)?
     var onCurrencySelected3: ((String) -> Void)?
     var onCurrencySelected4: ((String) -> Void)?
+    // chosen short name of currency for cells #1...4 are stored here or cell is empty
     var onCurrencySelectedShort1: ((String) -> Void)?
     var onCurrencySelectedShort2: ((String) -> Void)?
     var onCurrencySelectedShort3: ((String) -> Void)?
     var onCurrencySelectedShort4: ((String) -> Void)?
+    
+    // here are stored data after caching of currencies list and used to show up currency list from the last api request
     var cachedSymbols = [(String, String)]()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // style setting of name label of the screen
         nameOfScreen.textAlignment = .center
         nameOfScreen.backgroundColor = .clear
         nameOfScreen.textColor = .white
         nameOfScreen.text = NSLocalizedString("nameOfScreen", comment: "")
         nameOfScreen.font = nameOfScreen.font.withSize(24)
         
+        //
         tableView.dataSource = self
         tableView.delegate = self
         if cachedSymbols.isEmpty {
@@ -43,8 +56,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             print("RETURNING WAS DONE")
         }
         
+        // temporary collection for editing
         var currencyDict = [String: String]()
         
+        // in case of empty "cachedSymbols": api request is being made and uploaded currencies list to CoreData memory; temporary collection "currencyDict" obtains short and full names of currencies from api
+        // in case of non-empty "cachedSymbols": emporary collection "currencyDict" obtains short and full names of currencies from "cachedSymbols"
         if cachedSymbols.isEmpty {
             findCur()
             print("Way1")
@@ -57,6 +73,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                 currencyDict[n.0] = n.1
             }
         }
+        
+        // 
         for n in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
             var tempArray: [(String,String)] = []
             for m in currencyDict {
@@ -259,7 +277,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         backButton.masksToBounds = true
     }
     
-    // recording of data in CoreData
+    // recording (refreshing) of currencies list to CoreData memory
     func createData() {
         removeData()
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -280,6 +298,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    // downloading currencies list from CoreData
     func returnData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -297,6 +316,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    // deleting currencies list from CoreData memory
     func removeData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -312,6 +332,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 }
 
 
+// extension is used to support function to delete data from CoreData memory
 extension NSManagedObjectContext {
     public func executeAndMergeChanges(using batchDeleteRequest: NSBatchDeleteRequest) throws {
         batchDeleteRequest.resultType = .resultTypeObjectIDs
