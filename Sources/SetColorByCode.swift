@@ -1,5 +1,6 @@
 import UIKit
 
+// this structure was needed for defining and setting collor due to code RGB 
 struct SetColorByCode {
     static func hexStringToUIColor(hex: String) -> UIColor {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
