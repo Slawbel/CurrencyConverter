@@ -45,7 +45,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         nameOfScreen.text = NSLocalizedString("nameOfScreen", comment: "")
         nameOfScreen.font = nameOfScreen.font.withSize(24)
         
-        //
+        // here data is trying to be downloaded from DataCore
         tableView.dataSource = self
         tableView.delegate = self
         returnData()
@@ -54,8 +54,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         // temporary collection for editing
         var currencyDict = [String: String]()
         
-        // in case of empty "cachedSymbols": api request is being made and uploaded currencies list to CoreData memory; temporary collection "currencyDict" obtains short and full names of currencies from api
-        // in case of non-empty "cachedSymbols": emporary collection "currencyDict" obtains short and full names of currencies from "cachedSymbols"
+        // in case of empty "symbols": api request is being made and uploaded currencies list to CoreData memory;
+        // in case of non-empty "symbols": the process continues to the next step and temporary collection "currencyDict" obtains short and full names of currencies from "symbols"
         if symbols.isEmpty {
             print("Way1")
             findCur()
@@ -66,7 +66,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             currencyDict[n.0] = n.1
         }
         
-        // 
+        // sorting of temporary collection "currencyDict" and transferring to collection "dictCurrency"
         for n in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
             var tempArray: [(String,String)] = []
             for m in currencyDict {
@@ -77,7 +77,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             dictCurrency[n] = tempArray.sorted(by: { $0.1 < $1.1 })
         }
-        print(dictCurrency)
         
             
         // removing of empty elements and its key
@@ -89,14 +88,15 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         
         tableView.register(cellWithClass: MyTableViewCell.self)
-        tableView.delegate = self
-        tableView.dataSource = self
         
+        // adding objects to the screen with currencies list
         view.addSubview(nameOfScreen)
         view.addSubview(tableView)
         view.addSubview(backButton)
         view.addSubview(searchContr)
 
+        
+        // Constraints for objects on the screen with currencies list
         nameOfScreen.snp.makeConstraints { make in
             make.top.equalTo(view).inset(50)
             make.leading.equalTo(view).inset(105)
@@ -127,7 +127,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
     }
 
-
+    // here is setting of cell of tableView and defines If mark picture should be used beside chosen currency
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
         let contact = contact(for: indexPath)
@@ -140,6 +140,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell!
     }
 
+    // here we receiving every currency from currencies list according to order for the next processing
     private func contact(for indexPath: IndexPath) -> (String, String)? {
         let keyArray = Array(dictCurrency.keys)
         let sectionKey = keyArray[indexPath.section]
@@ -147,16 +148,18 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         return contactSection?[indexPath.row]
     }
 
+    // here we defines how many rows should be in every section and If there is no currency for some letter then there wont be any row
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         let key = Array(dictCurrency.keys)[section]
-        print(key)
         return dictCurrency[key]?.count ?? 0
     }
     
+    // here is set amount of sections
     func numberOfSections(in tableView: UITableView) -> Int {
         return dictCurrency.keys.count
     }
     
+    // here is set styling details and title for every section of tableView
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
         let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - 15, height: 40))
@@ -168,7 +171,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
   
         return view
     }
-
+    
+    // here are operations that will be done after click to any row with currency name; chosen row with currency saves and uses for transportation to the first screen "ConverterScreen"
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let contact = contact(for: indexPath)
         let selectedCur: String
@@ -188,18 +192,20 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.reloadData()
     }
     
+    // here is set what will be done after out of click
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath as IndexPath) {
             cell.accessoryType = .none
         }
     }
     
+    // here is defined height value of every row
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
     }
     
     
-    
+    // this function is implemented for gradient usage; values of color enters below and there should be defined way of gradient and distance between points where colors should be set
     func testGradientButton() -> Void {
         let gradientColor = CAGradientLayer()
         gradientColor.startPoint = CGPoint(x: 1, y: 0)
@@ -214,6 +220,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         self.backButton.layer.insertSublayer(gradientColor, at: 0)
     }
     
+    // this is api for calling currencies list an then it saves to CoreData memory
     private func findCur() {
         let stringUrl = "https://api.apilayer.com/fixer/symbols"
         guard let url = URL(string: stringUrl) else {
@@ -238,6 +245,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         createData()
     }
     
+    // this function updates code for the screen when it was already appeared and some styiling details should set for objects
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
