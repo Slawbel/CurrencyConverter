@@ -8,55 +8,65 @@ import OrderedCollections
 
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    
+    // elements of screen
     private let nameOfScreen = UILabel()
     private var tableView = UITableView()
     private var backButton = UIButton()
     private lazy var searchContr = UISearchTextField()
+    
+    // temporary collection to order data of every currency from list
     private var dictCurrency: OrderedDictionary<Character,[(String,String)]> = [:]
+    
+    // chosen row of currency that is needed to use in convertion operation
     private var chosenRow: IndexPath = []
+    
+    // list of currencies with short and long names which is used to show up on the tableView
     private var symbols = [(String, String)]()
+    
+    // chosen full name of currency for cells #1...4 are stored here or cell is empty
     var onCurrencySelected1: ((String) -> Void)?
     var onCurrencySelected2: ((String) -> Void)?
     var onCurrencySelected3: ((String) -> Void)?
     var onCurrencySelected4: ((String) -> Void)?
+    // chosen short name of currency for cells #1...4 are stored here or cell is empty
     var onCurrencySelectedShort1: ((String) -> Void)?
     var onCurrencySelectedShort2: ((String) -> Void)?
     var onCurrencySelectedShort3: ((String) -> Void)?
     var onCurrencySelectedShort4: ((String) -> Void)?
-    var cachedSymbols = [(String, String)]()
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // style setting of name label of the screen
         nameOfScreen.textAlignment = .center
         nameOfScreen.backgroundColor = .clear
         nameOfScreen.textColor = .white
         nameOfScreen.text = NSLocalizedString("nameOfScreen", comment: "")
         nameOfScreen.font = nameOfScreen.font.withSize(24)
         
+        // here data is trying to be downloaded from DataCore
         tableView.dataSource = self
         tableView.delegate = self
-        if cachedSymbols.isEmpty {
-            returnData()
-            print("RETURNING WAS DONE")
-        }
+        returnData()
+        print("RETURNING WAS DONE")
         
+        // temporary collection for editing
         var currencyDict = [String: String]()
         
-        if cachedSymbols.isEmpty {
-            findCur()
+        // in case of empty "symbols": api request is being made and uploaded currencies list to CoreData memory;
+        // in case of non-empty "symbols": the process continues to the next step and temporary collection "currencyDict" obtains short and full names of currencies from "symbols"
+        if symbols.isEmpty {
             print("Way1")
-            for n in symbols {
-                currencyDict[n.0] = n.1
-            }
+            findCur()
         } else {
             print("Way2")
-            for n in cachedSymbols {
-                currencyDict[n.0] = n.1
-            }
         }
+        for n in symbols {
+            currencyDict[n.0] = n.1
+        }
+        
+        // sorting of temporary collection "currencyDict" and transferring to collection "dictCurrency"
         for n in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
             var tempArray: [(String,String)] = []
             for m in currencyDict {
@@ -67,9 +77,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             dictCurrency[n] = tempArray.sorted(by: { $0.1 < $1.1 })
         }
-        print(dictCurrency)
+
         
-            
         // removing of empty elements and its key
         for i in dictCurrency.keys {
             if dictCurrency[i] == nil {
@@ -79,14 +88,15 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         
         tableView.register(cellWithClass: MyTableViewCell.self)
-        tableView.delegate = self
-        tableView.dataSource = self
         
+        // adding objects to the screen with currencies list
         view.addSubview(nameOfScreen)
         view.addSubview(tableView)
         view.addSubview(backButton)
         view.addSubview(searchContr)
 
+        
+        // Constraints for objects on the screen with currencies list
         nameOfScreen.snp.makeConstraints { make in
             make.top.equalTo(view).inset(50)
             make.leading.equalTo(view).inset(105)
@@ -117,13 +127,10 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
     }
 
-
+    // here is setting of cell of tableView and defines If mark picture should be used beside chosen currency
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let keyArray = Array(dictCurrency.keys)
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
-        let sectionKey = keyArray[indexPath.section]
-        let contactSection = dictCurrency[sectionKey]
-        let contact = contactSection?[indexPath.row]
+        let contact = contact(for: indexPath)
         if indexPath != chosenRow {
             cell?.setup(text: contact?.1 ?? "", isChecked: true)
         } else {
@@ -133,16 +140,27 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell!
     }
 
+    // here we receiving every currency from currencies list according to order for the next processing
+    private func contact(for indexPath: IndexPath) -> (String, String)? {
+        let keyArray = Array(dictCurrency.keys)
+        let sectionKey = keyArray[indexPath.section]
+        let contactSection = dictCurrency[sectionKey]
+        return contactSection?[indexPath.row]
+    }
+
+    // here we defines how many rows should be in every section and If there is no currency for some letter then there wont be any row
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         let key = Array(dictCurrency.keys)[section]
         print(key)
         return dictCurrency[key]?.count ?? 0
     }
     
+    // here is set amount of sections
     func numberOfSections(in tableView: UITableView) -> Int {
         return dictCurrency.keys.count
     }
     
+    // here is set styling details and title for every section of tableView
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
         let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - 15, height: 40))
@@ -154,17 +172,14 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
   
         return view
     }
-
+    
+    // here are operations that will be done after click to any row with currency name; chosen row with currency saves and uses for transportation to the first screen "ConverterScreen"
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let contact = contact(for: indexPath)
         let selectedCur: String
-        var selectedCur2: String
-        if cachedSymbols.isEmpty {
-            selectedCur = symbols[indexPath.row].1
-            selectedCur2 = symbols[indexPath.row].0
-        } else {
-            selectedCur = cachedSymbols[indexPath.row].1
-            selectedCur2 = cachedSymbols[indexPath.row].0
-        }
+        let selectedCur2: String
+        selectedCur = contact?.1 ?? ""
+        selectedCur2 = contact?.0 ?? ""
         onCurrencySelected1?(selectedCur)
         print(selectedCur)
         onCurrencySelected2?(selectedCur)
@@ -179,18 +194,20 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.reloadData()
     }
     
+    // here is set what will be done after out of click
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath as IndexPath) {
             cell.accessoryType = .none
         }
     }
     
+    // here is defined height value of every row
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
     }
     
     
-    
+    // this function is implemented for gradient usage; values of color enters below and there should be defined way of gradient and distance between points where colors should be set
     func testGradientButton() -> Void {
         let gradientColor = CAGradientLayer()
         gradientColor.startPoint = CGPoint(x: 1, y: 0)
@@ -205,6 +222,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         self.backButton.layer.insertSublayer(gradientColor, at: 0)
     }
     
+    // this is api for calling currencies list an then it saves to CoreData memory
     private func findCur() {
         let stringUrl = "https://api.apilayer.com/fixer/symbols"
         guard let url = URL(string: stringUrl) else {
@@ -229,6 +247,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         createData()
     }
     
+    // this function updates code for the screen when it was already appeared and some styiling details should set for objects
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -260,7 +279,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         backButton.masksToBounds = true
     }
     
-    // recording of data in CoreData
+    // recording (refreshing) of currencies list to CoreData memory
     func createData() {
         removeData()
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -281,6 +300,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    // downloading currencies list from CoreData
     func returnData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -291,13 +311,14 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         do {
             let result = try managedContext.fetch(request)
             for data in result as! [NSManagedObject] {
-                self.cachedSymbols.append((data.value(forKey: "shortNameOfCurrency") as! String, data.value(forKey: "longNameOfCurrency") as! String))
+                self.symbols.append((data.value(forKey: "shortNameOfCurrency") as! String, data.value(forKey: "longNameOfCurrency") as! String))
             }
         } catch {
             print("Failed returning")
         }
     }
     
+    // deleting currencies list from CoreData memory
     func removeData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -313,6 +334,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 }
 
 
+// extension is used to support function to delete data from CoreData memory
 extension NSManagedObjectContext {
     public func executeAndMergeChanges(using batchDeleteRequest: NSBatchDeleteRequest) throws {
         batchDeleteRequest.resultType = .resultTypeObjectIDs

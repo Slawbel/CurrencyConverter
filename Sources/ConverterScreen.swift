@@ -1,12 +1,12 @@
 import SnapKit
 import UIKit
 
-
-
 class ConverterScreen: UIViewController {
-
+    
+    // profile for saving data in file
     var userProfileURL: URL!
     
+    // the main name-label on the first screen
     private let nameLabel = UILabel()
     
     // currency for conversion
@@ -37,25 +37,25 @@ class ConverterScreen: UIViewController {
     private let outputCurButton3 = UIButton()
     private let outputLabel3 = UILabel()
 
+    // calendar, swap buttons and button for adding one more currency
     private let datePicker = UIDatePicker()
     private let swapButton1 = UIButton()
     private let swapButton2 = UIButton()
     private let swapButton3 = UIButton()
     private let addButton = UIButton()
     
+    // buttons to call diagram and rate history
     private let buttonRateHistory = UIButton()
     private let buttonDiagramPage = UIButton()
    
-    
-    private var result1: String?
-    private var result2: String?
-    private var result3: String?
+    // chosen basic currency and currencies to compare with
     private var chosenCurrency: String!
     var chosenCurShortName: String!
     var chosenCurShortName1: String!
     var chosenCurShortName2: String!
     var chosenCurShortName3: String!
     
+    // needed counter for adding of currency on the screen
     var counterOfClick = 0
    
 
@@ -63,33 +63,43 @@ class ConverterScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // defining user url for saving data into file
         createDirectoryForFile()
+        
+        // setting of background color
         view.backgroundColor = .init(named: "mainBackgroundColor")
         
+        // style setting of the main name-label
         nameLabel.textAlignment = .center
         nameLabel.backgroundColor = .clear
         nameLabel.textColor = .white
         nameLabel.text = NSLocalizedString("nameLabelText", comment: "")
         nameLabel.font = nameLabel.font.withSize(24)
         
+        
+        // BLOCK OF BASIC CURRENCY
+        // style setting of block of basic currency
         stackView.axis = .vertical
         stackView.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         stackView.layer.cornerRadius = 20
         
-        inputCurLabel.textAlignment = .center
-        
+        // style setting of block label of basic currency
+        inputCurLabel.textAlignment = .left
         let font = UIFont(name: "DMSans-Regular", size: 14)
         inputCurLabel.font = font
         inputCurLabel.textColor = .white
         inputCurLabel.backgroundColor = .clear
         inputCurLabel.text = NSLocalizedString("inputCurLabelText", comment: "")
         
+        // style setting of label of chosen basic currency
         inputCurrencyLabel.text = "               >"
         inputCurrencyLabel.textAlignment = .center
         inputCurrencyLabel.font = inputCurrencyLabel.font.withSize(14)
         inputCurrencyLabel.textColor = .white
         inputCurrencyLabel.backgroundColor = .clear
         
+        // style and function setting of button of chosen basic currency
+        //
         inputCurButton.layer.cornerRadius = 10
         inputCurButton.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         inputCurButton.setTitleColor(.white, for: .normal)
@@ -109,8 +119,9 @@ class ConverterScreen: UIViewController {
             self.navigationController?.pushViewController(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
         
-
+        // saving date from calendar into file
         writingDateToTheFile(currentDate)
+        // style setting of calendar
         datePicker.timeZone = NSTimeZone.local
         datePicker.overrideUserInterfaceStyle = .dark
         datePicker.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
@@ -121,7 +132,7 @@ class ConverterScreen: UIViewController {
         datePicker.layer.cornerRadius = 8
         datePicker.setValue(UIColor.white, forKey: "textColor")
         
-        
+        // style setting of textfield for input of amount to be converted
         inputTF.keyboardType = .asciiCapableNumberPad
         inputTF.keyboardAppearance = .dark
         let placeholderForInputTF = NSLocalizedString("writeTheAmount", comment: "")
@@ -132,23 +143,29 @@ class ConverterScreen: UIViewController {
         inputTF.attributedPlaceholder = NSAttributedString(
             string: placeholderForInputTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         
-        // currency #1
+        
+        // BLOCK OF CURRENCY #1 FOR COMPARISON
+        // style setting of block of currency #1 for comparison
         stackView1.axis = .vertical
         stackView1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         stackView1.layer.cornerRadius = 20
         
+        // style setting of block label of currency #1 for comparison
         outputCurLabel1.textAlignment = .left
         outputCurLabel1.font = outputCurLabel1.font.withSize(14)
         outputCurLabel1.textColor = .white
         outputCurLabel1.backgroundColor = .clear
         outputCurLabel1.text = NSLocalizedString("outputCurLabelText", comment: "")
         
+        // style setting of label of currency #1 for comparison
         outputCurrencyLabel1.text = "               >"
         outputCurrencyLabel1.textAlignment = .center
         outputCurrencyLabel1.font = outputCurrencyLabel1.font.withSize(14)
         outputCurrencyLabel1.textColor = .white
         outputCurrencyLabel1.backgroundColor = .clear
         
+        // style and function setting of button of currency #1 for comparison
+        // button's action creates instance of class with currencies list, calls API for conversion and defines calls functions to show flag
         outputCurButton1.layer.cornerRadius = 10
         outputCurButton1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton1.setTitleColor(.white, for: .normal)
@@ -168,18 +185,22 @@ class ConverterScreen: UIViewController {
             self.navigationController?.pushViewController(currencyScreen, animated: true)
         }, for: .primaryActionTriggered)
         
+        // style setting of convertion result of currency #1 for comparison
         outputLabel1.backgroundColor = .clear
         outputLabel1.textAlignment = .right
         outputLabel1.textColor = .white
         outputLabel1.font = outputCurrencyLabel1.font.withSize(18)
         outputLabel1.text = "0"
         
-        // currency #2
+        
+        // BLOCK OF CURRENCY #2 FOR COMPARISON
+        // style setting of block of currency #2 for comparison
         stackView2.axis = .vertical
         stackView2.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         stackView2.layer.cornerRadius = 20
         stackView2.isHidden = true
         
+        // style setting of block label of currency #2 for comparison
         outputCurLabel2.textAlignment = .left
         outputCurLabel2.font = outputCurLabel2.font.withSize(14)
         outputCurLabel2.textColor = .white
@@ -187,6 +208,7 @@ class ConverterScreen: UIViewController {
         outputCurLabel2.text = NSLocalizedString("outputCurLabelText", comment: "")
         outputCurLabel2.isHidden = true
         
+        // style setting of label of currency #2 for comparison
         outputCurrencyLabel2.text = "               >"
         outputCurrencyLabel2.textAlignment = .center
         outputCurrencyLabel2.font = outputCurrencyLabel2.font.withSize(14)
@@ -194,6 +216,8 @@ class ConverterScreen: UIViewController {
         outputCurrencyLabel2.backgroundColor = .clear
         outputCurrencyLabel2.isHidden = true
         
+        // style and function setting of button of currency #2 for comparison
+        // button's action creates instance of class with currencies list, calls API for conversion and defines calls functions to show flag
         outputCurButton2.layer.cornerRadius = 10
         outputCurButton2.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton2.setTitleColor(.white, for: .normal)
@@ -214,6 +238,7 @@ class ConverterScreen: UIViewController {
         }, for: .primaryActionTriggered)
         outputCurButton2.isHidden = true
         
+        // style setting of convertion result of currency #2 for comparison
         outputLabel2.backgroundColor = .clear
         outputLabel2.textAlignment = .right
         outputLabel2.textColor = .white
@@ -221,12 +246,15 @@ class ConverterScreen: UIViewController {
         outputLabel2.text = "0"
         outputLabel2.isHidden = true
         
-        // currency #3
+        
+        // BLOCK OF CURRENCY #3 FOR COMPARISON
+        // style setting of block of currency #3 for comparison
         stackView3.axis = .vertical
         stackView3.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         stackView3.layer.cornerRadius = 20
         stackView3.isHidden = true
         
+        // style setting of block label of currency #3 for comparison
         outputCurLabel3.textAlignment = .left
         outputCurLabel3.font = outputCurLabel3.font.withSize(14)
         outputCurLabel3.textColor = .white
@@ -234,6 +262,7 @@ class ConverterScreen: UIViewController {
         outputCurLabel3.text = NSLocalizedString("outputCurLabelText", comment: "")
         outputCurLabel3.isHidden = true
         
+        // style setting of label of currency #3 for comparison
         outputCurrencyLabel3.text = "               >"
         outputCurrencyLabel3.textAlignment = .center
         outputCurrencyLabel3.font = outputCurrencyLabel3.font.withSize(14)
@@ -241,6 +270,8 @@ class ConverterScreen: UIViewController {
         outputCurrencyLabel3.backgroundColor = .clear
         outputCurrencyLabel3.isHidden = true
         
+        // style and function setting of button of currency #3 for comparison
+        // button's action creates instance of class with currencies list, calls API for conversion and defines calls functions to show flag
         outputCurButton3.layer.cornerRadius = 10
         outputCurButton3.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton3.setTitleColor(.white, for: .normal)
@@ -261,6 +292,7 @@ class ConverterScreen: UIViewController {
         }, for: .primaryActionTriggered)
         outputCurButton3.isHidden = true
         
+        // style setting of convertion result of currency #3 for comparison
         outputLabel3.backgroundColor = .clear
         outputLabel3.textAlignment = .right
         outputLabel3.textColor = .white
@@ -268,32 +300,40 @@ class ConverterScreen: UIViewController {
         outputLabel3.text = "0"
         outputLabel3.isHidden = true
         
+        
+        // BLOCK OF ADDITIONAL BUTTONS
+        // style setting of swap button #1
         swapButton1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#0F0F0F")
         swapButton1.layer.cornerRadius = 19
         let swapSymbol1 = UIImage(named: "icon_swap_vertical")
         swapButton1.setImage(swapSymbol1, for: .normal)
         swapButton1.addTarget(self, action: #selector(swapCurrency1), for: .touchUpInside)
         
+        // style setting of swap button #2
         swapButton2.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#0F0F0F")
         swapButton2.layer.cornerRadius = 19
         swapButton2.setImage(swapSymbol1, for: .normal)
         swapButton2.addTarget(self, action: #selector(swapCurrency2), for: .touchUpInside)
         swapButton2.isHidden = true
         
-
+        // style setting of swap button #3
         swapButton3.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#0F0F0F")
         swapButton3.layer.cornerRadius = 19
         swapButton3.setImage(swapSymbol1, for: .normal)
         swapButton3.addTarget(self, action: #selector(swapCurrency3), for: .touchUpInside)
         swapButton3.isHidden = true
         
-        
+        // style setting of button for adding one more currency
         addButton.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         addButton.layer.cornerRadius = 18.5
         let addSymbol = UIImage(named: "icon_plus")
         addButton.setImage(addSymbol, for: .normal)
         addButton.addTarget(self, action: #selector(addCurrency), for: .touchUpInside)
         
+        
+        // BLOCK OF BUTTONS TO CALL DIAGRAM AND RATE HISTORY
+        // style and function setting of button to call diagram
+        // button's action creates instance of rate's list class and transfer arguments for defining of rate history
         buttonRateHistory.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         buttonRateHistory.layer.cornerRadius = 12
         buttonRateHistory.titleLabel?.font = UIFont.systemFont(ofSize: 12)
@@ -310,6 +350,8 @@ class ConverterScreen: UIViewController {
         let buttonRateHistoryTitle = NSLocalizedString("transfer", comment: "")
         buttonRateHistory.setTitle(buttonRateHistoryTitle, for: .normal)
         
+        // style and function setting of button to call rate history
+        // button's action creates instance of page with diagram
         buttonDiagramPage.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         buttonDiagramPage.layer.cornerRadius = 12
         buttonDiagramPage.titleLabel?.font = UIFont.systemFont(ofSize: 12)
@@ -324,7 +366,9 @@ class ConverterScreen: UIViewController {
         let buttonDiagramPageTitle = NSLocalizedString("diagramPage", comment: "")
         buttonDiagramPage.setTitle(buttonDiagramPageTitle, for: .normal)
         
-    
+        
+        // BLOCK FOR INCLUDING OBJECTS ONTO SCREEN
+        // including of block of basic currency
         view.addSubview(nameLabel)
         view.addSubview(stackView)
         stackView.addSubview(inputCurLabel)
@@ -333,24 +377,28 @@ class ConverterScreen: UIViewController {
         stackView.addSubview(datePicker)
         stackView.addSubview(inputTF)
         
+        // including of block of currency #1 for comparison
         view.addSubview(stackView1)
         stackView1.addSubview(outputCurLabel1)
         stackView1.addSubview(outputCurButton1)
         outputCurButton1.addSubview(outputCurrencyLabel1)
         stackView1.addSubview(outputLabel1)
         
+        // including of  block of currency #2 for comparison
         view.addSubview(stackView2)
         stackView2.addSubview(outputCurLabel2)
         stackView2.addSubview(outputCurButton2)
         outputCurButton2.addSubview(outputCurrencyLabel2)
         stackView2.addSubview(outputLabel2)
         
+        // including of block of currency #3 for comparison
         view.addSubview(stackView3)
         stackView3.addSubview(outputCurLabel3)
         stackView3.addSubview(outputCurButton3)
         outputCurButton3.addSubview(outputCurrencyLabel3)
         stackView3.addSubview(outputLabel3)
         
+        // including of block of additional buttons
         view.addSubview(swapButton1)
         view.addSubview(swapButton2)
         view.addSubview(swapButton3)
@@ -359,7 +407,7 @@ class ConverterScreen: UIViewController {
         view.addSubview(buttonDiagramPage)
 
     
-        
+        // BLOCK FOR CONSTRAINTS
         nameLabel.snp.makeConstraints{ make in
             make.width.equalTo(222)
             make.height.equalTo(40)
@@ -367,7 +415,7 @@ class ConverterScreen: UIViewController {
             make.top.equalTo(view.snp.top).inset(44)
         }
         
-        // basic currency for conversion
+        // constraint for block of basic currency
         stackView.snp.makeConstraints{ make in
             make.leading.equalTo(view.snp.leading).inset(13)
             make.width.equalTo(360)
@@ -410,7 +458,6 @@ class ConverterScreen: UIViewController {
             make.width.equalTo(147)
         }
         
-        // currency #1
         stackView1.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(13)
             make.top.equalTo(view).inset(195)
@@ -446,7 +493,6 @@ class ConverterScreen: UIViewController {
             make.leading.equalTo(view).inset(278)
         }
         
-        // currency #2
         stackView2.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(13)
             make.top.equalTo(view).inset(296)
@@ -482,7 +528,6 @@ class ConverterScreen: UIViewController {
             make.leading.equalTo(view).inset(289)
         }
         
-        //currency #3
         stackView3.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(13)
             make.top.equalTo(view).inset(397)
@@ -518,7 +563,6 @@ class ConverterScreen: UIViewController {
             make.leading.equalTo(view).inset(289)
         }
         
-        // buttons
         swapButton1.snp.makeConstraints { make in
             make.width.equalTo(38)
             make.top.equalTo(view).inset(175)
@@ -562,11 +606,13 @@ class ConverterScreen: UIViewController {
         
     }
     
+    // function hides keyboard from screen
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         self.view.endEditing(true)
     }
     
+    // function calls string format of chosen date in calendar on the first screen
     var currentDate: String {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -575,26 +621,28 @@ class ConverterScreen: UIViewController {
             return stringDate
     }
     
-    
+    // function swaps basic currency and corrency #1 for comparison
     @objc func swapCurrency1() {
         let tempCur = inputCurrencyLabel.text
         inputCurrencyLabel.text = outputCurrencyLabel1.text
         outputCurrencyLabel1.text = tempCur
     }
     
+    // function swaps basic currency and corrency #2 for comparison
     @objc func swapCurrency2() {
         let tempCur = inputCurrencyLabel.text
         inputCurrencyLabel.text = outputCurrencyLabel2.text
         outputCurrencyLabel2.text = tempCur
     }
     
+    // function swaps basic currency and corrency #3 for comparison
     @objc func swapCurrency3() {
         let tempCur = inputCurrencyLabel.text
         inputCurrencyLabel.text = outputCurrencyLabel3.text
         outputCurrencyLabel3.text = tempCur
     }
 
-    
+    // function adds block with currencies #2 and #3 after pushing of addButton and sets constraints for moved buttons: "addButton", "buttonRateHistory", "buttonDiagramPage"
     @objc func addCurrency() {
         if counterOfClick == 0 {
             stackView2.isHidden = false
@@ -651,8 +699,8 @@ class ConverterScreen: UIViewController {
         }
     }
 
-    @objc
-    func convert() {
+    // function creates instance of API conversion class and sets currency names to arguments that will be used in conversion
+    @objc func convert() {
         let currencyApi = CurrencyApi()
         currencyApi.apiChosenCurShortName1 = chosenCurShortName
         currencyApi.apiChosenCurShortName2 = chosenCurShortName1
@@ -672,11 +720,7 @@ class ConverterScreen: UIViewController {
         }
     }
     
-    
-    
-    
-    
-
+    // function to define flag by code and transfer in string format to currency labels inside blocks
     func flag(country:String) -> String {
         let base : UInt32 = 127397
         var s = ""
@@ -686,32 +730,34 @@ class ConverterScreen: UIViewController {
         return String(s)
     }
     
+    // function to prepare code for finding of flag symbol
     func getFlagToLabel (shortName: String) -> String? {
         var cutShortNameFlag: String?
         if shortName != "BTC" && shortName != "XOF" && shortName != "XAF" && shortName != "XPF" && shortName != "STD" && shortName != "XAG" && shortName != "XAU" {
             var cutShortName = shortName
             cutShortName.removeLast()
             cutShortNameFlag = flag(country: cutShortName)
-            
         }
         return cutShortNameFlag
     }
     
+    // function calls saving calendar date to file after date change
     @objc func datePickerChanged(picker: UIDatePicker) {
         callWriting(currentDate)
     }
     
-    
+    // function prepares user's url for the next saving date to file
     func createDirectoryForFile() {
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         self.userProfileURL = documentsURL.appendingPathComponent("userProfile.txt")
     }
     
+    // function calls saving calendar date to file
     func callWriting(_ dateString: String) {
         writingDateToTheFile(dateString)
     }
     
-    
+    // function saves date to file
     func writingDateToTheFile(_ dateString: String) {
         //deleteSavedDate()
         if let data = dateString.data(using: .utf8) {
@@ -725,6 +771,7 @@ class ConverterScreen: UIViewController {
         }
     }
     
+    // function reads date from file
     func readingForControlDate() {
         do {
             let data = try Data(contentsOf: self.userProfileURL)
