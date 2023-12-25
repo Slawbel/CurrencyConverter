@@ -271,7 +271,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         backButton.setAttributedTitle(attributeButtonText, for: .normal)
         
         backButton.addAction(UIAction { [weak self] _ in
-            self?.dismiss(animated: true)
+            self?.navigationController?.popViewController(animated: true)
         }, for: .primaryActionTriggered)
                 
         backButton.masksToBounds = true
