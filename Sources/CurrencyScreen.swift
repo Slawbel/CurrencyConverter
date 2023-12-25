@@ -11,7 +11,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     // elements of screen
     private let nameOfScreen = UILabel()
     private var tableView = UITableView()
-    private var backButton = UIButton()
+    private var selectButton = UIButton()
     private lazy var searchContr = UISearchTextField()
     
     // temporary collection to order data of every currency from list
@@ -77,8 +77,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             dictCurrency[n] = tempArray.sorted(by: { $0.1 < $1.1 })
         }
+
         
-            
         // removing of empty elements and its key
         for i in dictCurrency.keys {
             if dictCurrency[i] == nil {
@@ -86,13 +86,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
         
-        
+
         tableView.register(cellWithClass: MyTableViewCell.self)
         
         // adding objects to the screen with currencies list
         view.addSubview(nameOfScreen)
         view.addSubview(tableView)
-        view.addSubview(backButton)
+        view.addSubview(selectButton)
         view.addSubview(searchContr)
 
         
@@ -111,7 +111,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.height.equalTo(45)
         }
         
-        backButton.snp.makeConstraints { make in
+        selectButton.snp.makeConstraints { make in
             make.top.equalTo(view).inset(746)
             make.leading.equalTo(view).inset(15)
             make.width.equalTo(360)
@@ -151,6 +151,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     // here we defines how many rows should be in every section and If there is no currency for some letter then there wont be any row
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         let key = Array(dictCurrency.keys)[section]
+        print(key)
         return dictCurrency[key]?.count ?? 0
     }
     
@@ -180,6 +181,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         selectedCur = contact?.1 ?? ""
         selectedCur2 = contact?.0 ?? ""
         onCurrencySelected1?(selectedCur)
+        print(selectedCur)
         onCurrencySelected2?(selectedCur)
         onCurrencySelected3?(selectedCur)
         onCurrencySelected4?(selectedCur)
@@ -216,8 +218,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         let color2 = UIColor(red: 249.0/255.0, green: 128.0/255.0, blue: 93.0/255.0, alpha: 1)
         let color3 = UIColor(red: 255.0/255.0, green: 143.0/255.0, blue: 52.0/255.0, alpha: 1)
         gradientColor.colors = [color0.cgColor, color1.cgColor,color2.cgColor,color3.cgColor]
-        gradientColor.frame = backButton.bounds
-        self.backButton.layer.insertSublayer(gradientColor, at: 0)
+        gradientColor.frame = selectButton.bounds
+        self.selectButton.layer.insertSublayer(gradientColor, at: 0)
     }
     
     // this is api for calling currencies list an then it saves to CoreData memory
@@ -260,7 +262,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         searchContr.textColor = .white
         searchContr.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         
-        backButton.layer.cornerRadius = 20
+        selectButton.layer.cornerRadius = 20
         let buttonBack = NSLocalizedString("buttonBack", comment: "")
         let font1 = UIFont(name: "DMSans-Bold", size: 16)
         let attributes1: [NSAttributedString.Key: Any] = [
@@ -268,13 +270,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             .foregroundColor: UIColor.white,
             .kern: 2]
         let attributeButtonText = NSAttributedString(string: buttonBack, attributes: attributes1)
-        backButton.setAttributedTitle(attributeButtonText, for: .normal)
+        selectButton.setAttributedTitle(attributeButtonText, for: .normal)
         
-        backButton.addAction(UIAction { [weak self] _ in
+        selectButton.addAction(UIAction { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
         }, for: .primaryActionTriggered)
                 
-        backButton.masksToBounds = true
+        selectButton.masksToBounds = true
     }
     
     // recording (refreshing) of currencies list to CoreData memory
