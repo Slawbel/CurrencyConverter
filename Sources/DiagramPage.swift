@@ -22,7 +22,7 @@ class DiagramPage: UIViewController {
     private let labelChosenCur3 = UILabel()
     
     private let buttonResult = UIButton()
-    private let buttonBack = UIButton()
+    private let selectButtonDiagramPage = UIButton()
 
     private var сhosenCurBase: String!
     private var сhosenCur1: String!
@@ -150,27 +150,31 @@ class DiagramPage: UIViewController {
             self?.curHistory()
         }, for: .primaryActionTriggered)
         
-        buttonBack.backgroundColor = .darkGray
-        buttonBack.setTitleColor(.white, for: .normal)
+        selectButtonDiagramPage.backgroundColor = .darkGray
+        selectButtonDiagramPage.setTitleColor(.white, for: .normal)
         let butBack = NSLocalizedString("butBackCur", comment: "")
-        buttonBack.setTitle(butBack, for: .normal)
-        buttonBack.addAction(UIAction { [unowned self] _ in
+        selectButtonDiagramPage.setTitle(butBack, for: .normal)
+        selectButtonDiagramPage.addAction(UIAction { [unowned self] _ in
             dismiss(animated: true)
         }, for: .primaryActionTriggered)
         
         view.addSubview(labelChooseCur)
         view.addSubview(startDatePicker)
         view.addSubview(endDatePicker)
+        
         view.addSubview(buttonChosenCurBase)
         view.addSubview(labelChosenCurBase)
         view.addSubview(buttonChosenCur1)
+        
         view.addSubview(labelChosenCur1)
         view.addSubview(buttonChosenCur2)
         view.addSubview(labelChosenCur2)
+        
         view.addSubview(buttonChosenCur3)
         view.addSubview(labelChosenCur3)
+        
         view.addSubview(buttonResult)
-        view.addSubview(buttonBack)
+        view.addSubview(selectButtonDiagramPage)
         
         labelChooseCur.snp.makeConstraints{ make in
             make.leading.trailing.equalTo(view).inset(0)
@@ -254,7 +258,7 @@ class DiagramPage: UIViewController {
             make.top.equalTo(view).inset(480)
         }
         
-        buttonBack.snp.makeConstraints{ make in
+        selectButtonDiagramPage.snp.makeConstraints{ make in
             make.trailing.leading.equalTo(view).inset(0)
             make.height.equalTo(60)
             make.top.equalTo(view).inset(560)

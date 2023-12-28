@@ -151,7 +151,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     // here we defines how many rows should be in every section and If there is no currency for some letter then there wont be any row
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         let key = Array(dictCurrency.keys)[section]
-        print(key)
         return dictCurrency[key]?.count ?? 0
     }
     
@@ -181,7 +180,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         selectedCur = contact?.1 ?? ""
         selectedCur2 = contact?.0 ?? ""
         onCurrencySelected1?(selectedCur)
-        print(selectedCur)
         onCurrencySelected2?(selectedCur)
         onCurrencySelected3?(selectedCur)
         onCurrencySelected4?(selectedCur)
@@ -190,7 +188,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         onCurrencySelectedShort3?(selectedCur2)
         onCurrencySelectedShort4?(selectedCur2)
         chosenRow = indexPath
-        print(chosenRow)
         tableView.reloadData()
     }
     

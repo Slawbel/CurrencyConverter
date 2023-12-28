@@ -782,15 +782,6 @@ class ConverterScreen: UIViewController {
             print("Error reading file: \(error)")
         }
     }
-    
-    /*func deleteSavedDate() {
-        do {
-            try FileManager.default.removeItem(at: self.userProfileURL)
-            print("Successfully deleted file!")
-        } catch {
-            print("Error deleting file: \(error)")
-        }
-    }*/
 
 }
 
