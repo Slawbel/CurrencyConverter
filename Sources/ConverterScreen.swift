@@ -129,7 +129,7 @@ class ConverterScreen: UIViewController {
         datePicker.setDate(.now, animated: true)
         datePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
         datePicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
-        datePicker.layer.cornerRadius = 8
+        datePicker.layerCornerRadius = 8
         datePicker.setValue(UIColor.white, forKey: "textColor")
         
         // style setting of textfield for input of amount to be converted
@@ -357,9 +357,14 @@ class ConverterScreen: UIViewController {
         buttonDiagramPage.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonDiagramPage.setTitleColor(.white, for: .normal)
         buttonDiagramPage.addAction(UIAction { [weak self] _ in
-            let diagramPage = DiagramPage()
-            diagramPage.modalPresentationStyle = .fullScreen
-            self?.present(diagramPage, animated: true)
+            let diagramResult = DiagramResult()
+            diagramResult.chosenCurShortNameBase = self?.chosenCurShortName
+            diagramResult.chosenCurShortName1 = self?.chosenCurShortName1
+            diagramResult.chosenCurShortName2 = self?.chosenCurShortName2
+            diagramResult.chosenCurShortName3 = self?.chosenCurShortName3
+            diagramResult.curHistory()
+            diagramResult.modalPresentationStyle = .fullScreen
+            self?.present(diagramResult, animated: true)
         }, for: .primaryActionTriggered)
         let buttonDiagramPageImage = UIImage(named: "icon_graph")
         buttonDiagramPage.setImage(buttonDiagramPageImage, for: .normal)
