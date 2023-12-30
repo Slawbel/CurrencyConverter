@@ -43,7 +43,8 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         lineChartView.xAxis.axisLineColor = .white
         lineChartView.xAxis.labelTextColor = .white
         lineChartView.xAxis.labelPosition = .bottom
-      
+        
+        
         
         
         labelDiagram.backgroundColor = .clear
@@ -72,6 +73,7 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         endDatePicker.setValue(UIColor.white, forKey: "textColor")
         endDatePicker.addTarget(self, action: #selector(self.curHistory), for: .valueChanged)
         //endDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
+    
         
         currencyNameLabel1.layerCornerRadius = 10
         currencyNameLabel1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
@@ -81,6 +83,10 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         
         currencyNameLabel3.layerCornerRadius = 10
         currencyNameLabel3.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
+        
+        lineChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rangeOfDates(startDatePicker.date, endDatePicker.date))
+    
+        
         
         view.addSubview(diagramStackView)
         diagramStackView.addSubview(lineChartView)
@@ -215,7 +221,6 @@ class DiagramResult: UIViewController, ChartViewDelegate {
             symbols += chosenCurShortName3
         }
         
-        print(symbols)
         
         // api request for all rates during some period
         let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + symbols + "&base=" + (chosenCurShortNameBase)
@@ -288,4 +293,33 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         return diagramData3 ?? []
     }
     
+    
+    func rangeOfDates (_ start: Date, _ end: Date) -> [String] {
+        let interval = 1
+        
+        let frmt = DateFormatter()
+        frmt.dateFormat = "dd.MM"
+
+         var dates:[Date] = []
+         var currentDate = start
+
+         while currentDate <= end {
+             print(currentDate)
+             currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)!
+             dates.append(currentDate)
+         }
+        
+        var datesString: [String] = []
+        for n in dates {
+            datesString.append(frmt.string(from: n))
+        }
+
+         return datesString
+    }
+
+    
 }
+
+
+
+
