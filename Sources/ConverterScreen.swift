@@ -626,6 +626,10 @@ class ConverterScreen: UIViewController {
         let tempCur = inputCurrencyLabel.text
         inputCurrencyLabel.text = outputCurrencyLabel1.text
         outputCurrencyLabel1.text = tempCur
+        let tempCurrencyLabel = chosenCurShortName
+        chosenCurShortName = chosenCurShortName1
+        chosenCurShortName1 = tempCurrencyLabel
+        convert()
     }
     
     // function swaps basic currency and corrency #2 for comparison
@@ -633,6 +637,10 @@ class ConverterScreen: UIViewController {
         let tempCur = inputCurrencyLabel.text
         inputCurrencyLabel.text = outputCurrencyLabel2.text
         outputCurrencyLabel2.text = tempCur
+        let tempCurrencyLabel = chosenCurShortName
+        chosenCurShortName = chosenCurShortName2
+        chosenCurShortName2 = tempCurrencyLabel
+        convert()
     }
     
     // function swaps basic currency and corrency #3 for comparison
@@ -640,6 +648,10 @@ class ConverterScreen: UIViewController {
         let tempCur = inputCurrencyLabel.text
         inputCurrencyLabel.text = outputCurrencyLabel3.text
         outputCurrencyLabel3.text = tempCur
+        let tempCurrencyLabel = chosenCurShortName
+        chosenCurShortName = chosenCurShortName3
+        chosenCurShortName3 = tempCurrencyLabel
+        convert()
     }
 
     // function adds block with currencies #2 and #3 after pushing of addButton and sets constraints for moved buttons: "addButton", "buttonRateHistory", "buttonDiagramPage"
