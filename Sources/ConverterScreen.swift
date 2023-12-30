@@ -623,35 +623,27 @@ class ConverterScreen: UIViewController {
     
     // function swaps basic currency and corrency #1 for comparison
     @objc func swapCurrency1() {
-        let tempCur = inputCurrencyLabel.text
-        inputCurrencyLabel.text = outputCurrencyLabel1.text
-        outputCurrencyLabel1.text = tempCur
-        let tempCurrencyLabel = chosenCurShortName
-        chosenCurShortName = chosenCurShortName1
-        chosenCurShortName1 = tempCurrencyLabel
+        self.swap(&inputCurrencyLabel.text!, &outputCurrencyLabel1.text!)
+        self.swap(&chosenCurShortName, &chosenCurShortName1)
         convert()
     }
     
     // function swaps basic currency and corrency #2 for comparison
     @objc func swapCurrency2() {
-        let tempCur = inputCurrencyLabel.text
-        inputCurrencyLabel.text = outputCurrencyLabel2.text
-        outputCurrencyLabel2.text = tempCur
-        let tempCurrencyLabel = chosenCurShortName
-        chosenCurShortName = chosenCurShortName2
-        chosenCurShortName2 = tempCurrencyLabel
+        self.swap(&inputCurrencyLabel.text!, &outputCurrencyLabel2.text!)
+        self.swap(&chosenCurShortName, &chosenCurShortName2)
         convert()
     }
     
     // function swaps basic currency and corrency #3 for comparison
     @objc func swapCurrency3() {
-        let tempCur = inputCurrencyLabel.text
-        inputCurrencyLabel.text = outputCurrencyLabel3.text
-        outputCurrencyLabel3.text = tempCur
-        let tempCurrencyLabel = chosenCurShortName
-        chosenCurShortName = chosenCurShortName3
-        chosenCurShortName3 = tempCurrencyLabel
+        self.swap(&inputCurrencyLabel.text!, &outputCurrencyLabel3.text!)
+        self.swap(&chosenCurShortName, &chosenCurShortName3)
         convert()
+    }
+    
+    func swap (_ a: inout String, _ b: inout String) {
+        (a, b) = (b, a)
     }
 
     // function adds block with currencies #2 and #3 after pushing of addButton and sets constraints for moved buttons: "addButton", "buttonRateHistory", "buttonDiagramPage"
