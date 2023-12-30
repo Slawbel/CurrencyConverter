@@ -295,8 +295,6 @@ class DiagramResult: UIViewController, ChartViewDelegate {
     
     
     func rangeOfDates (_ start: Date, _ end: Date) -> [String] {
-        let interval = 1
-        
         let frmt = DateFormatter()
         frmt.dateFormat = "dd.MM"
 
