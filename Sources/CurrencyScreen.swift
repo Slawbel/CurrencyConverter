@@ -22,6 +22,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // list of currencies with short and long names which is used to show up on the tableView
     private var symbols = [(String, String)]()
+    private var symbolsForSearch = [String]()
+    private var symbolsAfterSearch = [String]()
     
     // chosen full name of currency for cells #1...4 are stored here or cell is empty
     var onCurrencySelected1: ((String) -> Void)?
@@ -89,6 +91,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
         tableView.register(cellWithClass: MyTableViewCell.self)
         
+        searchContr.addTarget(self, action: #selector(CurrencyScreen.searchHandler), for: .editingChanged)
+        
         // adding objects to the screen with currencies list
         view.addSubview(nameOfScreen)
         view.addSubview(tableView)
@@ -131,6 +135,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
         let contact = contact(for: indexPath)
+        self.symbolsForSearch.append(contact?.1 ?? "")
         if indexPath != chosenRow {
             cell?.setup(text: contact?.1 ?? "", isChecked: true)
         } else {
@@ -151,7 +156,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     // here we defines how many rows should be in every section and If there is no currency for some letter then there wont be any row
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         let key = Array(dictCurrency.keys)[section]
-        print(key)
         return dictCurrency[key]?.count ?? 0
     }
     
@@ -181,7 +185,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         selectedCur = contact?.1 ?? ""
         selectedCur2 = contact?.0 ?? ""
         onCurrencySelected1?(selectedCur)
-        print(selectedCur)
         onCurrencySelected2?(selectedCur)
         onCurrencySelected3?(selectedCur)
         onCurrencySelected4?(selectedCur)
@@ -190,7 +193,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         onCurrencySelectedShort3?(selectedCur2)
         onCurrencySelectedShort4?(selectedCur2)
         chosenRow = indexPath
-        print(chosenRow)
         tableView.reloadData()
     }
     
@@ -328,6 +330,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             try managedContext.executeAndMergeChanges(using: batchDeleteRequest)
         } catch {
             print("Failed removing")
+        }
+    }
+    
+    @objc func searchHandler (_ sender: UITextField) {
+        if let searchText = sender.text {
+            symbolsAfterSearch = searchText.isEmpty ? symbolsForSearch : symbolsForSearch.filter{$0.lowercased().contains(searchText.lowercased())}
+            tableView.reloadData()
         }
     }
 }
