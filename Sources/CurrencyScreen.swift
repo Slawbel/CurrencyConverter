@@ -173,7 +173,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         lbl.font = UIFont(name: "DMSans-Regular", size: 20)
         lbl.textColor = SetColorByCode.hexStringToUIColor(hex: "#646464")
         view.addSubview(lbl)
-  
         return view
     }
     
