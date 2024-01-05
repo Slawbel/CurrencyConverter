@@ -57,6 +57,8 @@ class ConverterScreen: UIViewController {
     
     // needed counter for adding of currency on the screen
     var counterOfClick = 0
+    
+
    
 
 
@@ -67,7 +69,7 @@ class ConverterScreen: UIViewController {
         createDirectoryForFile()
         
         // setting of background color
-        view.backgroundColor = .init(named: "mainBackgroundColor")
+        view.backgroundColor = .black
         
         // style setting of the main name-label
         nameLabel.textAlignment = .center
