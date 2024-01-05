@@ -132,6 +132,7 @@ class ConverterScreen: UIViewController {
         datePicker.layer.cornerRadius = 8
         datePicker.setValue(UIColor.white, forKey: "textColor")
         
+        
         // style setting of textfield for input of amount to be converted
         inputTF.keyboardType = .asciiCapableNumberPad
         inputTF.keyboardAppearance = .dark
@@ -445,10 +446,10 @@ class ConverterScreen: UIViewController {
         }
         
         datePicker.snp.makeConstraints { make in
-            make.width.equalTo(117)
-            make.height.equalTo(25)
+            //make.width.equalTo(117)
+            //make.height.equalTo(25)
             make.top.equalTo(view).inset(94)
-            make.leading.equalTo(view).inset(256)
+            make.trailing.equalTo(view).inset(20)
         }
         
         inputTF.snp.makeConstraints { make in
