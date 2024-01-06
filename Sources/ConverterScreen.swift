@@ -490,10 +490,10 @@ class ConverterScreen: UIViewController {
         }
         
         outputLabel1.snp.makeConstraints { make in
-            make.width.equalTo(73)
+            make.width.equalTo(103)
             make.top.equalTo(view).inset(239)
             make.height.equalTo(40)
-            make.leading.equalTo(view).inset(278)
+            make.leading.equalTo(view).inset(255)
         }
         
         stackView2.snp.makeConstraints{ make in
@@ -525,10 +525,10 @@ class ConverterScreen: UIViewController {
         }
         
         outputLabel2.snp.makeConstraints { make in
-            make.width.equalTo(60)
+            make.width.equalTo(103)
             make.top.equalTo(view).inset(339)
             make.height.equalTo(40)
-            make.leading.equalTo(view).inset(289)
+            make.leading.equalTo(view).inset(255)
         }
         
         stackView3.snp.makeConstraints{ make in
@@ -560,10 +560,10 @@ class ConverterScreen: UIViewController {
         }
         
         outputLabel3.snp.makeConstraints { make in
-            make.width.equalTo(60)
+            make.width.equalTo(103)
             make.top.equalTo(view).inset(440)
             make.height.equalTo(40)
-            make.leading.equalTo(view).inset(289)
+            make.leading.equalTo(view).inset(255)
         }
         
         swapButton1.snp.makeConstraints { make in
@@ -626,24 +626,26 @@ class ConverterScreen: UIViewController {
     
     // function swaps basic currency and corrency #1 for comparison
     @objc func swapCurrency1() {
-        let tempCur = inputCurrencyLabel.text
-        inputCurrencyLabel.text = outputCurrencyLabel1.text
-        outputCurrencyLabel1.text = tempCur
+        swap(&inputCurrencyLabel.text!, &outputCurrencyLabel1.text!)
+        swap(&chosenCurShortName, &chosenCurShortName1)
+        convert()
     }
     
     // function swaps basic currency and corrency #2 for comparison
     @objc func swapCurrency2() {
-        let tempCur = inputCurrencyLabel.text
-        inputCurrencyLabel.text = outputCurrencyLabel2.text
-        outputCurrencyLabel2.text = tempCur
+        swap(&inputCurrencyLabel.text!, &outputCurrencyLabel2.text!)
+        swap(&chosenCurShortName, &chosenCurShortName2)
+        convert()
     }
     
     // function swaps basic currency and corrency #3 for comparison
     @objc func swapCurrency3() {
-        let tempCur = inputCurrencyLabel.text
-        inputCurrencyLabel.text = outputCurrencyLabel3.text
-        outputCurrencyLabel3.text = tempCur
+        swap(&inputCurrencyLabel.text!, &outputCurrencyLabel3.text!)
+        swap(&chosenCurShortName, &chosenCurShortName3)
+        convert()
     }
+    
+
 
     // function adds block with currencies #2 and #3 after pushing of addButton and sets constraints for moved buttons: "addButton", "buttonRateHistory", "buttonDiagramPage"
     @objc func addCurrency() {
@@ -785,15 +787,6 @@ class ConverterScreen: UIViewController {
             print("Error reading file: \(error)")
         }
     }
-    
-    /*func deleteSavedDate() {
-        do {
-            try FileManager.default.removeItem(at: self.userProfileURL)
-            print("Successfully deleted file!")
-        } catch {
-            print("Error deleting file: \(error)")
-        }
-    }*/
 
 }
 
