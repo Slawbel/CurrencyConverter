@@ -57,6 +57,8 @@ class ConverterScreen: UIViewController {
     
     // needed counter for adding of currency on the screen
     var counterOfClick = 0
+    
+
    
 
 
@@ -131,6 +133,7 @@ class ConverterScreen: UIViewController {
         datePicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
         datePicker.layer.cornerRadius = 8
         datePicker.setValue(UIColor.white, forKey: "textColor")
+        
         
         // style setting of textfield for input of amount to be converted
         inputTF.keyboardType = .asciiCapableNumberPad
@@ -445,10 +448,10 @@ class ConverterScreen: UIViewController {
         }
         
         datePicker.snp.makeConstraints { make in
-            make.width.equalTo(128)
+            make.width.equalTo(143)
             make.height.equalTo(25)
             make.top.equalTo(view).inset(94)
-            make.leading.equalTo(view).inset(245)
+            make.leading.equalTo(view).inset(230)
         }
         
         inputTF.snp.makeConstraints { make in
