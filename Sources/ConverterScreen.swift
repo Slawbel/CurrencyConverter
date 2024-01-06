@@ -69,7 +69,7 @@ class ConverterScreen: UIViewController {
         createDirectoryForFile()
         
         // setting of background color
-        view.backgroundColor = .black
+        view.backgroundColor = .init(named: "mainBackgroundColor")
         
         // style setting of the main name-label
         nameLabel.textAlignment = .center
