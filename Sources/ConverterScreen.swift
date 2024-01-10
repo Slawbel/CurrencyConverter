@@ -45,8 +45,8 @@ class ConverterScreen: UIViewController {
     private let addButton = UIButton()
     
     // buttons to call diagram and rate history
-    private let buttonRateHistory = UIButton()
-    private let buttonDiagramPage = UIButton()
+    /*private let buttonRateHistory = UIButton()
+    private let buttonDiagramPage = UIButton()*/
    
     // chosen basic currency and currencies to compare with
     private var chosenCurrency: String!
@@ -337,7 +337,7 @@ class ConverterScreen: UIViewController {
         // BLOCK OF BUTTONS TO CALL DIAGRAM AND RATE HISTORY
         // style and function setting of button to call diagram
         // button's action creates instance of rate's list class and transfer arguments for defining of rate history
-        buttonRateHistory.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
+        /*buttonRateHistory.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         buttonRateHistory.layer.cornerRadius = 12
         buttonRateHistory.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonRateHistory.setTitleColor(.white, for: .normal)
@@ -367,7 +367,7 @@ class ConverterScreen: UIViewController {
         let buttonDiagramPageImage = UIImage(named: "icon_graph")
         buttonDiagramPage.setImage(buttonDiagramPageImage, for: .normal)
         let buttonDiagramPageTitle = NSLocalizedString("diagramPage", comment: "")
-        buttonDiagramPage.setTitle(buttonDiagramPageTitle, for: .normal)
+        buttonDiagramPage.setTitle(buttonDiagramPageTitle, for: .normal)*/
         
         
         // BLOCK FOR INCLUDING OBJECTS ONTO SCREEN
@@ -406,8 +406,8 @@ class ConverterScreen: UIViewController {
         view.addSubview(swapButton2)
         view.addSubview(swapButton3)
         view.addSubview(addButton)
-        view.addSubview(buttonRateHistory)
-        view.addSubview(buttonDiagramPage)
+        //view.addSubview(buttonRateHistory)
+        //view.addSubview(buttonDiagramPage)
 
     
         // BLOCK FOR CONSTRAINTS
@@ -490,10 +490,10 @@ class ConverterScreen: UIViewController {
         }
         
         outputLabel1.snp.makeConstraints { make in
-            make.width.equalTo(103)
+            make.width.equalTo(123)
             make.top.equalTo(view).inset(239)
             make.height.equalTo(40)
-            make.leading.equalTo(view).inset(255)
+            make.leading.equalTo(view).inset(235)
         }
         
         stackView2.snp.makeConstraints{ make in
@@ -525,10 +525,10 @@ class ConverterScreen: UIViewController {
         }
         
         outputLabel2.snp.makeConstraints { make in
-            make.width.equalTo(103)
+            make.width.equalTo(123)
             make.top.equalTo(view).inset(339)
             make.height.equalTo(40)
-            make.leading.equalTo(view).inset(255)
+            make.leading.equalTo(view).inset(235)
         }
         
         stackView3.snp.makeConstraints{ make in
@@ -560,10 +560,10 @@ class ConverterScreen: UIViewController {
         }
         
         outputLabel3.snp.makeConstraints { make in
-            make.width.equalTo(103)
+            make.width.equalTo(123)
             make.top.equalTo(view).inset(440)
             make.height.equalTo(40)
-            make.leading.equalTo(view).inset(255)
+            make.leading.equalTo(view).inset(235)
         }
         
         swapButton1.snp.makeConstraints { make in
@@ -593,7 +593,7 @@ class ConverterScreen: UIViewController {
             make.width.height.equalTo(37)
         }
         
-        buttonRateHistory.snp.makeConstraints { make in
+        /*buttonRateHistory.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(16)
             make.top.equalTo(view).inset(296)
             make.height.equalTo(40)
@@ -605,7 +605,7 @@ class ConverterScreen: UIViewController {
             make.top.equalTo(view).inset(296)
             make.height.equalTo(40)
             make.width.equalTo(176)
-        }
+        }*/
         
     }
     
@@ -665,7 +665,7 @@ class ConverterScreen: UIViewController {
                 make.width.height.equalTo(37)
             }
             
-            buttonRateHistory.snp.remakeConstraints { make in
+            /*buttonRateHistory.snp.remakeConstraints { make in
                 make.leading.equalTo(view).inset(16)
                 make.top.equalTo(view).inset(397)
                 make.height.equalTo(40)
@@ -677,7 +677,7 @@ class ConverterScreen: UIViewController {
                 make.top.equalTo(view).inset(397)
                 make.height.equalTo(40)
                 make.width.equalTo(176)
-            }
+            }*/
         } else {
             stackView3.isHidden = false
             outputCurLabel3.isHidden = false
@@ -688,7 +688,7 @@ class ConverterScreen: UIViewController {
             swapButton3.isHidden = false
             counterOfClick = 0
             
-            buttonRateHistory.snp.remakeConstraints { make in
+            /*buttonRateHistory.snp.remakeConstraints { make in
                 make.leading.equalTo(view).inset(16)
                 make.top.equalTo(view).inset(498)
                 make.height.equalTo(40)
@@ -700,7 +700,7 @@ class ConverterScreen: UIViewController {
                 make.top.equalTo(view).inset(498)
                 make.height.equalTo(40)
                 make.width.equalTo(176)
-            }
+            }*/
         }
     }
 
