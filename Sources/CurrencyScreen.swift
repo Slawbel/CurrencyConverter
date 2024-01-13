@@ -35,6 +35,8 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     var onCurrencySelectedShort2: ((String) -> Void)?
     var onCurrencySelectedShort3: ((String) -> Void)?
     var onCurrencySelectedShort4: ((String) -> Void)?
+    
+    var filteredDictCurrency: OrderedDictionary<Character, [(String, String)]> = [:]
 
     
     override func viewDidLoad() {
@@ -91,7 +93,10 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
         tableView.register(cellWithClass: MyTableViewCell.self)
         
-        searchContr.addTarget(self, action: #selector(CurrencyScreen.searchHandler), for: .editingChanged)
+        //searchContr.addTarget(self, action: #selector(CurrencyScreen.searchHandler), for: .editingChanged)
+        
+        filteredDictCurrency = dictCurrency
+        print(filteredDictCurrency)
         
         // adding objects to the screen with currencies list
         view.addSubview(nameOfScreen)
@@ -147,28 +152,28 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
     // here we receiving every currency from currencies list according to order for the next processing
     private func contact(for indexPath: IndexPath) -> (String, String)? {
-        let keyArray = Array(dictCurrency.keys)
+        let keyArray = Array(filteredDictCurrency.keys)
         let sectionKey = keyArray[indexPath.section]
-        let contactSection = dictCurrency[sectionKey]
+        let contactSection = filteredDictCurrency[sectionKey]
         return contactSection?[indexPath.row]
     }
 
     // here we defines how many rows should be in every section and If there is no currency for some letter then there wont be any row
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let key = Array(dictCurrency.keys)[section]
-        return dictCurrency[key]?.count ?? 0
+        let key = Array(filteredDictCurrency.keys)[section]
+        return filteredDictCurrency[key]?.count ?? 0
     }
     
     // here is set amount of sections
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dictCurrency.keys.count
+        return filteredDictCurrency.keys.count
     }
     
     // here is set styling details and title for every section of tableView
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
         let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - 15, height: 40))
-        let key = Array(dictCurrency.keys)
+        let key = Array(filteredDictCurrency.keys)
         lbl.text = String(key[section])
         lbl.font = UIFont(name: "DMSans-Regular", size: 20)
         lbl.textColor = SetColorByCode.hexStringToUIColor(hex: "#646464")
@@ -332,12 +337,22 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    @objc func searchHandler (_ sender: UITextField) {
+    /*@objc func searchHandler (_ sender: UITextField, textDidChange searchText: String) {
         if let searchText = sender.text {
-            symbolsAfterSearch = searchText.isEmpty ? symbolsForSearch : symbolsForSearch.filter{$0.lowercased().contains(searchText.lowercased())}
-            tableView.reloadData()
+            filteredDictCurrency = [:]
+            let dictValues = [:]
+            if searchText == "" {
+                filteredDictCurrency = dictCurrency
+            }
+            for word in dictValues.values {
+                if word.uppercased().contains(searchText.uppercased()) {
+                    filteredDictCurrency.append(word)
+                }
+            }
+            self.tableView.reloadData()
+            
         }
-    }
+    }*/
 }
 
 
