@@ -12,7 +12,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     private let nameOfScreen = UILabel()
     private var tableView = UITableView()
     private var selectButton = UIButton()
-    //private lazy var searchContr = UISearchTextField()
+    private lazy var searchContr = UISearchTextField()
     
     // temporary collection to order data of every currency from list
     private var dictCurrency: OrderedDictionary<Character,[(String,String)]> = [:]
@@ -93,7 +93,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
         tableView.register(cellWithClass: MyTableViewCell.self)
         
-        //searchContr.addTarget(self, action: #selector(CurrencyScreen.searchHandler), for: .editingChanged)
+        searchContr.addTarget(self, action: #selector(CurrencyScreen.searchHandler), for: .editingChanged)
         
         filteredDictCurrency = dictCurrency
         print(filteredDictCurrency)
@@ -102,7 +102,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         view.addSubview(nameOfScreen)
         view.addSubview(tableView)
         view.addSubview(selectButton)
-        //view.addSubview(searchContr)
+        view.addSubview(searchContr)
 
         
         // Constraints for objects on the screen with currencies list
@@ -113,12 +113,12 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.height.equalTo(40)
         }
         
-        /*searchContr.snp.makeConstraints{ make in
+        searchContr.snp.makeConstraints{ make in
             make.top.equalTo(view).inset(114)
             make.leading.equalTo(view).inset(15)
             make.width.equalTo(360)
             make.height.equalTo(45)
-        }*/
+        }
         
         selectButton.snp.makeConstraints { make in
             make.top.equalTo(view).inset(746)
@@ -260,12 +260,12 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         tableView.backgroundColor = .black
         
-        /*searchContr.layerCornerRadius = 20
+        searchContr.layerCornerRadius = 20
         let colorForSearchPlaceholder = SetColorByCode.hexStringToUIColor(hex: "#646464")
         searchContr.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("searchCurrency", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : colorForSearchPlaceholder])
         searchContr.font = UIFont(name: "DMSans-Regular", size: 14)
         searchContr.textColor = .white
-        searchContr.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")*/
+        searchContr.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         
         selectButton.layer.cornerRadius = 20
         let buttonBack = NSLocalizedString("buttonBack", comment: "")
@@ -337,22 +337,17 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    /*@objc func searchHandler (_ sender: UITextField, textDidChange searchText: String) {
+    @objc func searchHandler (_ sender: UITextField, textDidChange searchText: String) {
         if let searchText = sender.text {
-            filteredDictCurrency = [:]
-            let dictValues = [:]
-            if searchText == "" {
-                filteredDictCurrency = dictCurrency
-            }
-            for word in dictValues.values {
-                if word.uppercased().contains(searchText.uppercased()) {
-                    filteredDictCurrency.append(word)
-                }
+            filteredDictCurrency = dictCurrency
+            filteredDictCurrency = filteredDictCurrency.compactMapValues { valuesForKey in
+                let filteresValues = valuesForKey.filter { $0.1.contains(searchText) }
+                return filteresValues.isEmpty ? nil : filteresValues
             }
             self.tableView.reloadData()
             
         }
-    }*/
+    }
 }
 
 
