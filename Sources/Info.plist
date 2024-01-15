@@ -20,6 +20,8 @@
 	<string>1</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
+	<key>LSMinimumSystemVersion</key>
+	<string>13.3</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>DMSans-Bold.ttf</string>
