@@ -341,6 +341,9 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         if let searchText = sender.text {
             filteredDictCurrency = dictCurrency.compactMapValues { valuesForKey in
                 let filteresValues = valuesForKey.filter { $0.1.contains(searchText) }
+                if searchText == "" {
+                    return valuesForKey
+                }
                 return filteresValues.isEmpty ? nil : filteresValues
             }
             self.tableView.reloadData()
