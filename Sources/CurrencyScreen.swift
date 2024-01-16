@@ -339,12 +339,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @objc func searchHandler (_ sender: UITextField, textDidChange searchText: String) {
         if let searchText = sender.text {
-            filteredDictCurrency = dictCurrency.compactMapValues { valuesForKey in
-                let filteresValues = valuesForKey.filter { $0.1.contains(searchText) }
-                if searchText == "" {
-                    return valuesForKey
+            if searchText == "" {
+                filteredDictCurrency = dictCurrency
+            } else {
+                filteredDictCurrency = dictCurrency.compactMapValues { valuesForKey in
+                    let filteresValues = valuesForKey.filter { $0.1.contains(searchText) }
+                    return filteresValues.isEmpty ? nil : filteresValues
                 }
-                return filteresValues.isEmpty ? nil : filteresValues
             }
             self.tableView.reloadData()
             
