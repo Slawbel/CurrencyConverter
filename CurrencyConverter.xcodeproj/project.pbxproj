@@ -16,6 +16,7 @@
 		A22FC4902A9A44A50037B6D6 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A22FC48F2A9A445B0037B6D6 /* DMSans-Bold.ttf */; };
 		A261608D2AEC7CAC00C6DF13 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A261608B2AEC7CAC00C6DF13 /* Model.xcdatamodeld */; };
 		A2616D462B173E58000AF9A7 /* SetColorByCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2616D452B173E58000AF9A7 /* SetColorByCode.swift */; };
+		A29E8E832B5EC55300B8BCEC /* ConverterScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29E8E822B5EC55300B8BCEC /* ConverterScreenTests.swift */; };
 		A2B496F5299FBDD00017A82A /* CurrencyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */; };
 		A2B496F729A2C5200017A82A /* TableViewCellForCurrencyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */; };
 		A2B496FB29A802A30017A82A /* CurData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496FA29A802A20017A82A /* CurData.swift */; };
@@ -47,6 +48,7 @@
 		A22FC48F2A9A445B0037B6D6 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Bold.ttf"; sourceTree = "<group>"; };
 		A261608C2AEC7CAC00C6DF13 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		A2616D452B173E58000AF9A7 /* SetColorByCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetColorByCode.swift; sourceTree = "<group>"; };
+		A29E8E822B5EC55300B8BCEC /* ConverterScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterScreenTests.swift; sourceTree = "<group>"; };
 		A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyScreen.swift; sourceTree = "<group>"; };
 		A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellForCurrencyScreen.swift; sourceTree = "<group>"; };
 		A2B496FA29A802A20017A82A /* CurData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurData.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 		9E25D2AE29998C2B00293AB7 = {
 			isa = PBXGroup;
 			children = (
+				A29E8E842B5EC5CA00B8BCEC /* Tests */,
 				9E25D2D029998CA700293AB7 /* Sources */,
 				9E25D2B829998C2B00293AB7 /* Products */,
 				A2B496FF29AAC9660017A82A /* Frameworks */,
@@ -125,6 +128,14 @@
 				9EFEB4842A91413D00860A54 /* DMSans-Regular.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		A29E8E842B5EC5CA00B8BCEC /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				A29E8E822B5EC55300B8BCEC /* ConverterScreenTests.swift */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		A2B496FF29AAC9660017A82A /* Frameworks */ = {
@@ -224,6 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2C48EAF29E5C412004A5594 /* DiagramResult.swift in Sources */,
+				A29E8E832B5EC55300B8BCEC /* ConverterScreenTests.swift in Sources */,
 				9E25D2DF29998CA700293AB7 /* AppDelegate.swift in Sources */,
 				A2616D462B173E58000AF9A7 /* SetColorByCode.swift in Sources */,
 				9E25D2DB29998CA700293AB7 /* ConverterScreen.swift in Sources */,
