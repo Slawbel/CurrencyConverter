@@ -1,7 +1,7 @@
 "writeTheAmount" = "The amount ____";
 "transfer" = " Rate history";
 "inputCurLabelText" = "Your currency type";
-"outputCurLabelText" = "Conveted currency type";
+"outputCurLabelText" = "Converted currency type";
 "buttonBack" = "SELECT";
 "date" = "Date";
 "chooseStartAndEndDates" = "Select start and end dates";
