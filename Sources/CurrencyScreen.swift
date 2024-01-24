@@ -96,7 +96,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         searchContr.addTarget(self, action: #selector(CurrencyScreen.searchHandler), for: .editingChanged)
         
         filteredDictCurrency = dictCurrency
-        print(filteredDictCurrency)
         
         // adding objects to the screen with currencies list
         view.addSubview(nameOfScreen)

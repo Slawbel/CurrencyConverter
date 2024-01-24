@@ -61,7 +61,9 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         startDatePicker.setDate(.now, animated: true)
         startDatePicker.layerCornerRadius = 15
         startDatePicker.setValue(UIColor.white, forKey: "textColor")
+        startDatePicker.addTarget(self, action: #selector(rangeOfDates), for: .valueChanged)
         startDatePicker.addTarget(self, action: #selector(self.curHistory), for: .valueChanged)
+        
         //startDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
         
         endDatePicker.timeZone = NSTimeZone.local
@@ -71,9 +73,9 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         endDatePicker.setDate(.now, animated: true)
         endDatePicker.layerCornerRadius = 15
         endDatePicker.setValue(UIColor.white, forKey: "textColor")
+        endDatePicker.addTarget(self, action: #selector(rangeOfDates), for: .valueChanged)
         endDatePicker.addTarget(self, action: #selector(self.curHistory), for: .valueChanged)
         //endDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
-    
         
         currencyNameLabel1.layerCornerRadius = 10
         currencyNameLabel1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
@@ -84,7 +86,8 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         currencyNameLabel3.layerCornerRadius = 10
         currencyNameLabel3.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         
-        lineChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rangeOfDates(startDatePicker.date, endDatePicker.date))
+        
+        //lineChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rangeOfDates(startDatePicker.date, endDatePicker.date))
     
         
         
@@ -186,6 +189,12 @@ class DiagramResult: UIViewController, ChartViewDelegate {
     }
     
     
+    @objc func rangeOfDates() {
+        let dayDurationInSeconds: TimeInterval = 60*60*24
+        for date in stride(from: startDatePicker.date, to: endDatePicker.date, by: dayDurationInSeconds) {
+            print(date)
+        }
+    }
     
     @objc func curHistory() {
         guard let chosenCurShortNameBase = chosenCurShortNameBase else {
@@ -235,7 +244,7 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         guard let data = try? URLSession.shared.dataSync(with: request).0 else {
             return
         }
-        print(String(data: data, encoding: .utf8)!)
+        //print(String(data: data, encoding: .utf8)!)
         rateData = RateData(from: data)
         
         self.setData(coordinates: coordinates(), coordinates2: coordinates2(), coordinates3: coordinates3(), chosenCur1: chosenCurShortName1 ?? "", chosenCur2: chosenCurShortName2 ?? "", chosenCur3: chosenCurShortName3 ?? "")
@@ -294,29 +303,17 @@ class DiagramResult: UIViewController, ChartViewDelegate {
     }
     
     
-    func rangeOfDates (_ start: Date, _ end: Date) -> [String] {
-        let frmt = DateFormatter()
-        frmt.dateFormat = "dd.MM"
-
-         var dates:[Date] = []
-         var currentDate = start
-
-         while currentDate <= end {
-             print(currentDate)
-             currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)!
-             dates.append(currentDate)
-         }
-        
-        var datesString: [String] = []
-        for n in dates {
-            datesString.append(frmt.string(from: n))
-        }
-
-         return datesString
-    }
-
-    
 }
+
+/*extension Date: Strideable {
+    public func dateRange(to first: Date) -> TimeInterval {
+        return first.timeIntervalSinceReferenceDate - self.timeIntervalSinceReferenceDate
+    }
+    
+    public func advanced(by n: TimeInterval) -> Date {
+        return self + n
+    }
+}*/
 
 
 
