@@ -191,7 +191,7 @@ class DiagramResult: UIViewController, ChartViewDelegate {
     
     @objc func rangeOfDates() {
         let dayDurationInSeconds: TimeInterval = 60*60*24
-        for date in stride(from: startDatePicker.date, to: endDatePicker.date, by: dayDurationInSeconds) {
+        for date in stride(from: startDatePicker.date.iso8601, to: endDatePicker.date.iso8601, by: dayDurationInSeconds) {
             print(date)
         }
     }
@@ -305,15 +305,15 @@ class DiagramResult: UIViewController, ChartViewDelegate {
     
 }
 
-/*extension Date: Strideable {
-    public func dateRange(to first: Date) -> TimeInterval {
-        return first.timeIntervalSinceReferenceDate - self.timeIntervalSinceReferenceDate
+extension Date {
+    var iso8601: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        return dateFormatter.string(from: self as Date)
     }
-    
-    public func advanced(by n: TimeInterval) -> Date {
-        return self + n
-    }
-}*/
+}
 
 
 
