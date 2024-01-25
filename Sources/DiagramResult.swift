@@ -44,9 +44,6 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         lineChartView.xAxis.labelTextColor = .white
         lineChartView.xAxis.labelPosition = .bottom
         
-        
-        
-        
         labelDiagram.backgroundColor = .clear
         labelDiagram.textAlignment = .center
         labelDiagram.textColor = .white
@@ -64,8 +61,6 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         startDatePicker.addTarget(self, action: #selector(rangeOfDates), for: .valueChanged)
         startDatePicker.addTarget(self, action: #selector(self.curHistory), for: .valueChanged)
         
-        //startDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
-        
         endDatePicker.timeZone = NSTimeZone.local
         endDatePicker.datePickerMode = .date
         endDatePicker.overrideUserInterfaceStyle = .dark
@@ -75,7 +70,6 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         endDatePicker.setValue(UIColor.white, forKey: "textColor")
         endDatePicker.addTarget(self, action: #selector(rangeOfDates), for: .valueChanged)
         endDatePicker.addTarget(self, action: #selector(self.curHistory), for: .valueChanged)
-        //endDatePicker.addTarget(self, action: #selector(ConverterScreen.datePickerValueChanged(_:)), for: .valueChanged)
         
         currencyNameLabel1.layerCornerRadius = 10
         currencyNameLabel1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
@@ -87,7 +81,7 @@ class DiagramResult: UIViewController, ChartViewDelegate {
         currencyNameLabel3.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         
         
-        //lineChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rangeOfDates(startDatePicker.date, endDatePicker.date))
+        lineChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rangeOfDates())
     
         
         
@@ -189,11 +183,22 @@ class DiagramResult: UIViewController, ChartViewDelegate {
     }
     
     
-    @objc func rangeOfDates() {
+    @objc func rangeOfDates() -> [String] {
+        var arrayOfDates: [String] = []
         let dayDurationInSeconds: TimeInterval = 60*60*24
-        for date in stride(from: startDatePicker.date.iso8601, to: endDatePicker.date.iso8601, by: dayDurationInSeconds) {
-            print(date)
+        for date in stride(from: startDatePicker.date, to: endDatePicker.date, by: dayDurationInSeconds) {
+            let tempStringDate = changeDateFormat(dateForChange: date)
+            arrayOfDates.append(tempStringDate)
         }
+        print(arrayOfDates)
+        return arrayOfDates
+    }
+    
+    func changeDateFormat (dateForChange: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let stringDate = dateFormatter.string(from: dateForChange)
+        return stringDate
     }
     
     @objc func curHistory() {
@@ -305,15 +310,15 @@ class DiagramResult: UIViewController, ChartViewDelegate {
     
 }
 
-extension Date {
-    var iso8601: String {
+/*extension Date {
+    var iso8601: Date {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale
         dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        return dateFormatter.string(from: self as Date)
+        return dateFormatter.date
     }
-}
+}*/
 
 
 
