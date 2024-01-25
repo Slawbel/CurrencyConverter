@@ -18,8 +18,5 @@ final class ConverterScreenTests: XCTestCase {
     func flagShouldBeString() {
         let sut = ConverterScreen()
         let bool = sut.flag(country: "aaa")
-        
-        XCTAs
     }
-
 }
