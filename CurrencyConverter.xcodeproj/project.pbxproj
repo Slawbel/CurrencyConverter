@@ -21,7 +21,9 @@
 		A2B496FB29A802A30017A82A /* CurData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496FA29A802A20017A82A /* CurData.swift */; };
 		A2B4970629AACC060017A82A /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A2B4970529AACC060017A82A /* SwifterSwift */; };
 		A2B4970829B2B31D0017A82A /* ConvertResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B4970729B2B31D0017A82A /* ConvertResult.swift */; };
-		A2C48EAD29E47990004A5594 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = A2C48EAC29E47990004A5594 /* Charts */; };
+		A2C271CE2B682774009E40C6 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = A2C271CD2B682774009E40C6 /* DGCharts */; };
+		A2C271D02B682774009E40C6 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = A2C271CF2B682774009E40C6 /* DGChartsDynamic */; };
+		A2C271D22B684223009E40C6 /* DemoBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C271D12B684223009E40C6 /* DemoBaseViewController.swift */; };
 		A2C48EAF29E5C412004A5594 /* DiagramResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C48EAE29E5C412004A5594 /* DiagramResult.swift */; };
 		A2EA57312AD2DA6F0043EB27 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = A2EA57302AD2DA6F0043EB27 /* Collections */; };
 		A2EA57332AD2DA6F0043EB27 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = A2EA57322AD2DA6F0043EB27 /* DequeModule */; };
@@ -50,6 +52,7 @@
 		A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellForCurrencyScreen.swift; sourceTree = "<group>"; };
 		A2B496FA29A802A20017A82A /* CurData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurData.swift; sourceTree = "<group>"; };
 		A2B4970729B2B31D0017A82A /* ConvertResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertResult.swift; sourceTree = "<group>"; };
+		A2C271D12B684223009E40C6 /* DemoBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoBaseViewController.swift; sourceTree = "<group>"; };
 		A2C48EAE29E5C412004A5594 /* DiagramResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramResult.swift; sourceTree = "<group>"; };
 		A2EA87572A23E2FA00AAC943 /* CurrencyApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyApi.swift; sourceTree = "<group>"; };
 		A2FEBA5429C11BB7006363DB /* RateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateData.swift; sourceTree = "<group>"; };
@@ -65,8 +68,9 @@
 				A2B4970629AACC060017A82A /* SwifterSwift in Frameworks */,
 				A2EA57312AD2DA6F0043EB27 /* Collections in Frameworks */,
 				A2FEBA7A29D4EF99006363DB /* Swiftstraints in Frameworks */,
-				A2C48EAD29E47990004A5594 /* Charts in Frameworks */,
+				A2C271D02B682774009E40C6 /* DGChartsDynamic in Frameworks */,
 				A2EA57352AD2DA6F0043EB27 /* OrderedCollections in Frameworks */,
+				A2C271CE2B682774009E40C6 /* DGCharts in Frameworks */,
 				A2EA57332AD2DA6F0043EB27 /* DequeModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -111,6 +115,7 @@
 				A261608B2AEC7CAC00C6DF13 /* Model.xcdatamodeld */,
 				9E25D2D929998CA700293AB7 /* Info.plist */,
 				A2616D452B173E58000AF9A7 /* SetColorByCode.swift */,
+				A2C271D12B684223009E40C6 /* DemoBaseViewController.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -151,10 +156,11 @@
 				A2F83E1F299AE3AA00FAE989 /* SnapKit */,
 				A2B4970529AACC060017A82A /* SwifterSwift */,
 				A2FEBA7929D4EF99006363DB /* Swiftstraints */,
-				A2C48EAC29E47990004A5594 /* Charts */,
 				A2EA57302AD2DA6F0043EB27 /* Collections */,
 				A2EA57322AD2DA6F0043EB27 /* DequeModule */,
 				A2EA57342AD2DA6F0043EB27 /* OrderedCollections */,
+				A2C271CD2B682774009E40C6 /* DGCharts */,
+				A2C271CF2B682774009E40C6 /* DGChartsDynamic */,
 			);
 			productName = CurrencyConverter;
 			productReference = 9E25D2B729998C2B00293AB7 /* CurrencyConverter.app */;
@@ -189,8 +195,8 @@
 				A2F83E1E299AE3AA00FAE989 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				A2B4970429AACC060017A82A /* XCRemoteSwiftPackageReference "SwifterSwift" */,
 				A2FEBA7829D4EF99006363DB /* XCRemoteSwiftPackageReference "Swiftstraints" */,
-				A2C48EAB29E47990004A5594 /* XCRemoteSwiftPackageReference "Charts" */,
 				A2EA572F2AD2DA6F0043EB27 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				A2C271CC2B682773009E40C6 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 9E25D2B829998C2B00293AB7 /* Products */;
 			projectDirPath = "";
@@ -224,6 +230,7 @@
 				9E25D2DF29998CA700293AB7 /* AppDelegate.swift in Sources */,
 				A2616D462B173E58000AF9A7 /* SetColorByCode.swift in Sources */,
 				9E25D2DB29998CA700293AB7 /* ConverterScreen.swift in Sources */,
+				A2C271D22B684223009E40C6 /* DemoBaseViewController.swift in Sources */,
 				A2B496FB29A802A30017A82A /* CurData.swift in Sources */,
 				A2EA87582A23E2FA00AAC943 /* CurrencyApi.swift in Sources */,
 				A2B496F5299FBDD00017A82A /* CurrencyScreen.swift in Sources */,
@@ -463,12 +470,12 @@
 				kind = branch;
 			};
 		};
-		A2C48EAB29E47990004A5594 /* XCRemoteSwiftPackageReference "Charts" */ = {
+		A2C271CC2B682773009E40C6 /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielgindi/Charts";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.1.0;
+				minimumVersion = 5.0.0;
 			};
 		};
 		A2EA572F2AD2DA6F0043EB27 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
@@ -503,10 +510,15 @@
 			package = A2B4970429AACC060017A82A /* XCRemoteSwiftPackageReference "SwifterSwift" */;
 			productName = SwifterSwift;
 		};
-		A2C48EAC29E47990004A5594 /* Charts */ = {
+		A2C271CD2B682774009E40C6 /* DGCharts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A2C48EAB29E47990004A5594 /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = Charts;
+			package = A2C271CC2B682773009E40C6 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		A2C271CF2B682774009E40C6 /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2C271CC2B682773009E40C6 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
 		};
 		A2EA57302AD2DA6F0043EB27 /* Collections */ = {
 			isa = XCSwiftPackageProductDependency;

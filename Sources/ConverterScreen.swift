@@ -1,6 +1,8 @@
 import SnapKit
 import UIKit
 
+
+
 class ConverterScreen: UIViewController {
     
     // profile for saving data in file
@@ -58,9 +60,8 @@ class ConverterScreen: UIViewController {
     // needed counter for adding of currency on the screen
     var counterOfClick = 0
     
-
+    weak var delegate: ConverterScreenDelegate?
    
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -361,11 +362,8 @@ class ConverterScreen: UIViewController {
         buttonDiagramPage.setTitleColor(.white, for: .normal)
         buttonDiagramPage.addAction(UIAction { [weak self] _ in
             let diagramResult = DiagramResult()
-            diagramResult.chosenCurShortNameBase = self?.chosenCurShortName
-            diagramResult.chosenCurShortName1 = self?.chosenCurShortName1
-            diagramResult.chosenCurShortName2 = self?.chosenCurShortName2
-            diagramResult.chosenCurShortName3 = self?.chosenCurShortName3
-            diagramResult.curHistory()
+            self?.delegate?.transferedCurNames(basicCur: self!.chosenCurShortName, firstCur: self!.chosenCurShortName1, secondCur: self!.chosenCurShortName2, thirdCur: self?.chosenCurShortName3)
+            //diagramResult.curHistory()
             diagramResult.modalPresentationStyle = .fullScreen
             self?.present(diagramResult, animated: true)
         }, for: .primaryActionTriggered)
