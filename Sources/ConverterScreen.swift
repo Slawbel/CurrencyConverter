@@ -362,7 +362,7 @@ class ConverterScreen: UIViewController {
         buttonDiagramPage.setTitleColor(.white, for: .normal)
         buttonDiagramPage.addAction(UIAction { [weak self] _ in
             let diagramResult = DiagramResult()
-            self?.delegate?.transferedCurNames(basicCur: self!.chosenCurShortName, firstCur: self!.chosenCurShortName1, secondCur: self!.chosenCurShortName2, thirdCur: self?.chosenCurShortName3)
+            diagramResult.transferedCurNames(basicCur: self!.chosenCurShortName, firstCur: self!.chosenCurShortName1, secondCur: self!.chosenCurShortName2, thirdCur: self?.chosenCurShortName3)
             diagramResult.curHistory()
             diagramResult.modalPresentationStyle = .fullScreen
             self?.present(diagramResult, animated: true)
