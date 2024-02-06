@@ -88,42 +88,23 @@ class DiagramResult: DemoBaseViewController {
         chartView.dragEnabled = true
         chartView.setScaleEnabled(true)
         chartView.pinchZoomEnabled = true
+        chartView.layer.cornerRadius = 5
+        chartView.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
+        chartView.leftAxis.labelTextColor = .white
+        chartView.legendRenderer.legend = .none
+        chartView.drawBordersEnabled = true
+        chartView.borderColor = .gray
     
-        // x-axis limit line
-        let llXAxis = ChartLimitLine(limit: 10, label: "Index 10")
-        llXAxis.lineWidth = 4
-        llXAxis.lineDashLengths = [10, 10, 0]
-        llXAxis.labelPosition = .rightBottom
-        llXAxis.valueFont = .systemFont(ofSize: 10)
-
-        chartView.xAxis.gridLineDashLengths = [10, 10]
+        chartView.xAxis.gridLineDashLengths = [1, 1]
         chartView.xAxis.gridLineDashPhase = 0
+        chartView.xAxis.labelTextColor = .white
+        chartView.xAxis.labelPosition = .bottom
+        chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rangeOfDates())
+        chartView.xAxis.granularity = 1.0
         
-        let ll1 = ChartLimitLine(limit: 150, label: "Upper Limit")
-        ll1.lineWidth = 4
-        ll1.lineDashLengths = [5, 5]
-        ll1.labelPosition = .rightTop
-        ll1.valueFont = .systemFont(ofSize: 10)
-
-        let ll2 = ChartLimitLine(limit: -30, label: "Lower Limit")
-        ll2.lineWidth = 4
-        ll2.lineDashLengths = [5,5]
-        ll2.labelPosition = .rightBottom
-        ll2.valueFont = .systemFont(ofSize: 10)
-
-        let leftAxis = chartView.leftAxis
-        leftAxis.removeAllLimitLines()
-        leftAxis.addLimitLine(ll1)
-        leftAxis.addLimitLine(ll2)
-        leftAxis.axisMaximum = 200
-        leftAxis.axisMinimum = -50
-        leftAxis.gridLineDashLengths = [5, 5]
-        leftAxis.drawLimitLinesBehindDataEnabled = true
         
         chartView.rightAxis.enabled = false
-        
-        //[_chartView.viewPortHandler setMaximumScaleY: 2.f];
-              //[_chartView.viewPortHandler setMaximumScaleX: 2.f];
+
 
         chartView.legend.form = .line
 
@@ -132,7 +113,6 @@ class DiagramResult: DemoBaseViewController {
 
         chartView.animate(xAxisDuration: 2.5)
         
-        chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rangeOfDates())
 
         view.addSubview(diagramStackView)
         diagramStackView.addSubview(chartView)
@@ -192,12 +172,33 @@ class DiagramResult: DemoBaseViewController {
          let set1 = LineChartDataSet(entries: coordinates, label: chosenCur1)
          let set2 = LineChartDataSet(entries: coordinates2, label: chosenCur2)
          let set3 = LineChartDataSet(entries: coordinates3, label: chosenCur3)
-         set1.colors = [NSUIColor.blue]
-         set2.colors = [NSUIColor.red]
+         set1.colors = [NSUIColor.purple]
+         set2.colors = [NSUIColor.white]
          set3.colors = [NSUIColor.orange]
          let data = LineChartData(dataSets: [set1, set2, set3])
+         set1.circleRadius = 7
+         set1.circleColors = [UIColor.purple]
+         set1.circleHoleRadius = .zero
+         set1.drawValuesEnabled = false
+         
+         set2.circleRadius = 7
+         set2.circleColors = [UIColor.white]
+         set2.circleHoleRadius = .zero
+         set2.drawValuesEnabled = false
+         
+         set3.circleRadius = 7
+         set3.circleColors = [UIColor.orange]
+         set3.circleHoleRadius = .zero
+         set3.drawValuesEnabled = false
+         
          chartView.data = data
      }
+    
+    override func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+            let alert = UIAlertController(title: "Value", message: "Value: \(entry.y)", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+    }
     
     @objc func rangeOfDates() -> [String] {
         var arrayOfDates: [String] = []
