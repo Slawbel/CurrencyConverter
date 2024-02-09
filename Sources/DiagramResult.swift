@@ -90,23 +90,24 @@ class DiagramResult: DemoBaseViewController {
         chartView.pinchZoomEnabled = true
         chartView.layer.cornerRadius = 5
         chartView.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
-        chartView.leftAxis.labelTextColor = .white
-        chartView.legendRenderer.legend = .none
         chartView.drawBordersEnabled = true
         chartView.borderColor = .gray
+        chartView.legend.form = .line
+
     
-        chartView.xAxis.gridLineDashLengths = [1, 1]
         chartView.xAxis.gridLineDashPhase = 0
         chartView.xAxis.labelTextColor = .white
         chartView.xAxis.labelPosition = .bottom
         chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rangeOfDates())
-        chartView.xAxis.granularity = 1.0
         
+        
+        
+        chartView.leftAxis.labelTextColor = .white
+
         
         chartView.rightAxis.enabled = false
 
 
-        chartView.legend.form = .line
 
         sliderX.value = 45
         sliderY.value = 100
@@ -176,6 +177,7 @@ class DiagramResult: DemoBaseViewController {
          set2.colors = [NSUIColor.white]
          set3.colors = [NSUIColor.orange]
          let data = LineChartData(dataSets: [set1, set2, set3])
+         
          set1.circleRadius = 7
          set1.circleColors = [UIColor.purple]
          set1.circleHoleRadius = .zero
@@ -203,11 +205,14 @@ class DiagramResult: DemoBaseViewController {
     @objc func rangeOfDates() -> [String] {
         var arrayOfDates: [String] = []
         let dayDurationInSeconds: TimeInterval = 60*60*24
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yy"
+        
         for date in stride(from: startDatePicker.date, to: endDatePicker.date, by: dayDurationInSeconds) {
-            let tempStringDate = changeDateFormat(dateForChange: date)
+            let tempStringDate = dateFormatter.string(from: date)
             arrayOfDates.append(tempStringDate)
         }
-        print(arrayOfDates)
         return arrayOfDates
     }
     
@@ -263,12 +268,7 @@ class DiagramResult: DemoBaseViewController {
         self.setData(coordinates: coordinates(), coordinates2: coordinates2(), coordinates3: coordinates3(), chosenCur1: chosenCurShortName1 ?? "", chosenCur2: chosenCurShortName2 ?? "", chosenCur3: chosenCurShortName3 ?? "")
     }
     
-    func changeDateFormat (dateForChange: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let stringDate = dateFormatter.string(from: dateForChange)
-        return stringDate
-    }
+
     
     override func updateChartData() {
         if self.shouldHideData {
@@ -300,7 +300,6 @@ class DiagramResult: DemoBaseViewController {
         set1.drawFilledEnabled = true
 
         let data = LineChartData(dataSet: set1)
-
         chartView.data = data
     }
 
