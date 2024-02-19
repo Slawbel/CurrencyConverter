@@ -25,6 +25,15 @@ class DiagramResult: DemoBaseViewController {
     private let labelDiagram = UILabel()
     private let startDatePicker = UIDatePicker()
     private let endDatePicker = UIDatePicker()
+    
+    private let outputCurButton1 = UIButton()
+    private let outputLabel1 = UILabel()
+    
+    private let outputCurButton2 = UIButton()
+    private let outputLabel2 = UILabel()
+    
+    private let outputCurButton3 = UIButton()
+    private let outputLabel3 = UILabel()
 
     private var rateData: RateData?
     
@@ -90,29 +99,50 @@ class DiagramResult: DemoBaseViewController {
         chartView.pinchZoomEnabled = true
         chartView.layer.cornerRadius = 5
         chartView.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
+        chartView.legendRenderer.legend = .none
         chartView.drawBordersEnabled = true
         chartView.borderColor = .gray
         chartView.legend.form = .line
-
     
         chartView.xAxis.gridLineDashPhase = 0
         chartView.xAxis.labelTextColor = .white
         chartView.xAxis.labelPosition = .bottom
         chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rangeOfDates())
         
-        
-        
         chartView.leftAxis.labelTextColor = .white
 
-        
         chartView.rightAxis.enabled = false
-
-
 
         sliderX.value = 45
         sliderY.value = 100
-
         chartView.animate(xAxisDuration: 2.5)
+        
+        outputCurButton1.layer.cornerRadius = 10
+        outputCurButton1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
+        outputCurButton1.setTitleColor(.white, for: .normal)
+        outputCurButton1.addAction(UIAction { [unowned self] _ in
+            let currencyScreen = CurrencyScreen()
+            currencyScreen.onCurrencySelectedShort4 = { [weak self] shortName in
+                self?.chosenCurShortName1 = shortName
+                self?.outputLabel1.text = shortName + "      >"
+                self?.convert()
+                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
+                guard cutShortNameFlag != nil else { return }
+                if cutShortNameFlag != nil {
+                    self?.outputCurrencyLabel3.text = cutShortNameFlag! + " " + shortName + " >"
+                } else { return }
+            }
+            currencyScreen.modalPresentationStyle = .fullScreen
+            self.navigationController?.pushViewController(currencyScreen, animated: true)
+        }, for: .primaryActionTriggered)
+        
+        outputCurButton2.layer.cornerRadius = 10
+        outputCurButton2.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
+        outputCurButton2.setTitleColor(.white, for: .normal)
+        
+        outputCurButton3.layer.cornerRadius = 10
+        outputCurButton3.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
+        outputCurButton3.setTitleColor(.white, for: .normal)
         
 
         view.addSubview(diagramStackView)
@@ -120,6 +150,13 @@ class DiagramResult: DemoBaseViewController {
         view.addSubview(labelDiagram)
         view.addSubview(startDatePicker)
         view.addSubview(endDatePicker)
+        
+        view.addSubview(outputCurButton1)
+        view.addSubview(outputCurButton2)
+        view.addSubview(outputCurButton3)
+        outputCurButton1.addSubview(outputLabel1)
+        outputCurButton2.addSubview(outputLabel2)
+        outputCurButton3.addSubview(outputLabel3)
         
         diagramStackView.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(14)
@@ -153,6 +190,27 @@ class DiagramResult: DemoBaseViewController {
             make.width.equalTo(128)
             make.height.equalTo(35)
             make.top.equalTo(view).inset(115)
+        }
+        
+        outputCurButton1.snp.makeConstraints { make in
+            make.width.equalTo(115)
+            make.top.equalTo(view).inset(768)
+            make.height.equalTo(28)
+            make.leading.equalTo(view).inset(15)
+        }
+        
+        outputCurButton2.snp.makeConstraints { make in
+            make.width.equalTo(115)
+            make.top.equalTo(view).inset(768)
+            make.height.equalTo(28)
+            make.leading.equalTo(view).inset(138)
+        }
+            
+        outputCurButton3.snp.makeConstraints { make in
+            make.width.equalTo(115)
+            make.top.equalTo(view).inset(768)
+            make.height.equalTo(28)
+            make.leading.equalTo(view).inset(261)
         }
     }
     
