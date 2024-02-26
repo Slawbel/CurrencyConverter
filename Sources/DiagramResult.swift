@@ -46,7 +46,6 @@ class DiagramResult: DemoBaseViewController {
         diagramStackView.layer.cornerRadius = 30
         
         chartView.backgroundColor = .white
-        
         self.options = [.toggleValues,
                         .toggleFilled,
                         .toggleCircles,
@@ -92,7 +91,6 @@ class DiagramResult: DemoBaseViewController {
         endDatePicker.addTarget(self, action: #selector(rangeOfDates), for: .valueChanged)
         endDatePicker.addTarget(self, action: #selector(self.curHistory), for: .valueChanged)
         
-
         chartView.chartDescription.enabled = false
         chartView.dragEnabled = true
         chartView.setScaleEnabled(true)
@@ -117,19 +115,26 @@ class DiagramResult: DemoBaseViewController {
         sliderY.value = 100
         chartView.animate(xAxisDuration: 2.5)
         
+        outputLabel1.textAlignment = .center
+        outputLabel1.font = outputLabel1.font.withSize(14)
+        outputLabel1.textColor = .white
+        outputLabel1.backgroundColor = .clear
+        outputLabel1.isHidden = true
+        
         outputCurButton1.layer.cornerRadius = 10
         outputCurButton1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton1.setTitleColor(.white, for: .normal)
         outputCurButton1.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort4 = { [weak self] shortName in
-                self?.chosenCurShortName1 = shortName
+                let copyConverterScreen = ConverterScreen()
+                copyConverterScreen.chosenCurShortName1 = shortName
                 self?.outputLabel1.text = shortName + "      >"
-                self?.convert()
-                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
-                guard cutShortNameFlag != nil else { return }
-                if cutShortNameFlag != nil {
-                    self?.outputCurrencyLabel3.text = cutShortNameFlag! + " " + shortName + " >"
+                copyConverterScreen.convert()
+                let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
+                guard flag != nil else { return }
+                if flag != nil {
+                    self?.outputLabel1.text = flag! + " " + shortName + " >"
                 } else { return }
             }
             currencyScreen.modalPresentationStyle = .fullScreen
