@@ -91,7 +91,6 @@
 				9E25D2D029998CA700293AB7 /* Sources */,
 				9E25D2B829998C2B00293AB7 /* Products */,
 				A2B496FF29AAC9660017A82A /* Frameworks */,
-				CFC3FD355547ED96BA2DA33A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -143,13 +142,6 @@
 				A2C2721A2B6D05D1009E40C6 /* Charts.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		CFC3FD355547ED96BA2DA33A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

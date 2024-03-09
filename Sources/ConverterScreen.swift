@@ -364,8 +364,7 @@ class ConverterScreen: UIViewController {
             let diagramResult = DiagramResult()
             diagramResult.transferedCurNames(basicCur: self!.chosenCurShortName, firstCur: self!.chosenCurShortName1, secondCur: self!.chosenCurShortName2, thirdCur: self?.chosenCurShortName3)
             diagramResult.curHistory()
-            diagramResult.modalPresentationStyle = .fullScreen
-            self?.present(diagramResult, animated: true)
+            self?.navigationController?.pushViewController(diagramResult, animated: true)
         }, for: .primaryActionTriggered)
         let buttonDiagramPageImage = UIImage(named: "icon_graph")
         buttonDiagramPage.setImage(buttonDiagramPageImage, for: .normal)

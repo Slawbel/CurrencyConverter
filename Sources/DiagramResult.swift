@@ -46,7 +46,6 @@ class DiagramResult: DemoBaseViewController {
         diagramStackView.layer.cornerRadius = 30
         
         chartView.backgroundColor = .white
-        
         self.options = [.toggleValues,
                         .toggleFilled,
                         .toggleCircles,
@@ -92,7 +91,6 @@ class DiagramResult: DemoBaseViewController {
         endDatePicker.addTarget(self, action: #selector(rangeOfDates), for: .valueChanged)
         endDatePicker.addTarget(self, action: #selector(self.curHistory), for: .valueChanged)
         
-
         chartView.chartDescription.enabled = false
         chartView.dragEnabled = true
         chartView.setScaleEnabled(true)
@@ -117,19 +115,26 @@ class DiagramResult: DemoBaseViewController {
         sliderY.value = 100
         chartView.animate(xAxisDuration: 2.5)
         
+        outputLabel1.text = "               >"
+        outputLabel1.textAlignment = .center
+        outputLabel1.font = outputLabel1.font.withSize(14)
+        outputLabel1.textColor = .white
+        outputLabel1.backgroundColor = .clear
+        
         outputCurButton1.layer.cornerRadius = 10
         outputCurButton1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton1.setTitleColor(.white, for: .normal)
         outputCurButton1.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
-            currencyScreen.onCurrencySelectedShort4 = { [weak self] shortName in
+            currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
                 self?.chosenCurShortName1 = shortName
                 self?.outputLabel1.text = shortName + "      >"
-                self?.convert()
-                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
-                guard cutShortNameFlag != nil else { return }
-                if cutShortNameFlag != nil {
-                    self?.outputCurrencyLabel3.text = cutShortNameFlag! + " " + shortName + " >"
+                let copyConverterScreen = ConverterScreen()
+                copyConverterScreen.convert()
+                let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
+                guard flag != nil else { return }
+                if flag != nil {
+                    self?.outputLabel1.text = flag! + " " + shortName + " >"
                 } else { return }
             }
             currencyScreen.modalPresentationStyle = .fullScreen
@@ -436,55 +441,55 @@ class DiagramResult: DemoBaseViewController {
     
     func coordinates() -> [ChartDataEntry] {
 
-            guard let chosenCurShortName1 = chosenCurShortName1 else {
-                return []
-            }
-            var x = -1
-            let diagramData = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
-                return dateAndRateLeft.key < dateAndRateRight.key
-            }).compactMap { key, value in
-                guard let currency = value[chosenCurShortName1] else {
-                    return nil as ChartDataEntry?
-                }
-                x += 1
-                return ChartDataEntry(x: Double(x), y: currency)
-            })
-            return diagramData ?? []
+        guard let chosenCurShortName1 = chosenCurShortName1 else {
+            return []
         }
+        var x = -1
+        let diagramData = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
+            return dateAndRateLeft.key < dateAndRateRight.key
+        }).compactMap { key, value in
+            guard let currency = value[chosenCurShortName1] else {
+                return nil as ChartDataEntry?
+            }
+            x += 1
+            return ChartDataEntry(x: Double(x), y: currency)
+        })
+        return diagramData ?? []
+    }
         
-        func coordinates2() -> [ChartDataEntry] {
-            guard let chosenCurShortName2 = chosenCurShortName2 else {
-                return []
-            }
-            var y = -1
-            let diagramData2 = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
-                return dateAndRateLeft.key < dateAndRateRight.key
-            }).compactMap { key, value in
-                guard let currency2 = value[chosenCurShortName2] else {
-                    return nil as ChartDataEntry?
-                }
-                y += 1
-                return ChartDataEntry(x: Double(y), y: currency2)
-            })
-            return diagramData2 ?? []
+    func coordinates2() -> [ChartDataEntry] {
+        guard let chosenCurShortName2 = chosenCurShortName2 else {
+            return []
         }
+        var y = -1
+        let diagramData2 = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
+            return dateAndRateLeft.key < dateAndRateRight.key
+        }).compactMap { key, value in
+            guard let currency2 = value[chosenCurShortName2] else {
+                return nil as ChartDataEntry?
+            }
+            y += 1
+            return ChartDataEntry(x: Double(y), y: currency2)
+        })
+        return diagramData2 ?? []
+    }
         
-        func coordinates3() -> [ChartDataEntry] {
-            guard let chosenCurShortName3 = chosenCurShortName3 else {
-                return []
-            }
-            var z = -1
-            let diagramData3 = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
-                return dateAndRateLeft.key < dateAndRateRight.key
-            }).compactMap { key, value in
-                guard let currency3 = value[chosenCurShortName3] else {
-                    return nil as ChartDataEntry?
-                }
-                z += 1
-                return ChartDataEntry(x: Double(z), y: currency3)
-            })
-            return diagramData3 ?? []
+    func coordinates3() -> [ChartDataEntry] {
+        guard let chosenCurShortName3 = chosenCurShortName3 else {
+            return []
         }
+        var z = -1
+        let diagramData3 = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
+            return dateAndRateLeft.key < dateAndRateRight.key
+        }).compactMap { key, value in
+            guard let currency3 = value[chosenCurShortName3] else {
+                    return nil as ChartDataEntry?
+            }
+            z += 1
+            return ChartDataEntry(x: Double(z), y: currency3)
+        })
+        return diagramData3 ?? []
+    }
 }
 
 extension DiagramResult: ConverterScreenDelegate {
