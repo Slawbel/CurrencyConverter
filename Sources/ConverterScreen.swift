@@ -60,6 +60,8 @@ class ConverterScreen: UIViewController {
     // needed counter for adding of currency on the screen
     var counterOfClick = 0
     
+    let coordinator = Coordinator()
+    
     weak var delegate: ConverterScreenDelegate?
    
 
@@ -185,7 +187,7 @@ class ConverterScreen: UIViewController {
                     self?.outputCurrencyLabel1.text = cutShortNameFlag! + " " + shortName + " >"
                 } else { return }
             }
-            openCurrencyScreen(from: self, to: currencyScreen)
+            coordinator.openCurrencyScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
         // style setting of convertion result of currency #1 for comparison
@@ -236,7 +238,7 @@ class ConverterScreen: UIViewController {
                     self?.outputCurrencyLabel2.text = cutShortNameFlag! + " " + shortName + " >"
                 } else { return }
             }
-            openCurrencyScreen(from: self, to: currencyScreen)
+            coordinator.openCurrencyScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         outputCurButton2.isHidden = true
         
@@ -289,7 +291,7 @@ class ConverterScreen: UIViewController {
                     self?.outputCurrencyLabel3.text = cutShortNameFlag! + " " + shortName + " >"
                 } else { return }
             }
-            openCurrencyScreen(from: self, to: currencyScreen)
+            coordinator.openCurrencyScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         outputCurButton3.isHidden = true
         
@@ -786,11 +788,5 @@ class ConverterScreen: UIViewController {
             print("Error reading file: \(error)")
         }
     }
-    
-    func openCurrencyScreen (from: UIViewController, to: UIViewController) {
-        to.modalPresentationStyle = .fullScreen
-        from.navigationController?.pushViewController(to, animated: true)
-    }
-
 }
 
