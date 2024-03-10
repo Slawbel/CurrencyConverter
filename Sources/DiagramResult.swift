@@ -137,8 +137,7 @@ class DiagramResult: DemoBaseViewController {
                     self?.outputLabel1.text = flag! + " " + shortName + " >"
                 } else { return }
             }
-            currencyScreen.modalPresentationStyle = .fullScreen
-            self.navigationController?.pushViewController(currencyScreen, animated: true)
+            Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
         outputCurButton2.layer.cornerRadius = 10

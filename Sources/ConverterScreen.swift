@@ -120,8 +120,7 @@ class ConverterScreen: UIViewController {
                     self?.inputCurrencyLabel.text = cutShortNameFlag! + " " + shortName + " >"
                 } else { return }
             }
-            currencyScreen.modalPresentationStyle = .fullScreen
-            self.navigationController?.pushViewController(currencyScreen, animated: true)
+            Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
         // saving date from calendar into file
@@ -187,7 +186,7 @@ class ConverterScreen: UIViewController {
                     self?.outputCurrencyLabel1.text = cutShortNameFlag! + " " + shortName + " >"
                 } else { return }
             }
-            coordinator.openCurrencyScreen(from: self, to: currencyScreen)
+            Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
         // style setting of convertion result of currency #1 for comparison
@@ -238,7 +237,7 @@ class ConverterScreen: UIViewController {
                     self?.outputCurrencyLabel2.text = cutShortNameFlag! + " " + shortName + " >"
                 } else { return }
             }
-            coordinator.openCurrencyScreen(from: self, to: currencyScreen)
+            Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         outputCurButton2.isHidden = true
         
@@ -291,7 +290,7 @@ class ConverterScreen: UIViewController {
                     self?.outputCurrencyLabel3.text = cutShortNameFlag! + " " + shortName + " >"
                 } else { return }
             }
-            coordinator.openCurrencyScreen(from: self, to: currencyScreen)
+            Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         outputCurButton3.isHidden = true
         
@@ -363,7 +362,7 @@ class ConverterScreen: UIViewController {
             let diagramResult = DiagramResult()
             diagramResult.transferedCurNames(basicCur: self!.chosenCurShortName, firstCur: self!.chosenCurShortName1, secondCur: self!.chosenCurShortName2, thirdCur: self?.chosenCurShortName3)
             diagramResult.curHistory()
-            self?.navigationController?.pushViewController(diagramResult, animated: true)
+            Coordinator.openAnotherScreen(from: self!, to: diagramResult)
         }, for: .primaryActionTriggered)
         let buttonDiagramPageImage = UIImage(named: "icon_graph")
         buttonDiagramPage.setImage(buttonDiagramPageImage, for: .normal)

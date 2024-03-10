@@ -277,7 +277,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         selectButton.setAttributedTitle(attributeButtonText, for: .normal)
         
         selectButton.addAction(UIAction { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
+            Coordinator.closeAnotherScreen(from: self!)
         }, for: .primaryActionTriggered)
                 
         selectButton.masksToBounds = true
