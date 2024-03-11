@@ -12,6 +12,7 @@
 		9E25D2DC29998CA700293AB7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9E25D2D329998CA700293AB7 /* Localizable.strings */; };
 		9E25D2DE29998CA700293AB7 /* RateHistoryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D629998CA700293AB7 /* RateHistoryPage.swift */; };
 		9E25D2DF29998CA700293AB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D829998CA700293AB7 /* AppDelegate.swift */; };
+		9EE797DC2B9F812E00BDBDEA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE797DB2B9F812E00BDBDEA /* Coordinator.swift */; };
 		9EFEB4852A91413D00860A54 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9EFEB4842A91413D00860A54 /* DMSans-Regular.ttf */; };
 		A22FC4902A9A44A50037B6D6 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A22FC48F2A9A445B0037B6D6 /* DMSans-Bold.ttf */; };
 		A232020B2B7E574E00851454 /* BitCollections in Frameworks */ = {isa = PBXBuildFile; productRef = A232020A2B7E574E00851454 /* BitCollections */; };
@@ -48,6 +49,7 @@
 		9E25D2D729998CA700293AB7 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9E25D2D829998CA700293AB7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E25D2D929998CA700293AB7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9EE797DB2B9F812E00BDBDEA /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		9EFEB4842A91413D00860A54 /* DMSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Regular.ttf"; sourceTree = "<group>"; };
 		A22FC48F2A9A445B0037B6D6 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Bold.ttf"; sourceTree = "<group>"; };
 		A261608C2AEC7CAC00C6DF13 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				9EFEB4832A91413D00860A54 /* Fonts */,
 				9E25D2D129998CA700293AB7 /* Media.xcassets */,
 				A2B4970729B2B31D0017A82A /* ConvertResult.swift */,
+				9EE797DB2B9F812E00BDBDEA /* Coordinator.swift */,
 				A2EA87572A23E2FA00AAC943 /* CurrencyApi.swift */,
 				9E25D2D229998CA700293AB7 /* ConverterScreen.swift */,
 				A2C48EAE29E5C412004A5594 /* DiagramResult.swift */,
@@ -207,7 +210,7 @@
 			);
 			mainGroup = 9E25D2AE29998C2B00293AB7;
 			packageReferences = (
-				A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections.git" */,
+				A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				A23202142B7E577300851454 /* XCRemoteSwiftPackageReference "Swiftstraints" */,
 				A29F09D62B8045C5008CC1E1 /* XCRemoteSwiftPackageReference "Charts" */,
 				A29F09DB2B80468D008CC1E1 /* XCRemoteSwiftPackageReference "SnapKit" */,
@@ -261,6 +264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EE797DC2B9F812E00BDBDEA /* Coordinator.swift in Sources */,
 				A2C48EAF29E5C412004A5594 /* DiagramResult.swift in Sources */,
 				9E25D2DF29998CA700293AB7 /* AppDelegate.swift in Sources */,
 				A264AF7C2B9D1D2500AFECCC /* Coordinator.swift in Sources */,
@@ -502,7 +506,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections.git" */ = {
+		A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections.git";
 			requirement = {
@@ -547,27 +551,27 @@
 /* Begin XCSwiftPackageProductDependency section */
 		A232020A2B7E574E00851454 /* BitCollections */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections.git" */;
+			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = BitCollections;
 		};
 		A232020C2B7E574E00851454 /* Collections */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections.git" */;
+			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = Collections;
 		};
 		A232020E2B7E574E00851454 /* DequeModule */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections.git" */;
+			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = DequeModule;
 		};
 		A23202102B7E574E00851454 /* HashTreeCollections */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections.git" */;
+			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = HashTreeCollections;
 		};
 		A23202122B7E574E00851454 /* HeapModule */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections.git" */;
+			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = HeapModule;
 		};
 		A23202152B7E577300851454 /* Swiftstraints */ = {
