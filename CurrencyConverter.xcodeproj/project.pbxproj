@@ -207,7 +207,7 @@
 			);
 			mainGroup = 9E25D2AE29998C2B00293AB7;
 			packageReferences = (
-				A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections.git" */,
 				A23202142B7E577300851454 /* XCRemoteSwiftPackageReference "Swiftstraints" */,
 				A29F09D62B8045C5008CC1E1 /* XCRemoteSwiftPackageReference "Charts" */,
 				A29F09DB2B80468D008CC1E1 /* XCRemoteSwiftPackageReference "SnapKit" */,
@@ -502,7 +502,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+		A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections.git";
 			requirement = {
@@ -547,27 +547,27 @@
 /* Begin XCSwiftPackageProductDependency section */
 		A232020A2B7E574E00851454 /* BitCollections */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections.git" */;
 			productName = BitCollections;
 		};
 		A232020C2B7E574E00851454 /* Collections */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections.git" */;
 			productName = Collections;
 		};
 		A232020E2B7E574E00851454 /* DequeModule */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections.git" */;
 			productName = DequeModule;
 		};
 		A23202102B7E574E00851454 /* HashTreeCollections */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections.git" */;
 			productName = HashTreeCollections;
 		};
 		A23202122B7E574E00851454 /* HeapModule */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections.git" */;
 			productName = HeapModule;
 		};
 		A23202152B7E577300851454 /* Swiftstraints */ = {
