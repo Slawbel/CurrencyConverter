@@ -12,6 +12,8 @@
 		9E25D2DC29998CA700293AB7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9E25D2D329998CA700293AB7 /* Localizable.strings */; };
 		9E25D2DE29998CA700293AB7 /* RateHistoryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D629998CA700293AB7 /* RateHistoryPage.swift */; };
 		9E25D2DF29998CA700293AB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D829998CA700293AB7 /* AppDelegate.swift */; };
+		9EAE18F12BA016C300F8E929 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 9EAE18F02BA016C300F8E929 /* DGCharts */; };
+		9EAE18F32BA016C300F8E929 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 9EAE18F22BA016C300F8E929 /* DGChartsDynamic */; };
 		9EE797DC2B9F812E00BDBDEA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE797DB2B9F812E00BDBDEA /* Coordinator.swift */; };
 		9EFEB4852A91413D00860A54 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9EFEB4842A91413D00860A54 /* DMSans-Regular.ttf */; };
 		A22FC4902A9A44A50037B6D6 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A22FC48F2A9A445B0037B6D6 /* DMSans-Bold.ttf */; };
@@ -23,8 +25,6 @@
 		A23202162B7E577300851454 /* Swiftstraints in Frameworks */ = {isa = PBXBuildFile; productRef = A23202152B7E577300851454 /* Swiftstraints */; };
 		A261608D2AEC7CAC00C6DF13 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A261608B2AEC7CAC00C6DF13 /* Model.xcdatamodeld */; };
 		A2616D462B173E58000AF9A7 /* SetColorByCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2616D452B173E58000AF9A7 /* SetColorByCode.swift */; };
-		A29F09D82B8045C5008CC1E1 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = A29F09D72B8045C5008CC1E1 /* DGCharts */; };
-		A29F09DA2B8045C5008CC1E1 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = A29F09D92B8045C5008CC1E1 /* DGChartsDynamic */; };
 		A29F09DD2B80468D008CC1E1 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A29F09DC2B80468D008CC1E1 /* SnapKit */; };
 		A29F09DF2B80468D008CC1E1 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = A29F09DE2B80468D008CC1E1 /* SnapKit-Dynamic */; };
 		A29F09E22B8046D0008CC1E1 /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A29F09E12B8046D0008CC1E1 /* SwifterSwift */; };
@@ -70,14 +70,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A29F09D82B8045C5008CC1E1 /* DGCharts in Frameworks */,
 				A23202112B7E574E00851454 /* HashTreeCollections in Frameworks */,
 				A23202162B7E577300851454 /* Swiftstraints in Frameworks */,
+				9EAE18F32BA016C300F8E929 /* DGChartsDynamic in Frameworks */,
+				9EAE18F12BA016C300F8E929 /* DGCharts in Frameworks */,
 				A232020D2B7E574E00851454 /* Collections in Frameworks */,
 				A232020F2B7E574E00851454 /* DequeModule in Frameworks */,
 				A232020B2B7E574E00851454 /* BitCollections in Frameworks */,
 				A23202132B7E574E00851454 /* HeapModule in Frameworks */,
-				A29F09DA2B8045C5008CC1E1 /* DGChartsDynamic in Frameworks */,
 				A29F09E22B8046D0008CC1E1 /* SwifterSwift in Frameworks */,
 				A29F09DF2B80468D008CC1E1 /* SnapKit-Dynamic in Frameworks */,
 				A29F09DD2B80468D008CC1E1 /* SnapKit in Frameworks */,
@@ -171,11 +171,11 @@
 				A23202102B7E574E00851454 /* HashTreeCollections */,
 				A23202122B7E574E00851454 /* HeapModule */,
 				A23202152B7E577300851454 /* Swiftstraints */,
-				A29F09D72B8045C5008CC1E1 /* DGCharts */,
-				A29F09D92B8045C5008CC1E1 /* DGChartsDynamic */,
 				A29F09DC2B80468D008CC1E1 /* SnapKit */,
 				A29F09DE2B80468D008CC1E1 /* SnapKit-Dynamic */,
 				A29F09E12B8046D0008CC1E1 /* SwifterSwift */,
+				9EAE18F02BA016C300F8E929 /* DGCharts */,
+				9EAE18F22BA016C300F8E929 /* DGChartsDynamic */,
 			);
 			productName = CurrencyConverter;
 			productReference = 9E25D2B729998C2B00293AB7 /* CurrencyConverter.app */;
@@ -209,9 +209,9 @@
 			packageReferences = (
 				A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				A23202142B7E577300851454 /* XCRemoteSwiftPackageReference "Swiftstraints" */,
-				A29F09D62B8045C5008CC1E1 /* XCRemoteSwiftPackageReference "Charts" */,
 				A29F09DB2B80468D008CC1E1 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				A29F09E02B8046D0008CC1E1 /* XCRemoteSwiftPackageReference "SwifterSwift" */,
+				9EAE18EF2BA016C300F8E929 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 9E25D2B829998C2B00293AB7 /* Products */;
 			projectDirPath = "";
@@ -502,6 +502,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9EAE18EF2BA016C300F8E929 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 		A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections.git";
@@ -516,14 +524,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.2.0;
-			};
-		};
-		A29F09D62B8045C5008CC1E1 /* XCRemoteSwiftPackageReference "Charts" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/danielgindi/Charts";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.1.0;
 			};
 		};
 		A29F09DB2B80468D008CC1E1 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
@@ -545,6 +545,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9EAE18F02BA016C300F8E929 /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EAE18EF2BA016C300F8E929 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		9EAE18F22BA016C300F8E929 /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EAE18EF2BA016C300F8E929 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
+		};
 		A232020A2B7E574E00851454 /* BitCollections */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A23202092B7E574E00851454 /* XCRemoteSwiftPackageReference "swift-collections" */;
@@ -574,16 +584,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A23202142B7E577300851454 /* XCRemoteSwiftPackageReference "Swiftstraints" */;
 			productName = Swiftstraints;
-		};
-		A29F09D72B8045C5008CC1E1 /* DGCharts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A29F09D62B8045C5008CC1E1 /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = DGCharts;
-		};
-		A29F09D92B8045C5008CC1E1 /* DGChartsDynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A29F09D62B8045C5008CC1E1 /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = DGChartsDynamic;
 		};
 		A29F09DC2B80468D008CC1E1 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
