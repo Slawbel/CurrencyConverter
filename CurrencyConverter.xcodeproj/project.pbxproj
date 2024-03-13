@@ -12,6 +12,7 @@
 		9E25D2DC29998CA700293AB7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9E25D2D329998CA700293AB7 /* Localizable.strings */; };
 		9E25D2DE29998CA700293AB7 /* RateHistoryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D629998CA700293AB7 /* RateHistoryPage.swift */; };
 		9E25D2DF29998CA700293AB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25D2D829998CA700293AB7 /* AppDelegate.swift */; };
+		9E40EF472BA16F88003965A5 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 9E40EF462BA16F88003965A5 /* OrderedCollections */; };
 		9EE797DC2B9F812E00BDBDEA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE797DB2B9F812E00BDBDEA /* Coordinator.swift */; };
 		9EFEB4852A91413D00860A54 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9EFEB4842A91413D00860A54 /* DMSans-Regular.ttf */; };
 		A22FC4902A9A44A50037B6D6 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A22FC48F2A9A445B0037B6D6 /* DMSans-Bold.ttf */; };
@@ -63,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E40EF472BA16F88003965A5 /* OrderedCollections in Frameworks */,
 				A2E4F7D12BA09EFB006C6672 /* DGCharts in Frameworks */,
 				A2E4F7C82BA09EDF006C6672 /* SwifterSwift in Frameworks */,
 				A2E4F7CB2BA09EEC006C6672 /* SnapKit in Frameworks */,
@@ -155,6 +157,7 @@
 				A2E4F7CA2BA09EEC006C6672 /* SnapKit */,
 				A2E4F7CD2BA09EF3006C6672 /* Swiftstraints */,
 				A2E4F7D02BA09EFB006C6672 /* DGCharts */,
+				9E40EF462BA16F88003965A5 /* OrderedCollections */,
 			);
 			productName = CurrencyConverter;
 			productReference = 9E25D2B729998C2B00293AB7 /* CurrencyConverter.app */;
@@ -190,7 +193,7 @@
 				A2E4F7C92BA09EEC006C6672 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				A2E4F7CC2BA09EF3006C6672 /* XCRemoteSwiftPackageReference "Swiftstraints" */,
 				A2E4F7CF2BA09EFB006C6672 /* XCRemoteSwiftPackageReference "Charts" */,
-				A2E4F7D22BA09F06006C6672 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				9E40EF452BA16F87003965A5 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = 9E25D2B829998C2B00293AB7 /* Products */;
 			projectDirPath = "";
@@ -481,6 +484,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9E40EF452BA16F87003965A5 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
 		A2E4F7C62BA09EDF006C6672 /* XCRemoteSwiftPackageReference "SwifterSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwifterSwift/SwifterSwift";
@@ -513,17 +524,14 @@
 				minimumVersion = 5.1.0;
 			};
 		};
-		A2E4F7D22BA09F06006C6672 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-collections.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9E40EF462BA16F88003965A5 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9E40EF452BA16F87003965A5 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
 		A2E4F7C72BA09EDF006C6672 /* SwifterSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A2E4F7C62BA09EDF006C6672 /* XCRemoteSwiftPackageReference "SwifterSwift" */;
