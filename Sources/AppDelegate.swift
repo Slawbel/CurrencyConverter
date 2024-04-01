@@ -12,8 +12,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = UINavigationController(rootViewController: ConverterScreen())
         window?.makeKeyAndVisible()
+        
         return true
     }
+
     
     // MARK: - Core Data stack
 

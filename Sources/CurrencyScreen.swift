@@ -96,7 +96,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         searchContr.addTarget(self, action: #selector(CurrencyScreen.searchHandler), for: .editingChanged)
         
         filteredDictCurrency = dictCurrency
-        print(filteredDictCurrency)
         
         // adding objects to the screen with currencies list
         view.addSubview(nameOfScreen)
@@ -278,7 +277,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         selectButton.setAttributedTitle(attributeButtonText, for: .normal)
         
         selectButton.addAction(UIAction { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
+            Coordinator.closeAnotherScreen(from: self!)
         }, for: .primaryActionTriggered)
                 
         selectButton.masksToBounds = true

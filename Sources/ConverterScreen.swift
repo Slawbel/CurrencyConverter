@@ -1,6 +1,8 @@
 import SnapKit
 import UIKit
 
+
+
 class ConverterScreen: UIViewController {
     
     // profile for saving data in file
@@ -45,8 +47,8 @@ class ConverterScreen: UIViewController {
     private let addButton = UIButton()
     
     // buttons to call diagram and rate history
-    /*private let buttonRateHistory = UIButton()
-    private let buttonDiagramPage = UIButton()*/
+    private let buttonRateHistory = UIButton()
+    private let buttonDiagramPage = UIButton()
    
     // chosen basic currency and currencies to compare with
     private var chosenCurrency: String!
@@ -58,9 +60,10 @@ class ConverterScreen: UIViewController {
     // needed counter for adding of currency on the screen
     var counterOfClick = 0
     
-
+    let coordinator = Coordinator()
+    
+    weak var delegate: ConverterScreenDelegate?
    
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,8 +120,7 @@ class ConverterScreen: UIViewController {
                     self?.inputCurrencyLabel.text = cutShortNameFlag! + " " + shortName + " >"
                 } else { return }
             }
-            currencyScreen.modalPresentationStyle = .fullScreen
-            self.navigationController?.pushViewController(currencyScreen, animated: true)
+            Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
         // saving date from calendar into file
@@ -131,7 +133,7 @@ class ConverterScreen: UIViewController {
         datePicker.setDate(.now, animated: true)
         datePicker.addTarget(self, action: #selector(ConverterScreen.convert), for: .valueChanged)
         datePicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
-        datePicker.layer.cornerRadius = 8
+        datePicker.layerCornerRadius = 8
         datePicker.setValue(UIColor.white, forKey: "textColor")
         
         
@@ -184,8 +186,7 @@ class ConverterScreen: UIViewController {
                     self?.outputCurrencyLabel1.text = cutShortNameFlag! + " " + shortName + " >"
                 } else { return }
             }
-            currencyScreen.modalPresentationStyle = .fullScreen
-            self.navigationController?.pushViewController(currencyScreen, animated: true)
+            Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
         // style setting of convertion result of currency #1 for comparison
@@ -236,8 +237,7 @@ class ConverterScreen: UIViewController {
                     self?.outputCurrencyLabel2.text = cutShortNameFlag! + " " + shortName + " >"
                 } else { return }
             }
-            currencyScreen.modalPresentationStyle = .fullScreen
-            self.navigationController?.pushViewController(currencyScreen, animated: true)
+            Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         outputCurButton2.isHidden = true
         
@@ -290,8 +290,7 @@ class ConverterScreen: UIViewController {
                     self?.outputCurrencyLabel3.text = cutShortNameFlag! + " " + shortName + " >"
                 } else { return }
             }
-            currencyScreen.modalPresentationStyle = .fullScreen
-            self.navigationController?.pushViewController(currencyScreen, animated: true)
+            Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         outputCurButton3.isHidden = true
         
@@ -337,7 +336,7 @@ class ConverterScreen: UIViewController {
         // BLOCK OF BUTTONS TO CALL DIAGRAM AND RATE HISTORY
         // style and function setting of button to call diagram
         // button's action creates instance of rate's list class and transfer arguments for defining of rate history
-        /*buttonRateHistory.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
+        buttonRateHistory.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         buttonRateHistory.layer.cornerRadius = 12
         buttonRateHistory.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonRateHistory.setTitleColor(.white, for: .normal)
@@ -360,14 +359,15 @@ class ConverterScreen: UIViewController {
         buttonDiagramPage.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonDiagramPage.setTitleColor(.white, for: .normal)
         buttonDiagramPage.addAction(UIAction { [weak self] _ in
-            let diagramPage = DiagramPage()
-            diagramPage.modalPresentationStyle = .fullScreen
-            self?.present(diagramPage, animated: true)
+            let diagramResult = DiagramResult()
+            diagramResult.transferedCurNames(basicCur: self!.chosenCurShortName, firstCur: self!.chosenCurShortName1, secondCur: self!.chosenCurShortName2, thirdCur: self?.chosenCurShortName3)
+            diagramResult.curHistory()
+            Coordinator.openAnotherScreen(from: self!, to: diagramResult)
         }, for: .primaryActionTriggered)
         let buttonDiagramPageImage = UIImage(named: "icon_graph")
         buttonDiagramPage.setImage(buttonDiagramPageImage, for: .normal)
         let buttonDiagramPageTitle = NSLocalizedString("diagramPage", comment: "")
-        buttonDiagramPage.setTitle(buttonDiagramPageTitle, for: .normal)*/
+        buttonDiagramPage.setTitle(buttonDiagramPageTitle, for: .normal)
         
         
         // BLOCK FOR INCLUDING OBJECTS ONTO SCREEN
@@ -406,8 +406,8 @@ class ConverterScreen: UIViewController {
         view.addSubview(swapButton2)
         view.addSubview(swapButton3)
         view.addSubview(addButton)
-        //view.addSubview(buttonRateHistory)
-        //view.addSubview(buttonDiagramPage)
+        view.addSubview(buttonRateHistory)
+        view.addSubview(buttonDiagramPage)
 
     
         // BLOCK FOR CONSTRAINTS
@@ -665,7 +665,7 @@ class ConverterScreen: UIViewController {
                 make.width.height.equalTo(37)
             }
             
-            /*buttonRateHistory.snp.remakeConstraints { make in
+            buttonRateHistory.snp.remakeConstraints { make in
                 make.leading.equalTo(view).inset(16)
                 make.top.equalTo(view).inset(397)
                 make.height.equalTo(40)
@@ -677,7 +677,7 @@ class ConverterScreen: UIViewController {
                 make.top.equalTo(view).inset(397)
                 make.height.equalTo(40)
                 make.width.equalTo(176)
-            }*/
+            }
         } else {
             stackView3.isHidden = false
             outputCurLabel3.isHidden = false
@@ -688,7 +688,7 @@ class ConverterScreen: UIViewController {
             swapButton3.isHidden = false
             counterOfClick = 0
             
-            /*buttonRateHistory.snp.remakeConstraints { make in
+            buttonRateHistory.snp.remakeConstraints { make in
                 make.leading.equalTo(view).inset(16)
                 make.top.equalTo(view).inset(498)
                 make.height.equalTo(40)
@@ -700,7 +700,7 @@ class ConverterScreen: UIViewController {
                 make.top.equalTo(view).inset(498)
                 make.height.equalTo(40)
                 make.width.equalTo(176)
-            }*/
+            }
         }
     }
 
@@ -787,6 +787,5 @@ class ConverterScreen: UIViewController {
             print("Error reading file: \(error)")
         }
     }
-
 }
 

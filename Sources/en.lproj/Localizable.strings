@@ -8,13 +8,8 @@
 "convert" = "Convert";
 "diagramPage" = " Diagram";
 "butChosenCurBase" = "Currency for sale";
-"labelChooseCur" = "Select currencies for conversion";
-"butChosenCur1" = "Currency #1 (purchase)";
-"butChosenCur2" = "Currency #2 (purchase)";
-"butChosenCur3" = "Currency #3 (purchase)";
+"labelDiagram" = "Diagram";
 "butResult" = "Compare";
-"butBack" = "Back";
-"butBackCur" = "Back";
 "nameLabelText" = "Currency converter";
 "nameOfScreen" = "Select currency";
 "searchCurrency" = "Search currency";

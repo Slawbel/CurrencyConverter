@@ -95,7 +95,7 @@ class RateHistoryPage: UIViewController, UITableViewDataSource, UITableViewDeleg
         guard let data = try? URLSession.shared.dataSync(with: request).0 else {
             return
         }
-        print(String(data: data, encoding: .utf8)!)
+        //print(String(data: data, encoding: .utf8)!)
         rateData = RateData(from: data)
         tableView.reloadData()
     }
