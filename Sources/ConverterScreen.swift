@@ -715,12 +715,21 @@ class ConverterScreen: UIViewController {
         currencyApi.apiInputTF = inputTF.text
         currencyApi.apiChosenDate = currentDate
         currencyApi.conversion2 { [weak self] convertResult in
+            guard let convertResult else {
+                return
+            }
             self?.outputLabel1.text = String(convertResult.result ?? 0)
         }
         currencyApi.conversion3 { [weak self] convertResult in
+            guard let convertResult else {
+                return
+            }
             self?.outputLabel2.text = String(convertResult.result ?? 0)
         }
         currencyApi.conversion4 { [weak self] convertResult in
+            guard let convertResult else {
+                return
+            }
             self?.outputLabel3.text = String(convertResult.result ?? 0)
         }
     }
