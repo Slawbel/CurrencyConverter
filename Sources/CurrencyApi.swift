@@ -2,9 +2,9 @@ import UIKit
 
 // protocol is used as pattern for function "conversion"
 protocol CurrencyApiProtocol {
-    func conversion2(onCompletion: @escaping (ConvertResult) -> Void)
-    func conversion3(onCompletion: @escaping (ConvertResult) -> Void)
-    func conversion4(onCompletion: @escaping (ConvertResult) -> Void)
+    func conversion2(onCompletion: @escaping (ConvertResult?) -> Void)
+    func conversion3(onCompletion: @escaping (ConvertResult?) -> Void)
+    func conversion4(onCompletion: @escaping (ConvertResult?) -> Void)
 }
 
 
@@ -21,7 +21,7 @@ class CurrencyApi: CurrencyApiProtocol {
     public var apiChosenDate: String = ""
 
     // api to convert amount of money of currency to another one
-    private func conversion(to: String!, onCompletion: @escaping (ConvertResult) -> Void) {
+    private func conversion(to: String!, onCompletion: @escaping (ConvertResult?) -> Void) {
         let string = "https://api.apilayer.com/fixer/convert?to=" + (to ?? "") + "&from=" + (apiChosenCurShortName1 ?? "") + "&amount=" + (apiInputTF ?? "0") + "&date=" + apiChosenDate
         guard let url = URL(string: string) else {
             return
@@ -45,13 +45,25 @@ class CurrencyApi: CurrencyApiProtocol {
     }
     
     // those functions help to convert chosen currency from three below to currency "apiChosenCurShortName1"
-    public func conversion2(onCompletion: @escaping (ConvertResult) -> Void) {
+    public func conversion2(onCompletion: @escaping (ConvertResult?) -> Void) {
+        guard let apiChosenCurShortName2 else {
+            onCompletion(nil)
+            return
+        }
         conversion(to: apiChosenCurShortName2, onCompletion: onCompletion)
     }
-    public func conversion3(onCompletion: @escaping (ConvertResult) -> Void) {
+    public func conversion3(onCompletion: @escaping (ConvertResult?) -> Void) {
+        guard let apiChosenCurShortName3 else {
+            onCompletion(nil)
+            return
+        }
         conversion(to: apiChosenCurShortName3, onCompletion: onCompletion)
     }
-    public func conversion4(onCompletion: @escaping (ConvertResult) -> Void) {
+    public func conversion4(onCompletion: @escaping (ConvertResult?) -> Void) {
+        guard let apiChosenCurShortName4 else {
+            onCompletion(nil)
+            return
+        }
         conversion(to: apiChosenCurShortName4, onCompletion: onCompletion)
     }
     
