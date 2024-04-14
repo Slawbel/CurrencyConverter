@@ -148,12 +148,15 @@ class DiagramResult: DemoBaseViewController {
         outputCurButton3.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton3.setTitleColor(.white, for: .normal)
         
+        let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(doSwipeRight(_:)))
+        swipeRightGesture.direction = .right
 
         view.addSubview(diagramStackView)
         diagramStackView.addSubview(chartView)
         view.addSubview(labelDiagram)
         view.addSubview(startDatePicker)
         view.addSubview(endDatePicker)
+        view.addGestureRecognizer(swipeRightGesture)
         
         view.addSubview(outputCurButton1)
         view.addSubview(outputCurButton2)
@@ -215,6 +218,12 @@ class DiagramResult: DemoBaseViewController {
             make.top.equalTo(view).inset(768)
             make.height.equalTo(28)
             make.leading.equalTo(view).inset(261)
+        }
+    }
+    
+    @objc private func doSwipeRight (_ gesture: UISwipeGestureRecognizer) {
+        if gesture.state == .ended {
+            Coordinator.closeAnotherScreen(from: self)
         }
     }
     
