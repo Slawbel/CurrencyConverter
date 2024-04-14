@@ -4,8 +4,6 @@ import UIKit
 import SwifterSwift
 import OrderedCollections
 
-
-
 class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     // elements of screen
@@ -97,11 +95,15 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         filteredDictCurrency = dictCurrency
         
+        let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(doSwipeRight(_:)))
+        swipeRightGesture.direction = .right
+        
         // adding objects to the screen with currencies list
         view.addSubview(nameOfScreen)
         view.addSubview(tableView)
         view.addSubview(selectButton)
         view.addSubview(searchContr)
+        view.addGestureRecognizer(swipeRightGesture)
 
         
         // Constraints for objects on the screen with currencies list
@@ -133,6 +135,12 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.leading.trailing.equalTo(view).inset(21)
         }
 
+    }
+    
+    @objc private func doSwipeRight (_ gesture: UISwipeGestureRecognizer) {
+        if gesture.state == .ended {
+            Coordinator.closeAnotherScreen(from: self)
+        }
     }
 
     // here is setting of cell of tableView and defines If mark picture should be used beside chosen currency
