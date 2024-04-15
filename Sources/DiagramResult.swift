@@ -240,32 +240,34 @@ class DiagramResult: DemoBaseViewController {
     }
     
     // setting lines on diagram according to each currency
-     func setData(coordinates: [ChartDataEntry], coordinates2 : [ChartDataEntry], coordinates3: [ChartDataEntry], chosenCur1: String, chosenCur2: String, chosenCur3: String) {
-         let set1 = LineChartDataSet(entries: coordinates, label: chosenCur1)
-         let set2 = LineChartDataSet(entries: coordinates2, label: chosenCur2)
-         let set3 = LineChartDataSet(entries: coordinates3, label: chosenCur3)
-         set1.colors = [NSUIColor.purple]
-         set2.colors = [NSUIColor.white]
-         set3.colors = [NSUIColor.orange]
-         let data = LineChartData(dataSets: [set1, set2, set3])
-         
-         set1.circleRadius = 7
-         set1.circleColors = [UIColor.purple]
-         set1.circleHoleRadius = .zero
-         set1.drawValuesEnabled = false
-         
-         set2.circleRadius = 7
-         set2.circleColors = [UIColor.white]
-         set2.circleHoleRadius = .zero
-         set2.drawValuesEnabled = false
-         
-         set3.circleRadius = 7
-         set3.circleColors = [UIColor.orange]
-         set3.circleHoleRadius = .zero
-         set3.drawValuesEnabled = false
-         
-         chartView.data = data
-     }
+    func setData(coordinates: [ChartDataEntry], coordinates2: [ChartDataEntry], coordinates3: [ChartDataEntry], chosenCur1: String, chosenCur2: String, chosenCur3: String) {
+        let set1 = LineChartDataSet(entries: coordinates, label: chosenCur1)
+        let set2 = LineChartDataSet(entries: coordinates2, label: chosenCur2)
+        let set3 = LineChartDataSet(entries: coordinates3, label: chosenCur3)
+        
+        set1.colors = [NSUIColor.purple]
+        set2.colors = [NSUIColor.white]
+        set3.colors = [NSUIColor.orange]
+        
+        set1.circleRadius = 7
+        set1.circleColors = [NSUIColor.purple]
+        set1.circleHoleRadius = 0.0 // Setting it to .zero is not allowed here, use 0.0 instead
+        set1.drawValuesEnabled = false
+        
+        set2.circleRadius = 7
+        set2.circleColors = [NSUIColor.white]
+        set2.circleHoleRadius = 0.0 // Same here
+        set2.drawValuesEnabled = false
+        
+        set3.circleRadius = 7
+        set3.circleColors = [NSUIColor.orange]
+        set3.circleHoleRadius = 0.0 // Same here
+        set3.drawValuesEnabled = false
+        
+        let data = LineChartData(dataSets: [set1, set2, set3]) // Passing an array of LineChartDataSet to LineChartData initializer
+        
+        chartView.data = data
+    }
     
     override func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
             let alert = UIAlertController(title: "Value", message: "Value: \(entry.y)", preferredStyle: .alert)

@@ -1,10 +1,10 @@
 {
-  "originHash" : "720e26a9afe0711fc5034965cf9bd71ddf3367e4a4737805f7a253bbdc7d0d18",
+  "originHash" : "00e9d726cbf597acd7bc8122931f8dd1f43d4ecbc8d215e7289bb7b6a21b5ee6",
   "pins" : [
     {
       "identity" : "charts",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/danielgindi/Charts",
+      "location" : "https://github.com/ChartsOrg/Charts",
       "state" : {
         "revision" : "dd9c72e3d7e751e769971092a6bd72d39198ae63",
         "version" : "5.1.0"
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SwifterSwift/SwifterSwift",
       "state" : {
-        "revision" : "1eab3444fa06a344a35e79540719df956ab4d4ad",
-        "version" : "6.0.0"
+        "revision" : "39fa28c90a3ebe3d53f80289304fd880cf2c42d0",
+        "version" : "6.2.0"
       }
     },
     {
