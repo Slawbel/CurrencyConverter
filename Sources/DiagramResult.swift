@@ -45,7 +45,6 @@ class DiagramResult: DemoBaseViewController {
         diagramStackView.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         diagramStackView.layer.cornerRadius = 30
         
-        chartView.backgroundColor = .white
         self.options = [.toggleValues,
                         .toggleFilled,
                         .toggleCircles,
@@ -105,8 +104,8 @@ class DiagramResult: DemoBaseViewController {
         chartView.xAxis.gridLineDashPhase = 0
         chartView.xAxis.labelTextColor = .white
         chartView.xAxis.labelPosition = .bottom
-        chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rangeOfDates())
-        
+        updateOfXAxis()
+
         chartView.leftAxis.labelTextColor = .white
 
         chartView.rightAxis.enabled = false
@@ -150,7 +149,7 @@ class DiagramResult: DemoBaseViewController {
         
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(doSwipeRight(_:)))
         swipeRightGesture.direction = .right
-
+        
         view.addSubview(diagramStackView)
         diagramStackView.addSubview(chartView)
         view.addSubview(labelDiagram)
@@ -338,6 +337,7 @@ class DiagramResult: DemoBaseViewController {
         //print(String(data: data, encoding: .utf8)!)
         rateData = RateData(from: data)
         
+        updateOfXAxis()
         self.setData(coordinates: coordinates(), coordinates2: coordinates2(), coordinates3: coordinates3(), chosenCur1: chosenCurShortName1 ?? "", chosenCur2: chosenCurShortName2 ?? "", chosenCur3: chosenCurShortName3 ?? "")
     }
     
@@ -509,10 +509,15 @@ extension DiagramResult: ConverterScreenDelegate {
         self.chosenCurShortName2 = secondCur
         self.chosenCurShortName3 = thirdCur
     }
+    
+    private func updateOfXAxis() {
+        self.chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rangeOfDates())
+        self.chartView.xAxis.labelCount = rangeOfDates().count
+        self.chartView.xAxis.labelRotationAngle = -45 // Rotate the labels by -45 degrees to prevent overlapping
+        self.chartView.xAxis.granularityEnabled = true
+        self.chartView.xAxis.granularity = 1 // Ensure each label is drawn even if it overlaps with others
+        print(rangeOfDates())
+    }
+
 }
-
-
-
-
-
 
