@@ -13,7 +13,9 @@ class ConverterScreen: UIViewController {
     
     // currency for conversion
     private let stackView = UIStackView()
+    // label to lead user what to do
     private let inputCurLabel = UILabel()
+    // label with country flag and currency ID name
     private let inputCurrencyLabel = UILabel()
     private let inputCurButton = UIButton()
     private let inputTF = UITextField()

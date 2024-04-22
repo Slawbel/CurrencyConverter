@@ -128,6 +128,8 @@ class DiagramResult: DemoBaseViewController {
             currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
                 self?.chosenCurShortName1 = shortName
                 self?.outputLabel1.text = shortName + "      >"
+                print(shortName)
+                print(self?.outputLabel1.text)
                 let copyConverterScreen = ConverterScreen()
                 copyConverterScreen.convert()
                 let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
@@ -139,13 +141,59 @@ class DiagramResult: DemoBaseViewController {
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
+        outputLabel2.text = "               >"
+        outputLabel2.textAlignment = .center
+        outputLabel2.font = outputLabel1.font.withSize(14)
+        outputLabel2.textColor = .white
+        outputLabel2.backgroundColor = .clear
+        
         outputCurButton2.layer.cornerRadius = 10
         outputCurButton2.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton2.setTitleColor(.white, for: .normal)
+        outputCurButton2.addAction(UIAction { [unowned self] _ in
+            let currencyScreen = CurrencyScreen()
+            currencyScreen.onCurrencySelectedShort3 = { [weak self] shortName in
+                self?.chosenCurShortName2 = shortName
+                self?.outputLabel2.text = shortName + "      >"
+                print(shortName)
+                print(self?.outputLabel2.text)
+                let copyConverterScreen = ConverterScreen()
+                copyConverterScreen.convert()
+                let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
+                guard flag != nil else { return }
+                if flag != nil {
+                    self?.outputLabel2.text = flag! + " " + shortName + " >"
+                } else { return }
+            }
+            Coordinator.openAnotherScreen(from: self, to: currencyScreen)
+        }, for: .primaryActionTriggered)
+        
+        outputLabel3.text = "               >"
+        outputLabel3.textAlignment = .center
+        outputLabel3.font = outputLabel1.font.withSize(14)
+        outputLabel3.textColor = .white
+        outputLabel3.backgroundColor = .clear
         
         outputCurButton3.layer.cornerRadius = 10
         outputCurButton3.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton3.setTitleColor(.white, for: .normal)
+        outputCurButton3.addAction(UIAction { [unowned self] _ in
+            let currencyScreen = CurrencyScreen()
+            currencyScreen.onCurrencySelectedShort4 = { [weak self] shortName in
+                self?.chosenCurShortName3 = shortName
+                self?.outputLabel3.text = shortName + "      >"
+                print(shortName)
+                print(self?.outputLabel3.text)
+                let copyConverterScreen = ConverterScreen()
+                copyConverterScreen.convert()
+                let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
+                guard flag != nil else { return }
+                if flag != nil {
+                    self?.outputLabel3.text = flag! + " " + shortName + " >"
+                } else { return }
+            }
+            Coordinator.openAnotherScreen(from: self, to: currencyScreen)
+        }, for: .primaryActionTriggered)
         
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(doSwipeRight(_:)))
         swipeRightGesture.direction = .right
@@ -205,11 +253,21 @@ class DiagramResult: DemoBaseViewController {
             make.leading.equalTo(view).inset(15)
         }
         
+        outputLabel1.snp.makeConstraints { make in
+            make.centerX.equalTo(outputCurButton1) 
+            make.centerY.equalTo(outputCurButton1)
+        }
+        
         outputCurButton2.snp.makeConstraints { make in
             make.width.equalTo(115)
             make.top.equalTo(view).inset(768)
             make.height.equalTo(28)
             make.leading.equalTo(view).inset(138)
+        }
+        
+        outputLabel2.snp.makeConstraints { make in
+            make.centerX.equalTo(outputCurButton2)
+            make.centerY.equalTo(outputCurButton2)
         }
             
         outputCurButton3.snp.makeConstraints { make in
@@ -217,6 +275,11 @@ class DiagramResult: DemoBaseViewController {
             make.top.equalTo(view).inset(768)
             make.height.equalTo(28)
             make.leading.equalTo(view).inset(261)
+        }
+        
+        outputLabel3.snp.makeConstraints { make in
+            make.centerX.equalTo(outputCurButton3)
+            make.centerY.equalTo(outputCurButton3)
         }
     }
     
@@ -248,17 +311,17 @@ class DiagramResult: DemoBaseViewController {
         set2.colors = [NSUIColor.white]
         set3.colors = [NSUIColor.orange]
         
-        set1.circleRadius = 7
+        set1.circleRadius = 5
         set1.circleColors = [NSUIColor.purple]
         set1.circleHoleRadius = 0.0 // Setting it to .zero is not allowed here, use 0.0 instead
         set1.drawValuesEnabled = false
         
-        set2.circleRadius = 7
+        set2.circleRadius = 5
         set2.circleColors = [NSUIColor.white]
         set2.circleHoleRadius = 0.0 // Same here
         set2.drawValuesEnabled = false
         
-        set3.circleRadius = 7
+        set3.circleRadius = 5
         set3.circleColors = [NSUIColor.orange]
         set3.circleHoleRadius = 0.0 // Same here
         set3.drawValuesEnabled = false
@@ -516,7 +579,6 @@ extension DiagramResult: ConverterScreenDelegate {
         self.chartView.xAxis.labelRotationAngle = -45 // Rotate the labels by -45 degrees to prevent overlapping
         self.chartView.xAxis.granularityEnabled = true
         self.chartView.xAxis.granularity = 1 // Ensure each label is drawn even if it overlaps with others
-        print(rangeOfDates())
     }
 
 }
