@@ -2,9 +2,6 @@ import UIKit
 import DGCharts
 import SnapKit
 
-protocol ConverterScreenDelegate: AnyObject {
-    func transferedCurNames(basicCur: String, firstCur: String, secondCur: String, thirdCur: String?)
-}
 
 class DiagramResult: DemoBaseViewController {
     
@@ -37,9 +34,23 @@ class DiagramResult: DemoBaseViewController {
 
     private var rateData: RateData?
     
+    init (inputCur: String, outputCur1: String, outputCur2: String?, outputCur3: String?) {
+        super.init(nibName: nil, bundle: nil)
+        self.chosenCurShortNameBase = inputCur
+        self.chosenCurShortName1 = outputCur1
+        if outputCur2 != nil { self.chosenCurShortName2 = outputCur2 }
+        if outputCur3 != nil { self.chosenCurShortName3 = outputCur3 }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .init(named: "mainBackgroundColor")
+        
+        
         
         diagramStackView.axis = .vertical
         diagramStackView.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
@@ -114,7 +125,7 @@ class DiagramResult: DemoBaseViewController {
         sliderY.value = 100
         chartView.animate(xAxisDuration: 2.5)
         
-        outputLabel1.text = "               >"
+        uploadCurToLabel(textOfLabel: &outputLabel1.text, currency: chosenCurShortName1)
         outputLabel1.textAlignment = .center
         outputLabel1.font = outputLabel1.font.withSize(14)
         outputLabel1.textColor = .white
@@ -128,8 +139,6 @@ class DiagramResult: DemoBaseViewController {
             currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
                 self?.chosenCurShortName1 = shortName
                 self?.outputLabel1.text = shortName + "      >"
-                print(shortName)
-                print(self?.outputLabel1.text)
                 let copyConverterScreen = ConverterScreen()
                 copyConverterScreen.convert()
                 let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
@@ -141,7 +150,7 @@ class DiagramResult: DemoBaseViewController {
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
-        outputLabel2.text = "               >"
+        uploadCurToLabel(textOfLabel: &outputLabel2.text, currency: chosenCurShortName2)
         outputLabel2.textAlignment = .center
         outputLabel2.font = outputLabel1.font.withSize(14)
         outputLabel2.textColor = .white
@@ -155,8 +164,6 @@ class DiagramResult: DemoBaseViewController {
             currencyScreen.onCurrencySelectedShort3 = { [weak self] shortName in
                 self?.chosenCurShortName2 = shortName
                 self?.outputLabel2.text = shortName + "      >"
-                print(shortName)
-                print(self?.outputLabel2.text)
                 let copyConverterScreen = ConverterScreen()
                 copyConverterScreen.convert()
                 let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
@@ -168,7 +175,7 @@ class DiagramResult: DemoBaseViewController {
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
-        outputLabel3.text = "               >"
+        uploadCurToLabel(textOfLabel: &outputLabel3.text, currency: chosenCurShortName3)
         outputLabel3.textAlignment = .center
         outputLabel3.font = outputLabel1.font.withSize(14)
         outputLabel3.textColor = .white
@@ -182,8 +189,6 @@ class DiagramResult: DemoBaseViewController {
             currencyScreen.onCurrencySelectedShort4 = { [weak self] shortName in
                 self?.chosenCurShortName3 = shortName
                 self?.outputLabel3.text = shortName + "      >"
-                print(shortName)
-                print(self?.outputLabel3.text)
                 let copyConverterScreen = ConverterScreen()
                 copyConverterScreen.convert()
                 let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
@@ -565,14 +570,7 @@ class DiagramResult: DemoBaseViewController {
     }
 }
 
-extension DiagramResult: ConverterScreenDelegate {
-    func transferedCurNames(basicCur: String, firstCur: String, secondCur: String, thirdCur: String?) {
-        self.chosenCurShortNameBase = basicCur
-        self.chosenCurShortName1 = firstCur
-        self.chosenCurShortName2 = secondCur
-        self.chosenCurShortName3 = thirdCur
-    }
-    
+extension DiagramResult {
     private func updateOfXAxis() {
         self.chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rangeOfDates())
         self.chartView.xAxis.labelCount = rangeOfDates().count
@@ -580,6 +578,15 @@ extension DiagramResult: ConverterScreenDelegate {
         self.chartView.xAxis.granularityEnabled = true
         self.chartView.xAxis.granularity = 1 // Ensure each label is drawn even if it overlaps with others
     }
-
+    
+    private func uploadCurToLabel ( textOfLabel: inout String?, currency: String?) {
+        let converter = ConverterScreen()
+        if let currency = currency {
+            let flagLabel = converter.getFlagToLabel(shortName: currency)
+            textOfLabel = (flagLabel ?? "") + " " + currency
+        } else {
+            textOfLabel = "               >"
+        }
+    }
 }
 

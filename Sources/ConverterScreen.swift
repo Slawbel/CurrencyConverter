@@ -63,9 +63,6 @@ class ConverterScreen: UIViewController {
     var counterOfClick = 0
     
     let coordinator = Coordinator()
-    
-    weak var delegate: ConverterScreenDelegate?
-   
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -361,8 +358,7 @@ class ConverterScreen: UIViewController {
         buttonDiagramPage.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonDiagramPage.setTitleColor(.white, for: .normal)
         buttonDiagramPage.addAction(UIAction { [weak self] _ in
-            let diagramResult = DiagramResult()
-            diagramResult.transferedCurNames(basicCur: self!.chosenCurShortName, firstCur: self!.chosenCurShortName1, secondCur: self!.chosenCurShortName2, thirdCur: self?.chosenCurShortName3)
+            let diagramResult = DiagramResult(inputCur: self!.chosenCurShortName, outputCur1: self!.chosenCurShortName1, outputCur2: self?.chosenCurShortName2, outputCur3: self?.chosenCurShortName3)
             diagramResult.curHistory()
             Coordinator.openAnotherScreen(from: self!, to: diagramResult)
         }, for: .primaryActionTriggered)
@@ -595,7 +591,7 @@ class ConverterScreen: UIViewController {
             make.width.height.equalTo(37)
         }
         
-        /*buttonRateHistory.snp.makeConstraints { make in
+        buttonRateHistory.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(16)
             make.top.equalTo(view).inset(296)
             make.height.equalTo(40)
@@ -607,7 +603,7 @@ class ConverterScreen: UIViewController {
             make.top.equalTo(view).inset(296)
             make.height.equalTo(40)
             make.width.equalTo(176)
-        }*/
+        }
         
     }
     
@@ -646,8 +642,6 @@ class ConverterScreen: UIViewController {
         swap(&chosenCurShortName, &chosenCurShortName3)
         convert()
     }
-    
-
 
     // function adds block with currencies #2 and #3 after pushing of addButton and sets constraints for moved buttons: "addButton", "buttonRateHistory", "buttonDiagramPage"
     @objc func addCurrency() {
@@ -659,7 +653,6 @@ class ConverterScreen: UIViewController {
             outputLabel2.isHidden = false
             swapButton2.isHidden = false
             counterOfClick+=1
-            
             
             addButton.snp.remakeConstraints { make in
                 make.leading.equalTo(view).inset(177)
