@@ -113,13 +113,7 @@ class ConverterScreen: UIViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort1 = { [weak self] shortName in
                 self?.chosenCurShortName = shortName
-                self?.inputCurrencyLabel.text = shortName + "      >"
-                self?.convert()
-                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
-                guard cutShortNameFlag != nil else { return }
-                if cutShortNameFlag != nil {
-                    self?.inputCurrencyLabel.text = cutShortNameFlag! + " " + shortName + " >"
-                } else { return }
+                self?.inputCurrencyLabel.text = self?.updateOutputCurrencyLabel(chosenCurrency: shortName)
             }
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
@@ -179,13 +173,7 @@ class ConverterScreen: UIViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
                 self?.chosenCurShortName1 = shortName
-                self?.outputCurrencyLabel1.text = shortName + "      >"
-                self?.convert()
-                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
-                guard cutShortNameFlag != nil else { return }
-                if cutShortNameFlag != nil {
-                    self?.outputCurrencyLabel1.text = cutShortNameFlag! + " " + shortName + " >"
-                } else { return }
+                self?.outputCurrencyLabel1.text = self?.updateOutputCurrencyLabel(chosenCurrency: shortName)
             }
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
@@ -230,13 +218,7 @@ class ConverterScreen: UIViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort3 = { [weak self] shortName in
                 self?.chosenCurShortName2 = shortName
-                self?.outputCurrencyLabel2.text = shortName + "      >"
-                self?.convert()
-                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
-                guard cutShortNameFlag != nil else { return }
-                if cutShortNameFlag != nil {
-                    self?.outputCurrencyLabel2.text = cutShortNameFlag! + " " + shortName + " >"
-                } else { return }
+                self?.outputCurrencyLabel2.text = self?.updateOutputCurrencyLabel(chosenCurrency: shortName)
             }
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
@@ -283,13 +265,7 @@ class ConverterScreen: UIViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort4 = { [weak self] shortName in
                 self?.chosenCurShortName3 = shortName
-                self?.outputCurrencyLabel3.text = shortName + "      >"
-                self?.convert()
-                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
-                guard cutShortNameFlag != nil else { return }
-                if cutShortNameFlag != nil {
-                    self?.outputCurrencyLabel3.text = cutShortNameFlag! + " " + shortName + " >"
-                } else { return }
+                self?.outputCurrencyLabel3.text = self?.updateOutputCurrencyLabel(chosenCurrency: shortName)
             }
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
@@ -803,12 +779,26 @@ extension ConverterScreen: DiagramResultDelegate {
         }
         if let curOutputInst1 = curOutput1 {
             self.chosenCurShortName1 = curOutput1
+            self.outputCurrencyLabel1.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName1)
         }
         if let curOutputInst2 = curOutput2 {
             self.chosenCurShortName2 = curOutput2
+            self.outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName2)
         }
         if let curOutputInst3 = curOutput3 {
             self.chosenCurShortName3 = curOutput3
+            self.outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName3)
+        }
+    }
+    
+    func updateOutputCurrencyLabel (chosenCurrency: String) -> String {
+        self.convert()
+        print(chosenCurrency)
+        let cutShortNameFlag = self.getFlagToLabel(shortName: chosenCurrency)
+        if cutShortNameFlag != nil {
+            return (cutShortNameFlag! + " " + chosenCurrency + " >")
+        } else {
+            return (chosenCurrency + "      >")
         }
     }
 }
