@@ -784,16 +784,21 @@ extension ConverterScreen: DiagramResultDelegate {
         if let curOutputInst2 = curOutput2 {
             self.chosenCurShortName2 = curOutput2
             self.outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName2)
+            self.counterOfClick = 0
+            self.addCurrency()
         }
         if let curOutputInst3 = curOutput3 {
             self.chosenCurShortName3 = curOutput3
             self.outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName3)
+            for counter in 0...1 {
+                self.counterOfClick = counter
+                self.addCurrency()
+            }
         }
     }
     
     func updateOutputCurrencyLabel (chosenCurrency: String) -> String {
         self.convert()
-        print(chosenCurrency)
         let cutShortNameFlag = self.getFlagToLabel(shortName: chosenCurrency)
         if cutShortNameFlag != nil {
             return (cutShortNameFlag! + " " + chosenCurrency + " >")

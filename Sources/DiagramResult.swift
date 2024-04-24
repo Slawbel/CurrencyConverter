@@ -147,6 +147,7 @@ class DiagramResult: DemoBaseViewController {
                 if flag != nil {
                     self?.outputLabel1.text = flag! + " " + shortName + " 🟣"
                 } else { return }
+                self?.curHistory()
             }
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
@@ -172,6 +173,7 @@ class DiagramResult: DemoBaseViewController {
                 if flag != nil {
                     self?.outputLabel2.text = flag! + " " + shortName + " ⚪️"
                 } else { return }
+                self?.curHistory()
             }
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
@@ -197,6 +199,7 @@ class DiagramResult: DemoBaseViewController {
                 if flag != nil {
                     self?.outputLabel3.text = flag! + " " + shortName + " 🟠"
                 } else { return }
+                self?.curHistory()
             }
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
@@ -366,7 +369,6 @@ class DiagramResult: DemoBaseViewController {
             present(alertMissedCurBase, animated:  true, completion: nil)
             return
         }
-        
             
         // making string with all currencies for API request
         var symbols = ""
@@ -410,8 +412,6 @@ class DiagramResult: DemoBaseViewController {
         updateOfXAxis()
         self.setData(coordinates: coordinates(), coordinates2: coordinates2(), coordinates3: coordinates3(), chosenCur1: chosenCurShortName1 ?? "", chosenCur2: chosenCurShortName2 ?? "", chosenCur3: chosenCurShortName3 ?? "")
     }
-    
-
     
     override func updateChartData() {
         if self.shouldHideData {
