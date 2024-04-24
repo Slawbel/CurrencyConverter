@@ -1,7 +1,9 @@
 import SnapKit
 import UIKit
 
-
+protocol DiagramResultDelegate: AnyObject {
+    func currenciesFromDiagramToConverter(curInput: String?, curOutput1: String?, curOutput2: String?, curOutput3: String?)
+}
 
 class ConverterScreen: UIViewController {
     
@@ -360,6 +362,7 @@ class ConverterScreen: UIViewController {
         buttonDiagramPage.addAction(UIAction { [weak self] _ in
             let diagramResult = DiagramResult(inputCur: self!.chosenCurShortName, outputCur1: self!.chosenCurShortName1, outputCur2: self?.chosenCurShortName2, outputCur3: self?.chosenCurShortName3)
             diagramResult.curHistory()
+            diagramResult.diagramDelegate = self
             Coordinator.openAnotherScreen(from: self!, to: diagramResult)
         }, for: .primaryActionTriggered)
         let buttonDiagramPageImage = UIImage(named: "icon_graph")
@@ -789,6 +792,23 @@ class ConverterScreen: UIViewController {
             }
         } catch {
             print("Error reading file: \(error)")
+        }
+    }
+}
+
+extension ConverterScreen: DiagramResultDelegate {
+    func currenciesFromDiagramToConverter(curInput: String?, curOutput1: String?, curOutput2: String?, curOutput3: String?) {
+        if let curInputInst = curInput {
+            self.chosenCurShortName = curInput
+        }
+        if let curOutputInst1 = curOutput1 {
+            self.chosenCurShortName1 = curOutput1
+        }
+        if let curOutputInst2 = curOutput2 {
+            self.chosenCurShortName2 = curOutput2
+        }
+        if let curOutputInst3 = curOutput3 {
+            self.chosenCurShortName3 = curOutput3
         }
     }
 }

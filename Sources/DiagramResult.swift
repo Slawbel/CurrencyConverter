@@ -33,6 +33,7 @@ class DiagramResult: DemoBaseViewController {
     private let outputLabel3 = UILabel()
 
     private var rateData: RateData?
+    weak var diagramDelegate: DiagramResultDelegate?
     
     init (inputCur: String, outputCur1: String, outputCur2: String?, outputCur3: String?) {
         super.init(nibName: nil, bundle: nil)
@@ -126,6 +127,7 @@ class DiagramResult: DemoBaseViewController {
         chartView.animate(xAxisDuration: 2.5)
         
         uploadCurToLabel(textOfLabel: &outputLabel1.text, currency: chosenCurShortName1)
+        outputLabel1.text! += " 🟣"
         outputLabel1.textAlignment = .center
         outputLabel1.font = outputLabel1.font.withSize(14)
         outputLabel1.textColor = .white
@@ -138,19 +140,19 @@ class DiagramResult: DemoBaseViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
                 self?.chosenCurShortName1 = shortName
-                self?.outputLabel1.text = shortName + "      >"
                 let copyConverterScreen = ConverterScreen()
                 copyConverterScreen.convert()
                 let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
                 guard flag != nil else { return }
                 if flag != nil {
-                    self?.outputLabel1.text = flag! + " " + shortName + " >"
+                    self?.outputLabel1.text = flag! + " " + shortName + " 🟣"
                 } else { return }
             }
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
         uploadCurToLabel(textOfLabel: &outputLabel2.text, currency: chosenCurShortName2)
+        outputLabel2.text! += " ⚪️"
         outputLabel2.textAlignment = .center
         outputLabel2.font = outputLabel1.font.withSize(14)
         outputLabel2.textColor = .white
@@ -163,19 +165,19 @@ class DiagramResult: DemoBaseViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort3 = { [weak self] shortName in
                 self?.chosenCurShortName2 = shortName
-                self?.outputLabel2.text = shortName + "      >"
                 let copyConverterScreen = ConverterScreen()
                 copyConverterScreen.convert()
                 let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
                 guard flag != nil else { return }
                 if flag != nil {
-                    self?.outputLabel2.text = flag! + " " + shortName + " >"
+                    self?.outputLabel2.text = flag! + " " + shortName + " ⚪️"
                 } else { return }
             }
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
         uploadCurToLabel(textOfLabel: &outputLabel3.text, currency: chosenCurShortName3)
+        outputLabel3.text! += " 🟠"
         outputLabel3.textAlignment = .center
         outputLabel3.font = outputLabel1.font.withSize(14)
         outputLabel3.textColor = .white
@@ -188,13 +190,12 @@ class DiagramResult: DemoBaseViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort4 = { [weak self] shortName in
                 self?.chosenCurShortName3 = shortName
-                self?.outputLabel3.text = shortName + "      >"
                 let copyConverterScreen = ConverterScreen()
                 copyConverterScreen.convert()
                 let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
                 guard flag != nil else { return }
                 if flag != nil {
-                    self?.outputLabel3.text = flag! + " " + shortName + " >"
+                    self?.outputLabel3.text = flag! + " " + shortName + " 🟠"
                 } else { return }
             }
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
@@ -290,6 +291,7 @@ class DiagramResult: DemoBaseViewController {
     
     @objc private func doSwipeRight (_ gesture: UISwipeGestureRecognizer) {
         if gesture.state == .ended {
+            diagramDelegate?.currenciesFromDiagramToConverter(curInput: chosenCurShortNameBase, curOutput1: chosenCurShortName1, curOutput2: chosenCurShortName2, curOutput3: chosenCurShortName3)
             Coordinator.closeAnotherScreen(from: self)
         }
     }
@@ -585,7 +587,7 @@ extension DiagramResult {
             let flagLabel = converter.getFlagToLabel(shortName: currency)
             textOfLabel = (flagLabel ?? "") + " " + currency
         } else {
-            textOfLabel = "               >"
+            textOfLabel = "           "
         }
     }
 }
