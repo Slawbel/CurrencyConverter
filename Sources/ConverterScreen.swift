@@ -1,7 +1,9 @@
 import SnapKit
 import UIKit
 
-
+protocol DiagramResultDelegate: AnyObject {
+    func currenciesFromDiagramToConverter(curInput: String?, curOutput1: String?, curOutput2: String?, curOutput3: String?)
+}
 
 class ConverterScreen: UIViewController {
     
@@ -13,7 +15,9 @@ class ConverterScreen: UIViewController {
     
     // currency for conversion
     private let stackView = UIStackView()
+    // label to lead user what to do
     private let inputCurLabel = UILabel()
+    // label with country flag and currency ID name
     private let inputCurrencyLabel = UILabel()
     private let inputCurButton = UIButton()
     private let inputTF = UITextField()
@@ -61,9 +65,6 @@ class ConverterScreen: UIViewController {
     var counterOfClick = 0
     
     let coordinator = Coordinator()
-    
-    weak var delegate: ConverterScreenDelegate?
-   
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,13 +113,7 @@ class ConverterScreen: UIViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort1 = { [weak self] shortName in
                 self?.chosenCurShortName = shortName
-                self?.inputCurrencyLabel.text = shortName + "      >"
-                self?.convert()
-                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
-                guard cutShortNameFlag != nil else { return }
-                if cutShortNameFlag != nil {
-                    self?.inputCurrencyLabel.text = cutShortNameFlag! + " " + shortName + " >"
-                } else { return }
+                self?.inputCurrencyLabel.text = self?.updateOutputCurrencyLabel(chosenCurrency: shortName)
             }
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
@@ -178,13 +173,7 @@ class ConverterScreen: UIViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
                 self?.chosenCurShortName1 = shortName
-                self?.outputCurrencyLabel1.text = shortName + "      >"
-                self?.convert()
-                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
-                guard cutShortNameFlag != nil else { return }
-                if cutShortNameFlag != nil {
-                    self?.outputCurrencyLabel1.text = cutShortNameFlag! + " " + shortName + " >"
-                } else { return }
+                self?.outputCurrencyLabel1.text = self?.updateOutputCurrencyLabel(chosenCurrency: shortName)
             }
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
@@ -229,13 +218,7 @@ class ConverterScreen: UIViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort3 = { [weak self] shortName in
                 self?.chosenCurShortName2 = shortName
-                self?.outputCurrencyLabel2.text = shortName + "      >"
-                self?.convert()
-                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
-                guard cutShortNameFlag != nil else { return }
-                if cutShortNameFlag != nil {
-                    self?.outputCurrencyLabel2.text = cutShortNameFlag! + " " + shortName + " >"
-                } else { return }
+                self?.outputCurrencyLabel2.text = self?.updateOutputCurrencyLabel(chosenCurrency: shortName)
             }
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
@@ -282,13 +265,7 @@ class ConverterScreen: UIViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort4 = { [weak self] shortName in
                 self?.chosenCurShortName3 = shortName
-                self?.outputCurrencyLabel3.text = shortName + "      >"
-                self?.convert()
-                let cutShortNameFlag = self?.getFlagToLabel(shortName: shortName)
-                guard cutShortNameFlag != nil else { return }
-                if cutShortNameFlag != nil {
-                    self?.outputCurrencyLabel3.text = cutShortNameFlag! + " " + shortName + " >"
-                } else { return }
+                self?.outputCurrencyLabel3.text = self?.updateOutputCurrencyLabel(chosenCurrency: shortName)
             }
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
@@ -359,9 +336,9 @@ class ConverterScreen: UIViewController {
         buttonDiagramPage.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonDiagramPage.setTitleColor(.white, for: .normal)
         buttonDiagramPage.addAction(UIAction { [weak self] _ in
-            let diagramResult = DiagramResult()
-            diagramResult.transferedCurNames(basicCur: self!.chosenCurShortName, firstCur: self!.chosenCurShortName1, secondCur: self!.chosenCurShortName2, thirdCur: self?.chosenCurShortName3)
+            let diagramResult = DiagramResult(inputCur: self!.chosenCurShortName, outputCur1: self!.chosenCurShortName1, outputCur2: self?.chosenCurShortName2, outputCur3: self?.chosenCurShortName3)
             diagramResult.curHistory()
+            diagramResult.diagramDelegate = self
             Coordinator.openAnotherScreen(from: self!, to: diagramResult)
         }, for: .primaryActionTriggered)
         let buttonDiagramPageImage = UIImage(named: "icon_graph")
@@ -593,7 +570,7 @@ class ConverterScreen: UIViewController {
             make.width.height.equalTo(37)
         }
         
-        /*buttonRateHistory.snp.makeConstraints { make in
+        buttonRateHistory.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(16)
             make.top.equalTo(view).inset(296)
             make.height.equalTo(40)
@@ -605,7 +582,7 @@ class ConverterScreen: UIViewController {
             make.top.equalTo(view).inset(296)
             make.height.equalTo(40)
             make.width.equalTo(176)
-        }*/
+        }
         
     }
     
@@ -644,8 +621,6 @@ class ConverterScreen: UIViewController {
         swap(&chosenCurShortName, &chosenCurShortName3)
         convert()
     }
-    
-
 
     // function adds block with currencies #2 and #3 after pushing of addButton and sets constraints for moved buttons: "addButton", "buttonRateHistory", "buttonDiagramPage"
     @objc func addCurrency() {
@@ -657,7 +632,6 @@ class ConverterScreen: UIViewController {
             outputLabel2.isHidden = false
             swapButton2.isHidden = false
             counterOfClick+=1
-            
             
             addButton.snp.remakeConstraints { make in
                 make.leading.equalTo(view).inset(177)
@@ -794,6 +768,42 @@ class ConverterScreen: UIViewController {
             }
         } catch {
             print("Error reading file: \(error)")
+        }
+    }
+}
+
+extension ConverterScreen: DiagramResultDelegate {
+    func currenciesFromDiagramToConverter(curInput: String?, curOutput1: String?, curOutput2: String?, curOutput3: String?) {
+        if curInput != nil {
+            self.chosenCurShortName = curInput
+        }
+        if curOutput1 != nil {
+            self.chosenCurShortName1 = curOutput1
+            self.outputCurrencyLabel1.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName1)
+        }
+        if curOutput2 != nil {
+            self.chosenCurShortName2 = curOutput2
+            self.outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName2)
+            self.counterOfClick = 0
+            self.addCurrency()
+        }
+        if curOutput3 != nil {
+            self.chosenCurShortName3 = curOutput3
+            self.outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName3)
+            for counter in 0...1 {
+                self.counterOfClick = counter
+                self.addCurrency()
+            }
+        }
+    }
+    
+    func updateOutputCurrencyLabel (chosenCurrency: String) -> String {
+        self.convert()
+        let cutShortNameFlag = self.getFlagToLabel(shortName: chosenCurrency)
+        if cutShortNameFlag != nil {
+            return cutShortNameFlag! + " " + chosenCurrency + " >"
+        } else {
+            return chosenCurrency + "      >"
         }
     }
 }

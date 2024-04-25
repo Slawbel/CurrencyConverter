@@ -2,9 +2,6 @@ import UIKit
 import DGCharts
 import SnapKit
 
-protocol ConverterScreenDelegate: AnyObject {
-    func transferedCurNames(basicCur: String, firstCur: String, secondCur: String, thirdCur: String?)
-}
 
 class DiagramResult: DemoBaseViewController {
     
@@ -36,16 +33,30 @@ class DiagramResult: DemoBaseViewController {
     private let outputLabel3 = UILabel()
 
     private var rateData: RateData?
+    weak var diagramDelegate: DiagramResultDelegate?
+    
+    init (inputCur: String, outputCur1: String, outputCur2: String?, outputCur3: String?) {
+        super.init(nibName: nil, bundle: nil)
+        self.chosenCurShortNameBase = inputCur
+        self.chosenCurShortName1 = outputCur1
+        if outputCur2 != nil { self.chosenCurShortName2 = outputCur2 }
+        if outputCur3 != nil { self.chosenCurShortName3 = outputCur3 }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .init(named: "mainBackgroundColor")
         
+        
+        
         diagramStackView.axis = .vertical
         diagramStackView.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
         diagramStackView.layer.cornerRadius = 30
         
-        chartView.backgroundColor = .white
         self.options = [.toggleValues,
                         .toggleFilled,
                         .toggleCircles,
@@ -105,8 +116,8 @@ class DiagramResult: DemoBaseViewController {
         chartView.xAxis.gridLineDashPhase = 0
         chartView.xAxis.labelTextColor = .white
         chartView.xAxis.labelPosition = .bottom
-        chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rangeOfDates())
-        
+        updateOfXAxis()
+
         chartView.leftAxis.labelTextColor = .white
 
         chartView.rightAxis.enabled = false
@@ -115,7 +126,8 @@ class DiagramResult: DemoBaseViewController {
         sliderY.value = 100
         chartView.animate(xAxisDuration: 2.5)
         
-        outputLabel1.text = "               >"
+        uploadCurToLabel(textOfLabel: &outputLabel1.text, currency: chosenCurShortName1)
+        outputLabel1.text! += " 🟣"
         outputLabel1.textAlignment = .center
         outputLabel1.font = outputLabel1.font.withSize(14)
         outputLabel1.textColor = .white
@@ -128,29 +140,73 @@ class DiagramResult: DemoBaseViewController {
             let currencyScreen = CurrencyScreen()
             currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
                 self?.chosenCurShortName1 = shortName
-                self?.outputLabel1.text = shortName + "      >"
                 let copyConverterScreen = ConverterScreen()
                 copyConverterScreen.convert()
                 let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
                 guard flag != nil else { return }
                 if flag != nil {
-                    self?.outputLabel1.text = flag! + " " + shortName + " >"
+                    self?.outputLabel1.text = flag! + " " + shortName + " 🟣"
                 } else { return }
+                self?.curHistory()
             }
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
+        uploadCurToLabel(textOfLabel: &outputLabel2.text, currency: chosenCurShortName2)
+        outputLabel2.text! += " ⚪️"
+        outputLabel2.textAlignment = .center
+        outputLabel2.font = outputLabel1.font.withSize(14)
+        outputLabel2.textColor = .white
+        outputLabel2.backgroundColor = .clear
+        
         outputCurButton2.layer.cornerRadius = 10
         outputCurButton2.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton2.setTitleColor(.white, for: .normal)
+        outputCurButton2.addAction(UIAction { [unowned self] _ in
+            let currencyScreen = CurrencyScreen()
+            currencyScreen.onCurrencySelectedShort3 = { [weak self] shortName in
+                self?.chosenCurShortName2 = shortName
+                let copyConverterScreen = ConverterScreen()
+                copyConverterScreen.convert()
+                let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
+                guard flag != nil else { return }
+                if flag != nil {
+                    self?.outputLabel2.text = flag! + " " + shortName + " ⚪️"
+                } else { return }
+                self?.curHistory()
+            }
+            Coordinator.openAnotherScreen(from: self, to: currencyScreen)
+        }, for: .primaryActionTriggered)
+        
+        uploadCurToLabel(textOfLabel: &outputLabel3.text, currency: chosenCurShortName3)
+        outputLabel3.text! += " 🟠"
+        outputLabel3.textAlignment = .center
+        outputLabel3.font = outputLabel1.font.withSize(14)
+        outputLabel3.textColor = .white
+        outputLabel3.backgroundColor = .clear
         
         outputCurButton3.layer.cornerRadius = 10
         outputCurButton3.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton3.setTitleColor(.white, for: .normal)
+        outputCurButton3.addAction(UIAction { [unowned self] _ in
+            let currencyScreen = CurrencyScreen()
+            currencyScreen.onCurrencySelectedShort4 = { [weak self] shortName in
+                self?.chosenCurShortName3 = shortName
+                let copyConverterScreen = ConverterScreen()
+                copyConverterScreen.convert()
+                let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
+                guard flag != nil else { return }
+                if flag != nil {
+                    self?.outputLabel3.text = flag! + " " + shortName + " 🟠"
+                } else { return }
+                self?.curHistory()
+            }
+            Coordinator.openAnotherScreen(from: self, to: currencyScreen)
+        }, for: .primaryActionTriggered)
         
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(doSwipeRight(_:)))
         swipeRightGesture.direction = .right
-
+        
         view.addSubview(diagramStackView)
         diagramStackView.addSubview(chartView)
         view.addSubview(labelDiagram)
@@ -206,11 +262,21 @@ class DiagramResult: DemoBaseViewController {
             make.leading.equalTo(view).inset(15)
         }
         
+        outputLabel1.snp.makeConstraints { make in
+            make.centerX.equalTo(outputCurButton1) 
+            make.centerY.equalTo(outputCurButton1)
+        }
+        
         outputCurButton2.snp.makeConstraints { make in
             make.width.equalTo(115)
             make.top.equalTo(view).inset(768)
             make.height.equalTo(28)
             make.leading.equalTo(view).inset(138)
+        }
+        
+        outputLabel2.snp.makeConstraints { make in
+            make.centerX.equalTo(outputCurButton2)
+            make.centerY.equalTo(outputCurButton2)
         }
             
         outputCurButton3.snp.makeConstraints { make in
@@ -219,10 +285,16 @@ class DiagramResult: DemoBaseViewController {
             make.height.equalTo(28)
             make.leading.equalTo(view).inset(261)
         }
+        
+        outputLabel3.snp.makeConstraints { make in
+            make.centerX.equalTo(outputCurButton3)
+            make.centerY.equalTo(outputCurButton3)
+        }
     }
     
     @objc private func doSwipeRight (_ gesture: UISwipeGestureRecognizer) {
         if gesture.state == .ended {
+            diagramDelegate?.currenciesFromDiagramToConverter(curInput: chosenCurShortNameBase, curOutput1: chosenCurShortName1, curOutput2: chosenCurShortName2, curOutput3: chosenCurShortName3)
             Coordinator.closeAnotherScreen(from: self)
         }
     }
@@ -240,32 +312,34 @@ class DiagramResult: DemoBaseViewController {
     }
     
     // setting lines on diagram according to each currency
-     func setData(coordinates: [ChartDataEntry], coordinates2 : [ChartDataEntry], coordinates3: [ChartDataEntry], chosenCur1: String, chosenCur2: String, chosenCur3: String) {
-         let set1 = LineChartDataSet(entries: coordinates, label: chosenCur1)
-         let set2 = LineChartDataSet(entries: coordinates2, label: chosenCur2)
-         let set3 = LineChartDataSet(entries: coordinates3, label: chosenCur3)
-         set1.colors = [NSUIColor.purple]
-         set2.colors = [NSUIColor.white]
-         set3.colors = [NSUIColor.orange]
-         let data = LineChartData(dataSets: [set1, set2, set3])
-         
-         set1.circleRadius = 7
-         set1.circleColors = [UIColor.purple]
-         set1.circleHoleRadius = .zero
-         set1.drawValuesEnabled = false
-         
-         set2.circleRadius = 7
-         set2.circleColors = [UIColor.white]
-         set2.circleHoleRadius = .zero
-         set2.drawValuesEnabled = false
-         
-         set3.circleRadius = 7
-         set3.circleColors = [UIColor.orange]
-         set3.circleHoleRadius = .zero
-         set3.drawValuesEnabled = false
-         
-         chartView.data = data
-     }
+    func setData(coordinates: [ChartDataEntry], coordinates2: [ChartDataEntry], coordinates3: [ChartDataEntry], chosenCur1: String, chosenCur2: String, chosenCur3: String) {
+        let set1 = LineChartDataSet(entries: coordinates, label: chosenCur1)
+        let set2 = LineChartDataSet(entries: coordinates2, label: chosenCur2)
+        let set3 = LineChartDataSet(entries: coordinates3, label: chosenCur3)
+        
+        set1.colors = [NSUIColor.purple]
+        set2.colors = [NSUIColor.white]
+        set3.colors = [NSUIColor.orange]
+        
+        set1.circleRadius = 5
+        set1.circleColors = [NSUIColor.purple]
+        set1.circleHoleRadius = 0.0 // Setting it to .zero is not allowed here, use 0.0 instead
+        set1.drawValuesEnabled = false
+        
+        set2.circleRadius = 5
+        set2.circleColors = [NSUIColor.white]
+        set2.circleHoleRadius = 0.0 // Same here
+        set2.drawValuesEnabled = false
+        
+        set3.circleRadius = 5
+        set3.circleColors = [NSUIColor.orange]
+        set3.circleHoleRadius = 0.0 // Same here
+        set3.drawValuesEnabled = false
+        
+        let data = LineChartData(dataSets: [set1, set2, set3]) // Passing an array of LineChartDataSet to LineChartData initializer
+        
+        chartView.data = data
+    }
     
     override func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
             let alert = UIAlertController(title: "Value", message: "Value: \(entry.y)", preferredStyle: .alert)
@@ -295,7 +369,6 @@ class DiagramResult: DemoBaseViewController {
             present(alertMissedCurBase, animated:  true, completion: nil)
             return
         }
-        
             
         // making string with all currencies for API request
         var symbols = ""
@@ -336,10 +409,9 @@ class DiagramResult: DemoBaseViewController {
         //print(String(data: data, encoding: .utf8)!)
         rateData = RateData(from: data)
         
+        updateOfXAxis()
         self.setData(coordinates: coordinates(), coordinates2: coordinates2(), coordinates3: coordinates3(), chosenCur1: chosenCurShortName1 ?? "", chosenCur2: chosenCurShortName2 ?? "", chosenCur3: chosenCurShortName3 ?? "")
     }
-    
-
     
     override func updateChartData() {
         if self.shouldHideData {
@@ -500,17 +572,23 @@ class DiagramResult: DemoBaseViewController {
     }
 }
 
-extension DiagramResult: ConverterScreenDelegate {
-    func transferedCurNames(basicCur: String, firstCur: String, secondCur: String, thirdCur: String?) {
-        self.chosenCurShortNameBase = basicCur
-        self.chosenCurShortName1 = firstCur
-        self.chosenCurShortName2 = secondCur
-        self.chosenCurShortName3 = thirdCur
+extension DiagramResult {
+    private func updateOfXAxis() {
+        self.chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rangeOfDates())
+        self.chartView.xAxis.labelCount = rangeOfDates().count
+        self.chartView.xAxis.labelRotationAngle = -45 // Rotate the labels by -45 degrees to prevent overlapping
+        self.chartView.xAxis.granularityEnabled = true
+        self.chartView.xAxis.granularity = 1 // Ensure each label is drawn even if it overlaps with others
+    }
+    
+    private func uploadCurToLabel ( textOfLabel: inout String?, currency: String?) {
+        let converter = ConverterScreen()
+        if let currency = currency {
+            let flagLabel = converter.getFlagToLabel(shortName: currency)
+            textOfLabel = (flagLabel ?? "") + " " + currency
+        } else {
+            textOfLabel = "           "
+        }
     }
 }
-
-
-
-
-
 
