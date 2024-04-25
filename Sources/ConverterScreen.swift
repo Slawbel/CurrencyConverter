@@ -774,20 +774,20 @@ class ConverterScreen: UIViewController {
 
 extension ConverterScreen: DiagramResultDelegate {
     func currenciesFromDiagramToConverter(curInput: String?, curOutput1: String?, curOutput2: String?, curOutput3: String?) {
-        if let curInputInst = curInput {
+        if curInput != nil {
             self.chosenCurShortName = curInput
         }
-        if let curOutputInst1 = curOutput1 {
+        if curOutput1 != nil {
             self.chosenCurShortName1 = curOutput1
             self.outputCurrencyLabel1.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName1)
         }
-        if let curOutputInst2 = curOutput2 {
+        if curOutput2 != nil {
             self.chosenCurShortName2 = curOutput2
             self.outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName2)
             self.counterOfClick = 0
             self.addCurrency()
         }
-        if let curOutputInst3 = curOutput3 {
+        if curOutput3 != nil {
             self.chosenCurShortName3 = curOutput3
             self.outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName3)
             for counter in 0...1 {
@@ -801,9 +801,9 @@ extension ConverterScreen: DiagramResultDelegate {
         self.convert()
         let cutShortNameFlag = self.getFlagToLabel(shortName: chosenCurrency)
         if cutShortNameFlag != nil {
-            return (cutShortNameFlag! + " " + chosenCurrency + " >")
+            return cutShortNameFlag! + " " + chosenCurrency + " >"
         } else {
-            return (chosenCurrency + "      >")
+            return chosenCurrency + "      >"
         }
     }
 }
