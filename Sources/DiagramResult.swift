@@ -35,10 +35,10 @@ class DiagramResult: DemoBaseViewController {
     private var rateData: RateData?
     weak var diagramDelegate: DiagramResultDelegate?
     
-    init (inputCur: String, outputCur1: String, outputCur2: String?, outputCur3: String?) {
+    init (inputCur: String, outputCur1: String?, outputCur2: String?, outputCur3: String?) {
         super.init(nibName: nil, bundle: nil)
         self.chosenCurShortNameBase = inputCur
-        self.chosenCurShortName1 = outputCur1
+        if outputCur1 != nil { self.chosenCurShortName1 = outputCur1 }
         if outputCur2 != nil { self.chosenCurShortName2 = outputCur2 }
         if outputCur3 != nil { self.chosenCurShortName3 = outputCur3 }
     }
