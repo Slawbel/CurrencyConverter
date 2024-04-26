@@ -374,13 +374,8 @@ class DiagramResult: DemoBaseViewController {
         var symbols = ""
         if let chosenCurShortName1 = chosenCurShortName1 {
             symbols += chosenCurShortName1
-        } else {
-            let alertMissedCur1 = UIAlertController(title: "Missing currency 1", message: "Please, select currency #1", preferredStyle: .alert)
-            let okAction1 = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alertMissedCur1.addAction(okAction1)
-            present(alertMissedCur1, animated:  true, completion: nil)
-            return
-        }
+        } 
+        
         if let chosenCurShortName2 = chosenCurShortName2 {
             if symbols != "" {
                 symbols += ","
@@ -411,6 +406,8 @@ class DiagramResult: DemoBaseViewController {
         
         updateOfXAxis()
         self.setData(coordinates: coordinates(), coordinates2: coordinates2(), coordinates3: coordinates3(), chosenCur1: chosenCurShortName1 ?? "", chosenCur2: chosenCurShortName2 ?? "", chosenCur3: chosenCurShortName3 ?? "")
+        
+        print(symbols)
     }
     
     override func updateChartData() {
