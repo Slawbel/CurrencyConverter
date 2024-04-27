@@ -13,3 +13,4 @@
 "nameLabelText" = "Конвертор валют";
 "nameOfScreen" = "Выберите валюту";
 "searchCurrency" = "Искать валюту";
+"textForAlertController" = "Выберите валюту в первом блоке";

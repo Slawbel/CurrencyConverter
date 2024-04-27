@@ -822,8 +822,9 @@ extension ConverterScreen: DiagramResultDelegate {
     }
     
     func forbidAnotherScreen() {
-        let alertController = UIAlertController(title: "Select input currency", message: nil, preferredStyle: .alert)
-        let cancelButton = UIAlertAction(title: "CANCEL", style: .default)
+        let textForAlertController = NSLocalizedString("textForAlertController", comment: "")
+        let alertController = UIAlertController(title: textForAlertController, message: nil, preferredStyle: .alert)
+        let cancelButton = UIAlertAction(title: "OK", style: .default)
         alertController.addAction(cancelButton)
         present(alertController, animated: true, completion: nil)
     }
