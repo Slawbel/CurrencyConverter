@@ -522,10 +522,10 @@
 		};
 		A25E63092BCD3D5E006B2D0A /* XCRemoteSwiftPackageReference "Swiftstraints" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Skyvive/Swiftstraints";
+			repositoryURL = "https://github.com/SwifterSwift/SwifterSwift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.2.0;
+				minimumVersion = 6.2.0;
 			};
 		};
 		A25E630E2BDC39F5006B2D0A /* XCRemoteSwiftPackageReference "Charts" */ = {
@@ -533,7 +533,7 @@
 			repositoryURL = "https://github.com/ChartsOrg/Charts";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.1.0;
+				minimumVersion = 5.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
