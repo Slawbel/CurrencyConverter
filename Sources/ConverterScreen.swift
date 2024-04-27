@@ -318,11 +318,15 @@ class ConverterScreen: UIViewController {
         buttonRateHistory.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonRateHistory.setTitleColor(.white, for: .normal)
         buttonRateHistory.addAction(UIAction { [weak self] _ in
-            let rateHistoryPage = RateHistoryPage()
-            rateHistoryPage.short1 = self?.chosenCurShortName
-            rateHistoryPage.short2 = self?.chosenCurShortName1
-            rateHistoryPage.modalPresentationStyle = .fullScreen
-            self?.present(rateHistoryPage, animated: true)
+            if self?.chosenCurShortName != nil {
+                let rateHistoryPage = RateHistoryPage()
+                rateHistoryPage.short1 = self?.chosenCurShortName
+                rateHistoryPage.short2 = self?.chosenCurShortName1
+                rateHistoryPage.modalPresentationStyle = .fullScreen
+                self?.present(rateHistoryPage, animated: true)
+            } else {
+                self?.forbidAnotherScreen()
+            }
         }, for: .primaryActionTriggered)
         let buttonRateHistoryImage = UIImage(named: "icon_history")
         buttonRateHistory.setImage(buttonRateHistoryImage, for: .normal)
@@ -336,10 +340,14 @@ class ConverterScreen: UIViewController {
         buttonDiagramPage.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonDiagramPage.setTitleColor(.white, for: .normal)
         buttonDiagramPage.addAction(UIAction { [weak self] _ in
-            let diagramResult = DiagramResult(inputCur: self!.chosenCurShortName, outputCur1: self!.chosenCurShortName1, outputCur2: self?.chosenCurShortName2, outputCur3: self?.chosenCurShortName3)
+            if self?.chosenCurShortName != nil {
+            let diagramResult = DiagramResult(inputCur: self!.chosenCurShortName, outputCur1: self?.chosenCurShortName1, outputCur2: self?.chosenCurShortName2, outputCur3: self?.chosenCurShortName3)
             diagramResult.curHistory()
             diagramResult.diagramDelegate = self
             Coordinator.openAnotherScreen(from: self!, to: diagramResult)
+            } else {
+                self?.forbidAnotherScreen()
+            }
         }, for: .primaryActionTriggered)
         let buttonDiagramPageImage = UIImage(named: "icon_graph")
         buttonDiagramPage.setImage(buttonDiagramPageImage, for: .normal)
@@ -706,6 +714,12 @@ class ConverterScreen: UIViewController {
             }
             self?.outputLabel3.text = String(convertResult.result ?? 0)
         }
+        
+        if self.chosenCurShortName == nil {
+            self.outputLabel1.text = "0"
+            self.outputLabel2.text = "0"
+            self.outputLabel3.text = "0"
+        }
     }
     
     // function to define flag by code and transfer in string format to currency labels inside blocks
@@ -805,6 +819,14 @@ extension ConverterScreen: DiagramResultDelegate {
         } else {
             return chosenCurrency + "      >"
         }
+    }
+    
+    func forbidAnotherScreen() {
+        let textForAlertController = NSLocalizedString("textForAlertController", comment: "")
+        let alertController = UIAlertController(title: textForAlertController, message: nil, preferredStyle: .alert)
+        let cancelButton = UIAlertAction(title: "OK", style: .default)
+        alertController.addAction(cancelButton)
+        present(alertController, animated: true, completion: nil)
     }
 }
 
