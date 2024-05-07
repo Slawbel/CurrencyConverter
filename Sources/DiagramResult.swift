@@ -3,6 +3,7 @@ import DGCharts
 import SnapKit
 
 
+
 class DiagramResult: DemoBaseViewController {
     
     private let diagramStackView = UIStackView()
@@ -34,6 +35,9 @@ class DiagramResult: DemoBaseViewController {
 
     private var rateData: RateData?
     weak var diagramDelegate: DiagramResultDelegate?
+    
+    var selectorDiagram: UInt8 = 0
+
     
     init (inputCur: String, outputCur1: String, outputCur2: String?, outputCur3: String?) {
         super.init(nibName: nil, bundle: nil)
@@ -136,19 +140,19 @@ class DiagramResult: DemoBaseViewController {
         outputCurButton1.layer.cornerRadius = 10
         outputCurButton1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton1.setTitleColor(.white, for: .normal)
-        outputCurButton1.addAction(UIAction { [unowned self] _ in
+        outputCurButton1.addAction(UIAction { _ in
             let currencyScreen = CurrencyScreen()
-            currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
-                self?.chosenCurShortName1 = shortName
-                let copyConverterScreen = ConverterScreen()
-                copyConverterScreen.convert()
-                let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
-                guard flag != nil else { return }
-                if flag != nil {
-                    self?.outputLabel1.text = flag! + " " + shortName + " 🟣"
-                } else { return }
-                self?.curHistory()
-            }
+            self.selectorDiagram = 1
+            currencyScreen.delegateToConverterScreen = self
+            
+            let copyConverterScreen = ConverterScreen()
+            copyConverterScreen.convert()
+            let flag = copyConverterScreen.getFlagToLabel(shortName: self.chosenCurShortName1!)
+            guard flag != nil else { return }
+            if flag != nil {
+                self.outputLabel1.text = flag! + " " + self.chosenCurShortName1! + " 🟣"
+            } else { return }
+            self.curHistory()
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
@@ -162,19 +166,19 @@ class DiagramResult: DemoBaseViewController {
         outputCurButton2.layer.cornerRadius = 10
         outputCurButton2.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton2.setTitleColor(.white, for: .normal)
-        outputCurButton2.addAction(UIAction { [unowned self] _ in
+        outputCurButton2.addAction(UIAction { _ in
             let currencyScreen = CurrencyScreen()
-            currencyScreen.onCurrencySelectedShort3 = { [weak self] shortName in
-                self?.chosenCurShortName2 = shortName
-                let copyConverterScreen = ConverterScreen()
-                copyConverterScreen.convert()
-                let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
-                guard flag != nil else { return }
-                if flag != nil {
-                    self?.outputLabel2.text = flag! + " " + shortName + " ⚪️"
-                } else { return }
-                self?.curHistory()
-            }
+            self.selectorDiagram = 2
+            currencyScreen.delegateToConverterScreen = self
+
+            let copyConverterScreen = ConverterScreen()
+            copyConverterScreen.convert()
+            let flag = copyConverterScreen.getFlagToLabel(shortName: self.chosenCurShortName2!)
+            guard flag != nil else { return }
+            if flag != nil {
+                self.outputLabel2.text = flag! + " " + self.chosenCurShortName2! + " ⚪️"
+            } else { return }
+            self.curHistory()
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
@@ -188,19 +192,19 @@ class DiagramResult: DemoBaseViewController {
         outputCurButton3.layer.cornerRadius = 10
         outputCurButton3.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton3.setTitleColor(.white, for: .normal)
-        outputCurButton3.addAction(UIAction { [unowned self] _ in
+        outputCurButton3.addAction(UIAction { _ in
             let currencyScreen = CurrencyScreen()
-            currencyScreen.onCurrencySelectedShort4 = { [weak self] shortName in
-                self?.chosenCurShortName3 = shortName
-                let copyConverterScreen = ConverterScreen()
-                copyConverterScreen.convert()
-                let flag = copyConverterScreen.getFlagToLabel(shortName: shortName)
-                guard flag != nil else { return }
-                if flag != nil {
-                    self?.outputLabel3.text = flag! + " " + shortName + " 🟠"
-                } else { return }
-                self?.curHistory()
-            }
+            self.selectorDiagram = 3
+            currencyScreen.delegateToConverterScreen = self
+                        
+            let copyConverterScreen = ConverterScreen()
+            copyConverterScreen.convert()
+            let flag = copyConverterScreen.getFlagToLabel(shortName: self.chosenCurShortName3!)
+            guard flag != nil else { return }
+            if flag != nil {
+                self.outputLabel3.text = flag! + " " + self.chosenCurShortName3! + " 🟠"
+            } else { return }
+            self.curHistory()
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
@@ -592,3 +596,13 @@ extension DiagramResult {
     }
 }
 
+extension DiagramResult: CurrencyScreenDelegate {
+    func transferCurShortName(currency: String) {
+        switch self.selectorDiagram {
+            case 1: self.chosenCurShortName1 = currency
+            case 2: self.chosenCurShortName2 = currency
+            case 3: self.chosenCurShortName3 = currency
+            default: return
+        }
+    }
+}
