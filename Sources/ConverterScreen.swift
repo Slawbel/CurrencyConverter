@@ -173,9 +173,9 @@ class ConverterScreen: UIViewController {
             let currencyScreen = CurrencyScreen()
             self.selector = 1
             currencyScreen.delegateToConverterScreen = self
-            
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
+
         
         // style setting of convertion result of currency #1 for comparison
         outputLabel1.backgroundColor = .clear
@@ -588,7 +588,6 @@ class ConverterScreen: UIViewController {
             make.height.equalTo(40)
             make.width.equalTo(176)
         }
-        
     }
     
     // function hides keyboard from screen
@@ -841,6 +840,7 @@ extension ConverterScreen: CurrencyScreenDelegate {
         }
         default: return
         }
+        convert()
     }
     
     func forbidAnotherScreen() {
