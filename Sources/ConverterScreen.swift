@@ -62,7 +62,7 @@ class ConverterScreen: UIViewController {
     var chosenCurShortName3: String!
     
     // needed counter for adding of currency on the screen
-    var counterOfClick = 0
+    var counterOfClick = 1
     var selector: UInt8 = 0
     
     let coordinator = Coordinator()
@@ -628,7 +628,7 @@ class ConverterScreen: UIViewController {
 
     // function adds block with currencies #2 and #3 after pushing of addButton and sets constraints for moved buttons: "addButton", "buttonRateHistory", "buttonDiagramPage"
     @objc func addCurrency() {
-        if counterOfClick == 0 {
+        if counterOfClick == 1 {
             stackView2.isHidden = false
             outputCurLabel2.isHidden = false
             outputCurrencyLabel2.isHidden = false
@@ -636,6 +636,7 @@ class ConverterScreen: UIViewController {
             outputLabel2.isHidden = false
             swapButton2.isHidden = false
             counterOfClick+=1
+            
             
             addButton.snp.remakeConstraints { make in
                 make.leading.equalTo(view).inset(177)
@@ -656,7 +657,7 @@ class ConverterScreen: UIViewController {
                 make.height.equalTo(40)
                 make.width.equalTo(176)
             }
-        } else {
+        } else if counterOfClick == 2 {
             stackView3.isHidden = false
             outputCurLabel3.isHidden = false
             outputCurrencyLabel3.isHidden = false
@@ -679,7 +680,7 @@ class ConverterScreen: UIViewController {
                 make.height.equalTo(40)
                 make.width.equalTo(176)
             }
-        }
+        } else { return }
     }
 
     // function creates instance of API conversion class and sets currency names to arguments that will be used in conversion
@@ -795,16 +796,18 @@ extension ConverterScreen: DiagramResultDelegate {
         if curOutput2 != nil {
             self.chosenCurShortName2 = curOutput2
             self.outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName2)
-            self.counterOfClick = 0
+            self.counterOfClick = 1
             self.addCurrency()
         }
         if curOutput3 != nil {
             self.chosenCurShortName3 = curOutput3
             self.outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName3)
-            for counter in 0...1 {
+            for counter in 1...2 {
                 self.counterOfClick = counter
                 self.addCurrency()
+                print(counter)
             }
+            self.counterOfClick = 0
         }
     }
     
