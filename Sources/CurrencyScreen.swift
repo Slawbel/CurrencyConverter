@@ -31,6 +31,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     weak var delegateToConverterScreen: CurrencyScreenDelegate?
     
     var filteredDictCurrency: OrderedDictionary<Character, [(String, String)]> = [:]
+    var valueForDelegate: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,6 +135,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @objc private func doSwipeRight (_ gesture: UISwipeGestureRecognizer) {
         if gesture.state == .ended {
+            delegationOfValue()
             Coordinator.closeAnotherScreen(from: self)
         }
     }
@@ -191,7 +193,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         onCurrencySelectedShort1 = contact?.0 ?? ""
 
         chosenRow = indexPath
-        self.delegateToConverterScreen?.transferCurShortName(currency: onCurrencySelectedShort1!)
+        self.valueForDelegate = onCurrencySelectedShort1 ?? ""
         tableView.reloadData()
     }
     
@@ -273,6 +275,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         selectButton.setAttributedTitle(attributeButtonText, for: .normal)
         
         selectButton.addAction(UIAction { [weak self] _ in
+            self?.delegationOfValue()
             Coordinator.closeAnotherScreen(from: self!)
         }, for: .primaryActionTriggered)
                 
@@ -343,8 +346,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                 }
             }
             self.tableView.reloadData()
-            
         }
+    }
+    
+    func delegationOfValue() {
+        self.delegateToConverterScreen?.transferCurShortName(currency: self.valueForDelegate)
     }
 }
 
