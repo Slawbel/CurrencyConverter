@@ -39,10 +39,10 @@ class DiagramResult: DemoBaseViewController {
     var selectorDiagram: UInt8 = 0
 
     
-    init (inputCur: String, outputCur1: String, outputCur2: String?, outputCur3: String?) {
+    init (inputCur: String, outputCur1: String?, outputCur2: String?, outputCur3: String?) {
         super.init(nibName: nil, bundle: nil)
         self.chosenCurShortNameBase = inputCur
-        self.chosenCurShortName1 = outputCur1
+        if outputCur1 != nil { self.chosenCurShortName1 = outputCur1 }
         if outputCur2 != nil { self.chosenCurShortName2 = outputCur2 }
         if outputCur3 != nil { self.chosenCurShortName3 = outputCur3 }
     }
@@ -144,15 +144,6 @@ class DiagramResult: DemoBaseViewController {
             let currencyScreen = CurrencyScreen()
             self.selectorDiagram = 1
             currencyScreen.delegateToConverterScreen = self
-            
-            let copyConverterScreen = ConverterScreen()
-            copyConverterScreen.convert()
-            let flag = copyConverterScreen.getFlagToLabel(shortName: self.chosenCurShortName1!)
-            guard flag != nil else { return }
-            if flag != nil {
-                self.outputLabel1.text = flag! + " " + self.chosenCurShortName1! + " 🟣"
-            } else { return }
-            self.curHistory()
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
@@ -170,15 +161,6 @@ class DiagramResult: DemoBaseViewController {
             let currencyScreen = CurrencyScreen()
             self.selectorDiagram = 2
             currencyScreen.delegateToConverterScreen = self
-
-            let copyConverterScreen = ConverterScreen()
-            copyConverterScreen.convert()
-            let flag = copyConverterScreen.getFlagToLabel(shortName: self.chosenCurShortName2!)
-            guard flag != nil else { return }
-            if flag != nil {
-                self.outputLabel2.text = flag! + " " + self.chosenCurShortName2! + " ⚪️"
-            } else { return }
-            self.curHistory()
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
@@ -196,15 +178,6 @@ class DiagramResult: DemoBaseViewController {
             let currencyScreen = CurrencyScreen()
             self.selectorDiagram = 3
             currencyScreen.delegateToConverterScreen = self
-                        
-            let copyConverterScreen = ConverterScreen()
-            copyConverterScreen.convert()
-            let flag = copyConverterScreen.getFlagToLabel(shortName: self.chosenCurShortName3!)
-            guard flag != nil else { return }
-            if flag != nil {
-                self.outputLabel3.text = flag! + " " + self.chosenCurShortName3! + " 🟠"
-            } else { return }
-            self.curHistory()
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
@@ -378,12 +351,6 @@ class DiagramResult: DemoBaseViewController {
         var symbols = ""
         if let chosenCurShortName1 = chosenCurShortName1 {
             symbols += chosenCurShortName1
-        } else {
-            let alertMissedCur1 = UIAlertController(title: "Missing currency 1", message: "Please, select currency #1", preferredStyle: .alert)
-            let okAction1 = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alertMissedCur1.addAction(okAction1)
-            present(alertMissedCur1, animated:  true, completion: nil)
-            return
         }
         if let chosenCurShortName2 = chosenCurShortName2 {
             if symbols != "" {
@@ -598,11 +565,41 @@ extension DiagramResult {
 
 extension DiagramResult: CurrencyScreenDelegate {
     func transferCurShortName(currency: String) {
+        let copyConverterScreen = ConverterScreen()
+
         switch self.selectorDiagram {
-            case 1: self.chosenCurShortName1 = currency
-            case 2: self.chosenCurShortName2 = currency
-            case 3: self.chosenCurShortName3 = currency
+            case 1: do {
+                self.chosenCurShortName1 = currency
+                
+                copyConverterScreen.convert()
+                let flag = copyConverterScreen.getFlagToLabel(shortName: self.chosenCurShortName1!)
+                guard flag != nil else { return }
+                if flag != nil {
+                    self.outputLabel1.text = flag! + " " + self.chosenCurShortName1! + " 🟣"
+                } else { return }
+            }
+            case 2: do {
+                self.chosenCurShortName2 = currency
+                
+                copyConverterScreen.convert()
+                let flag = copyConverterScreen.getFlagToLabel(shortName: self.chosenCurShortName2!)
+                guard flag != nil else { return }
+                if flag != nil {
+                    self.outputLabel2.text = flag! + " " + self.chosenCurShortName2! + " ⚪️"
+                } else { return }
+            }
+                case 3: do {
+                self.chosenCurShortName3 = currency
+                
+                copyConverterScreen.convert()
+                let flag = copyConverterScreen.getFlagToLabel(shortName: self.chosenCurShortName3!)
+                guard flag != nil else { return }
+                if flag != nil {
+                    self.outputLabel3.text = flag! + " " + self.chosenCurShortName3! + " 🟠"
+                } else { return }
+            }
             default: return
         }
+        self.curHistory()
     }
 }

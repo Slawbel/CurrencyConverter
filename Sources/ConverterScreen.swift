@@ -315,11 +315,15 @@ class ConverterScreen: UIViewController {
         buttonRateHistory.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonRateHistory.setTitleColor(.white, for: .normal)
         buttonRateHistory.addAction(UIAction { [weak self] _ in
-            let rateHistoryPage = RateHistoryPage()
-            rateHistoryPage.short1 = self?.chosenCurShortName
-            rateHistoryPage.short2 = self?.chosenCurShortName1
-            rateHistoryPage.modalPresentationStyle = .fullScreen
-            self?.present(rateHistoryPage, animated: true)
+            if self?.chosenCurShortName != nil {
+                let rateHistoryPage = RateHistoryPage()
+                rateHistoryPage.short1 = self?.chosenCurShortName
+                rateHistoryPage.short2 = self?.chosenCurShortName1
+                rateHistoryPage.modalPresentationStyle = .fullScreen
+                self?.present(rateHistoryPage, animated: true)
+            } else {
+                self?.forbidAnotherScreen()
+            }
         }, for: .primaryActionTriggered)
         let buttonRateHistoryImage = UIImage(named: "icon_history")
         buttonRateHistory.setImage(buttonRateHistoryImage, for: .normal)
@@ -333,10 +337,14 @@ class ConverterScreen: UIViewController {
         buttonDiagramPage.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonDiagramPage.setTitleColor(.white, for: .normal)
         buttonDiagramPage.addAction(UIAction { [weak self] _ in
-            let diagramResult = DiagramResult(inputCur: self!.chosenCurShortName, outputCur1: self!.chosenCurShortName1, outputCur2: self?.chosenCurShortName2, outputCur3: self?.chosenCurShortName3)
+            if self?.chosenCurShortName != nil {
+                let diagramResult = DiagramResult(inputCur: self!.chosenCurShortName, outputCur1: self?.chosenCurShortName1, outputCur2: self?.chosenCurShortName2, outputCur3: self?.chosenCurShortName3)
             diagramResult.curHistory()
             diagramResult.diagramDelegate = self
             Coordinator.openAnotherScreen(from: self!, to: diagramResult)
+            } else {
+                self?.forbidAnotherScreen()
+            }
         }, for: .primaryActionTriggered)
         let buttonDiagramPageImage = UIImage(named: "icon_graph")
         buttonDiagramPage.setImage(buttonDiagramPageImage, for: .normal)
@@ -703,6 +711,13 @@ class ConverterScreen: UIViewController {
             }
             self?.outputLabel3.text = String(convertResult.result ?? 0)
         }
+        
+        
+        if self.chosenCurShortName == nil {
+            self.outputLabel1.text = "0"
+            self.outputLabel2.text = "0"
+            self.outputLabel3.text = "0"
+        }
     }
     
     // function to define flag by code and transfer in string format to currency labels inside blocks
@@ -808,12 +823,32 @@ extension ConverterScreen: DiagramResultDelegate {
 extension ConverterScreen: CurrencyScreenDelegate {
     func transferCurShortName(currency: String) {
         switch self.selector {
-            case 0: inputCurrencyLabel.text = updateOutputCurrencyLabel(chosenCurrency: currency)
-            case 1: outputCurrencyLabel1.text = updateOutputCurrencyLabel(chosenCurrency: currency)
-            case 2: outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: currency)
-            case 3: outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: currency)
-            default: return
+        case 0: do {
+            inputCurrencyLabel.text = updateOutputCurrencyLabel(chosenCurrency: currency)
+            self.chosenCurShortName = currency
         }
+        case 1: do {
+            outputCurrencyLabel1.text = updateOutputCurrencyLabel(chosenCurrency: currency)
+            self.chosenCurShortName1 = currency
+        }
+        case 2: do {
+            outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: currency)
+            self.chosenCurShortName2 = currency
+        }
+        case 3: do {
+            outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: currency)
+            self.chosenCurShortName3 = currency
+        }
+        default: return
+        }
+    }
+    
+    func forbidAnotherScreen() {
+        let textForAlertController = NSLocalizedString("textForAlertController", comment: "")
+        let alertController = UIAlertController(title: textForAlertController, message: nil, preferredStyle: .alert)
+        let cancelButton = UIAlertAction(title: "OK", style: .default)
+        alertController.addAction(cancelButton)
+        present(alertController, animated: true, completion: nil)
     }
 }
 
