@@ -38,7 +38,7 @@ class DiagramResult: DemoBaseViewController {
     
     var selectorDiagram: UInt8 = 0
 
-    
+
     init (inputCur: String, outputCur1: String?, outputCur2: String?, outputCur3: String?) {
         super.init(nibName: nil, bundle: nil)
         self.chosenCurShortNameBase = inputCur
@@ -382,6 +382,8 @@ class DiagramResult: DemoBaseViewController {
         
         updateOfXAxis()
         self.setData(coordinates: coordinates(), coordinates2: coordinates2(), coordinates3: coordinates3(), chosenCur1: chosenCurShortName1 ?? "", chosenCur2: chosenCurShortName2 ?? "", chosenCur3: chosenCurShortName3 ?? "")
+        
+        print(symbols)
     }
     
     override func updateChartData() {

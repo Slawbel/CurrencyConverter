@@ -718,7 +718,6 @@ class ConverterScreen: UIViewController {
             self?.outputLabel3.text = String(convertResult.result ?? 0)
         }
         
-        
         if self.chosenCurShortName == nil {
             self.outputLabel1.text = "0"
             self.outputLabel2.text = "0"
@@ -876,6 +875,14 @@ extension ConverterScreen: CurrencyScreenDelegate {
         print(self.chosenCurShortName2)
         print(self.chosenCurShortName3)
         self.convert()
+    }
+    
+    func forbidAnotherScreen() {
+        let textForAlertController = NSLocalizedString("textForAlertController", comment: "")
+        let alertController = UIAlertController(title: textForAlertController, message: nil, preferredStyle: .alert)
+        let cancelButton = UIAlertAction(title: "OK", style: .default)
+        alertController.addAction(cancelButton)
+        present(alertController, animated: true, completion: nil)
     }
     
     func forbidAnotherScreen() {

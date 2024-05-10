@@ -78,7 +78,6 @@
 				A2FC58AD2BEA7B8D0091D8EB /* SwifterSwift in Frameworks */,
 				A2FC58BE2BEA7BB60091D8EB /* SnapKit in Frameworks */,
 				A2FC58BB2BEA7BAB0091D8EB /* HeapModule in Frameworks */,
-				A2FC58B72BEA7BAB0091D8EB /* DequeModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,6 +586,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A2FC58BC2BEA7BB60091D8EB /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		A25E630F2BDC39F5006B2D0A /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A25E630E2BDC39F5006B2D0A /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 
