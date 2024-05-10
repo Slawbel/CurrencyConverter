@@ -801,35 +801,27 @@ class ConverterScreen: UIViewController {
 
 extension ConverterScreen: DiagramResultDelegate {
     func currenciesFromDiagramToConverter(curInput: String?, curOutput1: String?, curOutput2: String?, curOutput3: String?) {
-        if curInput != nil {
-            self.chosenCurShortName = curInput
-        }
-        if curOutput1 != nil {
-            if curOutput1 == "" {
-            }
-            self.chosenCurShortName1 = curOutput1
-            self.outputCurrencyLabel1.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName1)
-        }
-        if curOutput2 != nil {
-            if curOutput3 == "" {
-            }
-            self.chosenCurShortName2 = curOutput2
-            self.outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName2)
-            self.counterOfClick = 1
+        print(curOutput1)
+        print(curOutput2)
+        print(curOutput3)
+        self.chosenCurShortName = curInput
+        
+        self.chosenCurShortName1 = curOutput1
+        self.outputCurrencyLabel1.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName1)
+        
+        self.chosenCurShortName2 = curOutput2
+        self.outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName2)
+        self.counterOfClick = 1
+        self.addCurrency()
+        
+        self.chosenCurShortName3 = curOutput3
+        self.outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName3)
+        for counter in 1...2 {
+            self.counterOfClick = counter
             self.addCurrency()
+            print(counter)
         }
-        if curOutput3 != nil {
-            if curInput == "" {
-            }
-            self.chosenCurShortName3 = curOutput3
-            self.outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName3)
-            for counter in 1...2 {
-                self.counterOfClick = counter
-                self.addCurrency()
-                print(counter)
-            }
-            self.counterOfClick = 0
-        }
+        self.counterOfClick = 0
     }
     
     func updateOutputCurrencyLabel (chosenCurrency: String?) -> String {
