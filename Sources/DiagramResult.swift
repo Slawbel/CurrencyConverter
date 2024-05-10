@@ -584,7 +584,7 @@ extension DiagramResult: CurrencyScreenDelegate {
                 if cutShortNameFlag != nil {
                     self.outputLabel1.text = cutShortNameFlag! + " " + self.chosenCurShortName1! + " 🟣"
                 } else {
-                    self.outputLabel1.text = " 🟣"
+                    self.outputLabel1.text = "           🟣"
                 }
             }
             case 2: do {
@@ -603,7 +603,7 @@ extension DiagramResult: CurrencyScreenDelegate {
                 if cutShortNameFlag != nil {
                     self.outputLabel2.text = cutShortNameFlag! + " " + self.chosenCurShortName2! + " ⚪️"
                 } else {
-                    self.outputLabel2.text = " ⚪️"
+                    self.outputLabel2.text = "           ⚪️"
                 }
             }
             case 3: do {
@@ -621,7 +621,7 @@ extension DiagramResult: CurrencyScreenDelegate {
                 if cutShortNameFlag != nil {
                     self.outputLabel3.text = cutShortNameFlag! + " " + self.chosenCurShortName3! + " 🟠"
                 } else {
-                    self.outputLabel3.text = " 🟠"
+                    self.outputLabel3.text = "           🟠"
                 }
             }
             default: return

@@ -724,13 +724,13 @@ class ConverterScreen: UIViewController {
             self.outputLabel2.text = "0"
             self.outputLabel3.text = "0"
         }
-        if self.chosenCurShortName1 == "" {
+        if self.chosenCurShortName1 == "" || self.chosenCurShortName1 == nil {
             self.outputLabel1.text = "0"
         }
-        if self.chosenCurShortName2 == "" {
+        if self.chosenCurShortName2 == "" || self.chosenCurShortName2 == nil {
             self.outputLabel2.text = "0"
         }
-        if self.chosenCurShortName3 == "" {
+        if self.chosenCurShortName3 == "" || self.chosenCurShortName3 == nil {
             self.outputLabel3.text = "0"
         }
     }
@@ -801,9 +801,6 @@ class ConverterScreen: UIViewController {
 
 extension ConverterScreen: DiagramResultDelegate {
     func currenciesFromDiagramToConverter(curInput: String?, curOutput1: String?, curOutput2: String?, curOutput3: String?) {
-        print(curOutput1)
-        print(curOutput2)
-        print(curOutput3)
         self.chosenCurShortName = curInput
         
         self.chosenCurShortName1 = curOutput1
@@ -829,13 +826,12 @@ extension ConverterScreen: DiagramResultDelegate {
         if chosenCurrency != nil {
             cutShortNameFlag = self.getFlagToLabel(shortName: chosenCurrency!)
         }
-        self.convert()
+        
         if cutShortNameFlag == nil {
             return "              >"
         } else {
             return cutShortNameFlag! + " " + chosenCurrency!
         }
-        
     }
 }
 
@@ -876,7 +872,10 @@ extension ConverterScreen: CurrencyScreenDelegate {
         }
         default: return
         }
-        
+        print(self.chosenCurShortName1)
+        print(self.chosenCurShortName2)
+        print(self.chosenCurShortName3)
+        self.convert()
     }
     
     func forbidAnotherScreen() {
