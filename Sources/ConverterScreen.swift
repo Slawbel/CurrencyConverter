@@ -801,32 +801,28 @@ class ConverterScreen: UIViewController {
 
 extension ConverterScreen: DiagramResultDelegate {
     func currenciesFromDiagramToConverter(curInput: String?, curOutput1: String?, curOutput2: String?, curOutput3: String?) {
-        var checkForEmptyValue = false
         if curInput != nil {
             self.chosenCurShortName = curInput
         }
         if curOutput1 != nil {
             if curOutput1 == "" {
-                checkForEmptyValue = true
             }
             self.chosenCurShortName1 = curOutput1
-            self.outputCurrencyLabel1.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName1, checkForEmptyValue: checkForEmptyValue)
+            self.outputCurrencyLabel1.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName1)
         }
         if curOutput2 != nil {
             if curOutput3 == "" {
-                checkForEmptyValue = true
             }
             self.chosenCurShortName2 = curOutput2
-            self.outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName2, checkForEmptyValue: checkForEmptyValue)
+            self.outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName2)
             self.counterOfClick = 1
             self.addCurrency()
         }
         if curOutput3 != nil {
             if curInput == "" {
-                checkForEmptyValue = true
             }
             self.chosenCurShortName3 = curOutput3
-            self.outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName3, checkForEmptyValue: checkForEmptyValue)
+            self.outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName3)
             for counter in 1...2 {
                 self.counterOfClick = counter
                 self.addCurrency()
@@ -836,16 +832,16 @@ extension ConverterScreen: DiagramResultDelegate {
         }
     }
     
-    func updateOutputCurrencyLabel (chosenCurrency: String, checkForEmptyValue: Bool) -> String {
+    func updateOutputCurrencyLabel (chosenCurrency: String?) -> String {
         var cutShortNameFlag: String?
-        if !checkForEmptyValue {
-            cutShortNameFlag = self.getFlagToLabel(shortName: chosenCurrency)
+        if chosenCurrency != nil {
+            cutShortNameFlag = self.getFlagToLabel(shortName: chosenCurrency!)
         }
         self.convert()
-        if cutShortNameFlag == nil || cutShortNameFlag == "" {
-            return chosenCurrency + "              >"
+        if cutShortNameFlag == nil {
+            return "              >"
         } else {
-            return cutShortNameFlag! + " " + chosenCurrency + " >"
+            return cutShortNameFlag! + " " + chosenCurrency!
         }
         
     }
@@ -853,26 +849,38 @@ extension ConverterScreen: DiagramResultDelegate {
 
 extension ConverterScreen: CurrencyScreenDelegate {
     func transferCurShortName(currency: String) {
-        var checkForEmptyValue = false
-        if currency == "" {
-            checkForEmptyValue = true
-        }
         switch self.selector {
         case 0: do {
-            self.chosenCurShortName = currency
-            inputCurrencyLabel.text = updateOutputCurrencyLabel(chosenCurrency: currency, checkForEmptyValue: checkForEmptyValue)
+            if currency == "" {
+                self.chosenCurShortName = nil
+            } else {
+                self.chosenCurShortName = currency
+            }
+            inputCurrencyLabel.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName)
         }
         case 1: do {
-            self.chosenCurShortName1 = currency
-            outputCurrencyLabel1.text = updateOutputCurrencyLabel(chosenCurrency: currency, checkForEmptyValue: checkForEmptyValue)
+            if currency == "" {
+                self.chosenCurShortName1 = nil
+            } else {
+                self.chosenCurShortName1 = currency
+            }
+            outputCurrencyLabel1.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName1)
         }
         case 2: do {
-            self.chosenCurShortName2 = currency
-            outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: currency, checkForEmptyValue: checkForEmptyValue)
+            if currency == "" {
+                self.chosenCurShortName2 = nil
+            } else {
+                self.chosenCurShortName2 = currency
+            }
+            outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName2)
         }
         case 3: do {
-            self.chosenCurShortName3 = currency
-            outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: currency, checkForEmptyValue: checkForEmptyValue)
+            if currency == "" {
+                self.chosenCurShortName3 = nil
+            } else {
+                self.chosenCurShortName3 = currency
+            }
+            outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName3)
         }
         default: return
         }
