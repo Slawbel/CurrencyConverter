@@ -109,7 +109,7 @@ class ConverterScreen: UIViewController {
         inputCurButton.layer.cornerRadius = 10
         inputCurButton.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         inputCurButton.setTitleColor(.white, for: .normal)
-        inputCurButton.addAction(UIAction { _ in
+        inputCurButton.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             self.selector = 0
             currencyScreen.delegateToConverterScreen = self
@@ -176,7 +176,7 @@ class ConverterScreen: UIViewController {
         outputCurButton1.layer.cornerRadius = 10
         outputCurButton1.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton1.setTitleColor(.white, for: .normal)
-        outputCurButton1.addAction(UIAction { _ in
+        outputCurButton1.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             self.selector = 1
             currencyScreen.delegateToConverterScreen = self
@@ -220,7 +220,7 @@ class ConverterScreen: UIViewController {
         outputCurButton2.layer.cornerRadius = 10
         outputCurButton2.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton2.setTitleColor(.white, for: .normal)
-        outputCurButton2.addAction(UIAction { _ in
+        outputCurButton2.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             self.selector = 2
             currencyScreen.delegateToConverterScreen = self
@@ -266,7 +266,7 @@ class ConverterScreen: UIViewController {
         outputCurButton3.layer.cornerRadius = 10
         outputCurButton3.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         outputCurButton3.setTitleColor(.white, for: .normal)
-        outputCurButton3.addAction(UIAction { _ in
+        outputCurButton3.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
             self.selector = 3
             currencyScreen.delegateToConverterScreen = self
@@ -837,52 +837,22 @@ extension ConverterScreen: DiagramResultDelegate {
 extension ConverterScreen: CurrencyScreenDelegate {
     func transferCurShortName(currency: String) {
         switch self.selector {
-        case 0: do {
-            if currency == "" {
-                self.chosenCurShortName = nil
-            } else {
-                self.chosenCurShortName = currency
-            }
-            inputCurrencyLabel.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName)
+            case 0: setLabelWithFlag(currency: currency, chosenCur: &self.chosenCurShortName, label: &inputCurrencyLabel.text)
+            case 1: setLabelWithFlag(currency: currency, chosenCur: &self.chosenCurShortName1, label: &outputCurrencyLabel1.text)
+            case 2: setLabelWithFlag(currency: currency, chosenCur: &self.chosenCurShortName2, label: &outputCurrencyLabel2.text)
+            case 3: setLabelWithFlag(currency: currency, chosenCur: &self.chosenCurShortName3, label: &outputCurrencyLabel3.text)
+            default: return
         }
-        case 1: do {
-            if currency == "" {
-                self.chosenCurShortName1 = nil
-            } else {
-                self.chosenCurShortName1 = currency
-            }
-            outputCurrencyLabel1.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName1)
-        }
-        case 2: do {
-            if currency == "" {
-                self.chosenCurShortName2 = nil
-            } else {
-                self.chosenCurShortName2 = currency
-            }
-            outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName2)
-        }
-        case 3: do {
-            if currency == "" {
-                self.chosenCurShortName3 = nil
-            } else {
-                self.chosenCurShortName3 = currency
-            }
-            outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName3)
-        }
-        default: return
-        }
-        print(self.chosenCurShortName1)
-        print(self.chosenCurShortName2)
-        print(self.chosenCurShortName3)
         self.convert()
     }
     
-    func forbidAnotherScreen() {
-        let textForAlertController = NSLocalizedString("textForAlertController", comment: "")
-        let alertController = UIAlertController(title: textForAlertController, message: nil, preferredStyle: .alert)
-        let cancelButton = UIAlertAction(title: "OK", style: .default)
-        alertController.addAction(cancelButton)
-        present(alertController, animated: true, completion: nil)
+    func setLabelWithFlag (currency: String, chosenCur: inout String?, label: inout String?) {
+        if currency == "" {
+            chosenCur = nil
+        } else {
+            chosenCur = currency
+        }
+        label = updateOutputCurrencyLabel(chosenCurrency: chosenCur)
     }
     
     func forbidAnotherScreen() {

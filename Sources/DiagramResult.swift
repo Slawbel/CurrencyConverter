@@ -567,67 +567,36 @@ extension DiagramResult {
 
 extension DiagramResult: CurrencyScreenDelegate {
     func transferCurShortName(currency: String) {
+        
+        switch self.selectorDiagram {
+        case 1: setCurLabels(label: &self.outputLabel1.text, currency: currency, curShortName: &self.chosenCurShortName1, color: " 🟣")
+        case 2: setCurLabels(label: &self.outputLabel2.text, currency: currency, curShortName: &self.chosenCurShortName2, color: " ⚪️")
+        case 3: setCurLabels(label: &self.outputLabel3.text, currency: currency, curShortName: &self.chosenCurShortName3, color: " 🟠")
+        default: return
+        }
+        
+        self.curHistory()
+    }
+    
+    func setCurLabels(label: inout String?, currency: String, curShortName: inout String?, color: String) {
         let copyConverterScreen = ConverterScreen()
 
-        switch self.selectorDiagram {
-            case 1: do {
-                if currency == "" {
-                    self.chosenCurShortName1 = nil
-                } else {
-                    self.chosenCurShortName1 = currency
-                }
-                
-                var cutShortNameFlag: String?
-                if self.chosenCurShortName1 != nil {
-                    cutShortNameFlag = copyConverterScreen.getFlagToLabel(shortName: self.chosenCurShortName1!)
-                }
-                copyConverterScreen.convert()
-
-                if cutShortNameFlag != nil {
-                    self.outputLabel1.text = cutShortNameFlag! + " " + self.chosenCurShortName1! + " 🟣"
-                } else {
-                    self.outputLabel1.text = "           🟣"
-                }
-            }
-            case 2: do {
-                if currency == "" {
-                    self.chosenCurShortName2 = nil
-                } else {
-                    self.chosenCurShortName2 = currency
-                }
-                
-                var cutShortNameFlag: String?
-                if self.chosenCurShortName2 != nil {
-                    cutShortNameFlag = copyConverterScreen.getFlagToLabel(shortName: self.chosenCurShortName2!)
-                }
-                copyConverterScreen.convert()
-
-                if cutShortNameFlag != nil {
-                    self.outputLabel2.text = cutShortNameFlag! + " " + self.chosenCurShortName2! + " ⚪️"
-                } else {
-                    self.outputLabel2.text = "           ⚪️"
-                }
-            }
-            case 3: do {
-                if currency == "" {
-                    self.chosenCurShortName3 = nil
-                } else {
-                    self.chosenCurShortName3 = currency
-                }
-                var cutShortNameFlag: String?
-                if self.chosenCurShortName3 != nil {
-                    cutShortNameFlag = copyConverterScreen.getFlagToLabel(shortName: self.chosenCurShortName3!)
-                }
-                copyConverterScreen.convert()
-            
-                if cutShortNameFlag != nil {
-                    self.outputLabel3.text = cutShortNameFlag! + " " + self.chosenCurShortName3! + " 🟠"
-                } else {
-                    self.outputLabel3.text = "           🟠"
-                }
-            }
-            default: return
+        if currency == "" {
+            curShortName = nil
+        } else {
+            curShortName = currency
         }
-        self.curHistory()
+        
+        var cutShortNameFlag: String?
+        if curShortName != nil {
+            cutShortNameFlag = copyConverterScreen.getFlagToLabel(shortName: curShortName!)
+        }
+        copyConverterScreen.convert()
+
+        if cutShortNameFlag != nil {
+            label = cutShortNameFlag! + " " + curShortName! + color
+        } else {
+            label = "          " + color
+        }
     }
 }
