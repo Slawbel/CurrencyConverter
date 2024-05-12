@@ -24,19 +24,15 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     private var symbolsAfterSearch = [String]()
     
     // chosen full name of currency for cells #1...4 are stored here or cell is empty
-    var onCurrencySelected1: ((String) -> Void)?
-    var onCurrencySelected2: ((String) -> Void)?
-    var onCurrencySelected3: ((String) -> Void)?
-    var onCurrencySelected4: ((String) -> Void)?
+    var onCurrencySelected1: String?
     // chosen short name of currency for cells #1...4 are stored here or cell is empty
-    var onCurrencySelectedShort1: ((String) -> Void)?
-    var onCurrencySelectedShort2: ((String) -> Void)?
-    var onCurrencySelectedShort3: ((String) -> Void)?
-    var onCurrencySelectedShort4: ((String) -> Void)?
+    var onCurrencySelectedShort1: String?
+    
+    weak var delegateToConverterScreen: CurrencyScreenDelegate?
     
     var filteredDictCurrency: OrderedDictionary<Character, [(String, String)]> = [:]
+    var valueForDelegate: String = ""
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -139,6 +135,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @objc private func doSwipeRight (_ gesture: UISwipeGestureRecognizer) {
         if gesture.state == .ended {
+            delegationOfValue()
             Coordinator.closeAnotherScreen(from: self)
         }
     }
@@ -191,19 +188,12 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     // here are operations that will be done after click to any row with currency name; chosen row with currency saves and uses for transportation to the first screen "ConverterScreen"
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let contact = contact(for: indexPath)
-        let selectedCur: String
-        let selectedCur2: String
-        selectedCur = contact?.1 ?? ""
-        selectedCur2 = contact?.0 ?? ""
-        onCurrencySelected1?(selectedCur)
-        onCurrencySelected2?(selectedCur)
-        onCurrencySelected3?(selectedCur)
-        onCurrencySelected4?(selectedCur)
-        onCurrencySelectedShort1?(selectedCur2)
-        onCurrencySelectedShort2?(selectedCur2)
-        onCurrencySelectedShort3?(selectedCur2)
-        onCurrencySelectedShort4?(selectedCur2)
+        
+        onCurrencySelected1 = contact?.1 ?? ""
+        onCurrencySelectedShort1 = contact?.0 ?? ""
+
         chosenRow = indexPath
+        self.valueForDelegate = onCurrencySelectedShort1 ?? ""
         tableView.reloadData()
     }
     
@@ -285,6 +275,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         selectButton.setAttributedTitle(attributeButtonText, for: .normal)
         
         selectButton.addAction(UIAction { [weak self] _ in
+            self?.delegationOfValue()
             Coordinator.closeAnotherScreen(from: self!)
         }, for: .primaryActionTriggered)
                 
@@ -355,8 +346,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                 }
             }
             self.tableView.reloadData()
-            
         }
+    }
+    
+    func delegationOfValue() {
+        self.delegateToConverterScreen?.transferCurShortName(currency: self.valueForDelegate)
     }
 }
 

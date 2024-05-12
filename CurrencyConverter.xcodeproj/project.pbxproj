@@ -15,15 +15,6 @@
 		9EE797DC2B9F812E00BDBDEA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE797DB2B9F812E00BDBDEA /* Coordinator.swift */; };
 		9EFEB4852A91413D00860A54 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9EFEB4842A91413D00860A54 /* DMSans-Regular.ttf */; };
 		A22FC4902A9A44A50037B6D6 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A22FC48F2A9A445B0037B6D6 /* DMSans-Bold.ttf */; };
-		A25E62F72BCD3D1D006B2D0A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A25E62F62BCD3D1D006B2D0A /* SnapKit */; };
-		A25E62FD2BCD3D47006B2D0A /* BitCollections in Frameworks */ = {isa = PBXBuildFile; productRef = A25E62FC2BCD3D47006B2D0A /* BitCollections */; };
-		A25E62FF2BCD3D47006B2D0A /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = A25E62FE2BCD3D47006B2D0A /* Collections */; };
-		A25E63012BCD3D47006B2D0A /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = A25E63002BCD3D47006B2D0A /* DequeModule */; };
-		A25E63032BCD3D47006B2D0A /* HashTreeCollections in Frameworks */ = {isa = PBXBuildFile; productRef = A25E63022BCD3D47006B2D0A /* HashTreeCollections */; };
-		A25E63052BCD3D47006B2D0A /* HeapModule in Frameworks */ = {isa = PBXBuildFile; productRef = A25E63042BCD3D47006B2D0A /* HeapModule */; };
-		A25E63082BCD3D53006B2D0A /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A25E63072BCD3D53006B2D0A /* SwifterSwift */; };
-		A25E630B2BCD3D5E006B2D0A /* Swiftstraints in Frameworks */ = {isa = PBXBuildFile; productRef = A25E630A2BCD3D5E006B2D0A /* Swiftstraints */; };
-		A25E63102BDC39F5006B2D0A /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = A25E630F2BDC39F5006B2D0A /* DGCharts */; };
 		A261608D2AEC7CAC00C6DF13 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A261608B2AEC7CAC00C6DF13 /* Model.xcdatamodeld */; };
 		A2616D462B173E58000AF9A7 /* SetColorByCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2616D452B173E58000AF9A7 /* SetColorByCode.swift */; };
 		A2B496F5299FBDD00017A82A /* CurrencyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */; };
@@ -33,6 +24,16 @@
 		A2C271D22B684223009E40C6 /* DemoBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C271D12B684223009E40C6 /* DemoBaseViewController.swift */; };
 		A2C48EAF29E5C412004A5594 /* DiagramResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C48EAE29E5C412004A5594 /* DiagramResult.swift */; };
 		A2EA87582A23E2FA00AAC943 /* CurrencyApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA87572A23E2FA00AAC943 /* CurrencyApi.swift */; };
+		A2FC58AA2BEA7B870091D8EB /* Swiftstraints in Frameworks */ = {isa = PBXBuildFile; productRef = A2FC58A92BEA7B870091D8EB /* Swiftstraints */; };
+		A2FC58AD2BEA7B8D0091D8EB /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A2FC58AC2BEA7B8D0091D8EB /* SwifterSwift */; };
+		A2FC58B02BEA7B980091D8EB /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = A2FC58AF2BEA7B980091D8EB /* DGCharts */; };
+		A2FC58B32BEA7BAB0091D8EB /* BitCollections in Frameworks */ = {isa = PBXBuildFile; productRef = A2FC58B22BEA7BAB0091D8EB /* BitCollections */; };
+		A2FC58B52BEA7BAB0091D8EB /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = A2FC58B42BEA7BAB0091D8EB /* Collections */; };
+		A2FC58B72BEA7BAB0091D8EB /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = A2FC58B62BEA7BAB0091D8EB /* DequeModule */; };
+		A2FC58B92BEA7BAB0091D8EB /* HashTreeCollections in Frameworks */ = {isa = PBXBuildFile; productRef = A2FC58B82BEA7BAB0091D8EB /* HashTreeCollections */; };
+		A2FC58BB2BEA7BAB0091D8EB /* HeapModule in Frameworks */ = {isa = PBXBuildFile; productRef = A2FC58BA2BEA7BAB0091D8EB /* HeapModule */; };
+		A2FC58BE2BEA7BB60091D8EB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A2FC58BD2BEA7BB60091D8EB /* SnapKit */; };
+		A2FC58C02BEAD5D10091D8EB /* CurrencyScreenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FC58BF2BEAD5D00091D8EB /* CurrencyScreenDelegate.swift */; };
 		A2FEBA5529C11BB7006363DB /* RateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FEBA5429C11BB7006363DB /* RateData.swift */; };
 		A2FEBA7729D4EE5F006363DB /* RatesHistoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FEBA7629D4EE5F006363DB /* RatesHistoryList.swift */; };
 /* End PBXBuildFile section */
@@ -59,6 +60,7 @@
 		A2C2721A2B6D05D1009E40C6 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = System/Library/Frameworks/Charts.framework; sourceTree = SDKROOT; };
 		A2C48EAE29E5C412004A5594 /* DiagramResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramResult.swift; sourceTree = "<group>"; };
 		A2EA87572A23E2FA00AAC943 /* CurrencyApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyApi.swift; sourceTree = "<group>"; };
+		A2FC58BF2BEAD5D00091D8EB /* CurrencyScreenDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyScreenDelegate.swift; sourceTree = "<group>"; };
 		A2FEBA5429C11BB7006363DB /* RateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateData.swift; sourceTree = "<group>"; };
 		A2FEBA7629D4EE5F006363DB /* RatesHistoryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatesHistoryList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -68,15 +70,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A25E62FF2BCD3D47006B2D0A /* Collections in Frameworks */,
-				A25E62FD2BCD3D47006B2D0A /* BitCollections in Frameworks */,
-				A25E630B2BCD3D5E006B2D0A /* Swiftstraints in Frameworks */,
-				A25E63012BCD3D47006B2D0A /* DequeModule in Frameworks */,
-				A25E63082BCD3D53006B2D0A /* SwifterSwift in Frameworks */,
-				A25E62F72BCD3D1D006B2D0A /* SnapKit in Frameworks */,
-				A25E63032BCD3D47006B2D0A /* HashTreeCollections in Frameworks */,
-				A25E63102BDC39F5006B2D0A /* DGCharts in Frameworks */,
-				A25E63052BCD3D47006B2D0A /* HeapModule in Frameworks */,
+				A2FC58B32BEA7BAB0091D8EB /* BitCollections in Frameworks */,
+				A2FC58AA2BEA7B870091D8EB /* Swiftstraints in Frameworks */,
+				A2FC58B52BEA7BAB0091D8EB /* Collections in Frameworks */,
+				A2FC58B92BEA7BAB0091D8EB /* HashTreeCollections in Frameworks */,
+				A2FC58B02BEA7B980091D8EB /* DGCharts in Frameworks */,
+				A2FC58AD2BEA7B8D0091D8EB /* SwifterSwift in Frameworks */,
+				A2FC58BE2BEA7BB60091D8EB /* SnapKit in Frameworks */,
+				A2FC58BB2BEA7BAB0091D8EB /* HeapModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +110,7 @@
 				A2B496F4299FBDD00017A82A /* CurrencyScreen.swift */,
 				A2B496F629A2C5200017A82A /* TableViewCellForCurrencyScreen.swift */,
 				A2C48EAE29E5C412004A5594 /* DiagramResult.swift */,
+				A2FC58BF2BEAD5D00091D8EB /* CurrencyScreenDelegate.swift */,
 				9E25D2D329998CA700293AB7 /* Localizable.strings */,
 				A261608B2AEC7CAC00C6DF13 /* Model.xcdatamodeld */,
 				9E25D2D929998CA700293AB7 /* Info.plist */,
@@ -161,15 +163,15 @@
 			);
 			name = CurrencyConverter;
 			packageProductDependencies = (
-				A25E62F62BCD3D1D006B2D0A /* SnapKit */,
-				A25E62FC2BCD3D47006B2D0A /* BitCollections */,
-				A25E62FE2BCD3D47006B2D0A /* Collections */,
-				A25E63002BCD3D47006B2D0A /* DequeModule */,
-				A25E63022BCD3D47006B2D0A /* HashTreeCollections */,
-				A25E63042BCD3D47006B2D0A /* HeapModule */,
-				A25E63072BCD3D53006B2D0A /* SwifterSwift */,
-				A25E630A2BCD3D5E006B2D0A /* Swiftstraints */,
-				A25E630F2BDC39F5006B2D0A /* DGCharts */,
+				A2FC58A92BEA7B870091D8EB /* Swiftstraints */,
+				A2FC58AC2BEA7B8D0091D8EB /* SwifterSwift */,
+				A2FC58AF2BEA7B980091D8EB /* DGCharts */,
+				A2FC58B22BEA7BAB0091D8EB /* BitCollections */,
+				A2FC58B42BEA7BAB0091D8EB /* Collections */,
+				A2FC58B62BEA7BAB0091D8EB /* DequeModule */,
+				A2FC58B82BEA7BAB0091D8EB /* HashTreeCollections */,
+				A2FC58BA2BEA7BAB0091D8EB /* HeapModule */,
+				A2FC58BD2BEA7BB60091D8EB /* SnapKit */,
 			);
 			productName = CurrencyConverter;
 			productReference = 9E25D2B729998C2B00293AB7 /* CurrencyConverter.app */;
@@ -201,11 +203,11 @@
 			);
 			mainGroup = 9E25D2AE29998C2B00293AB7;
 			packageReferences = (
-				A25E62F52BCD3D1D006B2D0A /* XCRemoteSwiftPackageReference "SnapKit" */,
-				A25E62FB2BCD3D47006B2D0A /* XCRemoteSwiftPackageReference "swift-collections" */,
-				A25E63062BCD3D53006B2D0A /* XCRemoteSwiftPackageReference "SwifterSwift" */,
-				A25E63092BCD3D5E006B2D0A /* XCRemoteSwiftPackageReference "Swiftstraints" */,
-				A25E630E2BDC39F5006B2D0A /* XCRemoteSwiftPackageReference "Charts" */,
+				A2FC58A82BEA7B870091D8EB /* XCRemoteSwiftPackageReference "Swiftstraints" */,
+				A2FC58AB2BEA7B8D0091D8EB /* XCRemoteSwiftPackageReference "SwifterSwift" */,
+				A2FC58AE2BEA7B980091D8EB /* XCRemoteSwiftPackageReference "Charts" */,
+				A2FC58B12BEA7BAB0091D8EB /* XCRemoteSwiftPackageReference "swift-collections" */,
+				A2FC58BC2BEA7BB60091D8EB /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 9E25D2B829998C2B00293AB7 /* Products */;
 			projectDirPath = "";
@@ -268,6 +270,7 @@
 				A2FEBA7729D4EE5F006363DB /* RatesHistoryList.swift in Sources */,
 				A2B4970829B2B31D0017A82A /* ConvertResult.swift in Sources */,
 				A2B496F729A2C5200017A82A /* TableViewCellForCurrencyScreen.swift in Sources */,
+				A2FC58C02BEAD5D10091D8EB /* CurrencyScreenDelegate.swift in Sources */,
 				A261608D2AEC7CAC00C6DF13 /* Model.xcdatamodeld in Sources */,
 				A2FEBA5529C11BB7006363DB /* RateData.swift in Sources */,
 			);
@@ -496,15 +499,31 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A25E62F52BCD3D1D006B2D0A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		A2FC58A82BEA7B870091D8EB /* XCRemoteSwiftPackageReference "Swiftstraints" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			repositoryURL = "https://github.com/Skyvive/Swiftstraints";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.7.1;
+				minimumVersion = 5.2.0;
 			};
 		};
-		A25E62FB2BCD3D47006B2D0A /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+		A2FC58AB2BEA7B8D0091D8EB /* XCRemoteSwiftPackageReference "SwifterSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwifterSwift/SwifterSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.2.0;
+			};
+		};
+		A2FC58AE2BEA7B980091D8EB /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ChartsOrg/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
+		A2FC58B12BEA7BAB0091D8EB /* XCRemoteSwiftPackageReference "swift-collections" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections.git";
 			requirement = {
@@ -512,72 +531,61 @@
 				minimumVersion = 1.1.0;
 			};
 		};
-		A25E63062BCD3D53006B2D0A /* XCRemoteSwiftPackageReference "SwifterSwift" */ = {
+		A2FC58BC2BEA7BB60091D8EB /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwifterSwift/SwifterSwift";
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 6.2.0;
-			};
-		};
-		A25E63092BCD3D5E006B2D0A /* XCRemoteSwiftPackageReference "Swiftstraints" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwifterSwift/SwifterSwift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.2.0;
-			};
-		};
-		A25E630E2BDC39F5006B2D0A /* XCRemoteSwiftPackageReference "Charts" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ChartsOrg/Charts";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.2.0;
+				minimumVersion = 5.7.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A25E62F62BCD3D1D006B2D0A /* SnapKit */ = {
+		A2FC58A92BEA7B870091D8EB /* Swiftstraints */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A25E62F52BCD3D1D006B2D0A /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
+			package = A2FC58A82BEA7B870091D8EB /* XCRemoteSwiftPackageReference "Swiftstraints" */;
+			productName = Swiftstraints;
 		};
-		A25E62FC2BCD3D47006B2D0A /* BitCollections */ = {
+		A2FC58AC2BEA7B8D0091D8EB /* SwifterSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A25E62FB2BCD3D47006B2D0A /* XCRemoteSwiftPackageReference "swift-collections" */;
-			productName = BitCollections;
-		};
-		A25E62FE2BCD3D47006B2D0A /* Collections */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A25E62FB2BCD3D47006B2D0A /* XCRemoteSwiftPackageReference "swift-collections" */;
-			productName = Collections;
-		};
-		A25E63002BCD3D47006B2D0A /* DequeModule */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A25E62FB2BCD3D47006B2D0A /* XCRemoteSwiftPackageReference "swift-collections" */;
-			productName = DequeModule;
-		};
-		A25E63022BCD3D47006B2D0A /* HashTreeCollections */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A25E62FB2BCD3D47006B2D0A /* XCRemoteSwiftPackageReference "swift-collections" */;
-			productName = HashTreeCollections;
-		};
-		A25E63042BCD3D47006B2D0A /* HeapModule */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A25E62FB2BCD3D47006B2D0A /* XCRemoteSwiftPackageReference "swift-collections" */;
-			productName = HeapModule;
-		};
-		A25E63072BCD3D53006B2D0A /* SwifterSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A25E63062BCD3D53006B2D0A /* XCRemoteSwiftPackageReference "SwifterSwift" */;
+			package = A2FC58AB2BEA7B8D0091D8EB /* XCRemoteSwiftPackageReference "SwifterSwift" */;
 			productName = SwifterSwift;
 		};
-		A25E630A2BCD3D5E006B2D0A /* Swiftstraints */ = {
+		A2FC58AF2BEA7B980091D8EB /* DGCharts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A25E63092BCD3D5E006B2D0A /* XCRemoteSwiftPackageReference "Swiftstraints" */;
-			productName = Swiftstraints;
+			package = A2FC58AE2BEA7B980091D8EB /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		A2FC58B22BEA7BAB0091D8EB /* BitCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2FC58B12BEA7BAB0091D8EB /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = BitCollections;
+		};
+		A2FC58B42BEA7BAB0091D8EB /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2FC58B12BEA7BAB0091D8EB /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
+		A2FC58B62BEA7BAB0091D8EB /* DequeModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2FC58B12BEA7BAB0091D8EB /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = DequeModule;
+		};
+		A2FC58B82BEA7BAB0091D8EB /* HashTreeCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2FC58B12BEA7BAB0091D8EB /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = HashTreeCollections;
+		};
+		A2FC58BA2BEA7BAB0091D8EB /* HeapModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2FC58B12BEA7BAB0091D8EB /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = HeapModule;
+		};
+		A2FC58BD2BEA7BB60091D8EB /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2FC58BC2BEA7BB60091D8EB /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 		A25E630F2BDC39F5006B2D0A /* DGCharts */ = {
 			isa = XCSwiftPackageProductDependency;

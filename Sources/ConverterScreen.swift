@@ -62,7 +62,8 @@ class ConverterScreen: UIViewController {
     var chosenCurShortName3: String!
     
     // needed counter for adding of currency on the screen
-    var counterOfClick = 0
+    var counterOfClick = 1
+    var selector: UInt8 = 0
     
     let coordinator = Coordinator()
 
@@ -105,18 +106,17 @@ class ConverterScreen: UIViewController {
         inputCurrencyLabel.backgroundColor = .clear
         
         // style and function setting of button of chosen basic currency
-        //
         inputCurButton.layer.cornerRadius = 10
         inputCurButton.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#2B333A")
         inputCurButton.setTitleColor(.white, for: .normal)
         inputCurButton.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
-            currencyScreen.onCurrencySelectedShort1 = { [weak self] shortName in
-                self?.chosenCurShortName = shortName
-                self?.inputCurrencyLabel.text = self?.updateOutputCurrencyLabel(chosenCurrency: shortName)
-            }
+            self.selector = 0
+            currencyScreen.delegateToConverterScreen = self
+            
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
+        
         
         // saving date from calendar into file
         writingDateToTheFile(currentDate)
@@ -140,8 +140,15 @@ class ConverterScreen: UIViewController {
         inputTF.backgroundColor = .clear
         inputTF.textColor = .white
         inputTF.addTarget(self, action: #selector(ConverterScreen.convert), for: .editingChanged)
+        let placeholderAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.white,
+            .font: UIFont.systemFont(ofSize: 18)
+        ]
         inputTF.attributedPlaceholder = NSAttributedString(
-            string: placeholderForInputTF, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+            string: placeholderForInputTF,
+            attributes: placeholderAttributes
+        )
+
         
         
         // BLOCK OF CURRENCY #1 FOR COMPARISON
@@ -171,12 +178,11 @@ class ConverterScreen: UIViewController {
         outputCurButton1.setTitleColor(.white, for: .normal)
         outputCurButton1.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
-            currencyScreen.onCurrencySelectedShort2 = { [weak self] shortName in
-                self?.chosenCurShortName1 = shortName
-                self?.outputCurrencyLabel1.text = self?.updateOutputCurrencyLabel(chosenCurrency: shortName)
-            }
+            self.selector = 1
+            currencyScreen.delegateToConverterScreen = self
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
+
         
         // style setting of convertion result of currency #1 for comparison
         outputLabel1.backgroundColor = .clear
@@ -216,10 +222,9 @@ class ConverterScreen: UIViewController {
         outputCurButton2.setTitleColor(.white, for: .normal)
         outputCurButton2.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
-            currencyScreen.onCurrencySelectedShort3 = { [weak self] shortName in
-                self?.chosenCurShortName2 = shortName
-                self?.outputCurrencyLabel2.text = self?.updateOutputCurrencyLabel(chosenCurrency: shortName)
-            }
+            self.selector = 2
+            currencyScreen.delegateToConverterScreen = self
+            
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         outputCurButton2.isHidden = true
@@ -263,10 +268,9 @@ class ConverterScreen: UIViewController {
         outputCurButton3.setTitleColor(.white, for: .normal)
         outputCurButton3.addAction(UIAction { [unowned self] _ in
             let currencyScreen = CurrencyScreen()
-            currencyScreen.onCurrencySelectedShort4 = { [weak self] shortName in
-                self?.chosenCurShortName3 = shortName
-                self?.outputCurrencyLabel3.text = self?.updateOutputCurrencyLabel(chosenCurrency: shortName)
-            }
+            self.selector = 3
+            currencyScreen.delegateToConverterScreen = self
+            
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         outputCurButton3.isHidden = true
@@ -341,7 +345,7 @@ class ConverterScreen: UIViewController {
         buttonDiagramPage.setTitleColor(.white, for: .normal)
         buttonDiagramPage.addAction(UIAction { [weak self] _ in
             if self?.chosenCurShortName != nil {
-            let diagramResult = DiagramResult(inputCur: self!.chosenCurShortName, outputCur1: self?.chosenCurShortName1, outputCur2: self?.chosenCurShortName2, outputCur3: self?.chosenCurShortName3)
+                let diagramResult = DiagramResult(inputCur: self!.chosenCurShortName, outputCur1: self?.chosenCurShortName1, outputCur2: self?.chosenCurShortName2, outputCur3: self?.chosenCurShortName3)
             diagramResult.curHistory()
             diagramResult.diagramDelegate = self
             Coordinator.openAnotherScreen(from: self!, to: diagramResult)
@@ -591,7 +595,6 @@ class ConverterScreen: UIViewController {
             make.height.equalTo(40)
             make.width.equalTo(176)
         }
-        
     }
     
     // function hides keyboard from screen
@@ -632,7 +635,7 @@ class ConverterScreen: UIViewController {
 
     // function adds block with currencies #2 and #3 after pushing of addButton and sets constraints for moved buttons: "addButton", "buttonRateHistory", "buttonDiagramPage"
     @objc func addCurrency() {
-        if counterOfClick == 0 {
+        if counterOfClick == 1 {
             stackView2.isHidden = false
             outputCurLabel2.isHidden = false
             outputCurrencyLabel2.isHidden = false
@@ -660,7 +663,7 @@ class ConverterScreen: UIViewController {
                 make.height.equalTo(40)
                 make.width.equalTo(176)
             }
-        } else {
+        } else if counterOfClick == 2 {
             stackView3.isHidden = false
             outputCurLabel3.isHidden = false
             outputCurrencyLabel3.isHidden = false
@@ -683,7 +686,7 @@ class ConverterScreen: UIViewController {
                 make.height.equalTo(40)
                 make.width.equalTo(176)
             }
-        }
+        } else { return }
     }
 
     // function creates instance of API conversion class and sets currency names to arguments that will be used in conversion
@@ -718,6 +721,15 @@ class ConverterScreen: UIViewController {
         if self.chosenCurShortName == nil {
             self.outputLabel1.text = "0"
             self.outputLabel2.text = "0"
+            self.outputLabel3.text = "0"
+        }
+        if self.chosenCurShortName1 == "" || self.chosenCurShortName1 == nil {
+            self.outputLabel1.text = "0"
+        }
+        if self.chosenCurShortName2 == "" || self.chosenCurShortName2 == nil {
+            self.outputLabel2.text = "0"
+        }
+        if self.chosenCurShortName3 == "" || self.chosenCurShortName3 == nil {
             self.outputLabel3.text = "0"
         }
     }
@@ -788,37 +800,59 @@ class ConverterScreen: UIViewController {
 
 extension ConverterScreen: DiagramResultDelegate {
     func currenciesFromDiagramToConverter(curInput: String?, curOutput1: String?, curOutput2: String?, curOutput3: String?) {
-        if curInput != nil {
-            self.chosenCurShortName = curInput
-        }
-        if curOutput1 != nil {
-            self.chosenCurShortName1 = curOutput1
-            self.outputCurrencyLabel1.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName1)
-        }
-        if curOutput2 != nil {
-            self.chosenCurShortName2 = curOutput2
-            self.outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName2)
-            self.counterOfClick = 0
+        self.chosenCurShortName = curInput
+        
+        self.chosenCurShortName1 = curOutput1
+        self.outputCurrencyLabel1.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName1)
+        
+        self.chosenCurShortName2 = curOutput2
+        self.outputCurrencyLabel2.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName2)
+        self.counterOfClick = 1
+        self.addCurrency()
+        
+        self.chosenCurShortName3 = curOutput3
+        self.outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName3)
+        for counter in 1...2 {
+            self.counterOfClick = counter
             self.addCurrency()
+            print(counter)
         }
-        if curOutput3 != nil {
-            self.chosenCurShortName3 = curOutput3
-            self.outputCurrencyLabel3.text = updateOutputCurrencyLabel(chosenCurrency: self.chosenCurShortName3)
-            for counter in 0...1 {
-                self.counterOfClick = counter
-                self.addCurrency()
-            }
-        }
+        self.counterOfClick = 0
     }
     
-    func updateOutputCurrencyLabel (chosenCurrency: String) -> String {
-        self.convert()
-        let cutShortNameFlag = self.getFlagToLabel(shortName: chosenCurrency)
-        if cutShortNameFlag != nil {
-            return cutShortNameFlag! + " " + chosenCurrency + " >"
-        } else {
-            return chosenCurrency + "      >"
+    func updateOutputCurrencyLabel (chosenCurrency: String?) -> String {
+        var cutShortNameFlag: String?
+        if chosenCurrency != nil {
+            cutShortNameFlag = self.getFlagToLabel(shortName: chosenCurrency!)
         }
+        
+        if cutShortNameFlag == nil {
+            return "              >"
+        } else {
+            return cutShortNameFlag! + " " + chosenCurrency!
+        }
+    }
+}
+
+extension ConverterScreen: CurrencyScreenDelegate {
+    func transferCurShortName(currency: String) {
+        switch self.selector {
+            case 0: setLabelWithFlag(currency: currency, chosenCur: &self.chosenCurShortName, label: &inputCurrencyLabel.text)
+            case 1: setLabelWithFlag(currency: currency, chosenCur: &self.chosenCurShortName1, label: &outputCurrencyLabel1.text)
+            case 2: setLabelWithFlag(currency: currency, chosenCur: &self.chosenCurShortName2, label: &outputCurrencyLabel2.text)
+            case 3: setLabelWithFlag(currency: currency, chosenCur: &self.chosenCurShortName3, label: &outputCurrencyLabel3.text)
+            default: return
+        }
+        self.convert()
+    }
+    
+    func setLabelWithFlag (currency: String, chosenCur: inout String?, label: inout String?) {
+        if currency == "" {
+            chosenCur = nil
+        } else {
+            chosenCur = currency
+        }
+        label = updateOutputCurrencyLabel(chosenCurrency: chosenCur)
     }
     
     func forbidAnotherScreen() {
