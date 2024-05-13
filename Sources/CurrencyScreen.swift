@@ -186,7 +186,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         return view
     }
 
-
     
     // here are operations that will be done after click to any row with currency name; chosen row with currency saves and uses for transportation to the first screen "ConverterScreen"
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {

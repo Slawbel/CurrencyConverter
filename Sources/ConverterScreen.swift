@@ -826,10 +826,10 @@ extension ConverterScreen: DiagramResultDelegate {
             cutShortNameFlag = self.getFlagToLabel(shortName: chosenCurrency!)
         }
         
-        if cutShortNameFlag == nil {
+        if chosenCurrency == nil {
             return "              >"
         } else {
-            return cutShortNameFlag! + " " + chosenCurrency!
+            return (cutShortNameFlag ?? "") + " " + chosenCurrency!
         }
     }
 }
