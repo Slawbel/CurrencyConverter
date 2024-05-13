@@ -747,7 +747,7 @@ class ConverterScreen: UIViewController {
     // function to prepare code for finding of flag symbol
     func getFlagToLabel (shortName: String) -> String? {
         var cutShortNameFlag: String?
-        if shortName != "BTC" && shortName != "XOF" && shortName != "XAF" && shortName != "XPF" && shortName != "STD" && shortName != "XAG" && shortName != "XAU" {
+        if shortName != "BTC" && shortName != "XOF" && shortName != "XAF" && shortName != "XPF" && shortName != "STD" && shortName != "XAG" && shortName != "XAU" && shortName != "ANG" && shortName != "XCD" && shortName != "XDR" {
             var cutShortName = shortName
             cutShortName.removeLast()
             cutShortNameFlag = flag(country: cutShortName)
