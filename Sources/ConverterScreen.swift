@@ -1,4 +1,5 @@
 import SnapKit
+import SwiftUI
 import UIKit
 
 protocol DiagramResultDelegate: AnyObject {
@@ -323,11 +324,10 @@ class ConverterScreen: UIViewController {
         buttonRateHistory.setTitleColor(.white, for: .normal)
         buttonRateHistory.addAction(UIAction { [weak self] _ in
             if self?.chosenCurShortName != nil {
-                let rateHistoryPage = RateHistoryPage()
-                rateHistoryPage.short1 = self?.chosenCurShortName
-                rateHistoryPage.short2 = self?.chosenCurShortName1
-                rateHistoryPage.modalPresentationStyle = .fullScreen
-                self?.present(rateHistoryPage, animated: true)
+                let rateScreen = RateScreen()
+                let hostingController = UIHostingController(rootView: rateScreen)
+                Coordinator.openAnotherScreen(from: self!, to: hostingController)
+
             } else {
                 self?.forbidAnotherScreen()
             }
