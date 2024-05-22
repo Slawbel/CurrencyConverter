@@ -747,7 +747,7 @@ class ConverterScreen: UIViewController {
     // function to prepare code for finding of flag symbol
     func getFlagToLabel (shortName: String) -> String? {
         var cutShortNameFlag: String?
-        if shortName != "BTC" && shortName != "XOF" && shortName != "XAF" && shortName != "XPF" && shortName != "STD" && shortName != "XAG" && shortName != "XAU" && shortName != "ANG" && shortName != "XCD" && shortName != "XDR" {
+        if !["BTC", "XOF", "XAF", "XPF", "STD", "XAG", "XAU", "ANG", "XCD", "XDR"].contains(shortName) {
             var cutShortName = shortName
             cutShortName.removeLast()
             cutShortNameFlag = flag(country: cutShortName)
@@ -822,14 +822,11 @@ extension ConverterScreen: DiagramResultDelegate {
     
     func updateOutputCurrencyLabel (chosenCurrency: String?) -> String {
         var cutShortNameFlag: String?
-        if chosenCurrency != nil {
-            cutShortNameFlag = self.getFlagToLabel(shortName: chosenCurrency!)
-        }
-        
-        if chosenCurrency == nil {
-            return "              >"
+        if let checkOfChosenCurrency = chosenCurrency {
+            cutShortNameFlag = self.getFlagToLabel(shortName: checkOfChosenCurrency)
+            return (cutShortNameFlag ?? "") + " " + checkOfChosenCurrency
         } else {
-            return (cutShortNameFlag ?? "") + " " + chosenCurrency!
+            return "              >"
         }
     }
 }
