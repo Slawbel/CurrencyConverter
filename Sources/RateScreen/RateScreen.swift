@@ -1,13 +1,31 @@
 import SwiftUI
 
 struct RateScreen: View {
+    
+    init() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 24),
+            .foregroundColor: UIColor.white
+        ]
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
+    
     var body: some View {
         NavigationView {
-            List {
-                Text("Hello")
+            ZStack {
+                Color.black.ignoresSafeArea(.all)
+                
+                List {
+                    Text("Hello")
+                    Text("Bye")
+                }
+                .listStyle(PlainListStyle())
+                .padding()
             }
-            .navigationBarTitle(Text("Rate History").font(.system(size: 24)))
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitle("Rate History", displayMode: .inline)
         }
     }
 }
