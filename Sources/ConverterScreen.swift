@@ -67,6 +67,10 @@ class ConverterScreen: UIViewController {
     var selector: UInt8 = 0
     
     let coordinator = Coordinator()
+    
+    var resultCur1: [String] = []
+    var resultCur2: [String] = []
+    var resultCur3: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()

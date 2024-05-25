@@ -23,6 +23,7 @@
 		A2B4970829B2B31D0017A82A /* ConvertResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B4970729B2B31D0017A82A /* ConvertResult.swift */; };
 		A2C271D22B684223009E40C6 /* DemoBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C271D12B684223009E40C6 /* DemoBaseViewController.swift */; };
 		A2C48EAF29E5C412004A5594 /* DiagramResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C48EAE29E5C412004A5594 /* DiagramResult.swift */; };
+		A2D67D3C2C0113DF00084372 /* UIKitWrapperForRateScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D67D3B2C0113DF00084372 /* UIKitWrapperForRateScreen.swift */; };
 		A2EA87582A23E2FA00AAC943 /* CurrencyApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EA87572A23E2FA00AAC943 /* CurrencyApi.swift */; };
 		A2FC58C02BEAD5D10091D8EB /* CurrencyScreenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FC58BF2BEAD5D00091D8EB /* CurrencyScreenDelegate.swift */; };
 		A2FC58CA2BF21C640091D8EB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A2FC58C92BF21C640091D8EB /* SnapKit */; };
@@ -59,6 +60,7 @@
 		A2C271D12B684223009E40C6 /* DemoBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoBaseViewController.swift; sourceTree = "<group>"; };
 		A2C2721A2B6D05D1009E40C6 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = System/Library/Frameworks/Charts.framework; sourceTree = SDKROOT; };
 		A2C48EAE29E5C412004A5594 /* DiagramResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramResult.swift; sourceTree = "<group>"; };
+		A2D67D3B2C0113DF00084372 /* UIKitWrapperForRateScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitWrapperForRateScreen.swift; sourceTree = "<group>"; };
 		A2EA87572A23E2FA00AAC943 /* CurrencyApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyApi.swift; sourceTree = "<group>"; };
 		A2FC58BF2BEAD5D00091D8EB /* CurrencyScreenDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyScreenDelegate.swift; sourceTree = "<group>"; };
 		A2FEBA5429C11BB7006363DB /* RateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateData.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				9E25D2D829998CA700293AB7 /* AppDelegate.swift */,
 				A2FEBA5429C11BB7006363DB /* RateData.swift */,
 				A2EA87572A23E2FA00AAC943 /* CurrencyApi.swift */,
+				A2D67D3B2C0113DF00084372 /* UIKitWrapperForRateScreen.swift */,
 				A2FEBA7629D4EE5F006363DB /* RatesHistoryList.swift */,
 				A2B4970729B2B31D0017A82A /* ConvertResult.swift */,
 				A2C271D12B684223009E40C6 /* DemoBaseViewController.swift */,
@@ -268,6 +271,7 @@
 			files = (
 				9EE797DC2B9F812E00BDBDEA /* Coordinator.swift in Sources */,
 				A2C48EAF29E5C412004A5594 /* DiagramResult.swift in Sources */,
+				A2D67D3C2C0113DF00084372 /* UIKitWrapperForRateScreen.swift in Sources */,
 				A25911D32BF57C19000DF7B0 /* RateScreen.swift in Sources */,
 				9E25D2DF29998CA700293AB7 /* AppDelegate.swift in Sources */,
 				A2616D462B173E58000AF9A7 /* SetColorByCode.swift in Sources */,
