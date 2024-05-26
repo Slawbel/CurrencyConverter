@@ -33,10 +33,10 @@ class CurrencyApi: CurrencyApiProtocol {
             guard let data = data else {
                 return
             }
-            //print(String(data: data, encoding: .utf8)!)
             guard let convertResult = ConvertResult(from: data) else {
                 return
             }
+            print(convertResult.result)
             DispatchQueue.main.async {
                 onCompletion(convertResult)
             }

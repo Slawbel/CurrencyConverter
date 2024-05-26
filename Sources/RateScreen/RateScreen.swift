@@ -7,13 +7,21 @@ struct RateScreen: View {
     @State private var selectedDateEnd = Date()
     @State private var reload = false
     
-    @State private var conversion2Results: [ConvertResult] = []
-    @State private var conversion3Results: [ConvertResult] = []
-    @State private var conversion4Results: [ConvertResult] = []
+    var chosenCurShortName: String
+    var chosenCurShortName1: String
+    var chosenCurShortName2: String?
+    var chosenCurShortName3: String?
+    var apiInputTF: String
+    
+    @State private var conversion2Results: [String] = []
+    @State private var conversion3Results: [String] = []
+    @State private var conversion4Results: [String] = []
+    
+    let currencyApi = CurrencyApi()
     
     private let titles = ["Date", "#1", "#2", "#3"]
     
-    private var currencyApi = CurrencyApi()
+    private var converterScreen = ConverterScreen()
     
     private var dateRange: [String] {
         let calendar = Calendar.current
@@ -33,7 +41,13 @@ struct RateScreen: View {
         return dateArray
     }
     
-    init() {
+    init(chosenCurShortName: String, chosenCurShortName1: String, chosenCurShortName2: String?, chosenCurShortName3: String?, apiInputTF: String) {
+        self.chosenCurShortName = chosenCurShortName
+        self.chosenCurShortName1 = chosenCurShortName1
+        self.chosenCurShortName2 = chosenCurShortName2
+        self.chosenCurShortName3 = chosenCurShortName3
+        self.apiInputTF = apiInputTF
+        
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
         appearance.titleTextAttributes = [
@@ -45,13 +59,14 @@ struct RateScreen: View {
     }
     
     var body: some View {
+        
         NavigationView {
+            
             ZStack {
                 Color.black.ignoresSafeArea(.all)
                 
                 ScrollView {
                     VStack {
-                        
                         HStack {
                             Spacer()
                             
@@ -118,9 +133,9 @@ struct RateScreen: View {
                             }
                             
                             LazyVGrid(columns: columns, spacing: 1) {
-                                ForEach(dateRange.indices, id: \.self) { index in
+                                ForEach(conversion2Results.indices, id: \.self) { index in
                                     if index < conversion2Results.count {
-                                        Text("\(conversion2Results[index].result)")
+                                        Text(conversion2Results[index])
                                             .frame(width: 80, height: 40)
                                             .background(Color.white)
                                             .cornerRadius(5)
@@ -136,9 +151,9 @@ struct RateScreen: View {
                             }
                             
                             LazyVGrid(columns: columns, spacing: 1) {
-                                ForEach(dateRange.indices, id: \.self) { index in
+                                ForEach(conversion3Results.indices, id: \.self) { index in
                                     if index < conversion3Results.count {
-                                        Text("\(conversion3Results[index].result)")
+                                        Text(conversion3Results[index])
                                             .frame(width: 80, height: 40)
                                             .background(Color.white)
                                             .cornerRadius(5)
@@ -154,9 +169,9 @@ struct RateScreen: View {
                             }
                             
                             LazyVGrid(columns: columns, spacing: 1) {
-                                ForEach(dateRange.indices, id: \.self) { index in
+                                ForEach(conversion4Results.indices, id: \.self) { index in
                                     if index < conversion4Results.count {
-                                        Text("\(conversion4Results[index].result)")
+                                        Text(conversion4Results[index])
                                             .frame(width: 80, height: 40)
                                             .background(Color.white)
                                             .cornerRadius(5)
@@ -177,28 +192,51 @@ struct RateScreen: View {
                 }
             }
             .navigationBarTitle("Rate History", displayMode: .inline)
+            .onAppear {
+                triggerConversions()
+            }
         }
     }
     
     private func triggerConversions() {
-        CurrencyApiWrapper(
-            currencyApi: currencyApi,
-            onConversion2Completed: { results in
-                
-                self.conversion2Results = results
-            },
-            onConversion3Completed: { results in
-                self.conversion3Results = results
-            },
-            onConversion4Completed: { results in
-                self.conversion4Results = results
+        currencyApi.apiChosenCurShortName1 = self.chosenCurShortName
+        currencyApi.apiChosenCurShortName2 = self.chosenCurShortName1
+        currencyApi.apiChosenCurShortName3 = self.chosenCurShortName2
+        currencyApi.apiChosenCurShortName4 = self.chosenCurShortName3
+        currencyApi.apiInputTF = self.apiInputTF
+        
+        for currentDate in dateRange {
+            currencyApi.apiChosenDate = currentDate
+            
+            currencyApi.conversion2 { convertResult in
+                DispatchQueue.main.async { [self] in
+                    if let result = convertResult?.result {
+                        conversion2Results.append(String(result))
+                    }
+                }
             }
-        ).performConversions(for: dateRange)
+            
+            currencyApi.conversion3 { convertResult in
+                DispatchQueue.main.async { [self] in
+                    if let result = convertResult?.result {
+                        conversion3Results.append(String(result))
+                    }
+                }
+            }
+            
+            currencyApi.conversion4 { convertResult in
+                DispatchQueue.main.async { [self] in
+                    if let result = convertResult?.result {
+                        conversion4Results.append(String(result))
+                    }
+                }
+            }
+        }
     }
 }
 
 struct RateScreen_Previews: PreviewProvider {
     static var previews: some View {
-        RateScreen()
+        RateScreen(chosenCurShortName: "", chosenCurShortName1: "", chosenCurShortName2: nil, chosenCurShortName3: nil, apiInputTF: "")
     }
 }

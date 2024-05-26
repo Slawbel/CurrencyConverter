@@ -10,7 +10,7 @@ class ConverterScreen: UIViewController {
     
     // profile for saving data in file
     var userProfileURL: URL!
-    
+        
     // the main name-label on the first screen
     private let nameLabel = UILabel()
     
@@ -327,15 +327,23 @@ class ConverterScreen: UIViewController {
         buttonRateHistory.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonRateHistory.setTitleColor(.white, for: .normal)
         buttonRateHistory.addAction(UIAction { [weak self] _ in
-            if self?.chosenCurShortName != nil {
-                let rateScreen = RateScreen()
-                let hostingController = UIHostingController(rootView: rateScreen)
-                Coordinator.openAnotherScreen(from: self!, to: hostingController)
+            guard let self = self,
+                  let chosenCurShortName = self.chosenCurShortName,
+                  let chosenCurShortName1 = self.chosenCurShortName1,
+                  let inputTFText = self.inputTF.text else {
+                      self?.forbidAnotherScreen()
+                      return
+                  }
 
-            } else {
-                self?.forbidAnotherScreen()
-            }
+            let rateScreen = RateScreen(chosenCurShortName: chosenCurShortName,
+                                        chosenCurShortName1: chosenCurShortName1,
+                                        chosenCurShortName2: self.chosenCurShortName2,
+                                        chosenCurShortName3: self.chosenCurShortName3,
+                                        apiInputTF: inputTFText)
+            let hostingController = UIHostingController(rootView: rateScreen)
+            Coordinator.openAnotherScreen(from: self, to: hostingController)
         }, for: .primaryActionTriggered)
+
         let buttonRateHistoryImage = UIImage(named: "icon_history")
         buttonRateHistory.setImage(buttonRateHistoryImage, for: .normal)
         let buttonRateHistoryTitle = NSLocalizedString("transfer", comment: "")
@@ -362,6 +370,12 @@ class ConverterScreen: UIViewController {
         let buttonDiagramPageTitle = NSLocalizedString("diagramPage", comment: "")
         buttonDiagramPage.setTitle(buttonDiagramPageTitle, for: .normal)
         
+        
+//        sharedDataModel.chosenCurShortName = chosenCurShortName
+//        sharedDataModel.chosenCurShortName1 = chosenCurShortName1
+//        sharedDataModel.chosenCurShortName2 = chosenCurShortName2
+//        sharedDataModel.chosenCurShortName3 = chosenCurShortName3
+//        sharedDataModel.apiInputTF = inputTF.text
         
         // BLOCK FOR INCLUDING OBJECTS ONTO SCREEN
         // including of block of basic currency
@@ -819,7 +833,6 @@ extension ConverterScreen: DiagramResultDelegate {
         for counter in 1...2 {
             self.counterOfClick = counter
             self.addCurrency()
-            print(counter)
         }
         self.counterOfClick = 0
     }
