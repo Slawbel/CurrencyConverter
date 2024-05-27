@@ -26,7 +26,7 @@ struct RateScreen: View {
     private var dateRange: [String] {
         let calendar = Calendar.current
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         
         var dateArray: [String] = []
         var currentDate = calendar.startOfDay(for: selectedDateStart)
@@ -118,14 +118,13 @@ struct RateScreen: View {
                                     .foregroundColor(.black)
                             }
                         }
-                        .padding()
                         
                         HStack(spacing: 10) {
                             // Date rows
                             LazyVGrid(columns: columns, spacing: 1) {
                                 ForEach(dateRange.indices, id: \.self) { index in
-                                    Text(dateRange[index])
-                                        .frame(width: 80, height: 40)
+                                    Text(changeDateFormat(input: dateRange[index]))
+                                        .frame(width: 90, height: 40)
                                         .background(Color.white)
                                         .cornerRadius(5)
                                         .foregroundColor(.black)
@@ -136,13 +135,13 @@ struct RateScreen: View {
                                 ForEach(conversion2Results.indices, id: \.self) { index in
                                     if index < conversion2Results.count {
                                         Text(conversion2Results[index])
-                                            .frame(width: 80, height: 40)
+                                            .frame(width: 90, height: 40)
                                             .background(Color.white)
                                             .cornerRadius(5)
                                             .foregroundColor(.black)
                                     } else {
                                         Text("")
-                                            .frame(width: 80, height: 40)
+                                            .frame(width: 90, height: 40)
                                             .background(Color.white)
                                             .cornerRadius(5)
                                             .foregroundColor(.black)
@@ -154,13 +153,13 @@ struct RateScreen: View {
                                 ForEach(conversion3Results.indices, id: \.self) { index in
                                     if index < conversion3Results.count {
                                         Text(conversion3Results[index])
-                                            .frame(width: 80, height: 40)
+                                            .frame(width: 90, height: 40)
                                             .background(Color.white)
                                             .cornerRadius(5)
                                             .foregroundColor(.black)
                                     } else {
                                         Text("")
-                                            .frame(width: 80, height: 40)
+                                            .frame(width: 90, height: 40)
                                             .background(Color.white)
                                             .cornerRadius(5)
                                             .foregroundColor(.black)
@@ -172,13 +171,13 @@ struct RateScreen: View {
                                 ForEach(conversion4Results.indices, id: \.self) { index in
                                     if index < conversion4Results.count {
                                         Text(conversion4Results[index])
-                                            .frame(width: 80, height: 40)
+                                            .frame(width: 90, height: 40)
                                             .background(Color.white)
                                             .cornerRadius(5)
                                             .foregroundColor(.black)
                                     } else {
                                         Text("")
-                                            .frame(width: 80, height: 40)
+                                            .frame(width: 90, height: 40)
                                             .background(Color.white)
                                             .cornerRadius(5)
                                             .foregroundColor(.black)
@@ -199,38 +198,58 @@ struct RateScreen: View {
     }
     
     private func triggerConversions() {
-        currencyApi.apiChosenCurShortName1 = self.chosenCurShortName
-        currencyApi.apiChosenCurShortName2 = self.chosenCurShortName1
-        currencyApi.apiChosenCurShortName3 = self.chosenCurShortName2
-        currencyApi.apiChosenCurShortName4 = self.chosenCurShortName3
-        currencyApi.apiInputTF = self.apiInputTF
+        // Prepare API input parameters
+        currencyApi.apiChosenCurShortName1 = chosenCurShortName
+        currencyApi.apiChosenCurShortName2 = chosenCurShortName1
+        currencyApi.apiChosenCurShortName3 = chosenCurShortName2
+        currencyApi.apiChosenCurShortName4 = chosenCurShortName3
+        currencyApi.apiInputTF = apiInputTF
         
+        // Clear previous results
+        conversion2Results.removeAll()
+        conversion3Results.removeAll()
+        conversion4Results.removeAll()
+        
+        // Iterate over each date in the range
         for currentDate in dateRange {
+            // Set the chosen date for the API
             currencyApi.apiChosenDate = currentDate
             
+            // Perform conversion 2
             currencyApi.conversion2 { convertResult in
-                DispatchQueue.main.async { [self] in
-                    if let result = convertResult?.result {
-                        conversion2Results.append(String(result))
-                    }
+                if let result = convertResult?.result {
+                    self.conversion2Results.append(String(result))
                 }
             }
             
-            currencyApi.conversion3 { convertResult in
-                DispatchQueue.main.async { [self] in
-                    if let result = convertResult?.result {
-                        conversion3Results.append(String(result))
-                    }
+            
+            // Perform conversion 3
+            currencyApi.conversion3 { [self] convertResult in
+                if let result = convertResult?.result {
+                    self.conversion3Results.append(String(result))
                 }
             }
             
-            currencyApi.conversion4 { convertResult in
-                DispatchQueue.main.async { [self] in
-                    if let result = convertResult?.result {
-                        conversion4Results.append(String(result))
-                    }
+            
+            // Perform conversion 4
+            currencyApi.conversion4 { [self] convertResult in
+                if let result = convertResult?.result {
+                    self.conversion4Results.append(String(result))
                 }
             }
+        }
+    }
+    
+    func changeDateFormat(input: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        if let date = dateFormatter.date(from: input) {
+            dateFormatter.dateFormat = "dd.MM"
+            return dateFormatter.string(from: date)
+        } else {
+            // Handle invalid input
+            return ""
         }
     }
 }

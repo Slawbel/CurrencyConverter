@@ -46,26 +46,29 @@ class CurrencyApi: CurrencyApiProtocol {
     
     // those functions help to convert chosen currency from three below to currency "apiChosenCurShortName1"
     public func conversion2(onCompletion: @escaping (ConvertResult?) -> Void) {
-        guard let apiChosenCurShortName2 else {
+        guard let apiChosenCurShortName2 = apiChosenCurShortName2 else {
             onCompletion(nil)
             return
         }
         conversion(to: apiChosenCurShortName2, onCompletion: onCompletion)
     }
+
     public func conversion3(onCompletion: @escaping (ConvertResult?) -> Void) {
-        guard let apiChosenCurShortName3 else {
+        guard let apiChosenCurShortName3 = apiChosenCurShortName3 else {
             onCompletion(nil)
             return
         }
         conversion(to: apiChosenCurShortName3, onCompletion: onCompletion)
     }
+
     public func conversion4(onCompletion: @escaping (ConvertResult?) -> Void) {
-        guard let apiChosenCurShortName4 else {
+        guard let apiChosenCurShortName4 = apiChosenCurShortName4 else {
             onCompletion(nil)
             return
         }
         conversion(to: apiChosenCurShortName4, onCompletion: onCompletion)
     }
+
     
     
 }
