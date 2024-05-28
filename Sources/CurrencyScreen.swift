@@ -179,11 +179,13 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - 15, height: 40))
         let key = Array(filteredDictCurrency.keys)
         lbl.text = String(key[section])
-        lbl.font = UIFont(name: "DMSans-Regular", size: 20)
+        lbl.font = UIFont(name: "DMSans-Bold", size: 20)
         lbl.textColor = SetColorByCode.hexStringToUIColor(hex: "#646464")
+        lbl.backgroundColor = .black
         view.addSubview(lbl)
         return view
     }
+
     
     // here are operations that will be done after click to any row with currency name; chosen row with currency saves and uses for transportation to the first screen "ConverterScreen"
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
