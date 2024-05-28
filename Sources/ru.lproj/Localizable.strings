@@ -14,3 +14,4 @@
 "nameOfScreen" = "Выберите валюту";
 "searchCurrency" = "Искать валюту";
 "textForAlertController" = "Выберите валюту в первом блоке";
+"alertForRateHistoryButton" = "Выберите валюту в первом и втором блоках и введите количество";

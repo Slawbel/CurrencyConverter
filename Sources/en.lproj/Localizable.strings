@@ -13,4 +13,5 @@
 "nameLabelText" = "Currency converter";
 "nameOfScreen" = "Select currency";
 "searchCurrency" = "Search currency";
-"textForAlertController" = "Select input currency";
+"textForAlertController" = "Input currency is empty";
+"alertForRateHistoryButton" = "Input currency or output currency or amount are empty";

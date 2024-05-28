@@ -8,7 +8,7 @@ struct RateScreen: View {
     @State private var reload = false
     
     var chosenCurShortName: String
-    var chosenCurShortName1: String
+    var chosenCurShortName1: String?
     var chosenCurShortName2: String?
     var chosenCurShortName3: String?
     var apiInputTF: String
@@ -41,7 +41,7 @@ struct RateScreen: View {
         return dateArray
     }
     
-    init(chosenCurShortName: String, chosenCurShortName1: String, chosenCurShortName2: String?, chosenCurShortName3: String?, apiInputTF: String) {
+    init(chosenCurShortName: String, chosenCurShortName1: String?, chosenCurShortName2: String?, chosenCurShortName3: String?, apiInputTF: String) {
         self.chosenCurShortName = chosenCurShortName
         self.chosenCurShortName1 = chosenCurShortName1
         self.chosenCurShortName2 = chosenCurShortName2
@@ -49,7 +49,10 @@ struct RateScreen: View {
         self.apiInputTF = apiInputTF
         
         let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .black
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .black
+        //appearance.configureWithTransparentBackground()
         appearance.titleTextAttributes = [
             .font: UIFont.systemFont(ofSize: 24),
             .foregroundColor: UIColor.white
