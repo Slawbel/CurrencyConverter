@@ -377,14 +377,11 @@ class DiagramResult: DemoBaseViewController {
         guard let data = try? URLSession.shared.dataSync(with: request).0 else {
             return
         }
-        //print(String(data: data, encoding: .utf8)!)
         rateData = RateData(from: data)
         
         updateOfXAxis()
         self.setData(coordinates: coordinates(), coordinates2: coordinates2(), coordinates3: coordinates3(), chosenCur1: chosenCurShortName1 ?? "", chosenCur2: chosenCurShortName2 ?? "", chosenCur3: chosenCurShortName3 ?? "")
-        
-        print(symbols)
-    }
+        }
     
     override func updateChartData() {
         if self.shouldHideData {

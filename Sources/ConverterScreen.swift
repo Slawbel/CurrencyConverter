@@ -1,4 +1,5 @@
 import SnapKit
+import SwiftUI
 import UIKit
 
 protocol DiagramResultDelegate: AnyObject {
@@ -9,7 +10,7 @@ class ConverterScreen: UIViewController {
     
     // profile for saving data in file
     var userProfileURL: URL!
-    
+        
     // the main name-label on the first screen
     private let nameLabel = UILabel()
     
@@ -66,6 +67,10 @@ class ConverterScreen: UIViewController {
     var selector: UInt8 = 0
     
     let coordinator = Coordinator()
+    
+    var resultCur1: [String] = []
+    var resultCur2: [String] = []
+    var resultCur3: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -322,16 +327,24 @@ class ConverterScreen: UIViewController {
         buttonRateHistory.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         buttonRateHistory.setTitleColor(.white, for: .normal)
         buttonRateHistory.addAction(UIAction { [weak self] _ in
-            if self?.chosenCurShortName != nil {
-                let rateHistoryPage = RateHistoryPage()
-                rateHistoryPage.short1 = self?.chosenCurShortName
-                rateHistoryPage.short2 = self?.chosenCurShortName1
-                rateHistoryPage.modalPresentationStyle = .fullScreen
-                self?.present(rateHistoryPage, animated: true)
-            } else {
-                self?.forbidAnotherScreen()
+            guard let self = self,
+                  let chosenCurShortName = self.chosenCurShortName,
+                  (self.chosenCurShortName1 != nil || self.chosenCurShortName2 != nil || self.chosenCurShortName3 != nil),
+                  let inputTFText = self.inputTF.text, !inputTFText.isEmpty && inputTFText != placeholderForInputTF else {
+                let textForAlertControllerRateHistory = NSLocalizedString("alertForRateHistoryButton", comment: "")
+                self?.alertForAnotherScreensButton(message: textForAlertControllerRateHistory)
+                return
             }
+
+            let rateScreen = RateScreen(chosenCurShortName: chosenCurShortName,
+                                        chosenCurShortName1: self.chosenCurShortName1,
+                                        chosenCurShortName2: self.chosenCurShortName2,
+                                        chosenCurShortName3: self.chosenCurShortName3,
+                                        apiInputTF: inputTFText)
+            let hostingController = UIHostingController(rootView: rateScreen)
+            Coordinator.openAnotherScreen(from: self, to: hostingController)
         }, for: .primaryActionTriggered)
+
         let buttonRateHistoryImage = UIImage(named: "icon_history")
         buttonRateHistory.setImage(buttonRateHistoryImage, for: .normal)
         let buttonRateHistoryTitle = NSLocalizedString("transfer", comment: "")
@@ -350,14 +363,14 @@ class ConverterScreen: UIViewController {
             diagramResult.diagramDelegate = self
             Coordinator.openAnotherScreen(from: self!, to: diagramResult)
             } else {
-                self?.forbidAnotherScreen()
+                let textForAlertControllerDiagram = NSLocalizedString("textForAlertController", comment: "")
+                self?.alertForAnotherScreensButton(message: textForAlertControllerDiagram)
             }
         }, for: .primaryActionTriggered)
         let buttonDiagramPageImage = UIImage(named: "icon_graph")
         buttonDiagramPage.setImage(buttonDiagramPageImage, for: .normal)
         let buttonDiagramPageTitle = NSLocalizedString("diagramPage", comment: "")
         buttonDiagramPage.setTitle(buttonDiagramPageTitle, for: .normal)
-        
         
         // BLOCK FOR INCLUDING OBJECTS ONTO SCREEN
         // including of block of basic currency
@@ -815,7 +828,6 @@ extension ConverterScreen: DiagramResultDelegate {
         for counter in 1...2 {
             self.counterOfClick = counter
             self.addCurrency()
-            print(counter)
         }
         self.counterOfClick = 0
     }
@@ -852,9 +864,8 @@ extension ConverterScreen: CurrencyScreenDelegate {
         label = updateOutputCurrencyLabel(chosenCurrency: chosenCur)
     }
     
-    func forbidAnotherScreen() {
-        let textForAlertController = NSLocalizedString("textForAlertController", comment: "")
-        let alertController = UIAlertController(title: textForAlertController, message: nil, preferredStyle: .alert)
+    func alertForAnotherScreensButton(message: String) {
+        let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
         let cancelButton = UIAlertAction(title: "OK", style: .default)
         alertController.addAction(cancelButton)
         present(alertController, animated: true, completion: nil)
