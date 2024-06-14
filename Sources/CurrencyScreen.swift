@@ -10,18 +10,24 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     private let nameOfScreen = UILabel()
     private var tableView = UITableView()
     private var selectButton = UIButton()
-    private lazy var searchContr = UISearchTextField()
+    private var searchContr = UISearchController()
     
     // temporary collection to order data of every currency from list
     private var dictCurrency: OrderedDictionary<Character,[(String,String)]> = [:]
+    
+    private var searchBarEmpty: Bool {
+        guard let text = searchContr.searchBar.text else { return false }
+        return text.isEmpty
+    }
+    private var isFiltering: Bool {
+        return searchContr.isActive && !searchBarEmpty
+    }
     
     // chosen row of currency that is needed to use in convertion operation
     private var chosenRow: IndexPath = []
     
     // list of currencies with short and long names which is used to show up on the tableView
     private var symbols = [(String, String)]()
-    private var symbolsForSearch = [String]()
-    private var symbolsAfterSearch = [String]()
     
     // chosen full name of currency for cells #1...4 are stored here or cell is empty
     var onCurrencySelected1: String?
@@ -30,11 +36,26 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     
     weak var delegateToConverterScreen: CurrencyScreenDelegate?
     
-    var filteredDictCurrency: OrderedDictionary<Character, [(String, String)]> = [:]
+    private var sortedDictCurrency: OrderedDictionary<Character, [(String, String)]> = [:]
+    private var filteredDictCurrency: OrderedDictionary<Character, [(String, String)]> = [:]
+    private var sectionKey: Character?
     var valueForDelegate: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set the title of the view controller to the text of nameOfScreen
+        self.navigationItem.titleView = nameOfScreen
+        // Ensure the navigation bar is visible
+        self.navigationController?.isNavigationBarHidden = false
+        
+        // searchBar setting
+        searchContr.searchResultsUpdater = self
+        searchContr.obscuresBackgroundDuringPresentation = false
+        searchContr.searchBar.placeholder = NSLocalizedString("searchCurrency", comment: "")
+        navigationItem.searchController = searchContr
+        navigationItem.hidesSearchBarWhenScrolling = false // Add this line
+        definesPresentationContext = true
         
         // style setting of name label of the screen
         nameOfScreen.textAlignment = .center
@@ -83,13 +104,9 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
                 dictCurrency.removeValue(forKey: i)
             }
         }
-        
+        sortedDictCurrency = dictCurrency
 
         tableView.register(cellWithClass: MyTableViewCell.self)
-        
-        searchContr.addTarget(self, action: #selector(CurrencyScreen.searchHandler), for: .editingChanged)
-        
-        filteredDictCurrency = dictCurrency
         
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(doSwipeRight(_:)))
         swipeRightGesture.direction = .right
@@ -98,7 +115,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         view.addSubview(nameOfScreen)
         view.addSubview(tableView)
         view.addSubview(selectButton)
-        view.addSubview(searchContr)
         view.addGestureRecognizer(swipeRightGesture)
 
         
@@ -108,13 +124,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.leading.equalTo(view).inset(105)
             make.width.equalTo(180)
             make.height.equalTo(40)
-        }
-        
-        searchContr.snp.makeConstraints{ make in
-            make.top.equalTo(view).inset(114)
-            make.leading.equalTo(view).inset(15)
-            make.width.equalTo(360)
-            make.height.equalTo(45)
         }
         
         selectButton.snp.makeConstraints { make in
@@ -141,14 +150,21 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     // here is setting of cell of tableView and defines If mark picture should be used beside chosen currency
-    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
         let contact = contact(for: indexPath)
-        self.symbolsForSearch.append(contact?.1 ?? "")
-        if indexPath != chosenRow {
-            cell?.setup(text: contact?.1 ?? "", isChecked: true)
+        
+        var currency: OrderedDictionary<Character,[(String,String)]> = [:]
+        if isFiltering {
+            currency = filteredDictCurrency
         } else {
-            cell?.setup(text: contact?.1 ?? "", isChecked: false)
+            currency = sortedDictCurrency
+        }
+        
+        if indexPath != chosenRow {
+            cell?.setup(text: currency[sectionKey!]?[indexPath.row].1 ?? "", isChecked: true)
+        } else {
+            cell?.setup(text: currency[sectionKey!]?[indexPath.row].1 ?? "", isChecked: false)
         }
         cell?.backgroundColor = .black
         return cell!
@@ -156,28 +172,32 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
 
     // here we receiving every currency from currencies list according to order for the next processing
     private func contact(for indexPath: IndexPath) -> (String, String)? {
-        let keyArray = Array(filteredDictCurrency.keys)
-        let sectionKey = keyArray[indexPath.section]
-        let contactSection = filteredDictCurrency[sectionKey]
+        let keyArray = Array(sortedDictCurrency.keys)
+        sectionKey = keyArray[indexPath.section]
+        let contactSection = sortedDictCurrency[sectionKey!]
         return contactSection?[indexPath.row]
     }
 
     // here we defines how many rows should be in every section and If there is no currency for some letter then there wont be any row
-    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let key = Array(filteredDictCurrency.keys)[section]
-        return filteredDictCurrency[key]?.count ?? 0
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let key = Array(sortedDictCurrency.keys)[section]
+        if isFiltering {
+            return sortedDictCurrency[key]?.count ?? 0
+        } else {
+            return sortedDictCurrency[key]?.count ?? 0
+        }
     }
     
     // here is set amount of sections
     func numberOfSections(in tableView: UITableView) -> Int {
-        return filteredDictCurrency.keys.count
+        return sortedDictCurrency.keys.count
     }
     
     // here is set styling details and title for every section of tableView
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
         let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - 15, height: 40))
-        let key = Array(filteredDictCurrency.keys)
+        let key = Array(sortedDictCurrency.keys)
         lbl.text = String(key[section])
         lbl.font = UIFont(name: "DMSans-Bold", size: 20)
         lbl.textColor = SetColorByCode.hexStringToUIColor(hex: "#646464")
@@ -259,12 +279,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         tableView.backgroundColor = .black
         
-        searchContr.layerCornerRadius = 20
-        let colorForSearchPlaceholder = SetColorByCode.hexStringToUIColor(hex: "#646464")
-        searchContr.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("searchCurrency", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : colorForSearchPlaceholder])
-        searchContr.font = UIFont(name: "DMSans-Regular", size: 14)
-        searchContr.textColor = .white
-        searchContr.backgroundColor = SetColorByCode.hexStringToUIColor(hex: "#181B20")
+     
         
         selectButton.layer.cornerRadius = 20
         let buttonBack = NSLocalizedString("buttonBack", comment: "")
@@ -337,20 +352,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    @objc func searchHandler (_ sender: UITextField, textDidChange searchText: String) {
-        if let searchText = sender.text {
-            if searchText == "" {
-                filteredDictCurrency = dictCurrency
-            } else {
-                filteredDictCurrency = dictCurrency.compactMapValues { valuesForKey in
-                    let filteresValues = valuesForKey.filter { $0.1.contains(searchText) }
-                    return filteresValues.isEmpty ? nil : filteresValues
-                }
-            }
-            self.tableView.reloadData()
-        }
-    }
-    
     func delegationOfValue() {
         self.delegateToConverterScreen?.transferCurShortName(currency: self.valueForDelegate)
     }
@@ -366,3 +367,27 @@ extension NSManagedObjectContext {
         NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [self])
     }
 }
+
+extension CurrencyScreen: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filteredContentForSearchText(searchController.searchBar.text ?? "")
+    }
+    
+    private func filteredContentForSearchText(_ searchText: String) {
+        filteredDictCurrency = [:] // Clear previous filtered results
+        
+        // Iterate over each key-value pair in the original dictionary
+        for (key, values) in sortedDictCurrency {
+            // Filter the values array based on the search text
+            let filteredValues = values.filter { $0.1.contains(searchText) }
+            // If there are filtered values, add them to the filtered dictionary
+            if !filteredValues.isEmpty {
+                filteredDictCurrency[key] = filteredValues
+            }
+        }
+        
+        // Reload the table view data
+        tableView.reloadData()
+    }
+}
+
