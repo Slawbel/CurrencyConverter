@@ -423,13 +423,6 @@ class ConverterScreen: UIViewController {
 
     
         // BLOCK FOR CONSTRAINTS
-        nameLabel.snp.makeConstraints{ make in
-            make.width.equalTo(222)
-            make.height.equalTo(40)
-            make.leading.equalTo(view).inset(84)
-            make.top.equalTo(view.snp.top).inset(44)
-        }
-        
         // constraint for block of basic currency
         stackView.snp.makeConstraints{ make in
             make.leading.equalTo(view.snp.leading).inset(13)

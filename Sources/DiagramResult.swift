@@ -55,6 +55,15 @@ class DiagramResult: DemoBaseViewController {
         super.viewDidLoad()
         view.backgroundColor = .init(named: "mainBackgroundColor")
         
+        self.navigationItem.titleView = labelDiagram
+        if let navigationBar = navigationController?.navigationBar {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .black // Set your desired color
+            appearance.titleTextAttributes = [.foregroundColor: UIColor.white] // Set title text color
+            appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white] // Set large title text color
+            navigationBar.standardAppearance = appearance
+        }
         
         
         diagramStackView.axis = .vertical
@@ -200,41 +209,35 @@ class DiagramResult: DemoBaseViewController {
         
         diagramStackView.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(14)
-            make.top.equalTo(view).inset(164)
+            make.top.equalTo(view).inset(40)
             make.height.equalTo(590)
             make.width.equalTo(360)
         }
         
         chartView.snp.makeConstraints{ make in
-            make.leading.trailing.equalTo(view).inset(28)
-            make.top.equalTo(view).inset(190)
+            make.leading.equalTo(diagramStackView.snp.leading).inset(20)
+            make.trailing.equalTo(diagramStackView.snp.trailing).inset(20)
+            make.top.equalTo(diagramStackView.snp.top).inset(45)
             make.height.equalTo(540)
         }
         
-        labelDiagram.snp.makeConstraints{ make in
-            make.leading.equalTo(view).inset(148)
-            make.top.equalTo(view).inset(58)
-            make.height.equalTo(40)
-            make.width.equalTo(95)
-        }
-        
         startDatePicker.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(19)
+            make.leading.equalTo(view).inset(30)
             make.width.equalTo(128)
             make.height.equalTo(35)
-            make.top.equalTo(view).inset(115)
+            make.top.equalTo(diagramStackView.snp.top)
         }
         
         endDatePicker.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(154)
+            make.trailing.equalTo(view).inset(30)
             make.width.equalTo(128)
             make.height.equalTo(35)
-            make.top.equalTo(view).inset(115)
+            make.top.equalTo(diagramStackView.snp.top)
         }
         
         outputCurButton1.snp.makeConstraints { make in
             make.width.equalTo(115)
-            make.top.equalTo(view).inset(768)
+            make.top.equalTo(diagramStackView.snp.bottom).offset(30)
             make.height.equalTo(28)
             make.leading.equalTo(view).inset(15)
         }
@@ -246,7 +249,7 @@ class DiagramResult: DemoBaseViewController {
         
         outputCurButton2.snp.makeConstraints { make in
             make.width.equalTo(115)
-            make.top.equalTo(view).inset(768)
+            make.top.equalTo(diagramStackView.snp.bottom).offset(30)
             make.height.equalTo(28)
             make.leading.equalTo(view).inset(138)
         }
@@ -258,7 +261,7 @@ class DiagramResult: DemoBaseViewController {
             
         outputCurButton3.snp.makeConstraints { make in
             make.width.equalTo(115)
-            make.top.equalTo(view).inset(768)
+            make.top.equalTo(diagramStackView.snp.bottom).offset(30)
             make.height.equalTo(28)
             make.leading.equalTo(view).inset(261)
         }
@@ -271,9 +274,12 @@ class DiagramResult: DemoBaseViewController {
     
     @objc private func doSwipeRight (_ gesture: UISwipeGestureRecognizer) {
         if gesture.state == .ended {
-            diagramDelegate?.currenciesFromDiagramToConverter(curInput: chosenCurShortNameBase, curOutput1: chosenCurShortName1, curOutput2: chosenCurShortName2, curOutput3: chosenCurShortName3)
             Coordinator.closeAnotherScreen(from: self)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        diagramDelegate?.currenciesFromDiagramToConverter(curInput: chosenCurShortNameBase, curOutput1: chosenCurShortName1, curOutput2: chosenCurShortName2, curOutput3: chosenCurShortName3)
     }
     
     private var startChosenDates: String {
