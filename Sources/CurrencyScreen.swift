@@ -53,13 +53,36 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         // Ensure the navigation bar is visible
         self.navigationController?.isNavigationBarHidden = false
         
+        // Ensure the navigation bar appearance does not change on scroll
+        if let navigationBar = navigationController?.navigationBar {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .black // Set your desired color
+            appearance.titleTextAttributes = [.foregroundColor: UIColor.white] // Set title text color
+            appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white] // Set large title text color
+            
+            navigationBar.standardAppearance = appearance
+            navigationBar.scrollEdgeAppearance = appearance
+        }
+        
         // SearchBar setting
         searchContr.searchResultsUpdater = self
         searchContr.obscuresBackgroundDuringPresentation = false
         searchContr.searchBar.placeholder = NSLocalizedString("searchCurrency", comment: "")
         navigationItem.searchController = searchContr
-        navigationItem.hidesSearchBarWhenScrolling = false // Add this line
+        navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
+        
+        // Customize search bar text color
+        let searchTextField = searchContr.searchBar.searchTextField
+        searchTextField.textColor = .white // Set your desired text color here
+        
+        // Customize placeholder text color
+        let placeholderText = NSLocalizedString("searchCurrency", comment: "")
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.lightGray // Set your desired placeholder text color here
+        ]
+        searchTextField.attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: attributes)
         
         // Style setting of name label of the screen
         nameOfScreen.textAlignment = .center
@@ -73,6 +96,10 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.delegate = self
         returnData()
         print("RETURNING WAS DONE")
+        
+        // Hide scroll indicators
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         
         // Temporary collection for editing
         var currencyDict = [String: String]()
@@ -142,6 +169,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.leading.trailing.equalTo(view).inset(21)
         }
     }
+
     
     @objc private func doSwipeRight (_ gesture: UISwipeGestureRecognizer) {
         if gesture.state == .ended {
@@ -155,18 +183,11 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell
         let contact = contact(for: indexPath)
         
-        var currency: OrderedDictionary<Character,[(String,String)]> = [:]
-        if isFiltering {
-            currency = filteredDictCurrency
-        } else {
-            currency = sortedDictCurrency
-        }
-        
         self.symbolsForSearch.append(contact?.1 ?? "")
         
         // Check if the cell should be checked based on the selected currency symbol
         let isChecked = (contact?.0 == selectedCurrencySymbol)
-        cell?.setup(text: contact?.1 ?? "", isChecked: isChecked)
+        cell?.setup(text: contact?.1 ?? "", isChecked: !isChecked)
         
         cell?.backgroundColor = .black
         return cell!
