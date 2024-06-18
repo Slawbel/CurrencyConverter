@@ -77,9 +77,20 @@ class ConverterScreen: UIViewController {
         
         // defining user url for saving data into file
         createDirectoryForFile()
+        let navBarHeight = navigationController?.navigationBar.frame.size.height
         
         // setting of background color
         view.backgroundColor = .init(named: "mainBackgroundColor")
+        
+        self.navigationItem.titleView = nameLabel
+        if let navigationBar = navigationController?.navigationBar {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .black // Set your desired color
+            appearance.titleTextAttributes = [.foregroundColor: UIColor.white] // Set title text color
+            appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white] // Set large title text color
+            navigationBar.standardAppearance = appearance
+        }
         
         // style setting of the main name-label
         nameLabel.textAlignment = .center
@@ -87,7 +98,6 @@ class ConverterScreen: UIViewController {
         nameLabel.textColor = .white
         nameLabel.text = NSLocalizedString("nameLabelText", comment: "")
         nameLabel.font = nameLabel.font.withSize(24)
-        
         
         // BLOCK OF BASIC CURRENCY
         // style setting of block of basic currency
@@ -371,7 +381,7 @@ class ConverterScreen: UIViewController {
         buttonDiagramPage.setImage(buttonDiagramPageImage, for: .normal)
         let buttonDiagramPageTitle = NSLocalizedString("diagramPage", comment: "")
         buttonDiagramPage.setTitle(buttonDiagramPageTitle, for: .normal)
-        
+                
         // BLOCK FOR INCLUDING OBJECTS ONTO SCREEN
         // including of block of basic currency
         view.addSubview(nameLabel)
@@ -424,7 +434,7 @@ class ConverterScreen: UIViewController {
         stackView.snp.makeConstraints{ make in
             make.leading.equalTo(view.snp.leading).inset(13)
             make.width.equalTo(360)
-            make.top.equalTo(view.snp.top).inset(94)
+            make.top.equalTo(view.snp.top).inset(100)
             make.height.equalTo(95)
         }
         
@@ -452,7 +462,7 @@ class ConverterScreen: UIViewController {
         datePicker.snp.makeConstraints { make in
             make.width.equalTo(143)
             make.height.equalTo(25)
-            make.top.equalTo(view).inset(94)
+            make.top.equalTo(view).inset(100)
             make.leading.equalTo(view).inset(230)
         }
         
@@ -465,7 +475,7 @@ class ConverterScreen: UIViewController {
         
         stackView1.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(13)
-            make.top.equalTo(view).inset(195)
+            make.top.equalTo(view).inset(201)
             make.width.equalTo(360)
             make.height.equalTo(95)
         }
@@ -500,7 +510,7 @@ class ConverterScreen: UIViewController {
         
         stackView2.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(13)
-            make.top.equalTo(view).inset(296)
+            make.top.equalTo(view).inset(302)
             make.width.equalTo(360)
             make.height.equalTo(95)
         }
@@ -535,7 +545,7 @@ class ConverterScreen: UIViewController {
         
         stackView3.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(13)
-            make.top.equalTo(view).inset(397)
+            make.top.equalTo(view).inset(403)
             make.width.equalTo(360)
             make.height.equalTo(95)
         }
@@ -570,41 +580,41 @@ class ConverterScreen: UIViewController {
         
         swapButton1.snp.makeConstraints { make in
             make.width.equalTo(38)
-            make.top.equalTo(view).inset(175)
+            make.top.equalTo(view).inset(181)
             make.height.equalTo(38)
             make.leading.equalTo(view).inset(227)
         }
         
         swapButton2.snp.makeConstraints { make in
             make.width.equalTo(38)
-            make.top.equalTo(view).inset(276)
+            make.top.equalTo(view).inset(282)
             make.height.equalTo(38)
             make.leading.equalTo(view).inset(227)
         }
         
         swapButton3.snp.makeConstraints { make in
             make.width.equalTo(38)
-            make.top.equalTo(view).inset(377)
+            make.top.equalTo(view).inset(383)
             make.height.equalTo(38)
             make.leading.equalTo(view).inset(229)
         }
         
         addButton.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(177)
-            make.top.equalTo(view).inset(370)
+            make.top.equalTo(view).inset(376)
             make.width.height.equalTo(37)
         }
         
         buttonRateHistory.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(16)
-            make.top.equalTo(view).inset(296)
+            make.top.equalTo(view).inset(302)
             make.height.equalTo(40)
             make.width.equalTo(176)
         }
         
         buttonDiagramPage.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(198)
-            make.top.equalTo(view).inset(296)
+            make.top.equalTo(view).inset(302)
             make.height.equalTo(40)
             make.width.equalTo(176)
         }
@@ -659,20 +669,20 @@ class ConverterScreen: UIViewController {
             
             addButton.snp.remakeConstraints { make in
                 make.leading.equalTo(view).inset(177)
-                make.top.equalTo(view).inset(471)
+                make.top.equalTo(view).inset(477)
                 make.width.height.equalTo(37)
             }
             
             buttonRateHistory.snp.remakeConstraints { make in
                 make.leading.equalTo(view).inset(16)
-                make.top.equalTo(view).inset(397)
+                make.top.equalTo(view).inset(403)
                 make.height.equalTo(40)
                 make.width.equalTo(176)
             }
             
             buttonDiagramPage.snp.remakeConstraints{ make in
                 make.leading.equalTo(view).inset(198)
-                make.top.equalTo(view).inset(397)
+                make.top.equalTo(view).inset(403)
                 make.height.equalTo(40)
                 make.width.equalTo(176)
             }
@@ -688,14 +698,14 @@ class ConverterScreen: UIViewController {
             
             buttonRateHistory.snp.remakeConstraints { make in
                 make.leading.equalTo(view).inset(16)
-                make.top.equalTo(view).inset(498)
+                make.top.equalTo(view).inset(504)
                 make.height.equalTo(40)
                 make.width.equalTo(176)
             }
             
             buttonDiagramPage.snp.remakeConstraints{ make in
                 make.leading.equalTo(view).inset(198)
-                make.top.equalTo(view).inset(498)
+                make.top.equalTo(view).inset(504)
                 make.height.equalTo(40)
                 make.width.equalTo(176)
             }

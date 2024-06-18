@@ -50,8 +50,6 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
         
         // Set the title of the view controller to the text of nameOfScreen
         self.navigationItem.titleView = nameOfScreen
-        // Ensure the navigation bar is visible
-        self.navigationController?.isNavigationBarHidden = false
         
         // Ensure the navigation bar appearance does not change on scroll
         if let navigationBar = navigationController?.navigationBar {
@@ -169,7 +167,7 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
             make.leading.trailing.equalTo(view).inset(21)
         }
     }
-
+    
     
     @objc private func doSwipeRight (_ gesture: UISwipeGestureRecognizer) {
         if gesture.state == .ended {
@@ -384,27 +382,27 @@ class CurrencyScreen: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     private func findCur() {
-            let stringUrl = "https://api.apilayer.com/fixer/symbols"
-            guard let url = URL(string: stringUrl) else {
-                return
-            }
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            request.addValue("mUGIIf6VCrvec8zDdJv2EofmA4euGt2z", forHTTPHeaderField: "apikey")
-            
-            guard let data = try? URLSession.shared.dataSync(with: request).0 else {
-                return
-            }
-            
-            guard let curData = CurData(from: data) else {
-                return
-            }
-            symbols = curData.symbols.map { $0 }
-            symbols.sort{ $0.1 < $1.1 }
-            tableView.reloadData()
-            
-            createData()
+        let stringUrl = "https://api.apilayer.com/fixer/symbols"
+        guard let url = URL(string: stringUrl) else {
+            return
         }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("mUGIIf6VCrvec8zDdJv2EofmA4euGt2z", forHTTPHeaderField: "apikey")
+        
+        guard let data = try? URLSession.shared.dataSync(with: request).0 else {
+            return
+        }
+        
+        guard let curData = CurData(from: data) else {
+            return
+        }
+        symbols = curData.symbols.map { $0 }
+        symbols.sort{ $0.1 < $1.1 }
+        tableView.reloadData()
+        
+        createData()
+    }
 }
 
 // Extension is used to support function to delete data from CoreData memory
@@ -444,10 +442,10 @@ extension CurrencyScreen: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         // Get the text from the search bar
         guard let searchText = searchController.searchBar.text else { return }
-
+        
         // Filter the dictionary based on the search text
         filteredDictCurrency = sortedDictCurrency.mapValues { $0.filter { $0.1.localizedCaseInsensitiveContains(searchText) } }
-
+        
         // Reload the table view data to reflect the changes
         tableView.reloadData()
     }

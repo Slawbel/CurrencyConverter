@@ -80,7 +80,7 @@ struct RateScreen: View {
                             )
                             .datePickerStyle(CompactDatePickerStyle())
                             .background(Color.black)
-                            .accentColor(.white)
+                            .foregroundColor(.white)
                             .padding()
                             .environment(\.colorScheme, .dark)
                             .cornerRadius(5)
@@ -98,7 +98,7 @@ struct RateScreen: View {
                             )
                             .datePickerStyle(CompactDatePickerStyle())
                             .background(Color.black)
-                            .accentColor(.white)  // Text color
+                            .foregroundColor(.white)  // Text color
                             .padding()
                             .environment(\.colorScheme, .dark)  // Force dark mode
                             .cornerRadius(5)
