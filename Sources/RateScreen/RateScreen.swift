@@ -221,7 +221,7 @@ struct RateScreen: View {
             // Perform conversion 2
             currencyApi.conversion2 { convertResult in
                 if let result = convertResult?.result {
-                    self.conversion2Results.append(String(result))
+                    self.conversion2Results.append(String(format: "%.10f", result))
                 }
             }
             
@@ -229,7 +229,7 @@ struct RateScreen: View {
             // Perform conversion 3
             currencyApi.conversion3 { [self] convertResult in
                 if let result = convertResult?.result {
-                    self.conversion3Results.append(String(result))
+                    self.conversion3Results.append(String(format: "%.10f", result))
                 }
             }
             
@@ -237,7 +237,7 @@ struct RateScreen: View {
             // Perform conversion 4
             currencyApi.conversion4 { [self] convertResult in
                 if let result = convertResult?.result {
-                    self.conversion4Results.append(String(result))
+                    self.conversion4Results.append(String(format: "%.10f", result))
                 }
             }
         }

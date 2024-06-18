@@ -595,9 +595,13 @@ extension DiagramResult: CurrencyScreenDelegate {
             cutShortNameFlag = copyConverterScreen.getFlagToLabel(shortName: curShortName!)
         }
         copyConverterScreen.convert()
-
-        if cutShortNameFlag != nil {
-            label = cutShortNameFlag! + " " + curShortName! + color
+        
+        if curShortName != nil {
+            if cutShortNameFlag != nil {
+                label = cutShortNameFlag! + " " + curShortName! + color
+            } else {
+                label = "    " + curShortName! + color
+            }
         } else {
             label = "          " + color
         }

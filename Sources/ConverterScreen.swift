@@ -719,19 +719,19 @@ class ConverterScreen: UIViewController {
             guard let convertResult else {
                 return
             }
-            self?.outputLabel1.text = String(convertResult.result ?? 0)
+            self?.outputLabel1.text = String(format: "%.10f", convertResult.result ?? 0)
         }
         currencyApi.conversion3 { [weak self] convertResult in
             guard let convertResult else {
                 return
             }
-            self?.outputLabel2.text = String(convertResult.result ?? 0)
+            self?.outputLabel2.text = String(format: "%.10f", convertResult.result ?? 0)
         }
         currencyApi.conversion4 { [weak self] convertResult in
             guard let convertResult else {
                 return
             }
-            self?.outputLabel3.text = String(convertResult.result ?? 0)
+            self?.outputLabel3.text = String(format: "%.10f", convertResult.result ?? 0)
         }
         
         if self.chosenCurShortName == nil {
@@ -811,6 +811,11 @@ class ConverterScreen: UIViewController {
         } catch {
             print("Error reading file: \(error)")
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        convert()
     }
 }
 
