@@ -730,7 +730,7 @@ class ConverterScreen: UIViewController {
         currencyApi.conversion4 { [weak self] convertResult in
             guard let convertResult else {
                 return
-            }
+        }
             self?.outputLabel3.text = String(format: "%.10f", convertResult.result ?? 0)
         }
         

@@ -139,7 +139,7 @@ class DiagramResult: DemoBaseViewController {
         sliderY.value = 100
         chartView.animate(xAxisDuration: 2.5)
         
-        uploadCurToLabel(textOfLabel: &outputLabel1.text, currency: chosenCurShortName1)
+        outputLabel1.text = uploadCurToLabel(textOfLabel: &outputLabel1.text, currency: chosenCurShortName1)
         outputLabel1.text! += " 🟣"
         outputLabel1.textAlignment = .center
         outputLabel1.font = outputLabel1.font.withSize(14)
@@ -156,7 +156,7 @@ class DiagramResult: DemoBaseViewController {
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
-        uploadCurToLabel(textOfLabel: &outputLabel2.text, currency: chosenCurShortName2)
+        outputLabel2.text = uploadCurToLabel(textOfLabel: &outputLabel2.text, currency: chosenCurShortName2)
         outputLabel2.text! += " ⚪️"
         outputLabel2.textAlignment = .center
         outputLabel2.font = outputLabel1.font.withSize(14)
@@ -173,7 +173,7 @@ class DiagramResult: DemoBaseViewController {
             Coordinator.openAnotherScreen(from: self, to: currencyScreen)
         }, for: .primaryActionTriggered)
         
-        uploadCurToLabel(textOfLabel: &outputLabel3.text, currency: chosenCurShortName3)
+        outputLabel3.text = uploadCurToLabel(textOfLabel: &outputLabel3.text, currency: chosenCurShortName3)
         outputLabel3.text! += " 🟠"
         outputLabel3.textAlignment = .center
         outputLabel3.font = outputLabel1.font.withSize(14)
@@ -207,6 +207,11 @@ class DiagramResult: DemoBaseViewController {
         outputCurButton2.addSubview(outputLabel2)
         outputCurButton3.addSubview(outputLabel3)
         
+        constraintsForDiagram()
+    }
+    
+    // MARK: - Constraints
+    func constraintsForDiagram() {
         diagramStackView.snp.makeConstraints{ make in
             make.leading.equalTo(view).inset(14)
             make.top.equalTo(view).inset(40)
@@ -243,7 +248,7 @@ class DiagramResult: DemoBaseViewController {
         }
         
         outputLabel1.snp.makeConstraints { make in
-            make.centerX.equalTo(outputCurButton1) 
+            make.centerX.equalTo(outputCurButton1)
             make.centerY.equalTo(outputCurButton1)
         }
         
@@ -272,6 +277,7 @@ class DiagramResult: DemoBaseViewController {
         }
     }
     
+    // MARK: - SwipeRight
     @objc private func doSwipeRight (_ gesture: UISwipeGestureRecognizer) {
         if gesture.state == .ended {
             Coordinator.closeAnotherScreen(from: self)
@@ -282,54 +288,58 @@ class DiagramResult: DemoBaseViewController {
         diagramDelegate?.currenciesFromDiagramToConverter(curInput: chosenCurShortNameBase, curOutput1: chosenCurShortName1, curOutput2: chosenCurShortName2, curOutput3: chosenCurShortName3)
     }
     
+    // MARK: - select start and end dates for range
     private var startChosenDates: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.string(from: startDatePicker.date)
     }
-    
     private var endChosenDates: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.string(from: endDatePicker.date)
     }
     
-    // setting lines on diagram according to each currency
+    // MARK: - setting lines on diagram according to each currency
     func setData(coordinates: [ChartDataEntry], coordinates2: [ChartDataEntry], coordinates3: [ChartDataEntry], chosenCur1: String, chosenCur2: String, chosenCur3: String) {
         let set1 = LineChartDataSet(entries: coordinates, label: chosenCur1)
         let set2 = LineChartDataSet(entries: coordinates2, label: chosenCur2)
         let set3 = LineChartDataSet(entries: coordinates3, label: chosenCur3)
         
-        set1.colors = [NSUIColor.purple]
-        set2.colors = [NSUIColor.white]
-        set3.colors = [NSUIColor.orange]
-        
-        set1.circleRadius = 5
-        set1.circleColors = [NSUIColor.purple]
-        set1.circleHoleRadius = 0.0 // Setting it to .zero is not allowed here, use 0.0 instead
-        set1.drawValuesEnabled = false
-        
-        set2.circleRadius = 5
-        set2.circleColors = [NSUIColor.white]
-        set2.circleHoleRadius = 0.0 // Same here
-        set2.drawValuesEnabled = false
-        
-        set3.circleRadius = 5
-        set3.circleColors = [NSUIColor.orange]
-        set3.circleHoleRadius = 0.0 // Same here
-        set3.drawValuesEnabled = false
-        
+        setParameters(set: set1, value: 5, circleColor: NSUIColor.purple, drawValues: false, holeRadius: 0.0, lineColor: NSUIColor.purple)
+        setParameters(set: set2, value: 5, circleColor: NSUIColor.white, drawValues: false, holeRadius: 0.0, lineColor: NSUIColor.white)
+        setParameters(set: set3, value: 5, circleColor: NSUIColor.orange, drawValues: false, holeRadius: 0.0, lineColor: NSUIColor.orange)
+
         let data = LineChartData(dataSets: [set1, set2, set3]) // Passing an array of LineChartDataSet to LineChartData initializer
         
         chartView.data = data
     }
     
-    override func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-            let alert = UIAlertController(title: "Value", message: "Value: \(entry.y)", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+    func setParameters (set: LineChartDataSet, value: Int, circleColor: UIColor, drawValues: Bool, holeRadius: Float, lineColor: UIColor) {
+        setCircleRadius(set: set, value: value)
+        setCircleColor(set: set, color: circleColor)
+        setCircleDrawValues(set: set, drawValues: drawValues)
+        setCircleHoleRadius(set: set, holeRadius: holeRadius)
+        setLineColor(set: set, lineColor: lineColor)
     }
     
+    func setCircleRadius (set: LineChartDataSet, value: Int) {
+        set.circleRadius = CGFloat(value)
+    }
+    func setCircleColor (set: LineChartDataSet, color: UIColor) {
+        set.circleColors = [color]
+    }
+    func setCircleDrawValues (set: LineChartDataSet, drawValues: Bool) {
+        set.drawValuesEnabled = drawValues
+    }
+    func setCircleHoleRadius(set: LineChartDataSet, holeRadius: Float) {
+        set.circleHoleRadius = CGFloat(holeRadius)
+    }
+    func setLineColor (set: LineChartDataSet, lineColor: UIColor) {
+        set.colors = [lineColor]
+    }
+    
+    // MARK: - creation of date range on the base of selected start and end dates
     @objc func rangeOfDates() -> [String] {
         var arrayOfDates: [String] = []
         let dayDurationInSeconds: TimeInterval = 60*60*24
@@ -344,16 +354,34 @@ class DiagramResult: DemoBaseViewController {
         return arrayOfDates
     }
     
+    // MARK: - transfer of coordinates for diagram lines
     @objc func curHistory() {
+        // check for selected based currency
         guard let chosenCurShortNameBase = chosenCurShortNameBase else {
-            let alertMissedCurBase = UIAlertController(title: "Missing based currency", message: "Please, select based currency", preferredStyle: .alert)
-            let okActionBase = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alertMissedCurBase.addAction(okActionBase)
-            present(alertMissedCurBase, animated:  true, completion: nil)
+            showAlertEmptyBasedCurrency()
             return
         }
             
-        // making string with all currencies for API request
+        // api request for all rates during some period
+        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + symbols() + "&base=" + (chosenCurShortNameBase)
+        
+        guard let url = URL(string: stringUrl) else {
+            return
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("mUGIIf6VCrvec8zDdJv2EofmA4euGt2z", forHTTPHeaderField: "apikey")
+        
+        guard let data = try? URLSession.shared.dataSync(with: request).0 else {
+            return
+        }
+        rateData = RateData(from: data)
+        
+        updateOfXAxis()
+        self.setData(coordinates: createCoordinates(chosenCurrentShortName: chosenCurShortName1), coordinates2: createCoordinates(chosenCurrentShortName: chosenCurShortName2), coordinates3: createCoordinates(chosenCurrentShortName: chosenCurShortName3), chosenCur1: chosenCurShortName1 ?? "", chosenCur2: chosenCurShortName2 ?? "", chosenCur3: chosenCurShortName3 ?? "")
+    }
+    // making string with all currencies for API request
+    func symbols () -> String {
         var symbols = ""
         if let chosenCurShortName1 = chosenCurShortName1 {
             symbols += chosenCurShortName1
@@ -370,35 +398,26 @@ class DiagramResult: DemoBaseViewController {
             }
             symbols += chosenCurShortName3
         }
-        // api request for all rates during some period
-        let stringUrl = "https://api.apilayer.com/fixer/timeseries?start_date=" + (startChosenDates) + "&end_date=" + (endChosenDates) + "&symbols=" + symbols + "&base=" + (chosenCurShortNameBase)
-        
-        guard let url = URL(string: stringUrl) else {
-            return
-        }
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.addValue("mUGIIf6VCrvec8zDdJv2EofmA4euGt2z", forHTTPHeaderField: "apikey")
-        
-        guard let data = try? URLSession.shared.dataSync(with: request).0 else {
-            return
-        }
-        rateData = RateData(from: data)
-        
-        updateOfXAxis()
-        self.setData(coordinates: coordinates(), coordinates2: coordinates2(), coordinates3: coordinates3(), chosenCur1: chosenCurShortName1 ?? "", chosenCur2: chosenCurShortName2 ?? "", chosenCur3: chosenCurShortName3 ?? "")
-        }
+        return symbols
+    }
+    func showAlertEmptyBasedCurrency () {
+        let alertMissedCurBase = UIAlertController(title: "Missing based currency", message: "Please, select based currency", preferredStyle: .alert)
+        let okActionBase = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertMissedCurBase.addAction(okActionBase)
+        present(alertMissedCurBase, animated:  true, completion: nil)
+    }
     
+    // MARK: - Generate and set the new data
     override func updateChartData() {
         if self.shouldHideData {
             chartView.data = nil
             return
         }
-
-        self.setDataCount(Int(sliderX.value), range: UInt32(sliderY.value))
+        
+        let data = self.setDataCount(Int(sliderX.value), range: UInt32(sliderY.value))
+        chartView.data = data
     }
-
-    func setDataCount(_ count: Int, range: UInt32) {
+    func setDataCount(_ count: Int, range: UInt32) -> LineChartData {
         let values = (0..<count).map { (i) -> ChartDataEntry in
             let val = Double(arc4random_uniform(range) + 3)
             return ChartDataEntry(x: Double(i), y: val, icon: #imageLiteral(resourceName: "icon"))
@@ -419,7 +438,7 @@ class DiagramResult: DemoBaseViewController {
         set1.drawFilledEnabled = true
 
         let data = LineChartData(dataSet: set1)
-        chartView.data = data
+        return data
     }
 
     private func setup(_ dataSet: LineChartDataSet) {
@@ -450,7 +469,7 @@ class DiagramResult: DemoBaseViewController {
             dataSet.formLineWidth = 1
             dataSet.formSize = 15
         }
-        }
+    }
 
     override func optionTapped(_ option: Option) {
         guard let data = chartView.data else { return }
@@ -495,9 +514,9 @@ class DiagramResult: DemoBaseViewController {
         }
     }
     
-    func coordinates() -> [ChartDataEntry] {
-
-        guard let chosenCurShortName1 = chosenCurShortName1 else {
+    // MARK: - Prepare rates to coordinates type
+    func createCoordinates (chosenCurrentShortName: String?) -> [ChartDataEntry] {
+        guard let chosenCurShortName1 = chosenCurrentShortName else {
             return []
         }
         var x = -1
@@ -512,40 +531,6 @@ class DiagramResult: DemoBaseViewController {
         })
         return diagramData ?? []
     }
-        
-    func coordinates2() -> [ChartDataEntry] {
-        guard let chosenCurShortName2 = chosenCurShortName2 else {
-            return []
-        }
-        var y = -1
-        let diagramData2 = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
-            return dateAndRateLeft.key < dateAndRateRight.key
-        }).compactMap { key, value in
-            guard let currency2 = value[chosenCurShortName2] else {
-                return nil as ChartDataEntry?
-            }
-            y += 1
-            return ChartDataEntry(x: Double(y), y: currency2)
-        })
-        return diagramData2 ?? []
-    }
-        
-    func coordinates3() -> [ChartDataEntry] {
-        guard let chosenCurShortName3 = chosenCurShortName3 else {
-            return []
-        }
-        var z = -1
-        let diagramData3 = (rateData?.rates.sorted(by: { dateAndRateLeft, dateAndRateRight in
-            return dateAndRateLeft.key < dateAndRateRight.key
-        }).compactMap { key, value in
-            guard let currency3 = value[chosenCurShortName3] else {
-                    return nil as ChartDataEntry?
-            }
-            z += 1
-            return ChartDataEntry(x: Double(z), y: currency3)
-        })
-        return diagramData3 ?? []
-    }
 }
 
 extension DiagramResult {
@@ -557,53 +542,58 @@ extension DiagramResult {
         self.chartView.xAxis.granularity = 1 // Ensure each label is drawn even if it overlaps with others
     }
     
-    private func uploadCurToLabel ( textOfLabel: inout String?, currency: String?) {
+    // MARK: - Update outputLabel's
+    private func uploadCurToLabel ( textOfLabel: inout String?, currency: String?) -> String {
         let converter = ConverterScreen()
         if let currency = currency {
             let flagLabel = converter.getFlagToLabel(shortName: currency)
-            textOfLabel = (flagLabel ?? "") + " " + currency
+            return (flagLabel ?? "") + " " + currency
         } else {
-            textOfLabel = "           "
+            return "           "
         }
     }
 }
 
 extension DiagramResult: CurrencyScreenDelegate {
+    // MARK: - set names and values of currencies by delegate
     func transferCurShortName(currency: String) {
-        
         switch self.selectorDiagram {
         case 1: setCurLabels(label: &self.outputLabel1.text, currency: currency, curShortName: &self.chosenCurShortName1, color: " 🟣")
         case 2: setCurLabels(label: &self.outputLabel2.text, currency: currency, curShortName: &self.chosenCurShortName2, color: " ⚪️")
         case 3: setCurLabels(label: &self.outputLabel3.text, currency: currency, curShortName: &self.chosenCurShortName3, color: " 🟠")
         default: return
         }
-        
         self.curHistory()
     }
-    
     func setCurLabels(label: inout String?, currency: String, curShortName: inout String?, color: String) {
         let copyConverterScreen = ConverterScreen()
-
-        if currency == "" {
-            curShortName = nil
-        } else {
-            curShortName = currency
-        }
         
-        var cutShortNameFlag: String?
+        curShortName = checkForEmptiness(currency: currency)
+        
+        var curShortNameFlag: String?
         if curShortName != nil {
-            cutShortNameFlag = copyConverterScreen.getFlagToLabel(shortName: curShortName!)
+            curShortNameFlag = copyConverterScreen.getFlagToLabel(shortName: curShortName!)
         }
         copyConverterScreen.convert()
         
-        if curShortName != nil {
-            if cutShortNameFlag != nil {
-                label = cutShortNameFlag! + " " + curShortName! + color
+        label = setLabelText(name: curShortName, flag: curShortNameFlag, color: color)
+    }
+    func checkForEmptiness(currency: String) -> String? {
+        if currency == "" {
+            return nil
+        } else {
+            return currency
+        }
+    }
+    func setLabelText(name: String?, flag: String?, color: String) -> String {
+        if name != nil {
+            if flag != nil {
+                return flag! + " " + name! + color
             } else {
-                label = "    " + curShortName! + color
+                return "    " + name! + color
             }
         } else {
-            label = "          " + color
+            return "          " + color
         }
     }
 }
