@@ -14,6 +14,7 @@
 		9EE797DC2B9F812E00BDBDEA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE797DB2B9F812E00BDBDEA /* Coordinator.swift */; };
 		9EFEB4852A91413D00860A54 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9EFEB4842A91413D00860A54 /* DMSans-Regular.ttf */; };
 		A22FC4902A9A44A50037B6D6 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A22FC48F2A9A445B0037B6D6 /* DMSans-Bold.ttf */; };
+		A24F95952C34315300FA5938 /* DiagramResultTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F95942C34315300FA5938 /* DiagramResultTest.swift */; };
 		A25911D32BF57C19000DF7B0 /* RateScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25911D22BF57C19000DF7B0 /* RateScreen.swift */; };
 		A261608D2AEC7CAC00C6DF13 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A261608B2AEC7CAC00C6DF13 /* Model.xcdatamodeld */; };
 		A2616D462B173E58000AF9A7 /* SetColorByCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2616D452B173E58000AF9A7 /* SetColorByCode.swift */; };
@@ -48,6 +49,7 @@
 		9EE797DB2B9F812E00BDBDEA /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		9EFEB4842A91413D00860A54 /* DMSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Regular.ttf"; sourceTree = "<group>"; };
 		A22FC48F2A9A445B0037B6D6 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Bold.ttf"; sourceTree = "<group>"; };
+		A24F95942C34315300FA5938 /* DiagramResultTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DiagramResultTest.swift; path = Tests/DiagramResultTest.swift; sourceTree = "<group>"; };
 		A25911D22BF57C19000DF7B0 /* RateScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateScreen.swift; sourceTree = "<group>"; };
 		A261608C2AEC7CAC00C6DF13 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		A2616D452B173E58000AF9A7 /* SetColorByCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetColorByCode.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 		9E25D2AE29998C2B00293AB7 = {
 			isa = PBXGroup;
 			children = (
+				A24F95982C34319000FA5938 /* Tests */,
 				9E25D2D029998CA700293AB7 /* Sources */,
 				9E25D2B829998C2B00293AB7 /* Products */,
 				A2B496FF29AAC9660017A82A /* Frameworks */,
@@ -133,6 +136,14 @@
 				9EFEB4842A91413D00860A54 /* DMSans-Regular.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		A24F95982C34319000FA5938 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				A24F95942C34315300FA5938 /* DiagramResultTest.swift */,
+			);
+			name = Tests;
 			sourceTree = "<group>";
 		};
 		A25911D42BF57F85000DF7B0 /* RateScreen */ = {
@@ -269,6 +280,7 @@
 				9E25D2DF29998CA700293AB7 /* AppDelegate.swift in Sources */,
 				A2616D462B173E58000AF9A7 /* SetColorByCode.swift in Sources */,
 				9E25D2DB29998CA700293AB7 /* ConverterScreen.swift in Sources */,
+				A24F95952C34315300FA5938 /* DiagramResultTest.swift in Sources */,
 				A2C271D22B684223009E40C6 /* DemoBaseViewController.swift in Sources */,
 				A2B496FB29A802A30017A82A /* CurData.swift in Sources */,
 				A2EA87582A23E2FA00AAC943 /* CurrencyApi.swift in Sources */,
@@ -424,6 +436,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4A2KG46AV7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Sources/Info.plist;
@@ -456,6 +469,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4A2KG46AV7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Sources/Info.plist;

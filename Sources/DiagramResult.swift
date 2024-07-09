@@ -2,11 +2,19 @@ import UIKit
 import DGCharts
 import SnapKit
 
-
-
 class DiagramResult: DemoBaseViewController {
     
-    private let diagramStackView = UIStackView()
+    // redefinition of initializer without parameters
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    // required initializer for NSCoding
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    internal let diagramStackView = UIStackView()
     
     lazy var chartView = LineChartView()
 
@@ -45,10 +53,6 @@ class DiagramResult: DemoBaseViewController {
         if outputCur1 != nil { self.chosenCurShortName1 = outputCur1 }
         if outputCur2 != nil { self.chosenCurShortName2 = outputCur2 }
         if outputCur3 != nil { self.chosenCurShortName3 = outputCur3 }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
